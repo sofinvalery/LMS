@@ -59,7 +59,7 @@ CMakeLists.txt.user*
 *.opensdf
 *.vcxproj
 *vcxproj.*
-.vscode
+**/.vscode/
 
 # MinGW generated files
 *.Debug
