@@ -10,11 +10,13 @@ CONFIG += c++17
 
 SOURCES += \
     ../common/authentication/authentication.cpp \
+    ../common/course/course.cpp \
     main.cpp \
     mainwindow.cpp
 
 HEADERS += \
     ../common/authentication/authentication.h \
+    ../common/course/course.h \
     mainwindow.h
 
 FORMS += \
