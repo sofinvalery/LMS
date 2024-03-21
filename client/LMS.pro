@@ -1,5 +1,5 @@
 QT       += core gui
-
+QT += network
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 CONFIG += c++17
@@ -11,12 +11,19 @@ CONFIG += c++17
 SOURCES += \
     ../common/authentication/authentication.cpp \
     ../common/course/course.cpp \
+    ../common/course/course_components/coursepdf.cpp \
+    ../common/course/course_components/coursetask.cpp \
+    ../common/course/course_components/coursetutorials.cpp \
     main.cpp \
     mainwindow.cpp
 
 HEADERS += \
     ../common/authentication/authentication.h \
     ../common/course/course.h \
+    ../common/course/course_components/coursecomponent.h \
+    ../common/course/course_components/coursepdf.h \
+    ../common/course/course_components/coursetask.h \
+    ../common/course/course_components/coursetutorials.h \
     mainwindow.h
 
 FORMS += \

@@ -22,6 +22,8 @@ public:
     uint32_t GetCourseId(){return id;}
     QString GetTitle(){return title;}
     QString GetAvaTitleUrl(){return avaTitleUrl;}
+    public slots:
+    void ClickIcon();
 signals:
 };
 

@@ -4,8 +4,8 @@
 #include <QObject>
 #include <QJsonObject>
 #include <QJsonDocument>
-
-
+#include <QPasswordDigestor>
+#include <QCryptographicHash>
 
 
 enum EnumRoles{

@@ -20,7 +20,15 @@ void Authentication:: SetInformationAfterAuthentication(
 QString Authentication:: SerializeForAuthentication(){
     QJsonObject json;
     json["login"]=login;
-    json["password"]=password;
+    QByteArray salt,log;
+    log=password.toUtf8();
+    for(int i = 0; i<64;i+=3)
+        salt.append(log[(i/3)%(log.size()-1)]);
+    json["password"]=(QString)QPasswordDigestor::deriveKeyPbkdf2(QCryptographicHash::Algorithm::Sha3_512,log,salt,10000,64);
+    json["fio"]=fio;
+    json["urlAvatar"]=urlAvatar;
+    json["role"]=role;
+    json["tokenAuthentication"]=tokenAuthentication;
     QJsonDocument doc(json);
     QString jsonString = doc.toJson();
     return jsonString;
