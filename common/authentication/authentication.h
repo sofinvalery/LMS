@@ -50,8 +50,8 @@ private:
        QString GetUrlAvatar(){
            return urlAvatar;
        }
-       QString SerializeForAuthentication();
-       void DeserializeAfterAuthFromServer(QString jsonString);
+       QJsonObject SerializeForAuthentication();
+       void DeserializeAfterAuthFromServer(QJsonObject jsonObj);
 };
 
 #endif // AUTHENTICATION_H

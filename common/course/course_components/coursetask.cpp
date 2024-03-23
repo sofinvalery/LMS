@@ -22,7 +22,12 @@ void CourseTask::ClickIcon()
 
 }
 
-QString CourseTask::Serialize()
+QWidget *CourseTask::QWidgetShow()
+{
+ return new QTextEdit();
+}
+
+QJsonObject CourseTask::Serialize()
 {
     QJsonObject json;
     json["id"]=id;
@@ -35,19 +40,18 @@ QString CourseTask::Serialize()
     json["solutionTime"]= solutionTime.toString();
     json["verdict"]= verdict;
      json["notes"]= notes;
-    QJsonDocument doc(json);
-    QString jsonString = doc.toJson();
-    return jsonString;
+    QJsonObject main;
+     main["CourseTask"]=json;
+    return main;
 }
 
-CourseTask CourseTask::Deserialize(QString jsonString)
+CourseTask* CourseTask::Deserialize(QJsonObject json)
 {
-    QJsonDocument doc = QJsonDocument::fromJson(jsonString.toUtf8());
-    QJsonObject jsonObj = doc.object();
+    QJsonObject jsonObj=json["CourseTask"].toObject();
 
     QDate solutionTime;
     solutionTime.fromString(jsonObj["solutionTime"].toString(),"dd/MM/YYYY");
-    return CourseTask(jsonObj["id"].toInt(),jsonObj["order"].toInt(),jsonObj["content"].toString(),
+    return new CourseTask(jsonObj["id"].toInt(),jsonObj["order"].toInt(),jsonObj["content"].toString(),
                       jsonObj["maxMark"].toInt(),jsonObj["memoryLimit"].toInt(),
                       jsonObj["allowedTypeOfFiles"].toString(),jsonObj["answerUrl"].toString(),
                       solutionTime,jsonObj["verdict"].toInt(),jsonObj["notes"].toString());

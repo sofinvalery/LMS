@@ -1,10 +1,17 @@
 #ifndef COURSE_H
 #define COURSE_H
+
 #include <QDate>
 #include <QObject>
 #include <QJsonObject>
 #include <QJsonDocument>
-
+#include <QJsonArray>
+#include "course_components/coursecomponent.h"
+#include "course_components/coursepdf.h"
+#include "course_components/coursetask.h"
+#include "course_components/coursetest.h"
+#include "course_components/coursetutorials.h"
+#include "course_components/coursevideos.h"
 class Course : public QObject
 {
     Q_OBJECT
@@ -16,14 +23,33 @@ private:
     QString avaTitleUrl;
     QDate startTime;
     QDate endTime;
+    QList<CourseComponent*> listComponents = QList<CourseComponent*>();
 public:
-    static Course Deserialize(QString jsonString);
-    QString Serialize();
+
+    void AddCourseComponent(CourseComponent* component){
+        listComponents.append(component);
+    }
+
+    QJsonObject SerializeListComponents();
+
+    void DeserializeListComponents(QJsonObject jsonObj);
+
+    static Course Deserialize(QJsonObject jsonObj);
+
+    QJsonObject Serialize();
+
     uint32_t GetCourseId(){return id;}
+
     QString GetTitle(){return title;}
+
     QString GetAvaTitleUrl(){return avaTitleUrl;}
-    public slots:
+
+    QList<CourseComponent *> getListComponents() const;
+
+public slots:
+
     void ClickIcon();
+    QWidget* QWidgetShow();
 signals:
 };
 

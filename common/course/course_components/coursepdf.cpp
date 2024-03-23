@@ -14,6 +14,11 @@ void CoursePdf::ClickIcon()
 
 }
 
+QWidget *CoursePdf::QWidgetShow()
+{
+    return new QTextEdit();
+}
+
 QString CoursePdf::getTitle() const
 {
     return title;
@@ -24,22 +29,21 @@ QString CoursePdf::getUrl() const
     return url;
 }
 
-QString CoursePdf::Serialize()
+QJsonObject CoursePdf::Serialize()
 {
+    QJsonObject main;
     QJsonObject json;
     json["id"]=id;
     json["order"]=order;
     json["title"]=title;
     json["url"]= url;
-    QJsonDocument doc(json);
-    QString jsonString = doc.toJson();
-    return jsonString;
+    main["CoursePdf"]=json;
+    return main;
 }
 
-CoursePdf CoursePdf::Deserialize(QString jsonString)
+CoursePdf* CoursePdf::Deserialize(QJsonObject jsonObj)
 {
-    QJsonDocument doc = QJsonDocument::fromJson(jsonString.toUtf8());
-    QJsonObject jsonObj = doc.object();
-    return CoursePdf(jsonObj["id"].toInt(),jsonObj["order"].toInt(),
-                     jsonObj["title"].toString(),jsonObj["url"].toString());
+    QJsonObject json=jsonObj["CoursePdf"].toObject();
+    return new CoursePdf(json["id"].toInt(),json["order"].toInt(),
+                     json["title"].toString(),json["url"].toString());
 }
