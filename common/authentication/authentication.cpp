@@ -17,7 +17,7 @@ void Authentication:: SetInformationAfterAuthentication(
     this->tokenAuthentication=token_authentication;
     this->isAuthenticated=true;
 }
-QString Authentication:: SerializeForAuthentication(){
+QJsonObject Authentication:: SerializeForAuthentication(){
     QJsonObject json;
     json["login"]=login;
     QByteArray salt,log;
@@ -29,14 +29,11 @@ QString Authentication:: SerializeForAuthentication(){
     json["urlAvatar"]=urlAvatar;
     json["role"]=role;
     json["tokenAuthentication"]=tokenAuthentication;
-    QJsonDocument doc(json);
-    QString jsonString = doc.toJson();
-    return jsonString;
+
+    return json;
 }
 
-void Authentication::DeserializeAfterAuthFromServer(QString jsonString){
-    QJsonDocument doc = QJsonDocument::fromJson(jsonString.toUtf8());
-    QJsonObject jsonObj = doc.object();
+void Authentication::DeserializeAfterAuthFromServer(QJsonObject jsonObj){
     this->fio=jsonObj["fio"].toString();
     this->urlAvatar=jsonObj["urlAvatar"].toString();
     this->role=(EnumRoles)jsonObj["role"].toInt();

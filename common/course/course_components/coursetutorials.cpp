@@ -6,28 +6,33 @@ void CourseTutorials::ClickIcon()
 
 }
 
+QWidget *CourseTutorials::QWidgetShow()
+{
+    return new QTextEdit();
+}
+
+
 CourseTutorials::CourseTutorials(int32_t id, int32_t order, QString content, QObject *parent)
     :CourseComponent(id,order,parent)
 {
     this->content=content;
 }
 
-QString CourseTutorials::Serialize()
+QJsonObject CourseTutorials::Serialize()
 {
     QJsonObject json;
     json["id"]=id;
     json["order"]=order;
     json["content"]=content;
-    QJsonDocument doc(json);
-    QString jsonString = doc.toJson();
-    return jsonString;
+    QJsonObject main;
+    main["CourseTutorials"]=json;
+    return main;
 }
 
-CourseTutorials CourseTutorials::Deserialize(QString jsonString)
+CourseTutorials* CourseTutorials::Deserialize(QJsonObject json)
 {
-    QJsonDocument doc = QJsonDocument::fromJson(jsonString.toUtf8());
-    QJsonObject jsonObj = doc.object();
-    return CourseTutorials(jsonObj["id"].toInt(),jsonObj["order"].toInt(),
+    QJsonObject jsonObj=json["CourseTutorials"].toObject();
+    return new CourseTutorials(jsonObj["id"].toInt(),jsonObj["order"].toInt(),
                      jsonObj["content"].toString());
 }
 

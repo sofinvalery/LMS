@@ -9,9 +9,9 @@ class CourseTutorials : public CourseComponent
 public:
     explicit CourseTutorials(int32_t id, int32_t order,QString content, QObject *parent = nullptr);
 
-    QString Serialize();
+    QJsonObject Serialize() override;
 
-    static CourseTutorials Deserialize(QString jsonString);
+    static CourseTutorials* Deserialize(QJsonObject jsonObj);
 
     QString getContent() const;
 
@@ -20,6 +20,7 @@ private:
 
 public slots:
     void ClickIcon() override;
+    QWidget* QWidgetShow() override;
 };
 
 #endif // COURSETUTORIALS_H

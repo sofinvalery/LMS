@@ -1,14 +1,14 @@
-#ifndef COURSEPDF_H
-#define COURSEPDF_H
+#ifndef COURSEVIDEOS_H
+#define COURSEVIDEOS_H
 
 #include "coursecomponent.h"
 #include <QJsonObject>
 #include <QJsonDocument>
 
-class CoursePdf : public CourseComponent
+class CourseVideos : public CourseComponent
 {
 public:
-    explicit CoursePdf(int32_t id, int32_t order, QString title, QString url,QObject *parent = nullptr);
+    explicit CourseVideos(int32_t id, int32_t order, QString title, QString url,QObject *parent = nullptr);
 
 
     QString getTitle() const;
@@ -17,7 +17,7 @@ public:
 
     QJsonObject Serialize() override;
 
-    static CoursePdf* Deserialize(QJsonObject jsonObj);
+    static CourseVideos* Deserialize(QJsonObject jsonObj);
 
 private:
     QString title;
@@ -28,4 +28,4 @@ public slots:
     QWidget* QWidgetShow() override;
 };
 
-#endif // COURSEPDF_H
+#endif // COURSEVIDEOS_H

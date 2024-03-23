@@ -13,7 +13,10 @@ SOURCES += \
     ../common/course/course.cpp \
     ../common/course/course_components/coursepdf.cpp \
     ../common/course/course_components/coursetask.cpp \
+    ../common/course/course_components/coursetest.cpp \
     ../common/course/course_components/coursetutorials.cpp \
+    ../common/course/course_components/coursevideos.cpp \
+    ../common/course/course_components/question.cpp \
     main.cpp \
     mainwindow.cpp
 
@@ -23,7 +26,10 @@ HEADERS += \
     ../common/course/course_components/coursecomponent.h \
     ../common/course/course_components/coursepdf.h \
     ../common/course/course_components/coursetask.h \
+    ../common/course/course_components/coursetest.h \
     ../common/course/course_components/coursetutorials.h \
+    ../common/course/course_components/coursevideos.h \
+    ../common/course/course_components/question.h \
     mainwindow.h
 
 FORMS += \

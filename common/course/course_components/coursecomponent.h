@@ -1,7 +1,9 @@
 #ifndef COURSECOMPONENT_H
 #define COURSECOMPONENT_H
 
+#include "qobject.h"
 #include <QObject>
+#include<QTextEdit>
 
 class CourseComponent : public QObject
 {
@@ -18,11 +20,13 @@ public:
     int32_t getId(){
         return id;
     }
+    virtual QJsonObject Serialize()=0;
 protected:
     int32_t id;
     int32_t order;
 public slots:
     virtual void ClickIcon()=0;
+    virtual QWidget* QWidgetShow()=0;
 signals:
 };
 

@@ -12,9 +12,9 @@ public:
                         QString allowedTypeOfFiles, QString answerUrl, QDate solutionTime,
                         int32_t verdict, QString notes, QObject *parent = nullptr);
 
-    QString Serialize();
+    QJsonObject Serialize() override;
 
-    static CourseTask Deserialize(QString jsonString);
+    static CourseTask* Deserialize(QJsonObject jsonObj);
 
     QString getNotes() const;
 
@@ -44,6 +44,7 @@ private:
     QString notes;
 public slots:
     void ClickIcon() override;
+    QWidget* QWidgetShow() override;
 };
 
 #endif // COURSETASK_H
