@@ -14,8 +14,9 @@ SOURCES += \
     ../common/course/course_components/coursepdf.cpp \
     ../common/course/course_components/coursetask.cpp \
     ../common/course/course_components/coursetutorials.cpp \
-    main.cpp \
-    mainwindow.cpp
+    Forms/Auth/auth.cpp \
+    Forms/Main/mainwindow.cpp \
+    main.cpp
 
 HEADERS += \
     ../common/authentication/authentication.h \
@@ -24,10 +25,12 @@ HEADERS += \
     ../common/course/course_components/coursepdf.h \
     ../common/course/course_components/coursetask.h \
     ../common/course/course_components/coursetutorials.h \
-    mainwindow.h
+    Forms/Auth/auth.h \
+    Forms/Main/mainwindow.h
 
 FORMS += \
-    mainwindow.ui
+    Forms/Auth/auth.ui \
+    Forms/Main/mainwindow.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
