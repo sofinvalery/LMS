@@ -45,6 +45,12 @@ public:
 
     QString GetAvaTitleUrl(){return avaTitleUrl;}
 
+    QDate GetStartTime() { return startTime; }
+
+    QDate GetEndTime() { return endTime; }
+
+    int32_t GetPoints() { return sumpoints; }
+
     QList<CourseComponent *> getListComponents() const;
 
     int32_t getSumpoints() const;

@@ -9,6 +9,7 @@
 #include <QtSql/QSqlDriver>
 #include <QtSql/QSqlQuery>
 #include <QtSql/QSqlRecord>
+#include <QSqlQuery>
 
 class DatabaseManager {
 public:

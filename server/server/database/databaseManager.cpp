@@ -67,83 +67,75 @@ QList<QVariantMap> DatabaseManager::getQueryResults(const QString& query) {
 }
 
 QList<Course> Login(Authentication* auth) {
-    QString query = "SELECT id FROM users WHERE login = :username AND password = :password";
-    query.bindValue(":username", auth->username);
-    query.bindValue(":password", auth->password);
+    QSqlQuery query;
+
+    // query
+
+    query.bindValue(":login", auth->GetLogin());
+    query.bindValue(":password", auth->GetPassword());
 
     QVariant userId = DatabaseManager::getInstance()->getScalarValue(query);
     if (userId.isValid()) {
-        // Authentication successful, return a list of courses for the user
-        return Getmainpage(userId.toInt());
+        // return Getmainpage(userId.toInt());
     } else {
         // Authentication failed, return an empty list
         return QList<Course>();
     }
 }
 
-// Function to get the main page data
-QList<Course> GetMainPage(int userId) {
-    QString query = "SELECT c.id, c.title, c.ava_title_url, c.start_time, c.end_time "
-                    "FROM courses c "
-                    "JOIN zachisleniya z ON z.groups_id = c.groups_id "
-                    "WHERE z.users_id = :userId";
-    query.bindValue(":userId", userId);
+// QList<Course> GetMainPage(int userId) {
+//     QSqlQuery query;
 
-    QList<QVariantMap> results = DatabaseManager::getInstance()->getQueryResults(query);
-    QList<Course> courses;
-    for (const QVariantMap& row : results) {
-        Course course;
-        course.id = row["id"].toInt();
-        course.title = row["title"].toString();
-        course.avaUrl = row["ava_title_url"].toString();
-        course.startTime = row["start_time"].toDateTime();
-        course.endTime = row["end_time"].toDateTime();
-        courses.append(course);
-    }
-    return courses;
-}
+//     // query
 
-// Function to get course components
-Course GetCourseComponents(int32_t courseId) {
-    QString query = "SELECT p.title, p.url, p.`order` "
-                    "FROM path_course_pdfs p "
-                    "WHERE p.courses_id1 = :courseId "
-                    "UNION "
-                    "SELECT pt.content, NULL, pt.`order` "
-                    "FROM path_course_tasks pt "
-                    "WHERE pt.courses_id1 = :courseId "
-                    "UNION "
-                    "SELECT pt.title, pt.url_json, pt.`order` "
-                    "FROM path_course_tests pt "
-                    "WHERE pt.courses_id1 = :courseId "
-                    "UNION "
-                    "SELECT pv.url, NULL, pv.`order` "
-                    "FROM path_course_videos pv "
-                    "WHERE pv.courses_id1 = :courseId "
-                    "ORDER BY `order`";
-    query.bindValue(":courseId", courseId);
+//     query.bindValue(":userId", userId);
 
-    QList<QVariantMap> results = DatabaseManager::getInstance()->getQueryResults(query);
-    Course course;
-    for (const QVariantMap& row : results) {
-        CourseComponent component;
-        component.title = row["title"].toString();
-        component.url = row["url"].toString();
-        component.order = row["order"].toInt();
-        course.components.append(component);
-    }
-    return course;
-}
+//     QList<QVariantMap> results = DatabaseManager::getInstance()->getQueryResults(query);
+//     QList<Course> courses;
+//     for (const QVariantMap& row : results) {
+//         Course course;
+//         course.get = row["id"].toInt();
+//         course.title = row["title"].toString();
+//         course.avaUrl = row["ava_title_url"].toString();
+//         course.startTime = row["start_time"].toDateTime();
+//         course.endTime = row["end_time"].toDateTime();
+//         courses.append(course);
+//     }
+//     return courses;
+// }
 
-// Function to get test questions
-CourseTest GetTestQuestion(int32_t testId) {
-    QString query = "SELECT title, max_mark, url_json FROM path_course_tests WHERE id = :testId";
-    query.bindValue(":testId", testId);
+// // Function to get course components
+// Course GetCourseComponents(int32_t courseId) {
+//     QSqlQuery query;
 
-    QVariantMap result = DatabaseManager::getInstance()->getQueryResults(query).first();
-    CourseTest test;
-    test.title = result["title"].toString();
-    test.maxMark = result["max_mark"].toInt();
-    test.urlJson = result["url_json"].toString();
-    return test;
-}
+//     // query
+
+//     query.bindValue(":courseId", courseId);
+
+//     QList<QVariantMap> results = DatabaseManager::getInstance()->getQueryResults(query);
+//     Course course;
+//     for (const QVariantMap& row : results) {
+//         CourseComponent component;
+//         component.title = row["title"].toString();
+//         component.url = row["url"].toString();
+//         component.order = row["order"].toInt();
+//         course.components.append(component);
+//     }
+//     return course;
+// }
+
+// // Function to get test questions
+// CourseTest GetTestQuestion(int32_t testId) {
+//     QSqlQuery query;
+
+//     // query
+
+//     query.bindValue(":testId", testId);
+
+//     QVariantMap result = DatabaseManager::getInstance()->getQueryResults(query).first();
+//     CourseTest test;
+//     test.title = result["title"].toString();
+//     test.maxMark = result["max_mark"].toInt();
+//     test.urlJson = result["url_json"].toString();
+//     return test;
+// }

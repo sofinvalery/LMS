@@ -49,6 +49,11 @@ private:
        QString GetUrlAvatar(){
            return urlAvatar;
        }
+
+       QString GetLogin() { return login; }
+
+       QString GetPassword() { return password; }
+
        QJsonObject Serialize();
        static Authentication* Deserialize(QJsonObject jsonObj);
 };
