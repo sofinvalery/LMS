@@ -1,5 +1,6 @@
 QT       += core gui
 QT += network
+QT += sql
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 CONFIG += c++17
@@ -15,6 +16,7 @@ SOURCES += \
     ../common/course/course_components/coursetask.cpp \
     ../common/course/course_components/coursetest.cpp \
     ../common/course/course_components/coursetutorials.cpp \
+    ../database/databaseManager.cpp \
     ClientManager/clientmanager.cpp \
     Forms/Auth/auth.cpp \
     Forms/Main/mainwindow.cpp \
@@ -31,6 +33,7 @@ HEADERS += \
     ../common/course/course_components/coursetest.h \
     ../common/course/course_components/coursetutorials.h \
     ../common/transferEnum/transferEnum.h \
+    ../database/databaseManager.h \
     ClientManager/clientmanager.h \
     Forms/Auth/auth.h \
     Forms/Main/mainwindow.h  \
@@ -40,6 +43,9 @@ HEADERS += \
 FORMS += \
     Forms/Auth/auth.ui \
     Forms/Main/mainwindow.ui
+
+INCLUDEPATH += /usr/local/mysql-connector-cpp/include
+LIBS += -L/usr/local/mysql-connector-cpp/lib -lmysqlcppconn
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
