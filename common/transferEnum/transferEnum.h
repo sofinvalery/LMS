@@ -1,8 +1,13 @@
 #ifndef TRANSFERENUM_H
 #define TRANSFERENUM_H
 
+<<<<<<< HEAD
 enum TransferEnum{
     LOGINING=0,
+=======
+enum EnumRoles{
+    LOGIN=0,
+>>>>>>> 2b2368b (added db manager)
     GETMAINPAGE=1,
     GETCOURSECOMPONENTS=2,
     GETTESTQUESTION=3,
