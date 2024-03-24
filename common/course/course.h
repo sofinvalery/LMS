@@ -12,17 +12,19 @@
 #include "course_components/coursetest.h"
 #include "course_components/coursetutorials.h"
 #include "course_components/coursevideos.h"
+#include "ClientManager/clientmanager.h"
 class Course : public QObject
 {
     Q_OBJECT
 public:
-    explicit Course(int32_t id, QString title, QString avaUrl, QDate start, QDate end,QObject *parent = nullptr);
+    explicit Course(int32_t id, QString title, QString avaUrl, QDate start, QDate end,int32_t sumpoints=0,QObject *parent = nullptr);
 private:
     int32_t id;
     QString title;
     QString avaTitleUrl;
     QDate startTime;
     QDate endTime;
+    int32_t sumpoints;
     QList<CourseComponent*> listComponents = QList<CourseComponent*>();
 public:
 
@@ -46,8 +48,9 @@ public:
 
     QList<CourseComponent *> getListComponents() const;
 
-public slots:
+    int32_t getSumpoints() const;
 
+public slots:
     void ClickIcon();
     QWidget* QWidgetShow();
 signals:

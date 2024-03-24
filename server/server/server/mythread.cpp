@@ -60,11 +60,11 @@ void MyThread::readyRead()
             {
                 break;
             }
-            QString str;
-            in>>str;//тут дальнейший функционал
+            QJsonObject json;
+            in>>json;
+            //тут дальнейший функционал
             //пока это)
-            qDebug() << socketDescriptor << " Data in: " << str;
-            SendToClient("получил)");
+
             nextBlockSize=0;
             break;
         }
@@ -73,12 +73,12 @@ void MyThread::readyRead()
         qDebug()<<"Все пошло по одному месту";
     }
 }
-void MyThread::SendToClient(QString str){
+void MyThread::SendToClient(QJsonObject json){
 
     Data.clear();
     QDataStream out(&Data,QIODevice::WriteOnly);
     out.setVersion(QDataStream::Qt_6_2);
-    out<<quint16(0)<<str;
+    out<<quint16(0)<<json;
     out.device()->seek(0);
     out<<quint16(Data.size()-sizeof(quint16));
     socket->write(Data);

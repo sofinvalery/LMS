@@ -4,7 +4,7 @@
 #include <QThread>
 #include <QTcpSocket>
 #include <QDebug>
-
+#include<QJsonObject>
 class MyThread : public QThread
 {
     Q_OBJECT
@@ -19,7 +19,7 @@ signals:
 public slots:
     void readyRead();
     void disconnected();
-    void SendToClient(QString);
+    void SendToClient(QJsonObject);
 private:
     QTcpSocket *socket;
     qintptr socketDescriptor;

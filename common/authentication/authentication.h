@@ -19,7 +19,8 @@ class Authentication : public QObject
     Q_OBJECT
 public:
     /*Создается при входе на портал выступает для аутенфикации*/
-    explicit Authentication(QString login, QString password,QObject *parent = nullptr);
+    explicit Authentication(QString login, QString password,QString fio="",QString urlAvatar="",
+                            EnumRoles role=USER,bool isAuthenticated=false, QObject *parent = nullptr);
     //используется при преходе ответа с сервера и заполняет данные
 
 signals:
@@ -30,14 +31,12 @@ private:
     QString fio;
     QString urlAvatar;
     EnumRoles role;
-    int32_t tokenAuthentication;
     bool isAuthenticated;
    public slots:
     void SetInformationAfterAuthentication(
         QString fio,
         QString url_avatar,
-        EnumRoles role,
-        int32_t token_authentication);
+        EnumRoles role);
        bool IsAuthenticated(){
            return isAuthenticated;
        }
@@ -50,8 +49,8 @@ private:
        QString GetUrlAvatar(){
            return urlAvatar;
        }
-       QJsonObject SerializeForAuthentication();
-       void DeserializeAfterAuthFromServer(QJsonObject jsonObj);
+       QJsonObject Serialize();
+       static Authentication* Deserialize(QJsonObject jsonObj);
 };
 
 #endif // AUTHENTICATION_H

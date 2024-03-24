@@ -4,7 +4,7 @@
 
 CourseTest::CourseTest(int32_t id, int32_t order, QString title, int32_t maxMark,
                        QString urlJson, int32_t timeInSeconds, int32_t verdict,
-                       QString notes, QList<Question*> listQuestions, QObject *parent)
+                       QString notes,QDate time, QList<Question*> listQuestions, QObject *parent)
     :CourseComponent(id,order,parent)
 {
     this->title=title;
@@ -14,6 +14,7 @@ CourseTest::CourseTest(int32_t id, int32_t order, QString title, int32_t maxMark
     this->verdict=verdict;
     this->notes=notes;
     this->listQuestions=listQuestions;
+    this->time=time;
 }
 
 QString CourseTest::getTitle() const
@@ -61,6 +62,7 @@ QJsonObject CourseTest::Serialize()
     json["timeInSeconds"]= timeInSeconds;
     json["notes"]= notes;
     json["urlJson"]=urlJson;
+    json["time"]=time.toString();
     json["verdict"]= verdict;
     QJsonObject main;
     main["CourseTest"]=json;
@@ -70,10 +72,12 @@ QJsonObject CourseTest::Serialize()
 CourseTest* CourseTest::Deserialize(QJsonObject json)
 {
     QJsonObject jsonObj=json["CourseTest"].toObject();
+    QDate solutionTime;
+    solutionTime.fromString(jsonObj["time"].toString(),"dd/MM/YYYY");
     return new CourseTest(jsonObj["id"].toInt(),jsonObj["order"].toInt(),
                      jsonObj["title"].toString(),jsonObj["maxMark"].toInt(),
                      jsonObj["urlJson"].toString(),jsonObj["timeInSeconds"].toInt(),
-                      jsonObj["verdict"].toInt(),jsonObj["notes"].toString());
+                      jsonObj["verdict"].toInt(),jsonObj["notes"].toString(),solutionTime);
 }
 
 QJsonObject CourseTest::SerializeQuestionList()
@@ -95,6 +99,11 @@ void CourseTest::DeserializeQuestionList(QJsonObject jsonObj)
     QJsonArray questions=jsonObj["listQuestions"].toArray();
     for(int i=0;i<questions.size();i++)
         listQuestions.append(Question::Deserialize(questions[i].toObject()));
+}
+
+QDate CourseTest::getTime() const
+{
+    return time;
 }
 
 //по нажатию тут передадим данные в новую форму запрос к серверу и т.д

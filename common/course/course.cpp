@@ -2,13 +2,19 @@
 
 
 
-Course::Course(int32_t id, QString title, QString avaUrl, QDate start, QDate end, QObject *parent): QObject{parent}
+Course::Course(int32_t id, QString title, QString avaUrl, QDate start, QDate end,int32_t sumpoints, QObject *parent): QObject{parent}
 {
     this->id=id;
     this->title=title;
     this->avaTitleUrl=avaUrl;
     this->startTime=start;
     this->endTime=end;
+    this->sumpoints=sumpoints;
+}
+
+int32_t Course::getSumpoints() const
+{
+    return sumpoints;
 }
 
 QList<CourseComponent *> Course::getListComponents() const
@@ -55,7 +61,7 @@ Course Course::Deserialize(QJsonObject jsonObj)
     start.fromString(jsonObj["startTime"].toString(),"dd/MM/YYYY");
     QDate end;
     end.fromString(jsonObj["endTime"].toString(),"dd/MM/YYYY");
-    return Course(jsonObj["id"].toInt(),jsonObj["title"].toString(),jsonObj["avaTitleUrl"].toString(),start,end);
+    return Course(jsonObj["id"].toInt(),jsonObj["title"].toString(),jsonObj["avaTitleUrl"].toString(),start,end,jsonObj["sumpoints"].toInt());
 }
 
 QJsonObject Course::Serialize()
@@ -66,6 +72,7 @@ QJsonObject Course::Serialize()
     json["avaTitleUrl"]=avaTitleUrl;
     json["startTime"]= startTime.toString();
     json["endTime"]= endTime.toString();
+    json["sumpoints"]=sumpoints;
     return json;
 }
 //сделать тут обработку события нажатия на иконку курса для главной страницы
