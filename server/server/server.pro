@@ -1,6 +1,7 @@
 QT += core
 QT += network
 QT += widgets
+QT += sql
 CONFIG += c++17 cmdline console
 # You can make your code fail to compile if it uses deprecated APIs.
 # In order to do so, uncomment the following line.
@@ -15,6 +16,7 @@ SOURCES += \
         ../../common/course/course_components/coursetutorials.cpp \
         ../../common/course/course_components/coursevideos.cpp \
         ../../common/course/course_components/question.cpp \
+        database/databaseManager.cpp \
         jsonManager/jsonmaneger.cpp \
         main.cpp \
         server/myserver.cpp \
@@ -36,6 +38,7 @@ HEADERS += \
     ../../common/course/course_components/coursevideos.h \
     ../../common/course/course_components/question.h \
     ../../common/transferEnum/transferEnum.h \
+    database/databaseManager.h \
     jsonManager/jsonmaneger.h \
     server/myserver.h \
     server/mythread.h

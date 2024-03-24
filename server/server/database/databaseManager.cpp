@@ -1,6 +1,6 @@
 #include "databasemanager.h"
-#include "/Users/valeriysofin/Developer/LMS/common/authentication/authentication.h"
-#include "course.h"
+#include "../../common/authentication/authentication.h"
+#include "../../common/course/course.h"
 
 DatabaseManager* DatabaseManager::s_Instance = nullptr;
 
