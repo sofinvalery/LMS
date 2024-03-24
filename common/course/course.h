@@ -12,7 +12,6 @@
 #include "course_components/coursetest.h"
 #include "course_components/coursetutorials.h"
 #include "course_components/coursevideos.h"
-#include "ClientManager/clientmanager.h"
 class Course : public QObject
 {
     Q_OBJECT

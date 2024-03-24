@@ -4,6 +4,8 @@
 #include <QObject>
 #include <QTcpSocket>
 #include<QJsonObject>
+#include "../common/transferEnum/transferEnum.h"
+
 class ClientManager : public QObject
 {
     Q_OBJECT
@@ -25,7 +27,7 @@ private slots:
 
 public:
     static ClientManager* GetInstance() { return s_Instance = (s_Instance != nullptr ? s_Instance : new ClientManager()); }
-
+    void Send(TransferEnum e, QJsonObject json);
 signals:
     //если нужен будет другой тип возвращаемого значения поменяем
     void Readed(QJsonObject);

@@ -70,3 +70,11 @@ void ClientManager::SendToServer(QJsonObject json)
     out<<quint16(Data.size()-sizeof(quint16));
     socket->write(Data);
 }
+
+void ClientManager::Send(TransferEnum e, QJsonObject json)
+{
+    QJsonObject sendJson;
+    sendJson["Action"]=e;
+    sendJson["Data"]=json;
+    SendToServer(sendJson);
+}

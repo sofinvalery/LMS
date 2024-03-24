@@ -5,6 +5,8 @@
 #include <QTcpSocket>
 #include <QDebug>
 #include<QJsonObject>
+#include "../../common/authentication/authentication.h"
+
 class MyThread : public QThread
 {
     Q_OBJECT
@@ -25,6 +27,7 @@ private:
     qintptr socketDescriptor;
     quint16 nextBlockSize=0;
     QByteArray Data;
+    Authentication* auth = nullptr;
 };
 
 #endif // MYTHREAD_H

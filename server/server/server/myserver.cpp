@@ -12,11 +12,11 @@ void MyServer::startServer()
 
     if(!this->listen(QHostAddress::Any,port))
     {
-        qDebug() << "Could not start server";
+        qInfo() << "Could not start server";
     }
     else
     {
-        qDebug() << "Listening to port " << port << "...";
+        qInfo() << "Listening to port " << port << "...";
     }
 }
 
