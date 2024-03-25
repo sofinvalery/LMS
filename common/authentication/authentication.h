@@ -23,6 +23,8 @@ public:
                             EnumRoles role=USER,bool isAuthenticated=false, QObject *parent = nullptr);
     //используется при преходе ответа с сервера и заполняет данные
 
+    void setIsAuthenticated(bool newIsAuthenticated);
+
 signals:
 
 private:

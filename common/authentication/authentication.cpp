@@ -12,6 +12,11 @@ Authentication::Authentication(QString login, QString password, QString fio, QSt
     this->isAuthenticated=isAuthenticated;
 }
 
+void Authentication::setIsAuthenticated(bool newIsAuthenticated)
+{
+    isAuthenticated = newIsAuthenticated;
+}
+
 void Authentication:: SetInformationAfterAuthentication(
                                                   QString fio,
                                                   QString url_avatar,

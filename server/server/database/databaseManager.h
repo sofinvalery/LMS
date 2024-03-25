@@ -10,18 +10,32 @@
 #include <QtSql/QSqlQuery>
 #include <QtSql/QSqlRecord>
 #include <QSqlQuery>
+#include "../../common/authentication/authentication.h"
+#include "../../common/course/course.h"
+#include "../../common/course/course_components/coursetest.h"
+
 
 class DatabaseManager {
 public:
     static DatabaseManager* getInstance();
+    //функции выполняющие запросы
+    QList<Course*> Login(Authentication* auth);
+    QList<Course*> Getmainpage(Authentication* auth);
+    Course* GetCourseComponents(int32_t courseId);
+    CourseTest* GetTestQuestion(int32_t testId);
+    //bool SetNewGroupStudents(QList<Authentication*> listAuths, .....) //тут будет еще что то потом придумаю
+    //тут скорее всего будет не bool я еще почитаю как лучше реализовать обновление этих штук
+    bool SetNewTest(CourseTest* test);
+    bool SetNewCourse(Course* course);
+
+
+private:
     ~DatabaseManager();
 
     bool createConnection();
     QSqlQuery executeQuery(const QString& query);
     QVariant getScalarValue(const QString& query);
     QList<QVariantMap> getQueryResults(const QString& query);
-
-private:
     DatabaseManager();
     DatabaseManager(const DatabaseManager&) = delete;
     DatabaseManager& operator=(const DatabaseManager&) = delete;
