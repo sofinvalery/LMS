@@ -1,19 +1,23 @@
 #include "databasemanager.h"
+#include "../../common/authentication/authentication.h"
 
 
 QList<Course*> DatabaseManager::Login(Authentication* auth) {
     QSqlQuery query;
     query.prepare("");
 
-    // Bind parameters
     query.bindValue(":login", auth->GetLogin());
     query.bindValue(":password", auth->GetPassword());
 
-    // Execute the query
     QVariant userId = getScalarValue(query.executedQuery());
     QList<Course*> courses;
     if (userId.isValid()) {
 
+        QString fullName = query.value("full_name").toString();
+        QString avatarUrl = query.value("avatar_url").toString();
+        EnumRoles userRole = EnumRoles(query.value("role").toInt());
+
+        auth->SetInformationAfterAuthentication(fullName, avatarUrl, userRole);
 
         QSqlQuery courseQuery;
         courseQuery.prepare("");
@@ -37,3 +41,27 @@ QList<Course*> DatabaseManager::Login(Authentication* auth) {
         return courses;
     }
 }
+
+QList<Course*> DatabaseManager::GetMainPage(Authentication* auth) {
+    QSqlQuery query;
+    query.prepare("");
+
+    QList<Course*> courses;
+    QSqlQuery result = executeQuery(query.executedQuery());
+
+    while (result.next()) {
+        int courseId = result.value("id").toInt();
+        QString title = result.value("title").toString();
+        QString avaUrl = result.value("avaUrl").toString();
+        QDate start = result.value("start").toDate();
+        QDate end = result.value("end").toDate();
+        int sumpoints = result.value("sumpoints").toInt();
+
+        Course* course = new Course(courseId, title, avaUrl, start, end, sumpoints);
+        courses.append(course);
+    }
+
+    return courses;
+}
+
+

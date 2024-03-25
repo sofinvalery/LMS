@@ -20,7 +20,7 @@ public:
     static DatabaseManager* getInstance();
     //функции выполняющие запросы
     QList<Course*> Login(Authentication* auth);
-    QList<Course*> Getmainpage(Authentication* auth);
+    QList<Course*> GetMainPage(Authentication* auth);
     Course* GetCourseComponents(int32_t courseId);
     CourseTest* GetTestQuestion(int32_t testId);
     //bool SetNewGroupStudents(QList<Authentication*> listAuths, .....) //тут будет еще что то потом придумаю

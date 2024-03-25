@@ -26,7 +26,7 @@ void Authentication:: SetInformationAfterAuthentication(
     this->role=role;
     this->isAuthenticated=true;
 }
-QJsonObject Authentication:: Serialize(){
+QJsonObject Authentication:: Serialize() {
     QJsonObject json;
     json["login"]=login;
     QByteArray salt,log;
