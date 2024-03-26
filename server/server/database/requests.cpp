@@ -16,12 +16,13 @@ QList<Course*> DatabaseManager::Login(Authentication* auth) {
         QString fullName = query.value("full_name").toString();
         QString avatarUrl = query.value("avatar_url").toString();
         EnumRoles userRole = EnumRoles(query.value("role").toInt());
+        int32_t userId = query.value("id").toInt();
 
-        auth->SetInformationAfterAuthentication(fullName, avatarUrl, userRole);
+        auth->SetInformationAfterAuthentication(fullName, avatarUrl, userRole, userId);
 
-        QSqlQuery courseQuery;
+        /*QSqlQuery courseQuery;
         courseQuery.prepare("");
-        courseQuery.bindValue(":userId", userId.toInt());
+        courseQuery.bindValue(":userId", (int32_t )userId.toInt());
         QSqlQuery result = executeQuery(courseQuery.executedQuery());
 
         while (result.next()) {
@@ -38,7 +39,8 @@ QList<Course*> DatabaseManager::Login(Authentication* auth) {
         return courses;
     } else {
         auth->setIsAuthenticated(false);
-        return courses;
+        return courses;*/
+        return GetMainPage(auth);
     }
 }
 
