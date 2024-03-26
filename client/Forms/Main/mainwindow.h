@@ -2,6 +2,11 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+<<<<<<< Updated upstream
+=======
+#include "Forms/MyWidget/mywidget.h"
+
+>>>>>>> Stashed changes
 QT_BEGIN_NAMESPACE
 namespace Ui {
 class MainWindow;
@@ -15,10 +20,16 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
+<<<<<<< Updated upstream
+=======
+
+
+>>>>>>> Stashed changes
 private slots:
     void on_pushButton_clicked();
 
 private:
     Ui::MainWindow *ui;
+    MyWidget * course[25];
 };
 #endif // MAINWINDOW_H

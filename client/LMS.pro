@@ -18,6 +18,7 @@ SOURCES += \
     ClientManager/clientmanager.cpp \
     Forms/Auth/auth.cpp \
     Forms/Main/mainwindow.cpp \
+    Forms/MyWidget/mywidget.cpp \
     main.cpp  \
     ../common/course/course_components/coursevideos.cpp \
     ../common/course/course_components/question.cpp
@@ -36,10 +37,12 @@ HEADERS += \
     Forms/Main/mainwindow.h  \
     ../common/course/course_components/coursevideos.h \
     ../common/course/course_components/question.h \
+    Forms/MyWidget/mywidget.h
 
 FORMS += \
     Forms/Auth/auth.ui \
-    Forms/Main/mainwindow.ui
+    Forms/Main/mainwindow.ui \
+    Forms/MyWidget/mywidget.ui
 
 
 # Default rules for deployment.
