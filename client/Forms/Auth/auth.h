@@ -2,6 +2,7 @@
 #define AUTH_H
 
 #include <QDialog>
+#include <QFontDatabase>
 
 namespace Ui {
 class Auth;
@@ -19,7 +20,6 @@ public:
 
 private slots:
     void on_pushButton_clicked();
-
 
 private:
     Ui::Auth *ui;

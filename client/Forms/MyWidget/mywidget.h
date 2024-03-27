@@ -15,7 +15,6 @@ class MyWidget : public QWidget
 public:
     explicit MyWidget(QWidget *parent = nullptr);
     ~MyWidget();
-
 private:
     Ui::MyWidget *ui;
 };

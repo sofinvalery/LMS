@@ -7,19 +7,19 @@
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    Auth b;
-    MainWindow* w = nullptr;
+    Auth auth;
+    MainWindow* mainwindow = nullptr;
     SocketParser::GetInstance();
 
-    b.setModal(true);
-    b.exec();
-    if (b.authstatus == 1){
-        w = new MainWindow;
+    auth.setModal(true);
+    auth.exec();
+    if (auth.authstatus == 1){
+        mainwindow = new MainWindow;
         //QWidget* m_widget = new MyWidget(w);
-        w->showFullScreen();
+        mainwindow->showFullScreen();
         //m_widget->show();
     }
-    if (b.exit && b.authstatus != 1){
+    if (auth.exit && auth.authstatus != 1){
 
         return 0;
     }
