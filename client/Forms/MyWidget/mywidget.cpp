@@ -8,11 +8,11 @@ MyWidget::MyWidget(QWidget *parent)
 {
     ui->setupUi(this);
     //QWidget::setSizePolicy(QSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed));
-    QPixmap pixmap("kapipng.png");
-    QIcon ButtonIcon(pixmap);
+    //QPixmap pixmap("kapipng.png");
+    //QIcon ButtonIcon(pixmap);
 
-    ui->CourseButtonIMG->setIcon(pixmap);
-    ui->CourseButtonIMG->setIconSize(pixmap.rect().size());
+    ui->CourseButtonIMG->setIcon(QIcon(":/img/resources/kap.jpg"));
+    //ui->CourseButtonIMG->setIconSize(pixmap.rect().size());
 }
 
 MyWidget::~MyWidget()
