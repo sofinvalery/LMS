@@ -1,8 +1,8 @@
 #include "authentication.h"
 
 
-Authentication::Authentication(int32_t id,QString login, QString password, QString fio, QString urlAvatar,
-                               EnumRoles role,bool isAuthenticated, QObject *parent):QObject(parent)
+Authentication::Authentication(QString login, QString password,int32_t id, QString fio, QString urlAvatar,
+                               EnumRoles role, QList<QString> groups, bool isAuthenticated, QObject *parent):QObject(parent)
 {
     this->login=login;
     this->id=id;
@@ -11,6 +11,7 @@ Authentication::Authentication(int32_t id,QString login, QString password, QStri
     this->urlAvatar=urlAvatar;
     this->role=role;
     this->isAuthenticated=isAuthenticated;
+    this->groups=groups;
 }
 
 void Authentication::setIsAuthenticated(bool newIsAuthenticated)
@@ -31,12 +32,14 @@ int32_t Authentication::getId() const
 void Authentication:: SetInformationAfterAuthentication(
                                                   QString fio,
                                                   QString url_avatar,
-                                                  EnumRoles role,int32_t id){
+                                                  EnumRoles role,
+                                                  int32_t id, QList<QString> group){
     this->fio=fio;
     this->urlAvatar=url_avatar;
     this->role=role;
     this->id=id;
     this->isAuthenticated=true;
+    this->groups=group;
 }
 QJsonObject Authentication:: Serialize() {
     QJsonObject json;
@@ -51,12 +54,21 @@ QJsonObject Authentication:: Serialize() {
     json["urlAvatar"]=urlAvatar;
     json["role"]=role;
     json["isAuthenticated"]=isAuthenticated;
+    QJsonArray gr;
+    for(auto & g : groups)
+        gr.append(g);
+    json["groups"]=gr;
     return json;
 }
 
 Authentication* Authentication::Deserialize(QJsonObject jsonObj){
-    return new Authentication(jsonObj["id"].toInt(),jsonObj["login"].toString(),jsonObj["password"].toString(),
-                              jsonObj["fio"].toString(),jsonObj["urlAvatar"].toString(),
-                              (EnumRoles)jsonObj["role"].toInt(),jsonObj["isAuthenticated"].toBool());
+    QJsonArray gr=jsonObj["groups"].toArray();
+    QList<QString> list;
+    for(int i=0;i<gr.size();i++)
+        list.append(gr[i].toString());
+    return new Authentication(jsonObj["login"].toString(),jsonObj["password"].toString(),
+                              jsonObj["id"].toInt(),jsonObj["fio"].toString(),
+                              jsonObj["urlAvatar"].toString(), (EnumRoles)jsonObj["role"].toInt(),
+                              list, jsonObj["isAuthenticated"].toBool());
 }
 

@@ -6,7 +6,7 @@
 #include <QJsonDocument>
 #include <QPasswordDigestor>
 #include <QCryptographicHash>
-
+#include <QJsonArray>
 
 enum EnumRoles{
     ADMIN=0,
@@ -19,8 +19,8 @@ class Authentication : public QObject
     Q_OBJECT
 public:
     /*Создается при входе на портал выступает для аутенфикации*/
-    explicit Authentication(int32_t id,QString login, QString password,QString fio="",QString urlAvatar="",
-                            EnumRoles role=USER,bool isAuthenticated=false, QObject *parent = nullptr);
+    explicit Authentication(QString login, QString password,int32_t id=0,QString fio="",QString urlAvatar="",
+                            EnumRoles role=USER, QList<QString> groups=QList<QString>(), bool isAuthenticated=false, QObject *parent = nullptr);
     //используется при преходе ответа с сервера и заполняет данные
 
     void setIsAuthenticated(bool newIsAuthenticated);
@@ -39,12 +39,14 @@ private:
     EnumRoles role;
     bool isAuthenticated;
     int32_t id;
+    QList<QString> groups;
    public slots:
     void SetInformationAfterAuthentication(
         QString fio,
         QString url_avatar,
         EnumRoles role,
-           int32_t id);
+           int32_t id,
+           QList<QString> groups);
        bool IsAuthenticated(){
            return isAuthenticated;
        }

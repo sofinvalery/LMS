@@ -17,6 +17,8 @@ void SocketParser::socketparse(QJsonObject json)
     switch(e){
     case LOGINING: logining(data);
         break;
+    case GETMAINPAGE: getMainPage(data);
+        break;
     }
 }
 
@@ -28,6 +30,17 @@ void SocketParser::logining(QJsonObject json)
     for(qsizetype i=0;i<components.size();i++)
         list.append(Course::Deserialize(components[i].toObject()));
     ClientState::GetInstance()->setListCourses(list);
+    emit logined();
+}
+
+void SocketParser::getMainPage(QJsonObject json)
+{
+    QJsonArray components=json.value("CourseList").toArray();
+    QList<Course*> list;
+    for(qsizetype i=0;i<components.size();i++)
+        list.append(Course::Deserialize(components[i].toObject()));
+    ClientState::GetInstance()->setListCourses(list);
+    emit getMainPage();
 }
 
 
