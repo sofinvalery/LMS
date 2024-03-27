@@ -6,6 +6,8 @@
 #include "../../common/authentication/authentication.h"
 #include "../../common/course/course.h"
 #include "../../common/course/course_components/coursetutorials.h"
+#include "../database/databaseManager.h"
+
 QJsonObject jsonManager(QJsonObject json,Authentication *auth);
 
 static QJsonObject logining(QJsonObject json,Authentication *auth);
@@ -22,16 +24,8 @@ static QJsonObject setNewTest(QJsonObject json,Authentication *auth);
 
 static QJsonObject setNewCourse(QJsonObject json,Authentication *auth);
 
-typedef QJsonObject (*Action)(QJsonObject,Authentication *auth);
 
-static Action Actions[] ={
-    [LOGINING] = logining,
-    [GETMAINPAGE] = getMainPage,
-    [GETCOURSECOMPONENTS] = getCourseComponents,
-    [GETTESTQUESTION] = getTestQuestions,
-    [SETNEWGROUPSTUDENTS] = setNewGroupStudents,
-    [SETNEWTEST] = setNewTest,
-    [SETNEWCOURSE] = setNewCourse
-};
+
+
 
 #endif // JSONMANEGER_H

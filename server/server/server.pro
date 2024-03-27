@@ -2,6 +2,7 @@ QT += core
 QT += network
 QT += widgets
 QT += sql
+QT += concurrent
 CONFIG += c++17 cmdline console
 # You can make your code fail to compile if it uses deprecated APIs.
 # In order to do so, uncomment the following line.
@@ -20,8 +21,8 @@ SOURCES += \
         database/requests.cpp \
         jsonManager/jsonmaneger.cpp \
         main.cpp \
-        server/myserver.cpp \
-        server/mythread.cpp
+        server/client.cpp \
+        server/myserver.cpp
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
@@ -41,5 +42,5 @@ HEADERS += \
     ../../common/transferEnum/transferEnum.h \
     database/databaseManager.h \
     jsonManager/jsonmaneger.h \
-    server/myserver.h \
-    server/mythread.h
+    server/client.h \
+    server/myserver.h

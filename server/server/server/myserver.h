@@ -2,21 +2,46 @@
 #define MYSERVER_H
 
 #include <QTcpServer>
-#include "mythread.h"
+#include "client.h"
+#include<QThread>
 
-class MyServer : public QTcpServer
+
+class Worker: public QObject
 {
     Q_OBJECT
-public:
-    explicit MyServer(QObject *parent = 0);
-    void startServer();
-signals:
 
-public slots:
+public:
+
+    Q_INVOKABLE void addClient(qintptr socketDescriptor);
+};
+
+
+
+
+class Server: public QTcpServer
+{
+    Q_OBJECT
+
+public:
+    void startServer();
+    Server(size_t threads = 4, QObject * parent = nullptr);
+    ~Server();
 
 protected:
-    void incomingConnection(qintptr socketDescriptor);
 
+    virtual void incomingConnection(qintptr socketDescriptor);
+
+private:
+
+    void initThreads();
+
+private:
+
+    size_t m_threadCount;
+
+    QVector<QThread*> m_threads;
+    QVector<Worker*> m_workers;
+    size_t m_rrcounter;
 };
 
 #endif // MYSERVER_H
