@@ -17,7 +17,9 @@ QList<Course*> DatabaseManager::Login(Authentication* auth) {
         QString avatarUrl = query.value("avatar_url").toString();
         EnumRoles userRole = EnumRoles(query.value("role").toInt());
         int32_t userId = query.value("id").toInt();
-
+    //достань список групп в которых состоит пользователь
+    //теперь в SetInformationAfterAuthentication надо еще его добавить
+    //можно подумать сделать это в другом прайвет методе мало ли может еще где понадобиться
         auth->SetInformationAfterAuthentication(fullName, avatarUrl, userRole, userId);
 
         /*QSqlQuery courseQuery;
