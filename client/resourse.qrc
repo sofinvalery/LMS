@@ -3,8 +3,6 @@
         <file>resources/kap.jpg</file>
     </qresource>
     <qresource prefix="/font">
-        <file>resources/futuraround-bold.ttf</file>
-        <file>resources/futuraround.ttf</file>
         <file>resources/Comfortaa-Bold.ttf</file>
         <file>resources/Comfortaa-Regular.ttf</file>
     </qresource>
