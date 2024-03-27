@@ -16,6 +16,8 @@ SOURCES += \
     ../common/course/course_components/coursetest.cpp \
     ../common/course/course_components/coursetutorials.cpp \
     ClientManager/clientmanager.cpp \
+    ClientManager/socketparser.cpp \
+    ClientState/clientstate.cpp \
     Forms/Auth/auth.cpp \
     Forms/Main/mainwindow.cpp \
     Forms/MyWidget/mywidget.cpp \
@@ -33,6 +35,8 @@ HEADERS += \
     ../common/course/course_components/coursetutorials.h \
     ../common/transferEnum/transferEnum.h \
     ClientManager/clientmanager.h \
+    ClientManager/socketparser.h \
+    ClientState/clientstate.h \
     Forms/Auth/auth.h \
     Forms/Main/mainwindow.h  \
     ../common/course/course_components/coursevideos.h \

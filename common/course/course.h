@@ -35,7 +35,7 @@ public:
 
     void DeserializeListComponents(QJsonObject jsonObj);
 
-    static Course Deserialize(QJsonObject jsonObj);
+    static Course* Deserialize(QJsonObject jsonObj);
 
     QJsonObject Serialize();
 

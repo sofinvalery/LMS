@@ -1,10 +1,11 @@
 #include "authentication.h"
 
 
-Authentication::Authentication(QString login, QString password, QString fio, QString urlAvatar,
+Authentication::Authentication(int32_t id,QString login, QString password, QString fio, QString urlAvatar,
                                EnumRoles role,bool isAuthenticated, QObject *parent):QObject(parent)
 {
     this->login=login;
+    this->id=id;
     this->password=password;
     this->fio=fio;
     this->urlAvatar=urlAvatar;
@@ -17,13 +18,24 @@ void Authentication::setIsAuthenticated(bool newIsAuthenticated)
     isAuthenticated = newIsAuthenticated;
 }
 
+void Authentication::setId(int32_t newId)
+{
+    id = newId;
+}
+
+int32_t Authentication::getId() const
+{
+    return id;
+}
+
 void Authentication:: SetInformationAfterAuthentication(
                                                   QString fio,
                                                   QString url_avatar,
-                                                  EnumRoles role){
+                                                  EnumRoles role,int32_t id){
     this->fio=fio;
     this->urlAvatar=url_avatar;
     this->role=role;
+    this->id=id;
     this->isAuthenticated=true;
 }
 QJsonObject Authentication:: Serialize() {
@@ -35,6 +47,7 @@ QJsonObject Authentication:: Serialize() {
         salt.append(log[(i/3)%(log.size()-1)]);
     json["password"]=(QString)QPasswordDigestor::deriveKeyPbkdf2(QCryptographicHash::Algorithm::Sha3_512,log,salt,10000,64);
     json["fio"]=fio;
+    json["id"]=id;
     json["urlAvatar"]=urlAvatar;
     json["role"]=role;
     json["isAuthenticated"]=isAuthenticated;
@@ -42,7 +55,7 @@ QJsonObject Authentication:: Serialize() {
 }
 
 Authentication* Authentication::Deserialize(QJsonObject jsonObj){
-    return new Authentication(jsonObj["login"].toString(),jsonObj["password"].toString(),
+    return new Authentication(jsonObj["id"].toInt(),jsonObj["login"].toString(),jsonObj["password"].toString(),
                               jsonObj["fio"].toString(),jsonObj["urlAvatar"].toString(),
                               (EnumRoles)jsonObj["role"].toInt(),jsonObj["isAuthenticated"].toBool());
 }

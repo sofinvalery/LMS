@@ -95,6 +95,8 @@ QJsonObject CourseTest::SerializeQuestionList()
 
 void CourseTest::DeserializeQuestionList(QJsonObject jsonObj)
 {
+    for(auto temp:listQuestions)
+        delete temp;
     listQuestions.clear();
     QJsonArray questions=jsonObj["listQuestions"].toArray();
     for(int i=0;i<questions.size();i++)

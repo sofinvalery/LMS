@@ -14,6 +14,8 @@ ClientManager::ClientManager(QObject *parent)
     port=1234;
     hostName="127.0.0.1";
     socket->connectToHost(hostName,port);
+    qInfo() << "connection to server";
+
 }
 
 void ClientManager::slotReadyRead()

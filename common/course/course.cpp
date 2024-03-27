@@ -37,6 +37,8 @@ QJsonObject Course::SerializeListComponents()
 //тут надо прям потестить будет хорошо
 void Course::DeserializeListComponents(QJsonObject jsonObj)
 {
+    for(auto temp:listComponents)
+        delete temp;
     listComponents.clear();
     QJsonArray questions=jsonObj["listComponents"].toArray();
     for(int i=0;i<questions.size();i++)
@@ -55,13 +57,13 @@ void Course::DeserializeListComponents(QJsonObject jsonObj)
     }
 }
 
-Course Course::Deserialize(QJsonObject jsonObj)
+Course* Course::Deserialize(QJsonObject jsonObj)
 {
     QDate start;
     start.fromString(jsonObj["startTime"].toString(),"dd/MM/YYYY");
     QDate end;
     end.fromString(jsonObj["endTime"].toString(),"dd/MM/YYYY");
-    return Course(jsonObj["id"].toInt(),jsonObj["title"].toString(),jsonObj["avaTitleUrl"].toString(),start,end,jsonObj["sumpoints"].toInt());
+    return new Course(jsonObj["id"].toInt(),jsonObj["title"].toString(),jsonObj["avaTitleUrl"].toString(),start,end,jsonObj["sumpoints"].toInt());
 }
 
 QJsonObject Course::Serialize()

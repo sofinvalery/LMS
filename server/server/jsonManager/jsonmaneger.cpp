@@ -29,8 +29,11 @@ QJsonObject logining(QJsonObject json,Authentication *auth)
     QJsonArray components;
     for (auto & user : list)
         components.append(user->Serialize());
-    sendjson["Authentication"]=auth->Serialize();
-    sendjson["CourseList"]=components;
+    sendjson["Action"]=LOGINING;
+    QJsonObject temp;
+    temp["Authentication"]=auth->Serialize();
+    temp["CourseList"]=components;
+    sendjson["Data"]=temp;
     return sendjson;
 }
 
