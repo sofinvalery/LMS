@@ -2,7 +2,7 @@
 #define AUTH_H
 
 #include <QDialog>
-#include <QFontDatabase>
+#include "FontManager/fontmanager.h"
 
 namespace Ui {
 class Auth;

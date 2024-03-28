@@ -10,6 +10,10 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    //this->setStyleSheet("background-color: white;");
+    //ui->groupBox->setStyleSheet("background-color: white;");
+    //ui->scrollArea->setStyleSheet("background-color: white;");
+
     QScreen* scr = QGuiApplication::primaryScreen();
     this->resize( scr->availableGeometry().width(), scr->availableGeometry().height());
     ui->scrollArea->setWidgetResizable(true);
@@ -30,7 +34,6 @@ MainWindow::MainWindow(QWidget *parent)
     ui->gridLayout->setHorizontalSpacing(65);
     //ui->gridLayout->setContentsMargins(0,0,0,0);
     //ui->gridLayout->setGeometry(this->frameGeometry());
-
     for (int i = 0, j = 0, z = 0; z < arrlen; z++, j++){
         course[z] = new MyWidget();
         if (z % 4 == 0){

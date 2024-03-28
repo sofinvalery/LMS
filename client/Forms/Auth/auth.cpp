@@ -10,26 +10,19 @@ Auth::Auth(QWidget *parent)
     this->setWindowTitle("mOdle");
     this->setStyleSheet("background-color: white;");
     this->setFixedSize(this->size());
-    //загрузка шрифта
-    int fontIdBold = QFontDatabase::addApplicationFont(":/font/resources/Comfortaa-Bold.ttf");
-    QString fontBold = QFontDatabase::applicationFontFamilies(fontIdBold).at(0);
-
-    // int fontIdRegular = QFontDatabase::addApplicationFont(":/font/resources/Comfortaa-Regular.ttf");
-    // QString fontRegular = QFontDatabase::applicationFontFamilies(fontIdRegular).at(0);
-
     //groupbox
-    ui->groupBox->setFont(fontBold);
+    ui->groupBox->setFont(FontManager::GetInstance()->getBold());
     ui->groupBox->setStyleSheet("QGroupBox { border: none; }");
     //errorbox
+    ui->errorbox->setFont(FontManager::GetInstance()->getBold());
     ui->errorbox->setStyleSheet(
         "QLabel {"
         "qproperty-alignment: AlignCenter;"
         "color: red;"
         "font-size: 14px;"
         "}");
-    ui->errorbox->setFont(fontBold);
     //labelAuth
-    ui->labelAuth->setFont(fontBold);
+    ui->labelAuth->setFont(FontManager::GetInstance()->getBold());
     ui->labelAuth->setStyleSheet(
         "QLabel {"
         "qproperty-alignment: AlignCenter;"
@@ -58,7 +51,7 @@ Auth::Auth(QWidget *parent)
         );
     //дизайн кнопки
     ui->pushButton->setCursor(Qt::PointingHandCursor);
-    ui->pushButton->setFont(fontBold);
+    ui->pushButton->setFont(FontManager::GetInstance()->getBold());
     ui->pushButton->setStyleSheet(
         "QPushButton {"
         "background-color: #2194DE;"
