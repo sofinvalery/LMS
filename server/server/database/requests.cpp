@@ -45,8 +45,9 @@ QList<Course*> DatabaseManager::GetMainPage(Authentication* auth) {
         QDate start = result.value("start_time").toDate();
         QDate end = result.value("end_time").toDate();
         int sumpoints = 0;
+        int maxSumpoints=0;
 
-        Course* course = new Course(courseId, title, avaUrl, start, end, sumpoints);
+        Course* course = new Course(courseId, title, avaUrl, start, end, sumpoints,maxSumpoints);
         courses.append(course);
     }
 

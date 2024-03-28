@@ -16,7 +16,8 @@ class Course : public QObject
 {
     Q_OBJECT
 public:
-    explicit Course(int32_t id, QString title, QString avaUrl, QDate start, QDate end,int32_t sumpoints=0,QObject *parent = nullptr);
+    explicit Course(int32_t id, QString title, QString avaUrl, QDate start, QDate end,
+                    int32_t sumpoints,int32_t maxSumpoints,QObject *parent = nullptr);
 private:
     int32_t id;
     QString title;
@@ -24,6 +25,7 @@ private:
     QDate startTime;
     QDate endTime;
     int32_t sumpoints;
+    int32_t maxSumpoints;
     QList<CourseComponent*> listComponents = QList<CourseComponent*>();
 public:
 
@@ -54,6 +56,8 @@ public:
     QList<CourseComponent *> getListComponents() const;
 
     int32_t getSumpoints() const;
+
+    int32_t getMaxSumpoints() const;
 
 public slots:
     void ClickIcon();

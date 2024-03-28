@@ -2,7 +2,8 @@
 
 
 
-Course::Course(int32_t id, QString title, QString avaUrl, QDate start, QDate end,int32_t sumpoints, QObject *parent): QObject{parent}
+Course::Course(int32_t id, QString title, QString avaUrl, QDate start, QDate end,
+               int32_t sumpoints,int32_t maxSumpoints, QObject *parent): QObject{parent}
 {
     this->id=id;
     this->title=title;
@@ -10,6 +11,12 @@ Course::Course(int32_t id, QString title, QString avaUrl, QDate start, QDate end
     this->startTime=start;
     this->endTime=end;
     this->sumpoints=sumpoints;
+    this->maxSumpoints=maxSumpoints;
+}
+
+int32_t Course::getMaxSumpoints() const
+{
+    return maxSumpoints;
 }
 
 int32_t Course::getSumpoints() const
@@ -63,7 +70,8 @@ Course* Course::Deserialize(QJsonObject jsonObj)
     start.fromString(jsonObj["startTime"].toString(),"dd/MM/YYYY");
     QDate end;
     end.fromString(jsonObj["endTime"].toString(),"dd/MM/YYYY");
-    return new Course(jsonObj["id"].toInt(),jsonObj["title"].toString(),jsonObj["avaTitleUrl"].toString(),start,end,jsonObj["sumpoints"].toInt());
+    return new Course(jsonObj["id"].toInt(),jsonObj["title"].toString(),
+                      jsonObj["avaTitleUrl"].toString(),start,end,jsonObj["sumpoints"].toInt(),jsonObj["maxSumpoints"].toInt());
 }
 
 QJsonObject Course::Serialize()
@@ -75,6 +83,7 @@ QJsonObject Course::Serialize()
     json["startTime"]= startTime.toString();
     json["endTime"]= endTime.toString();
     json["sumpoints"]=sumpoints;
+    json["maxSumpoints"]=maxSumpoints;
     return json;
 }
 //сделать тут обработку события нажатия на иконку курса для главной страницы
