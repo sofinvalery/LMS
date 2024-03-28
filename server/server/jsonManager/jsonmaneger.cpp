@@ -23,9 +23,12 @@ QJsonObject jsonManager(QJsonObject json,Authentication *auth)
 
 QJsonObject logining(QJsonObject json,Authentication *auth)
 {
-    auth = Authentication::Deserialize(json);
-    QList<Course*> list = DatabaseManager::getInstance()->Login(auth);
     QJsonObject sendjson;
+    auth = Authentication::Deserialize(json);
+    //QList<Course*> list = DatabaseManager::getInstance()->Login(auth);
+    QList<Course*> list= {new Course(5,"maths","aaaaa", QDate(1999,9,9),QDate(2000,1,1),20,100),
+                            new Course(15,"phisyc","bbbbb", QDate(2004,4,4),QDate(2005,1,1),11,80)};
+   // auth->SetInformationAfterAuthentication("Max","bbbbb",ADMIN,55,QList<QString>{"O725B"});
     QJsonArray components;
     for (auto & user : list)
         components.append(user->Serialize());

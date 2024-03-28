@@ -5,6 +5,7 @@ Auth::Auth(QWidget *parent)
     : QDialog(parent)
     , ui(new Ui::Auth)
 {
+    connect(SocketParser::GetInstance(),SIGNAL(logined()),this,SLOT(showMainPage()));
     ui->setupUi(this);
     //дизайн окна
     this->setWindowTitle("mOdle");
@@ -87,8 +88,20 @@ void Auth::on_pushButton_clicked()
 {
     QString log = ui->login->text();
     QString pass = ui->password->text();
-    if (log == "1" && pass == "1"){
-        authstatus = 1;
+    Authentication* auth =new Authentication(log,pass);
+    QJsonObject json = auth->Serialize();
+    delete auth;
+    ClientManager::GetInstance()->Send(LOGINING,json);
+
+}
+
+void Auth::showMainPage()
+{
+    Authentication* auth=ClientState::GetInstance()->getAuth();
+    QList<Course*> list= ClientState::GetInstance()->getListCourses();
+    if (auth->IsAuthenticated()){
+        MainWindow* mainwindow = new MainWindow;
+        mainwindow->showFullScreen();
         this->close();
     }
     else

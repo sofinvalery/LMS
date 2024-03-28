@@ -14,7 +14,7 @@ private:
 
     QList<Course*> currentListCourses;
 
-    Authentication* auth;
+    Authentication* auth=nullptr;
 
     static ClientState* s_Instance;
 

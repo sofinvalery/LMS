@@ -3,6 +3,13 @@
 
 #include <QDialog>
 #include "FontManager/fontmanager.h"
+#include "../common/authentication/authentication.h"
+#include "ClientManager/socketparser.h"
+#include "ClientManager/clientmanager.h"
+#include "QJsonObject"
+#include "../common/transferEnum/transferEnum.h"
+#include "ClientState/clientstate.h"
+#include "Forms/Main/mainwindow.h"
 
 namespace Ui {
 class Auth;
@@ -20,7 +27,7 @@ public:
 
 private slots:
     void on_pushButton_clicked();
-
+    void showMainPage();
 private:
     Ui::Auth *ui;
     void closeEvent(QCloseEvent *event);

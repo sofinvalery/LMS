@@ -38,13 +38,8 @@ Client::Client(qintptr socketDescriptor, QObject* parent) :
             QJsonObject json;
 
             in>>json;
-            auto task = [this](QJsonObject json,Authentication* auth){
-                SendToClient( jsonManager(json,auth));
-                return;
-            };
-            auto future = QtConcurrent::task(std::move(task))
-                .withArguments(json,auth)
-                .spawn();
+
+            SendToClient( jsonManager(json,auth));
             break;
         }
     }

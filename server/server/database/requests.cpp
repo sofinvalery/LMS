@@ -22,7 +22,7 @@ QList<Course*> DatabaseManager::Login(Authentication* auth) {
     //достань список групп в которых состоит пользователь
     //теперь в SetInformationAfterAuthentication надо еще его добавить
     //можно подумать сделать это в другом прайвет методе мало ли может еще где понадобиться
-        auth->SetInformationAfterAuthentication(fullName, avatarUrl, userRole, userId);
+    //    auth->SetInformationAfterAuthentication(fullName, avatarUrl, userRole, userId);
     }
     return GetMainPage(auth);
 }
