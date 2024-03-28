@@ -18,6 +18,7 @@ class Authentication : public QObject
 {
     Q_OBJECT
 public:
+<<<<<<< Updated upstream
     /*Создается при входе на портал выступает для аутенфикации*/
     explicit Authentication(QString login, QString password,int32_t id=0,QString fio="",QString urlAvatar="",
                             EnumRoles role=USER, QList<QString> groups=QList<QString>(), bool isAuthenticated=false, QObject *parent = nullptr);
@@ -27,6 +28,15 @@ public:
 
     void setId(int32_t newId);
 
+=======
+    /*Создается при входе на портал выступает для аутентификации*/
+    explicit Authentication(QString login, QString password,QString fio="",QString urlAvatar="",
+                            EnumRoles role=USER,bool isAuthenticated=false, QObject *parent = nullptr);
+    //используется при приходе ответа с сервера и заполняет данные
+
+    void setIsAuthenticated(bool newIsAuthenticated);
+
+>>>>>>> Stashed changes
     int32_t getId() const;
 
 signals:
@@ -39,14 +49,23 @@ private:
     EnumRoles role;
     bool isAuthenticated;
     int32_t id;
+<<<<<<< Updated upstream
     QList<QString> groups;
+=======
+
+
+>>>>>>> Stashed changes
    public slots:
     void SetInformationAfterAuthentication(
         QString fio,
         QString url_avatar,
         EnumRoles role,
+<<<<<<< Updated upstream
            int32_t id,
            QList<QString> groups);
+=======
+        int32_t id);
+>>>>>>> Stashed changes
        bool IsAuthenticated(){
            return isAuthenticated;
        }

@@ -21,7 +21,7 @@ public:
     //функции выполняющие запросы
     QList<Course*> Login(Authentication* auth);
     QList<Course*> GetMainPage(Authentication* auth);
-    Course* GetCourseComponents(int32_t courseId);
+    void GetCourseComponents(Course* course);
     CourseTest* GetTestQuestion(int32_t testId);
     //bool SetNewGroupStudents(QList<Authentication*> listAuths, .....) //тут будет еще что то потом придумаю
     //тут скорее всего будет не bool я еще почитаю как лучше реализовать обновление этих штук
