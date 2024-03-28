@@ -19,14 +19,13 @@ void Authentication::setIsAuthenticated(bool newIsAuthenticated)
     isAuthenticated = newIsAuthenticated;
 }
 
-<<<<<<< Updated upstream
+
 void Authentication::setId(int32_t newId)
 {
     id = newId;
 }
 
-=======
->>>>>>> Stashed changes
+
 int32_t Authentication::getId() const
 {
     return id;
@@ -36,11 +35,9 @@ void Authentication:: SetInformationAfterAuthentication(
                                                   QString fio,
                                                   QString url_avatar,
                                                   EnumRoles role,
-<<<<<<< Updated upstream
+
                                                   int32_t id, QList<QString> group){
-=======
-                                                  int32_t id){
->>>>>>> Stashed changes
+
     this->fio=fio;
     this->urlAvatar=url_avatar;
     this->role=role;
