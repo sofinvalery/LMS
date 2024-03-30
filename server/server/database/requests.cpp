@@ -12,30 +12,56 @@ QList<Course*> DatabaseManager::Login(Authentication* auth) {
     query.bindValue(":password", auth->GetPassword());
 
     QVariant userId = getScalarValue(query.executedQuery());
-    QList<Course*> courses;
+    // QList<Course*> courses;
     if (userId.isValid()) {
-
-        QString fullName = query.value("full_name").toString();
+        QString fullName = query.value("fio").toString();
         QString avatarUrl = query.value("avatar_url").toString();
         EnumRoles userRole = EnumRoles(query.value("role").toInt());
         int32_t userId = query.value("id").toInt();
-    //достань список групп в которых состоит пользователь
-    //теперь в SetInformationAfterAuthentication надо еще его добавить
-    //можно подумать сделать это в другом прайвет методе мало ли может еще где понадобиться
-    //    auth->SetInformationAfterAuthentication(fullName, avatarUrl, userRole, userId);
+
+        QSqlQuery groupsQuery;
+        groupsQuery.prepare("SELECT g.classname "
+                            "FROM zachisleniya z "
+                            "JOIN groups g ON z.groups_id = g.id "
+                            "WHERE z.users_id = :userId");
+        groupsQuery.bindValue(":userId", userId);
+        QSqlQuery groupsResult = executeQuery(groupsQuery.executedQuery());
+
+        QList<QString> userGroups;
+        while (groupsResult.next()) {
+            userGroups.append(groupsResult.value("classname").toString());
+        }
+
+        auth->SetInformationAfterAuthentication(fullName, avatarUrl, userRole, userId, userGroups);
     }
     return GetMainPage(auth);
 }
 
 QList<Course*> DatabaseManager::GetMainPage(Authentication* auth) {
     QSqlQuery query;
-    query.prepare("SELECT c.id, c.title, c.ava_title_url, c.start_time, c.end_time "
-                  "FROM courses c "
-                  "INNER JOIN zachisleniya AS z ON c.groups_id = z.groups_id "
-                  "WHERE z.users_id = :userId");
+    QList<Course*> courses;
+
+    if (auth->GetCurrentRole() == STUDENT) {
+        // Get user's courses from students_groups_union table
+        query.prepare("SELECT c.id, c.title, c.ava_title_url, c.start_time, c.end_time "
+                      "FROM courses c "
+                      "INNER JOIN zachisleniya_in_potok zip ON c.students_groups_union_id1 = zip.students_groups_union_id "
+                      "INNER JOIN zachisleniya z ON zip.groups_id = z.groups_id "
+                      "WHERE z.users_id = :userId");
+    } else if (auth->GetCurrentRole() == TEACHER) {
+        // Get user's courses from groups table
+        query.prepare("SELECT c.id, c.title, c.ava_title_url, c.start_time, c.end_time "
+                      "FROM courses c "
+                      "INNER JOIN groups g ON c.groups_id = g.id "
+                      "INNER JOIN zachisleniya z ON g.id = z.groups_id "
+                      "WHERE z.users_id = :userId");
+    } else {
+        // Handle other roles if needed
+        return courses;
+    }
+
     query.bindValue(":userId", auth->getId());
 
-    QList<Course*> courses;
     QSqlQuery result = executeQuery(query.executedQuery());
 
     while (result.next()) {
@@ -45,9 +71,9 @@ QList<Course*> DatabaseManager::GetMainPage(Authentication* auth) {
         QDate start = result.value("start_time").toDate();
         QDate end = result.value("end_time").toDate();
         int sumpoints = 0;
-        int maxSumpoints=0;
+        int maxSumpoints = 0;
 
-        Course* course = new Course(courseId, title, avaUrl, start, end, sumpoints,maxSumpoints);
+        Course* course = new Course(courseId, title, avaUrl, start, end, sumpoints, maxSumpoints);
         courses.append(course);
     }
 
