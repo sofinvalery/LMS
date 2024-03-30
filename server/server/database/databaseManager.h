@@ -22,7 +22,7 @@ public:
     QList<Course*> Login(Authentication* auth);
     QList<Course*> GetMainPage(Authentication* auth);
     void GetCourseComponents(Course* course);
-    CourseTest* GetTestQuestion(int32_t testId);
+    QString GetTestQuestion(int32_t testId);
     //bool SetNewGroupStudents(QList<Authentication*> listAuths, .....) //тут будет еще что то потом придумаю
     //тут скорее всего будет не bool я еще почитаю как лучше реализовать обновление этих штук
     bool SetNewTest(CourseTest* test);

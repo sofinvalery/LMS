@@ -42,21 +42,19 @@ QList<Course*> DatabaseManager::GetMainPage(Authentication* auth) {
     QList<Course*> courses;
 
     if (auth->GetCurrentRole() == STUDENT) {
-        // Get user's courses from students_groups_union table
         query.prepare("SELECT c.id, c.title, c.ava_title_url, c.start_time, c.end_time "
                       "FROM courses c "
                       "INNER JOIN zachisleniya_in_potok zip ON c.students_groups_union_id1 = zip.students_groups_union_id "
                       "INNER JOIN zachisleniya z ON zip.groups_id = z.groups_id "
                       "WHERE z.users_id = :userId");
     } else if (auth->GetCurrentRole() == TEACHER) {
-        // Get user's courses from groups table
         query.prepare("SELECT c.id, c.title, c.ava_title_url, c.start_time, c.end_time "
                       "FROM courses c "
                       "INNER JOIN groups g ON c.groups_id = g.id "
                       "INNER JOIN zachisleniya z ON g.id = z.groups_id "
                       "WHERE z.users_id = :userId");
     } else {
-        // Handle other roles if needed
+        // ...
         return courses;
     }
 
@@ -185,5 +183,21 @@ void DatabaseManager::GetCourseComponents(Course* course) {
         QString url = videoResult.value("url").toString();
         CourseVideos* video = new CourseVideos(id, order, title, url);
         course->AddCourseComponent(video);
+    }
+}
+
+QString DatabaseManager::GetTestQuestion(int32_t testId) {
+    QSqlQuery query;
+    query.prepare("SELECT url_json "
+                  "FROM path_course_tests "
+                  "WHERE id = :testId");
+    query.bindValue(":testId", testId);
+
+    QSqlQuery result = executeQuery(query.executedQuery());
+
+    if (result.next()) {
+        return result.value("url_json").toString();
+    } else {
+        return QString();
     }
 }
