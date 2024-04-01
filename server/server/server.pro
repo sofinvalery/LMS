@@ -19,7 +19,7 @@ SOURCES += \
         ../../common/course/course_components/question.cpp \
         database/databaseManager.cpp \
         database/requests.cpp \
-        jsonManager/jsonmaneger.cpp \
+        jsonManager/jsonmanager.cpp \
         main.cpp \
         server/client.cpp \
         server/myserver.cpp
@@ -41,6 +41,6 @@ HEADERS += \
     ../../common/course/course_components/question.h \
     ../../common/transferEnum/transferEnum.h \
     database/databaseManager.h \
-    jsonManager/jsonmaneger.h \
+    jsonManager/jsonmanager.h \
     server/client.h \
     server/myserver.h

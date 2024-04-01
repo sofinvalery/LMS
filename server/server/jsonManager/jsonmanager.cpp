@@ -1,4 +1,4 @@
-#include "jsonmaneger.h"
+#include "jsonmanager.h"
 
 typedef QJsonObject (*Action)(QJsonObject,Authentication *auth);
 

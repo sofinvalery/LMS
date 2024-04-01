@@ -1,5 +1,5 @@
-#ifndef JSONMANEGER_H
-#define JSONMANEGER_H
+#ifndef JSONMANAGER_H
+#define JSONMANAGER_H
 
 #include<QJsonObject>
 #include "../../common/transferEnum/transferEnum.h"
@@ -28,4 +28,4 @@ static QJsonObject setNewCourse(QJsonObject json,Authentication *auth);
 
 
 
-#endif // JSONMANEGER_H
+#endif // JSONMANAGER_H

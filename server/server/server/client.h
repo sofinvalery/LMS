@@ -5,7 +5,7 @@
 #include<QTcpSocket>
 #include<QJsonObject>
 #include<QtConcurrent>
-#include"../jsonManager/jsonmaneger.h"
+#include"../jsonManager/jsonmanager.h"
 #include<../../common/authentication/authentication.h>
 
 class Client: public QObject

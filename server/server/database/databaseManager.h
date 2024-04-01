@@ -19,7 +19,7 @@ class DatabaseManager {
 public:
     static DatabaseManager* getInstance();
     //функции выполняющие запросы
-    QList<Course*> Login(Authentication* auth);
+    bool Login(Authentication* auth);
     QList<Course*> GetMainPage(Authentication* auth);
     void GetCourseComponents(Course* course);
     QString GetTestQuestion(int32_t testId);

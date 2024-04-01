@@ -2,7 +2,7 @@
 #include "../../common/authentication/authentication.h"
 
 
-QList<Course*> DatabaseManager::Login(Authentication* auth) {
+bool DatabaseManager::Login(Authentication* auth) {
     QSqlQuery query;
     query.prepare("SELECT u.fio, u.avatar_url, u.role, u.id "
                   "FROM users AS u "
@@ -11,31 +11,43 @@ QList<Course*> DatabaseManager::Login(Authentication* auth) {
     query.bindValue(":login", auth->GetLogin());
     query.bindValue(":password", auth->GetPassword());
 
-    QVariant userId = getScalarValue(query.executedQuery());
-    // QList<Course*> courses;
-    if (userId.isValid()) {
-        QString fullName = query.value("fio").toString();
-        QString avatarUrl = query.value("avatar_url").toString();
-        EnumRoles userRole = EnumRoles(query.value("role").toInt());
-        int32_t userId = query.value("id").toInt();
-
-        QSqlQuery groupsQuery;
-        groupsQuery.prepare("SELECT g.classname "
-                            "FROM zachisleniya z "
-                            "JOIN groups g ON z.groups_id = g.id "
-                            "WHERE z.users_id = :userId");
-        groupsQuery.bindValue(":userId", userId);
-        QSqlQuery groupsResult = executeQuery(groupsQuery.executedQuery());
-
-        QList<QString> userGroups;
-        while (groupsResult.next()) {
-            userGroups.append(groupsResult.value("classname").toString());
-        }
-
-        auth->SetInformationAfterAuthentication(fullName, avatarUrl, userRole, userId, userGroups);
+    if (!query.exec()) {
+        qDebug() << "Error executing query:" << query.lastError().text();
+        return false;
     }
-    return GetMainPage(auth);
+
+    if (!query.first()) {
+        qDebug() << "No user found with the given login and password.";
+        return false;
+    }
+
+    QString fullName = query.value("fio").toString();
+    QString avatarUrl = query.value("avatar_url").toString();
+    EnumRoles userRole = EnumRoles(query.value("role").toInt());
+    int32_t userId = query.value("id").toInt();
+
+    QSqlQuery groupsQuery;
+    groupsQuery.prepare("SELECT g.classname "
+                        "FROM zachisleniya z "
+                        "JOIN groups g ON z.groups_id = g.id "
+                        "WHERE z.users_id = :userId");
+    groupsQuery.bindValue(":userId", userId);
+
+    if (!groupsQuery.exec()) {
+        qDebug() << "Error executing groups query:" << groupsQuery.lastError().text();
+        return false;
+    }
+
+    QList<QString> userGroups;
+    while (groupsQuery.next()) {
+        userGroups.append(groupsQuery.value("classname").toString());
+    }
+
+    auth->SetInformationAfterAuthentication(fullName, avatarUrl, userRole, userId, userGroups);
+    return true;
 }
+
+
 
 QList<Course*> DatabaseManager::GetMainPage(Authentication* auth) {
     QSqlQuery query;
