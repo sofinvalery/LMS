@@ -29,3 +29,4 @@ static QJsonObject setNewCourse(QJsonObject json,Authentication *auth);
 
 
 #endif // JSONMANAGER_H
+

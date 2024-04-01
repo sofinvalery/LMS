@@ -62,7 +62,7 @@ QJsonObject CourseTest::Serialize()
     json["timeInSeconds"]= timeInSeconds;
     json["notes"]= notes;
     json["urlJson"]=urlJson;
-    json["time"]=time.toString();
+    json["time"]=time.toString("yyyy.MM.dd");
     json["verdict"]= verdict;
     QJsonObject main;
     main["CourseTest"]=json;
@@ -72,8 +72,7 @@ QJsonObject CourseTest::Serialize()
 CourseTest* CourseTest::Deserialize(QJsonObject json)
 {
     QJsonObject jsonObj=json["CourseTest"].toObject();
-    QDate solutionTime;
-    solutionTime.fromString(jsonObj["time"].toString(),"dd/MM/YYYY");
+    QDate solutionTime=QDate::fromString(jsonObj["time"].toString(),"yyyy.MM.dd");
     return new CourseTest(jsonObj["id"].toInt(),jsonObj["order"].toInt(),
                      jsonObj["title"].toString(),jsonObj["maxMark"].toInt(),
                      jsonObj["urlJson"].toString(),jsonObj["timeInSeconds"].toInt(),

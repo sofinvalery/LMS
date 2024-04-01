@@ -66,10 +66,8 @@ void Course::DeserializeListComponents(QJsonObject jsonObj)
 
 Course* Course::Deserialize(QJsonObject jsonObj)
 {
-    QDate start;
-    start.fromString(jsonObj["startTime"].toString(),"dd/MM/YYYY");
-    QDate end;
-    end.fromString(jsonObj["endTime"].toString(),"dd/MM/YYYY");
+    QDate start=QDate::fromString(jsonObj["startTime"].toString(),"yyyy.MM.dd");
+    QDate end = QDate::fromString(jsonObj["endTime"].toString(),"yyyy.MM.dd");
     return new Course(jsonObj["id"].toInt(),jsonObj["title"].toString(),
                       jsonObj["avaTitleUrl"].toString(),start,end,jsonObj["sumpoints"].toInt(),jsonObj["maxSumpoints"].toInt());
 }
@@ -80,8 +78,8 @@ QJsonObject Course::Serialize()
     json["id"]=id;
     json["title"]=title;
     json["avaTitleUrl"]=avaTitleUrl;
-    json["startTime"]= startTime.toString();
-    json["endTime"]= endTime.toString();
+    json["startTime"]= startTime.toString("yyyy.MM.dd");
+    json["endTime"]= endTime.toString("yyyy.MM.dd");
     json["sumpoints"]=sumpoints;
     json["maxSumpoints"]=maxSumpoints;
     return json;

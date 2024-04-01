@@ -24,7 +24,7 @@ class Server: public QTcpServer
 
 public:
     void startServer();
-    Server(size_t threads = 4, QObject * parent = nullptr);
+    Server(size_t threads = QThread::idealThreadCount()/2, QObject * parent = nullptr);
     ~Server();
 
 protected:

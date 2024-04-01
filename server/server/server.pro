@@ -22,7 +22,8 @@ SOURCES += \
         jsonManager/jsonmanager.cpp \
         main.cpp \
         server/client.cpp \
-        server/myserver.cpp
+        server/myserver.cpp \
+        server/servertask.cpp
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
@@ -43,4 +44,5 @@ HEADERS += \
     database/databaseManager.h \
     jsonManager/jsonmanager.h \
     server/client.h \
-    server/myserver.h
+    server/myserver.h \
+    server/servertask.h

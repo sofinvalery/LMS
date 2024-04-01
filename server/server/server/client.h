@@ -5,8 +5,8 @@
 #include<QTcpSocket>
 #include<QJsonObject>
 #include<QtConcurrent>
-#include"../jsonManager/jsonmanager.h"
-#include<../../common/authentication/authentication.h>
+#include "servertask.h"
+#include "../../common/authentication/authentication.h"
 
 class Client: public QObject
 {
@@ -14,14 +14,12 @@ class Client: public QObject
 
 public:
 
-    void SendToClient(QJsonObject);
-
     Client(qintptr socketDescriptor, QObject* parent = 0);
 
 public slots:
     void readyRead();
     void disconnected();
-
+    void SendToClient(QJsonObject);
 
 
 

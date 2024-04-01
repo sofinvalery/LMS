@@ -43,13 +43,14 @@ QJsonObject logining(QJsonObject json,Authentication *auth)
 QJsonObject getMainPage(QJsonObject json,Authentication *auth)
 {
     auth = Authentication::Deserialize(json);
-    QList<Course*> list = DatabaseManager::getInstance()->Login(auth);
+    QList<Course*> list = DatabaseManager::getInstance()->GetMainPage(auth);
     QJsonObject sendjson;
     QJsonArray components;
     for (auto & user : list)
         components.append(user->Serialize());
     sendjson["Action"]=GETMAINPAGE;
     sendjson["Data"]=components;
+    return sendjson;
 }
 
 QJsonObject getCourseComponents(QJsonObject json,Authentication *auth)

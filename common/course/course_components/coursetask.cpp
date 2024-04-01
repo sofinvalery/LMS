@@ -37,7 +37,7 @@ QJsonObject CourseTask::Serialize()
     json["memoryLimit"]= memoryLimit;
     json["allowedTypeOfFiles"]= allowedTypeOfFiles;
     json["answerUrl"]= answerUrl;
-    json["solutionTime"]= solutionTime.toString();
+    json["solutionTime"]= solutionTime.toString("yyyy.MM.dd");
     json["verdict"]= verdict;
      json["notes"]= notes;
     QJsonObject main;
@@ -49,8 +49,7 @@ CourseTask* CourseTask::Deserialize(QJsonObject json)
 {
     QJsonObject jsonObj=json["CourseTask"].toObject();
 
-    QDate solutionTime;
-    solutionTime.fromString(jsonObj["solutionTime"].toString(),"dd/MM/YYYY");
+    QDate solutionTime =QDate::fromString(jsonObj["solutionTime"].toString(),"yyyy.MM.dd");
     return new CourseTask(jsonObj["id"].toInt(),jsonObj["order"].toInt(),jsonObj["content"].toString(),
                       jsonObj["maxMark"].toInt(),jsonObj["memoryLimit"].toInt(),
                       jsonObj["allowedTypeOfFiles"].toString(),jsonObj["answerUrl"].toString(),

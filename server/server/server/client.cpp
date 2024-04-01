@@ -5,9 +5,6 @@ Client::Client(qintptr socketDescriptor, QObject* parent) :
 {
     qInfo() << "new connection";
     m_client = new QTcpSocket(this);
-
-    // set the ID
-
     m_client->setSocketDescriptor(socketDescriptor);
 
     connect(m_client, SIGNAL(readyRead()), this, SLOT(readyRead()), Qt::DirectConnection);
@@ -38,8 +35,10 @@ Client::Client(qintptr socketDescriptor, QObject* parent) :
             QJsonObject json;
 
             in>>json;
-
-            SendToClient( jsonManager(json,auth));
+            ServerTask *mytask = new ServerTask(json,auth);
+            mytask->setAutoDelete(true);
+            connect(mytask, SIGNAL(Result(QJsonObject)), this, SLOT(SendToClient(QJsonObject)), Qt::QueuedConnection);
+            QThreadPool::globalInstance()->start(mytask);
             break;
         }
     }
