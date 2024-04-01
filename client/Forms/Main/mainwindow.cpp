@@ -2,6 +2,7 @@
 #include <QScrollArea>
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include "FontManager/fontmanager.h"
 
 #define arrlen 25
 
@@ -10,20 +11,61 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    //this->setStyleSheet("background-color: white;");
-    //ui->groupBox->setStyleSheet("background-color: white;");
-    //ui->scrollArea->setStyleSheet("background-color: white;");
+    ui->groupBox->setStyleSheet("background-color: white;");
+    ui->scrollAreaWidgetContents->setStyleSheet("background-color: white;");
+
+    //groupbox
+    ui->groupBox->setStyleSheet(
+        "QGroupBox {"
+        "border: none;"
+        "}");
+    //scrollarea
+    ui->scrollArea->setStyleSheet(
+        "QScrollArea {"
+        "border: none;"
+        "border-top: 1px solid grey;"
+        "}");
+    //windowname
+    ui->windowname->setText("Ваши курсы");
+    ui->windowname->setFont(FontManager::GetInstance()->getRegular());
+    ui->windowname->setStyleSheet(
+        "QLabel {"
+        "font-size: 32px;"
+        "}");
+    //profilebutton
+    ui->profileButton->setIcon(QIcon(":/img/resources/profile.png"));
+    ui->profileButton->setFixedSize(64, 64);
+    ui->profileButton->setStyleSheet(
+        "QPushButton {"
+        "border-radius: 30px;"
+        "padding: 6px;"
+        "}"
+        "QPushButton:hover {"
+        "background-color: lightgrey;"
+        "}"
+        "QPushButton:pressed {"
+        "background-color: grey;"
+        "}");
+    QRect screenGeometry = QGuiApplication::primaryScreen()->geometry();
+    ui->profileButton->move(screenGeometry.width() - 64 - 10, 13);
+    ui->profileButton->setCursor(Qt::PointingHandCursor);
 
     QScreen* scr = QGuiApplication::primaryScreen();
+
     this->resize( scr->availableGeometry().width(), scr->availableGeometry().height());
     ui->scrollArea->setWidgetResizable(true);
-    ui->groupBox->setMinimumSize(this->frameGeometry().width()-50,this->frameGeometry().height()-43);
-    ui->scrollArea->resize(this->frameGeometry().width()-70,this->frameGeometry().height()-100);
+
+    ui->groupBox->setMinimumSize(this->frameGeometry().width(),this->frameGeometry().height());
+    ui->scrollArea->resize(this->frameGeometry().width(),this->frameGeometry().height() - 42);
+
+    ui->scrollArea->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+
+    //ui->scrollArea->resize(this->frameGeometry().width()-20,this->frameGeometry().height()-100);
     //ui->scrollAreaWidgetContents->setMinimumWidth(this->frameGeometry().width()-20); - ширина области в которой работает скролл
     ui->scrollAreaWidgetContents->setMinimumHeight((arrlen/4)*(65+262)+350);
     // ui->gridLayoutWidget->setFixedWidth(this->frameGeometry().width());
     // ui->gridLayoutWidget->setFixedWidth(this->frameGeometry().height());
-    ui->gridLayoutWidget->resize(this->frameGeometry().width()-70,this->frameGeometry().height()-100);
+    ui->gridLayoutWidget->resize(this->frameGeometry().width(),this->frameGeometry().height());
     ui->gridLayoutWidget->setMinimumHeight((arrlen/4)*(65+262)+350);
     // ui->gridLayout->setColumnMinimumWidth(0,351);
     // ui->gridLayout->setColumnMinimumWidth(1,351);

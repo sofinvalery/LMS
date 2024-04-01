@@ -8,7 +8,7 @@ MyWidget::MyWidget(QWidget *parent)
     , ui(new Ui::MyWidget)
 {
     ui->setupUi(this);
-    //this->setStyleSheet("background-color: white;");
+    this->setStyleSheet("background-color: white;");
     //progressbar
     ui->progressBar->setFont(FontManager::GetInstance()->getRegular());
     ui->progressBar->setStyleSheet(
@@ -18,8 +18,8 @@ MyWidget::MyWidget(QWidget *parent)
         "background-color: lightgrey;"
         "}"
         "QProgressBar::chunk {"
-        "background-color: #2194DE;"
         "border-radius: 10px;"
+        "background: #2194DE;"
         "}");
     //progressbarbutton
     ui->ProgressbarButton->setCursor(Qt::PointingHandCursor);

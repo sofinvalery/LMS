@@ -1,6 +1,7 @@
 <RCC>
     <qresource prefix="/img">
         <file>resources/kap.jpg</file>
+        <file>resources/profile.png</file>
     </qresource>
     <qresource prefix="/font">
         <file>resources/Comfortaa-Bold.ttf</file>
