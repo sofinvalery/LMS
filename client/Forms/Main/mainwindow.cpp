@@ -1,8 +1,6 @@
-#include <QScreen>
-#include <QScrollArea>
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include "FontManager/fontmanager.h"
+#include <QMessageBox>
 
 #define arrlen 25
 
@@ -14,6 +12,13 @@ MainWindow::MainWindow(QWidget *parent)
     ui->groupBox->setStyleSheet("background-color: white;");
     ui->scrollAreaWidgetContents->setStyleSheet("background-color: white;");
 
+    ui->adminButton->hide();
+
+    QRect screenGeometry = QGuiApplication::primaryScreen()->geometry();
+
+    Authentication* auth =new Authentication("sds","gtht");
+    auth->SetInformationAfterAuthentication("Max","bbbbb",ADMIN,55,QList<QString>{"O725B"});
+
     //groupbox
     ui->groupBox->setStyleSheet(
         "QGroupBox {"
@@ -23,32 +28,106 @@ MainWindow::MainWindow(QWidget *parent)
     ui->scrollArea->setStyleSheet(
         "QScrollArea {"
         "border: none;"
-        "border-top: 1px solid grey;"
+        "border-top: 2px solid lightgrey;"
         "}");
-    //windowname
-    ui->windowname->setText("Ваши курсы");
-    ui->windowname->setFont(FontManager::GetInstance()->getRegular());
-    ui->windowname->setStyleSheet(
-        "QLabel {"
+    //mainbutton
+    ui->mainButton->setCursor(Qt::PointingHandCursor);
+    ui->mainButton->setFont(FontManager::GetInstance()->getRegular());
+    ui->mainButton->setText("Главная");
+    ui->mainButton->setFixedSize(screenGeometry.width() / 4, 91);
+    ui->mainButton->move(0, 0);
+    ui->mainButton->setStyleSheet(
+        "QPushButton {"
+        "border: none;"
         "font-size: 32px;"
+        "border-right: 2px solid lightgrey;"
+        "}"
+        "QPushButton:hover {"
+        "background-color: #4EB5FF;"
+        "}"
+        "QPushButton:pressed {"
+        "background-color: #2194DE;"
+        "}");
+    //scorebutton
+    ui->scoreButton->setCursor(Qt::PointingHandCursor);
+    ui->scoreButton->setFont(FontManager::GetInstance()->getRegular());
+    ui->scoreButton->setText("Оценки");
+    ui->scoreButton->setFixedSize(screenGeometry.width() / 4, 91);
+    ui->scoreButton->move(screenGeometry.width() / 4, 0);
+    ui->scoreButton->setStyleSheet(
+        "QPushButton {"
+        "border: none;"
+        "font-size: 32px;"
+        "border-right: 2px solid lightgrey;"
+        "}"
+        "QPushButton:hover {"
+        "background-color: #4EB5FF;"
+        "}"
+        "QPushButton:pressed {"
+        "background-color: #2194DE;"
+        "}");
+    //adminbutton
+    ui->adminButton->setCursor(Qt::PointingHandCursor);
+    ui->adminButton->setFont(FontManager::GetInstance()->getRegular());
+    ui->adminButton->setText("Админ панель");
+    ui->adminButton->setFixedSize(screenGeometry.width() / 4, 91);
+    ui->adminButton->move(screenGeometry.width() / 2, 0);
+    ui->adminButton->setStyleSheet(
+        "QPushButton {"
+        "border: none;"
+        "font-size: 32px;"
+        "border-right: 2px solid lightgrey;"
+        "}"
+        "QPushButton:hover {"
+        "background-color: #4EB5FF;"
+        "}"
+        "QPushButton:pressed {"
+        "background-color: #2194DE;"
+        "}");
+    //exitbutton
+    ui->exitButton->setCursor(Qt::PointingHandCursor);
+    ui->exitButton->setFont(FontManager::GetInstance()->getRegular());
+    ui->exitButton->setText("X");
+    ui->exitButton->setFixedSize(screenGeometry.width() / 35, 20);
+    ui->exitButton->move(screenGeometry.width() - screenGeometry.width() / 35, 0);
+    ui->exitButton->setStyleSheet(
+        "QPushButton {"
+        "border: none;"
+        "border-left: 2px solid lightgrey;"
+        "border-bottom: 2px solid lightgrey;"
+        "}"
+        "QPushButton:hover {"
+        "background-color: #ed3124;"
+        "border-left: 1px solid #ed3124;"
+        "border-bottom: 1px solid #ed3124;"
+        "}"
+        "QPushButton:pressed {"
+        "background-color: #C9261E;"
+        "border-left: 1px solid #C9261E;"
+        "border-bottom: 1px solid #C9261E;"
         "}");
     //profilebutton
     ui->profileButton->setIcon(QIcon(":/img/resources/profile.png"));
     ui->profileButton->setFixedSize(64, 64);
+    ui->profileButton->move(screenGeometry.width() / 2 + 20, 13);
     ui->profileButton->setStyleSheet(
         "QPushButton {"
-        "border-radius: 30px;"
+        "border-radius: 32px;"
         "padding: 6px;"
         "}"
         "QPushButton:hover {"
-        "background-color: lightgrey;"
+        "background-color: #4EB5FF;"
         "}"
         "QPushButton:pressed {"
-        "background-color: grey;"
+        "background-color: #2194DE;"
         "}");
-    QRect screenGeometry = QGuiApplication::primaryScreen()->geometry();
-    ui->profileButton->move(screenGeometry.width() - 64 - 10, 13);
     ui->profileButton->setCursor(Qt::PointingHandCursor);
+
+    if (auth->GetCurrentRole() == ADMIN)
+    {
+        ui->adminButton->show();
+        ui->profileButton->move(3 * screenGeometry.width() / 4 + 20, 13);
+    }
 
     QScreen* scr = QGuiApplication::primaryScreen();
 
@@ -94,9 +173,11 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-
-void MainWindow::on_pushButton_clicked()
+void MainWindow::on_exitButton_clicked()
 {
-
+    QMessageBox::StandardButton reply;
+    reply = QMessageBox::question(this, "Подтверждение выхода", "Вы уверены, что хотите выйти?", QMessageBox::Yes|QMessageBox::No);
+    if (reply == QMessageBox::Yes)
+        QApplication::quit();
 }
 

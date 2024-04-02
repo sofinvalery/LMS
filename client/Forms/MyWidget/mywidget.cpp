@@ -8,7 +8,11 @@ MyWidget::MyWidget(QWidget *parent)
     , ui(new Ui::MyWidget)
 {
     ui->setupUi(this);
-    this->setStyleSheet("background-color: white;");
+    // this->setStyleSheet(
+    //     "QWidget, * {"
+    //     "background-color: lightgrey;"
+    //     "}");
+
     //progressbar
     ui->progressBar->setFont(FontManager::GetInstance()->getRegular());
     ui->progressBar->setStyleSheet(
@@ -19,7 +23,7 @@ MyWidget::MyWidget(QWidget *parent)
         "}"
         "QProgressBar::chunk {"
         "border-radius: 10px;"
-        "background: #2194DE;"
+        "background: #4EB5FF;"
         "}");
     //progressbarbutton
     ui->ProgressbarButton->setCursor(Qt::PointingHandCursor);
@@ -37,10 +41,10 @@ MyWidget::MyWidget(QWidget *parent)
         "border-radius: 20px;"
         "}"
         "QPushButton:hover {"
-        "background-color: lightgrey;"
+        "background-color: #4EB5FF;"
         "}"
         "QPushButton:pressed {"
-        "background-color: grey;"
+        "background-color: #2194DE;"
         "}");
 
     //QWidget::setSizePolicy(QSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed));

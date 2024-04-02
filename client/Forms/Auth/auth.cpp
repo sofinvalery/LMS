@@ -57,7 +57,7 @@ Auth::Auth(QWidget *parent)
     ui->pushButton->setFont(FontManager::GetInstance()->getBold());
     ui->pushButton->setStyleSheet(
         "QPushButton {"
-        "background-color: #2194DE;"
+        "background-color: #4AB8FF;"
         "border-radius: 10px;"
         "border: none;"
         "color: white;"
@@ -65,7 +65,7 @@ Auth::Auth(QWidget *parent)
         "font-size: 16px;"
         "}"
         "QPushButton:hover {"
-        "background-color: #4AB8FF;"
+        "background-color: #2194DE;"
         "}"
         "QPushButton:pressed {"
         "background-color: #0E5FA8;"
