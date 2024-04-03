@@ -2,7 +2,7 @@
 #define CLIENT_H
 
 #include <QObject>
-#include<QTcpSocket>
+#include<QSslSocket>
 #include<QJsonObject>
 #include<QtConcurrent>
 #include "servertask.h"
@@ -16,16 +16,15 @@ public:
 
     Client(qintptr socketDescriptor, QObject* parent = 0);
 
-public slots:
+private slots:
     void readyRead();
     void disconnected();
     void SendToClient(QJsonObject);
-
-
+    void sslErrorOccured(QList<QSslError> list);
 
 private:
     Authentication* auth=nullptr;
-    QTcpSocket* m_client;
+    QSslSocket* m_client;
 };
 
 #endif // CLIENT_H

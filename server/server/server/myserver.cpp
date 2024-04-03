@@ -55,7 +55,6 @@ void Server::incomingConnection(qintptr socketDescriptor)
 {
     Worker* worker = m_workers[m_rrcounter % m_threadCount];
     ++m_rrcounter;
-
     QMetaObject::invokeMethod(worker, "addClient",
                               Qt::QueuedConnection,
                               Q_ARG(qintptr, socketDescriptor));

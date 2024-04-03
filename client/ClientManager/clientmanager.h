@@ -2,7 +2,7 @@
 #define CLIENTMANAGER_H
 
 #include <QObject>
-#include <QTcpSocket>
+#include <QSslSocket>
 #include<QJsonObject>
 #include "../common/transferEnum/transferEnum.h"
 
@@ -12,9 +12,9 @@ class ClientManager : public QObject
 private:
     explicit ClientManager(QObject *parent = nullptr);
 
-    QTcpSocket *socket;
+    QSslSocket *socket;
     QByteArray Data;
-    quint16 nextBlockSize=0;
+    quint64 nextBlockSize=0;
     QString hostName;
     quint16 port;
     static ClientManager* s_Instance;
@@ -24,17 +24,14 @@ private slots:
     void slotReadyRead();
     void ServerOrClientError();
     void SendToServer(QJsonObject json);
+    void sslErrorOccured( QList<QSslError> list);
+
 
 public:
     static ClientManager* GetInstance() { return s_Instance = (s_Instance != nullptr ? s_Instance : new ClientManager()); }
     void Send(TransferEnum e, QJsonObject json);
 signals:
-    //если нужен будет другой тип возвращаемого значения поменяем
     void Readed(QJsonObject);
-    //для подключения:
-   // connect(ClientManager::GetInstance(),SIGNAL(Readed(QJsonObject)),this,SLOT(P(QJsonObject)));
-    //otkl
-    //QObject::disconnect(const QObject *receiver, const char *method = nullptr)
 };
 
 #endif // CLIENTMANAGER_H

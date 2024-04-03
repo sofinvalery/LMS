@@ -46,3 +46,6 @@ HEADERS += \
     server/client.h \
     server/myserver.h \
     server/servertask.h
+
+RESOURCES += \
+    resources.qrc

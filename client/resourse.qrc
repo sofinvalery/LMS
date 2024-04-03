@@ -6,4 +6,7 @@
         <file>resources/Comfortaa-Bold.ttf</file>
         <file>resources/Comfortaa-Regular.ttf</file>
     </qresource>
+    <qresource prefix="/sll">
+        <file>ClientManager/certificate/client.key</file>
+    </qresource>
 </RCC>
