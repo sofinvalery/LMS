@@ -1,5 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include "Forms/Profile/profile.h"
 #include <QMessageBox>
 
 #define arrlen 25
@@ -8,6 +9,7 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
+
     ui->setupUi(this);
     ui->groupBox->setStyleSheet("background-color: white;");
     ui->scrollAreaWidgetContents->setStyleSheet("background-color: white;");
@@ -28,19 +30,20 @@ MainWindow::MainWindow(QWidget *parent)
     ui->scrollArea->setStyleSheet(
         "QScrollArea {"
         "border: none;"
-        "border-top: 2px solid lightgrey;"
+        "border-top: 2px solid grey;"
         "}");
     //mainbutton
     ui->mainButton->setCursor(Qt::PointingHandCursor);
     ui->mainButton->setFont(FontManager::GetInstance()->getRegular());
     ui->mainButton->setText("Главная");
-    ui->mainButton->setFixedSize(screenGeometry.width() / 4, 91);
-    ui->mainButton->move(0, 0);
+    ui->mainButton->setFixedSize(screenGeometry.width() / 4, 90);
+    ui->mainButton->move(104, 0);
     ui->mainButton->setStyleSheet(
         "QPushButton {"
         "border: none;"
         "font-size: 32px;"
-        "border-right: 2px solid lightgrey;"
+        "border-right: 2px solid grey;"
+        "border-left: 2px solid grey;"
         "}"
         "QPushButton:hover {"
         "background-color: #4EB5FF;"
@@ -52,13 +55,13 @@ MainWindow::MainWindow(QWidget *parent)
     ui->scoreButton->setCursor(Qt::PointingHandCursor);
     ui->scoreButton->setFont(FontManager::GetInstance()->getRegular());
     ui->scoreButton->setText("Оценки");
-    ui->scoreButton->setFixedSize(screenGeometry.width() / 4, 91);
-    ui->scoreButton->move(screenGeometry.width() / 4, 0);
+    ui->scoreButton->setFixedSize(screenGeometry.width() / 4, 90);
+    ui->scoreButton->move(screenGeometry.width() / 4 + 104, 0);
     ui->scoreButton->setStyleSheet(
         "QPushButton {"
         "border: none;"
         "font-size: 32px;"
-        "border-right: 2px solid lightgrey;"
+        "border-right: 2px solid grey;"
         "}"
         "QPushButton:hover {"
         "background-color: #4EB5FF;"
@@ -70,13 +73,13 @@ MainWindow::MainWindow(QWidget *parent)
     ui->adminButton->setCursor(Qt::PointingHandCursor);
     ui->adminButton->setFont(FontManager::GetInstance()->getRegular());
     ui->adminButton->setText("Админ панель");
-    ui->adminButton->setFixedSize(screenGeometry.width() / 4, 91);
-    ui->adminButton->move(screenGeometry.width() / 2, 0);
+    ui->adminButton->setFixedSize(screenGeometry.width() / 4, 90);
+    ui->adminButton->move(screenGeometry.width() / 2 + 104, 0);
     ui->adminButton->setStyleSheet(
         "QPushButton {"
         "border: none;"
         "font-size: 32px;"
-        "border-right: 2px solid lightgrey;"
+        "border-right: 2px solid grey;"
         "}"
         "QPushButton:hover {"
         "background-color: #4EB5FF;"
@@ -93,8 +96,8 @@ MainWindow::MainWindow(QWidget *parent)
     ui->exitButton->setStyleSheet(
         "QPushButton {"
         "border: none;"
-        "border-left: 2px solid lightgrey;"
-        "border-bottom: 2px solid lightgrey;"
+        "border-left: 2px solid grey;"
+        "border-bottom: 2px solid grey;"
         "}"
         "QPushButton:hover {"
         "background-color: #ed3124;"
@@ -109,7 +112,8 @@ MainWindow::MainWindow(QWidget *parent)
     //profilebutton
     ui->profileButton->setIcon(QIcon(":/img/resources/profile.png"));
     ui->profileButton->setFixedSize(64, 64);
-    ui->profileButton->move(screenGeometry.width() / 2 + 20, 13);
+    // ui->profileButton->move(screenGeometry.width() / 2 + 20, 13);
+    ui->profileButton->move(20, 13);
     ui->profileButton->setStyleSheet(
         "QPushButton {"
         "border-radius: 32px;"
@@ -126,7 +130,6 @@ MainWindow::MainWindow(QWidget *parent)
     if (auth->GetCurrentRole() == ADMIN)
     {
         ui->adminButton->show();
-        ui->profileButton->move(3 * screenGeometry.width() / 4 + 20, 13);
     }
 
     QScreen* scr = QGuiApplication::primaryScreen();
@@ -171,6 +174,13 @@ MainWindow::MainWindow(QWidget *parent)
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+void MainWindow::on_profileButton_clicked()
+{
+    Profile* profileWidget = new Profile(this);
+    profileWidget->raise();
+    profileWidget->show();
 }
 
 void MainWindow::on_exitButton_clicked()

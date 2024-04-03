@@ -1,4 +1,5 @@
 #include "Forms/Main/mainwindow.h"
+#include "Forms/Profile/profile.h"
 #include "Forms/Auth/auth.h"
 #include <QApplication>
 #include "ClientManager/socketparser.h"
