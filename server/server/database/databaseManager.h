@@ -13,11 +13,12 @@
 #include "../../common/authentication/authentication.h"
 #include "../../common/course/course.h"
 #include "../../common/course/course_components/coursetest.h"
-
+#include <QUuid>
+#include <QThreadStorage>
 
 class DatabaseManager {
 public:
-    static DatabaseManager* getInstance();
+    DatabaseManager();
     //функции выполняющие запросы
     bool Login(Authentication* auth);
     QList<Course*> GetMainPage(Authentication* auth);
@@ -27,20 +28,16 @@ public:
     //тут скорее всего будет не bool я еще почитаю как лучше реализовать обновление этих штук
     bool SetNewTest(CourseTest* test);
     bool SetNewCourse(Course* course);
-
-
-private:
     ~DatabaseManager();
 
+private:
     bool createConnection();
     QSqlQuery executeQuery(const QString& query);
     QVariant getScalarValue(const QString& query);
     QList<QVariantMap> getQueryResults(const QString& query);
-    DatabaseManager();
     DatabaseManager(const DatabaseManager&) = delete;
     DatabaseManager& operator=(const DatabaseManager&) = delete;
 
-    static DatabaseManager* s_Instance;
     QSqlDatabase m_db;
 };
 

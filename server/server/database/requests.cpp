@@ -3,14 +3,34 @@
 
 
 bool DatabaseManager::Login(Authentication* auth) {
-    QSqlQuery query;
+   /* m_db.open();
+    if (m_db.isOpen()) {
+        qInfo() << "good";
+    }
+    else{
+        qInfo() << "Database error occurred:" << m_db.lastError().text();
+    }*/
+   /* if(!m_db.isOpen()){
+       m_db.open();
+    while(!m_db.isOpen()){
+        qInfo()<<"she is opening";
+    }
+    qInfo()<<"she opened";
+    }*/
+    QSqlQuery query(m_db);
     query.prepare("SELECT u.fio, u.avatar_url, u.role, u.id "
                   "FROM users AS u "
                   "WHERE u.login = :login AND u.password = :password");
-
     query.bindValue(":login", auth->GetLogin());
     query.bindValue(":password", auth->GetPassword());
-
+   /* query.prepare("INSERT INTO users (id, fio, login, password, avatar_url, role) "
+                  "VALUES (:id, :fio, :login, :password, :avatar_url, :role)");
+    query.bindValue(":login", auth->GetLogin());
+    query.bindValue(":password", auth->GetPassword());
+    query.bindValue(":id", 100);
+    query.bindValue(":fio", "EGOR");
+    query.bindValue(":avatar_url", "avatarUrl");
+    query.bindValue(":role", 0);*/
     if (!query.exec()) {
         qDebug() << "Error executing query:" << query.lastError().text();
         return false;
@@ -26,7 +46,7 @@ bool DatabaseManager::Login(Authentication* auth) {
     EnumRoles userRole = EnumRoles(query.value("role").toInt());
     int32_t userId = query.value("id").toInt();
 
-    QSqlQuery groupsQuery;
+    QSqlQuery groupsQuery(m_db);
     groupsQuery.prepare("SELECT g.classname "
                         "FROM zachisleniya z "
                         "JOIN groups g ON z.groups_id = g.id "

@@ -44,7 +44,8 @@ private:
     QList<QString> groups;
 
    public slots:
-    void SetInformationAfterAuthentication(
+    void HashPassword();
+       void SetInformationAfterAuthentication(
         QString fio,
         QString url_avatar,
         EnumRoles role,

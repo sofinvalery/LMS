@@ -49,3 +49,10 @@ HEADERS += \
 
 RESOURCES += \
     resources.qrc
+macx {
+    INCLUDEPATH += /usr/local/mysql-connector-cpp/include
+    LIBS += -L/usr/local/mysql-connector-cpp/lib -lmysqlcppconn
+    }
+
+
+

@@ -1,31 +1,22 @@
 #include "databasemanager.h"
 
+static QThreadStorage<QSqlDatabase> mDatabasePool;
 
-DatabaseManager* DatabaseManager::s_Instance = nullptr;
-
-DatabaseManager* DatabaseManager::getInstance() {
-    if (s_Instance == nullptr) {
-        s_Instance = new DatabaseManager();
-    }
-    return s_Instance;
-}
 
 DatabaseManager::DatabaseManager() {
     createConnection();
 }
 
 DatabaseManager::~DatabaseManager() {
-    if (m_db.isOpen()) {
-        m_db.close();
-    }
+
 }
 
 bool DatabaseManager::createConnection() {
-    m_db = QSqlDatabase::addDatabase("QMYSQL");
+  /*  m_db = QSqlDatabase::addDatabase("QMYSQL");
     m_db.setHostName("localhost");
-    m_db.setDatabaseName("LMS_db");
+    m_db.setDatabaseName("lms_db");
     m_db.setUserName("root");
-    m_db.setPassword("blessedNbest");
+    m_db.setPassword("12345");
 
     if (!m_db.open()) {
         qDebug() << "Database error occurred:" << m_db.lastError().text();
@@ -33,6 +24,30 @@ bool DatabaseManager::createConnection() {
     }
 
     return true;
+*/
+    if(mDatabasePool.hasLocalData()) {
+        m_db= mDatabasePool.localData();
+        return true;
+    } else {
+        auto m_db = QSqlDatabase::addDatabase("QMYSQL", QUuid::createUuid().toString());
+        m_db.setHostName("localhost");
+        m_db.setDatabaseName("lms_db");
+        m_db.setUserName("root");
+        m_db.setPassword("12345");
+        m_db.setPort(3306);
+        if (!m_db.open()) {
+            qInfo() << "Database error occurred:" << m_db.lastError().text();
+            throw("bd bad");
+        }
+        else{
+            while(!m_db.isOpen()){
+                qInfo()<<"she is opening";
+            }
+            qInfo()<<"she opened";
+        mDatabasePool.setLocalData(m_db);
+                return true;
+        }
+    }
 }
 
 QSqlQuery DatabaseManager::executeQuery(const QString& query) {
