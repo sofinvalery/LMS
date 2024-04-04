@@ -142,25 +142,33 @@ MainWindow::MainWindow(QWidget *parent)
 
     ui->scrollArea->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
+
+    int widgetwidth = MyWidget().width();
+    int widgetheight = MyWidget().height();
+    int vertspace = scr->availableGeometry().height()/ 17;
+    int horizspace = scr->availableGeometry().width()/ 30;
+
+    int columncnt = scr->availableGeometry().width()/ (widgetwidth + 2 * horizspace);
+
     //ui->scrollArea->resize(this->frameGeometry().width()-20,this->frameGeometry().height()-100);
     //ui->scrollAreaWidgetContents->setMinimumWidth(this->frameGeometry().width()-20); - ширина области в которой работает скролл
-    ui->scrollAreaWidgetContents->setMinimumHeight((arrlen/4)*(65+262)+350);
+    ui->scrollAreaWidgetContents->setMinimumHeight((arrlen/columncnt)*(vertspace+widgetheight));//+350);
     // ui->gridLayoutWidget->setFixedWidth(this->frameGeometry().width());
     // ui->gridLayoutWidget->setFixedWidth(this->frameGeometry().height());
     ui->gridLayoutWidget->resize(this->frameGeometry().width(),this->frameGeometry().height());
-    ui->gridLayoutWidget->setMinimumHeight((arrlen/4)*(65+262)+350);
+    ui->gridLayoutWidget->setMinimumHeight((arrlen/columncnt)*(2*vertspace+widgetheight));//+350);
     // ui->gridLayout->setColumnMinimumWidth(0,351);
     // ui->gridLayout->setColumnMinimumWidth(1,351);
     // ui->gridLayout->setColumnMinimumWidth(2,351);
     // ui->gridLayout->setColumnMinimumWidth(3,351);
     //ui->gridLayout->setRowMinimumHeight(0,0);
-    ui->gridLayout->setVerticalSpacing(65);
-    ui->gridLayout->setHorizontalSpacing(65);
+    ui->gridLayout->setVerticalSpacing(vertspace);
+    ui->gridLayout->setHorizontalSpacing(horizspace);
     //ui->gridLayout->setContentsMargins(0,0,0,0);
     //ui->gridLayout->setGeometry(this->frameGeometry());
     for (int i = 0, j = 0, z = 0; z < arrlen; z++, j++){
         course[z] = new MyWidget();
-        if (z % 4 == 0){
+        if (z % columncnt == 0){
             j = 0;
             i++;
             //ui->gridLayout->setRowMinimumHeight(i,1);
