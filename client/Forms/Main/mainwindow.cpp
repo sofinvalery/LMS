@@ -1,9 +1,10 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "Forms/Profile/profile.h"
+#include "Forms/Reconnect/reconnect.h"
 #include <QMessageBox>
 
-#define arrlen 25
+#define arrlen 15
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -89,25 +90,21 @@ MainWindow::MainWindow(QWidget *parent)
         "}");
     //exitbutton
     ui->exitButton->setCursor(Qt::PointingHandCursor);
-    ui->exitButton->setFont(FontManager::GetInstance()->getRegular());
-    ui->exitButton->setText("X");
-    ui->exitButton->setFixedSize(screenGeometry.width() / 35, 20);
-    ui->exitButton->move(screenGeometry.width() - screenGeometry.width() / 35, 0);
+    //ui->exitButton->setFont(FontManager::GetInstance()->getRegular());
+    ui->exitButton->setText("");
+    ui->exitButton->setIcon(QIcon(":/img/resources/kap.jpg"));
+    ui->exitButton->setFixedSize(64, 64);
+    ui->exitButton->move(screenGeometry.width() - 84, 13);
     ui->exitButton->setStyleSheet(
         "QPushButton {"
         "border: none;"
         "border-left: 2px solid grey;"
-        "border-bottom: 2px solid grey;"
         "}"
         "QPushButton:hover {"
         "background-color: #ed3124;"
-        "border-left: 1px solid #ed3124;"
-        "border-bottom: 1px solid #ed3124;"
         "}"
         "QPushButton:pressed {"
         "background-color: #C9261E;"
-        "border-left: 1px solid #C9261E;"
-        "border-bottom: 1px solid #C9261E;"
         "}");
     //profilebutton
     ui->profileButton->setIcon(QIcon(":/img/resources/profile.png"));
@@ -189,6 +186,13 @@ void MainWindow::on_profileButton_clicked()
     Profile* profileWidget = new Profile(this);
     profileWidget->raise();
     profileWidget->show();
+}
+
+void MainWindow::on_mainButton_clicked()
+{
+    Reconnect* reconnect = new Reconnect(this);
+    reconnect->raise();
+    reconnect->exec();
 }
 
 void MainWindow::on_exitButton_clicked()

@@ -28,6 +28,7 @@ public:
 private slots:
     void on_exitButton_clicked();
     void on_profileButton_clicked();
+    void on_mainButton_clicked();
 private:
     Ui::MainWindow *ui;
     MyWidget * course[25];

@@ -1,5 +1,4 @@
 #include "Forms/Main/mainwindow.h"
-#include "Forms/Profile/profile.h"
 #include "Forms/Auth/auth.h"
 #include <QApplication>
 #include "ClientManager/socketparser.h"
@@ -19,8 +18,7 @@ int main(int argc, char *argv[])
         mainwindow.showFullScreen();
     }
     if (auth.exit){
-        mainwindow.close();
-        qApp->quit();
+        return 0;
     }
     return a.exec();
 }
