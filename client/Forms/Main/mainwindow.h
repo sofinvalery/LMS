@@ -6,8 +6,11 @@
 #include "Forms/MyWidget/mywidget.h"
 #include "../common/authentication/authentication.h"
 #include "FontManager/fontmanager.h"
+#include "Forms/CoursesMPWidget/coursesmpwidget.h"
 #include <QScreen>
-#include <QScrollArea>
+
+// #include <QScrollArea>
+
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -31,6 +34,9 @@ private slots:
     void on_mainButton_clicked();
 private:
     Ui::MainWindow *ui;
-    MyWidget * course[25];
+    CoursesMPWidget * courses = new CoursesMPWidget();
+
+    //MyWidget * course[25];
+
 };
 #endif // MAINWINDOW_H
