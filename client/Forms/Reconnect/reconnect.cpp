@@ -10,8 +10,14 @@ Reconnect::Reconnect(QWidget *parent)
     this->hide();
     this->setWindowTitle("vlad lox pidor");
     this->setStyleSheet("background-color: white;");
-    this->setWindowFlag(Qt::WindowCloseButtonHint, false);
+    this->setWindowFlags(Qt::FramelessWindowHint);
     this->setFixedSize(this->size());
+    //groupbox
+    ui->groupBox->setStyleSheet(
+        "QGroupBox {"
+        "border: 2px solid grey;"
+        "border-radius: 10px;"
+        "}");
     //statuslabel
     ui->statusLabel->setFont(FontManager::GetInstance()->getRegular());
     ui->statusLabel->setText("Потеряно соединение");
@@ -22,7 +28,6 @@ Reconnect::Reconnect(QWidget *parent)
         "qproperty-alignment: AlignCenter;"
         "}");
     //exitbutton
-    ui->exitButton->setEnabled(true);
     ui->exitButton->setFont(FontManager::GetInstance()->getBold());
     ui->exitButton->setText("Выход");
     ui->exitButton->setFixedSize(178, 40);
@@ -74,7 +79,6 @@ void Reconnect::on_exitButton_clicked()
 void Reconnect::on_reconnectButton_clicked()
 {
     ui->statusLabel->setText("Gled lox");
-    ui->exitButton->setEnabled(false);
     ui->reconnectButton->setEnabled(false);
     //reconnect dlya gleda
     //esli che okno zapuskaetsa kogda na glavnoe nazhimaesh v mainwindow
