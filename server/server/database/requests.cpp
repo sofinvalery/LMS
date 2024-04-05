@@ -48,8 +48,8 @@ bool DatabaseManager::Login(Authentication* auth) {
 
     QSqlQuery groupsQuery(m_db);
     groupsQuery.prepare("SELECT g.classname "
-                        "FROM zachisleniya z "
-                        "JOIN groups g ON z.groups_id = g.id "
+                        "FROM zachisleniya AS z "
+                        "JOIN groups AS g ON z.groups_id = g.id "
                         "WHERE z.users_id = :userId");
     groupsQuery.bindValue(":userId", userId);
 
@@ -75,15 +75,15 @@ QList<Course*> DatabaseManager::GetMainPage(Authentication* auth) {
 
     if (auth->GetCurrentRole() == STUDENT) {
         query.prepare("SELECT c.id, c.title, c.ava_title_url, c.start_time, c.end_time "
-                      "FROM courses c "
-                      "INNER JOIN zachisleniya_in_potok zip ON c.students_groups_union_id1 = zip.students_groups_union_id "
-                      "INNER JOIN zachisleniya z ON zip.groups_id = z.groups_id "
+                      "FROM courses AS c "
+                      "INNER JOIN zachisleniya_in_potok AS zip ON c.students_groups_union_id1 = zip.students_groups_union_id "
+                      "INNER JOIN zachisleniya AS z ON zip.groups_id = z.groups_id "
                       "WHERE z.users_id = :userId");
     } else if (auth->GetCurrentRole() == TEACHER) {
         query.prepare("SELECT c.id, c.title, c.ava_title_url, c.start_time, c.end_time "
-                      "FROM courses c "
-                      "INNER JOIN groups g ON c.groups_id = g.id "
-                      "INNER JOIN zachisleniya z ON g.id = z.groups_id "
+                      "FROM courses AS c "
+                      "INNER JOIN groups AS g ON c.groups_id = g.id "
+                      "INNER JOIN zachisleniya AS z ON g.id = z.groups_id "
                       "WHERE z.users_id = :userId");
     } else {
         // ...
@@ -132,10 +132,10 @@ void DatabaseManager::GetCourseComponents(Course* course) {
     taskQuery.prepare("SELECT pct.id, pct.`order`, pct.content, pct.max_mark, pct.memory_limit, "
                       "GROUP_CONCAT(tf.name SEPARATOR ',') AS allowed_types, "
                       "pcts.answer_url, pcts.time, pcts.verdict, pcts.notes "
-                      "FROM path_course_tasks pct "
-                      "LEFT JOIN type_file_has_lesson_problem tfhlp ON pct.id = tfhlp.path_course_tasks_id1 "
-                      "LEFT JOIN type_files tf ON tfhlp.type_files_id1 = tf.id "
-                      "LEFT JOIN path_course_tasks_submits pcts ON pct.id = pcts.path_course_tasks_id1 "
+                      "FROM path_course_tasks AS pct "
+                      "LEFT JOIN type_file_has_lesson_problem AS tfhlp ON pct.id = tfhlp.path_course_tasks_id1 "
+                      "LEFT JOIN type_files AS tf ON tfhlp.type_files_id1 = tf.id "
+                      "LEFT JOIN path_course_tasks_submits AS pcts ON pct.id = pcts.path_course_tasks_id1 "
                       "WHERE pct.courses_id1 = :courseId "
                       "GROUP BY pct.id "
                       "ORDER BY pct.`order`");
@@ -162,7 +162,7 @@ void DatabaseManager::GetCourseComponents(Course* course) {
     QSqlQuery testQuery;
     testQuery.prepare("SELECT pct.id, pct.`order`, pct.title, pct.max_mark, pct.url_json, "
                       "pct.time_in_seconds, pcts.verdict, pcts.notes, pcts.time "
-                      "FROM path_course_tests pct "
+                      "FROM path_course_tests AS pct "
                       "LEFT JOIN path_course_test_submits pcts ON pct.id = pcts.path_course_tests_id "
                       "WHERE pct.courses_id1 = :courseId "
                       "ORDER BY pct.`order`");
