@@ -12,24 +12,11 @@ DatabaseManager::~DatabaseManager() {
 }
 
 bool DatabaseManager::createConnection() {
-  /*  m_db = QSqlDatabase::addDatabase("QMYSQL");
-    m_db.setHostName("localhost");
-    m_db.setDatabaseName("lms_db");
-    m_db.setUserName("root");
-    m_db.setPassword("12345");
-
-    if (!m_db.open()) {
-        qDebug() << "Database error occurred:" << m_db.lastError().text();
-        return false;
-    }
-
-    return true;
-*/
     if(mDatabasePool.hasLocalData()) {
         m_db= mDatabasePool.localData();
         return true;
     } else {
-        auto m_db = QSqlDatabase::addDatabase("QMYSQL", QUuid::createUuid().toString());
+        m_db = QSqlDatabase::addDatabase("QMYSQL", QUuid::createUuid().toString());
         m_db.setHostName("localhost");
         m_db.setDatabaseName("lms_db");
         m_db.setUserName("root");
@@ -40,10 +27,6 @@ bool DatabaseManager::createConnection() {
             throw("bd bad");
         }
         else{
-            while(!m_db.isOpen()){
-                qInfo()<<"she is opening";
-            }
-            qInfo()<<"she opened";
         mDatabasePool.setLocalData(m_db);
                 return true;
         }

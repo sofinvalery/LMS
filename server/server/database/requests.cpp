@@ -1,28 +1,15 @@
 #include "databasemanager.h"
 #include "../../common/authentication/authentication.h"
 
-
+#include <QThread>
 bool DatabaseManager::Login(Authentication* auth) {
-   /* m_db.open();
-    if (m_db.isOpen()) {
-        qInfo() << "good";
-    }
-    else{
-        qInfo() << "Database error occurred:" << m_db.lastError().text();
-    }*/
-   /* if(!m_db.isOpen()){
-       m_db.open();
-    while(!m_db.isOpen()){
-        qInfo()<<"she is opening";
-    }
-    qInfo()<<"she opened";
-    }*/
     QSqlQuery query(m_db);
     query.prepare("SELECT u.fio, u.avatar_url, u.role, u.id "
                   "FROM users AS u "
                   "WHERE u.login = :login AND u.password = :password");
     query.bindValue(":login", auth->GetLogin());
     query.bindValue(":password", auth->GetPassword());
+    //для вставки логина пароля в бд закоментировать выше разкомментировать ниже
    /* query.prepare("INSERT INTO users (id, fio, login, password, avatar_url, role) "
                   "VALUES (:id, :fio, :login, :password, :avatar_url, :role)");
     query.bindValue(":login", auth->GetLogin());

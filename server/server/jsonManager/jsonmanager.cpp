@@ -27,9 +27,8 @@ QJsonObject logining(QJsonObject json,Authentication *auth)
     auth = Authentication::Deserialize(json);
     auth->HashPassword();
     DatabaseManager db;
-    db.Login(auth);
     QList<Course*> list;
-    if(auth->IsAuthenticated())
+    if(db.Login(auth))
         list = db.GetMainPage(auth);
     /*QList<Course*> list= {new Course(5,"maths","aaaaa", QDate(1999,9,9),QDate(2000,1,1),20,100),
                             new Course(15,"phisyc","bbbbb", QDate(2004,4,4),QDate(2005,1,1),11,80)};
