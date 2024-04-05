@@ -35,8 +35,8 @@ bool DatabaseManager::Login(Authentication* auth) {
 
     QSqlQuery groupsQuery(m_db);
     groupsQuery.prepare("SELECT g.classname "
-                        "FROM zachisleniya AS z "
-                        "JOIN groups AS g ON z.groups_id = g.id "
+                        "FROM `groups` AS g "
+                        "JOIN zachisleniya AS z ON z.groups_id = g.id "
                         "WHERE z.users_id = :userId");
     groupsQuery.bindValue(":userId", userId);
 
@@ -69,7 +69,7 @@ QList<Course*> DatabaseManager::GetMainPage(Authentication* auth) {
     } else if (auth->GetCurrentRole() == TEACHER) {
         query.prepare("SELECT c.id, c.title, c.ava_title_url, c.start_time, c.end_time "
                       "FROM courses AS c "
-                      "INNER JOIN groups AS g ON c.groups_id = g.id "
+                      "INNER JOIN `groups` AS g ON c.groups_id = g.id "
                       "INNER JOIN zachisleniya AS z ON g.id = z.groups_id "
                       "WHERE z.users_id = :userId");
     } else {
