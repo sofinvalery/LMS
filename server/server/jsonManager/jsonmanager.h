@@ -10,7 +10,10 @@
 
 QJsonObject jsonManager(QJsonObject json,Authentication *auth);
 
+
 static QJsonObject logining(QJsonObject json,Authentication *auth);
+
+static QJsonObject reconect(QJsonObject json,Authentication *auth);
 
 static QJsonObject getMainPage(QJsonObject json,Authentication *auth);
 

@@ -22,6 +22,8 @@ SOURCES += \
     Forms/Auth/auth.cpp \
     Forms/Main/mainwindow.cpp \
     Forms/MyWidget/mywidget.cpp \
+    Forms/Profile/profile.cpp \
+    Forms/Reconnect/reconnect.cpp \
     main.cpp  \
     ../common/course/course_components/coursevideos.cpp \
     ../common/course/course_components/question.cpp
@@ -43,12 +45,16 @@ HEADERS += \
     Forms/Main/mainwindow.h  \
     ../common/course/course_components/coursevideos.h \
     ../common/course/course_components/question.h \
-    Forms/MyWidget/mywidget.h
+    Forms/MyWidget/mywidget.h \
+    Forms/Profile/profile.h \
+    Forms/Reconnect/reconnect.h
 
 FORMS += \
     Forms/Auth/auth.ui \
     Forms/Main/mainwindow.ui \
-    Forms/MyWidget/mywidget.ui
+    Forms/MyWidget/mywidget.ui \
+    Forms/Profile/profile.ui \
+    Forms/Reconnect/reconnect.ui
 
 
 # Default rules for deployment.

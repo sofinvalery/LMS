@@ -1,6 +1,6 @@
 #include "clientmanager.h"
 #include <QSslConfiguration>
-
+#include "Forms/Reconnect/reconnect.h"
 
 ClientManager* ClientManager::s_Instance = nullptr;
 
@@ -17,9 +17,9 @@ ClientManager::ClientManager(QObject *parent)
     port=1234;
     hostName="127.0.0.1";
     socket->connectToHostEncrypted(hostName,port);
-    if (!socket->waitForEncrypted(1000000)) {
+    if (!socket->waitForEncrypted(10000)) {
         qInfo() << socket->errorString();
-        throw ("ошибка подключения");
+        ServerOrClientError();
     }
     qInfo() << "connection to server";
 
@@ -66,7 +66,14 @@ void ClientManager::slotReadyRead()
 //вывести как нибудь что все пошло не туда...
 void ClientManager::ServerOrClientError()
 {
-   QT_THROW("Проверь интернет кабель...");
+    socket->waitForDisconnected();
+    Reconnect* rec = new Reconnect;
+    connect(rec,SIGNAL(re()),this,SLOT(tryReconnected()));
+    connect(socket,SIGNAL(encrypted()),rec,SLOT(reconnectGood()));
+    connect(socket,SIGNAL(errorOccurred(QAbstractSocket::SocketError)),rec,SLOT(reconnectEr(QAbstractSocket::SocketError)));
+    rec->setModal(true);
+    rec->raise();
+    rec->show();
 }
 
 void ClientManager::SendToServer(QJsonObject json)
@@ -86,6 +93,13 @@ void ClientManager::sslErrorOccured( QList<QSslError> list )
             qInfo() << "SSL error:" << error.errorString();
         }
         socket->ignoreSslErrors(list);
+}
+
+void ClientManager::tryReconnected()
+{
+    qInfo()<<"Asd";
+
+    QMetaObject::invokeMethod(this, [this]{ socket->connectToHostEncrypted(hostName,port); }, Qt::QueuedConnection);
 }
 
 void ClientManager::Send(TransferEnum e, QJsonObject json)

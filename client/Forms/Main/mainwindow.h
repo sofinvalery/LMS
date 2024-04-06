@@ -4,7 +4,10 @@
 #include <QMainWindow>
 
 #include "Forms/MyWidget/mywidget.h"
-
+#include "../common/authentication/authentication.h"
+#include "FontManager/fontmanager.h"
+#include <QScreen>
+#include <QScrollArea>
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -23,8 +26,9 @@ public:
 
 
 private slots:
-    void on_pushButton_clicked();
-
+    void on_exitButton_clicked();
+    void on_profileButton_clicked();
+    void on_mainButton_clicked();
 private:
     Ui::MainWindow *ui;
     MyWidget * course[25];

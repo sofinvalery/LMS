@@ -8,7 +8,7 @@ MyWidget::MyWidget(QWidget *parent)
     , ui(new Ui::MyWidget)
 {
     ui->setupUi(this);
-    //this->setStyleSheet("background-color: white;");
+
     //progressbar
     ui->progressBar->setFont(FontManager::GetInstance()->getRegular());
     ui->progressBar->setStyleSheet(
@@ -18,11 +18,19 @@ MyWidget::MyWidget(QWidget *parent)
         "background-color: lightgrey;"
         "}"
         "QProgressBar::chunk {"
-        "background-color: #2194DE;"
         "border-radius: 10px;"
+        "background: #4EB5FF;"
         "}");
     //progressbarbutton
+    ui->ProgressbarButton->raise();
     ui->ProgressbarButton->setCursor(Qt::PointingHandCursor);
+    ui->ProgressbarButton->setFixedSize(341, 25);
+    //groupbox
+    ui->groupBox->setStyleSheet(
+        "QGroupBox {"
+        "border-radius: 10px;"
+        "border: 2px solid lightgrey;"
+        "}");
     //coursename
     ui->CourseName->setFont(FontManager::GetInstance()->getBold());
     ui->CourseName->setStyleSheet(
@@ -33,8 +41,7 @@ MyWidget::MyWidget(QWidget *parent)
     ui->CourseButtonIMG->setCursor(Qt::PointingHandCursor);
     ui->CourseButtonIMG->setStyleSheet(
         "QPushButton {"
-        "border: 1px solid black;"
-        "border-radius: 20px;"
+        "border: none;"
         "}"
         "QPushButton:hover {"
         "background-color: lightgrey;"

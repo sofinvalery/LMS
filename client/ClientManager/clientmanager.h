@@ -25,7 +25,7 @@ private slots:
     void ServerOrClientError();
     void SendToServer(QJsonObject json);
     void sslErrorOccured( QList<QSslError> list);
-
+    void tryReconnected();
 
 public:
     static ClientManager* GetInstance() { return s_Instance = (s_Instance != nullptr ? s_Instance : new ClientManager()); }

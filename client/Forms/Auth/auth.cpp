@@ -31,23 +31,25 @@ Auth::Auth(QWidget *parent)
         "}"
         );
     //дизайн логина
+    ui->login->setFont(FontManager::GetInstance()->getRegular());
     ui->login->setStyleSheet(
         "QLineEdit {"
         "border: none;"
         "width: 100px;"
         "height: 50px;"
         "font-size: 20px;"
-        "border-bottom: 1px solid lightgrey;"
+        "border-bottom: 2px solid lightgrey;"
         "}"
         );
     //дизайн пароля
+    ui->password->setFont(FontManager::GetInstance()->getRegular());
     ui->password->setStyleSheet(
         "QLineEdit {"
         "border: none;"
         "width: 100px;"
         "height: 50px;"
         "font-size: 20px;"
-        "border-bottom: 1px solid lightgrey;"
+        "border-bottom: 2px solid lightgrey;"
         "}"
         );
     //дизайн кнопки
@@ -55,23 +57,23 @@ Auth::Auth(QWidget *parent)
     ui->pushButton->setFont(FontManager::GetInstance()->getBold());
     ui->pushButton->setStyleSheet(
         "QPushButton {"
-        "background-color: #2194DE;"
+        "background-color: #4AB8FF;"
         "border-radius: 10px;"
         "border: none;"
         "color: white;"
         "padding: 15px 32px;"
-        "text-align: center;"
-        "text-decoration: none;"
         "font-size: 16px;"
-        "margin: 4px 2px;"
         "}"
         "QPushButton:hover {"
-        "background-color: #4AB8FF;"
+        "background-color: #2194DE;"
         "}"
         "QPushButton:pressed {"
         "background-color: #0E5FA8;"
         "}"
         );
+    //errorbox
+    ui->errorbox->setText("Неправильный логин или пароль");
+    ui->errorbox->hide();
 }
 
 Auth::~Auth()
@@ -88,10 +90,11 @@ void Auth::on_pushButton_clicked()
 {
     QString log = ui->login->text();
     QString pass = ui->password->text();
-    Authentication* auth =new Authentication(log,pass);
-    QJsonObject json = auth->Serialize();
-    delete auth;
-    ClientManager::GetInstance()->Send(LOGINING,json);
+
+     Authentication* auth =new Authentication(log,pass);
+     QJsonObject json = auth->Serialize();
+     delete auth;
+     ClientManager::GetInstance()->Send(LOGINING,json);
 
 }
 
@@ -106,7 +109,7 @@ void Auth::showMainPage()
     }
     else
     {
-        ui->errorbox->setText("Ошибка, введены неправильные данные");
+         ui->errorbox->show();
     }
 }
 

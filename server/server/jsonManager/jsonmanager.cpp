@@ -9,16 +9,23 @@ static Action Actions[] ={
     [GETTESTQUESTION] = getTestQuestions,
     [SETNEWGROUPSTUDENTS] = setNewGroupStudents,
     [SETNEWTEST] = setNewTest,
-    [SETNEWCOURSE] = setNewCourse
+    [SETNEWCOURSE] = setNewCourse,
+    [RECONECT] = reconect,
 };
 
 QJsonObject jsonManager(QJsonObject json,Authentication *auth)
 {
     QJsonObject data=json["Data"].toObject();
     TransferEnum e = (TransferEnum)json["Action"].toInt();
-    if( (auth==nullptr&& e!=LOGINING) || (auth!=nullptr && !auth->IsAuthenticated() && e!=LOGINING))
-        throw std::exception();
+    if((e==LOGINING || e==RECONECT))
     return Actions[e](data,auth);
+    if(auth!=nullptr && auth->IsAuthenticated())
+        return Actions[e](data,auth);
+    else
+    {
+        QJsonObject sendjson;
+        return  sendjson;
+    }
 }
 
 QJsonObject logining(QJsonObject json,Authentication *auth)
@@ -41,6 +48,15 @@ QJsonObject logining(QJsonObject json,Authentication *auth)
     temp["Authentication"]=auth->Serialize();
     temp["CourseList"]=components;
     sendjson["Data"]=temp;
+    return sendjson;
+}
+QJsonObject reconect(QJsonObject json,Authentication *auth){
+    QJsonObject sendjson;
+    auth = Authentication::Deserialize(json);
+    DatabaseManager db;
+    if(!db.Login(auth))
+        auth->setIsAuthenticated(false);
+    sendjson["Action"]=RECONECT;
     return sendjson;
 }
 

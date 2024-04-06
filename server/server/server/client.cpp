@@ -22,6 +22,7 @@ Client::Client(qintptr socketDescriptor, QObject* parent) :
 
  void Client::readyRead()
 {
+     qInfo()<<"readyRead";
     quint64 nextBlockSize=0;
     QDataStream in(m_client);
     in.setVersion(QDataStream::Qt_6_2);
