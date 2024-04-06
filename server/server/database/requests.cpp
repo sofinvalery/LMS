@@ -4,20 +4,20 @@
 #include <QThread>
 bool DatabaseManager::Login(Authentication* auth) {
     QSqlQuery query(m_db);
-    query.prepare("SELECT u.fio, u.avatar_url, u.role, u.id "
-                  "FROM users AS u "
-                  "WHERE u.login = :login AND u.password = :password");
-    query.bindValue(":login", auth->GetLogin());
-    query.bindValue(":password", auth->GetPassword());
+    // query.prepare("SELECT u.fio, u.avatar_url, u.role, u.id "
+    //               "FROM users AS u "
+    //               "WHERE u.login = :login AND u.password = :password");
+    // query.bindValue(":login", auth->GetLogin());
+    // query.bindValue(":password", auth->GetPassword());
     //для вставки логина пароля в бд закоментировать выше разкомментировать ниже
-   /* query.prepare("INSERT INTO users (id, fio, login, password, avatar_url, role) "
+    query.prepare("INSERT INTO users (id, fio, login, password, avatar_url, role) "
                   "VALUES (:id, :fio, :login, :password, :avatar_url, :role)");
     query.bindValue(":login", auth->GetLogin());
     query.bindValue(":password", auth->GetPassword());
     query.bindValue(":id", 100);
     query.bindValue(":fio", "EGOR");
     query.bindValue(":avatar_url", "avatarUrl");
-    query.bindValue(":role", 0);*/
+    query.bindValue(":role", 0);
     if (!query.exec()) {
         qDebug() << "Error executing query:" << query.lastError().text();
         return false;
@@ -35,7 +35,7 @@ bool DatabaseManager::Login(Authentication* auth) {
 
     QSqlQuery groupsQuery(m_db);
     groupsQuery.prepare("SELECT g.classname "
-                        "FROM `groups` AS g "
+                        "FROM groups AS g "
                         "JOIN zachisleniya AS z ON z.groups_id = g.id "
                         "WHERE z.users_id = :userId");
     groupsQuery.bindValue(":userId", userId);
