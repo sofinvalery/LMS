@@ -4,11 +4,9 @@ QT += widgets
 QT += sql
 QT += concurrent
 QTPLUGIN += QPSQL
-LIBS += -L/usr/local/lib -lpq
+
 CONFIG += c++17 cmdline console
-INCLUDEPATH += /Users/valeriysofin/Qt/6.6.3/macos/plugins/sqldrivers
-INCLUDEPATH += /Applications/Postgres.app/Contents/Versions/16/include
-INCLUDEPATH += /Applications/Postgres.app/Contents/Versions/16/lib
+
 # You can make your code fail to compile if it uses deprecated APIs.
 # In order to do so, uncomment the following line.
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
@@ -55,6 +53,10 @@ HEADERS += \
 RESOURCES += \
     resources.qrc
 macx {
+    INCLUDEPATH += /Users/valeriysofin/Qt/6.6.3/macos/plugins/sqldrivers
+    INCLUDEPATH += /Applications/Postgres.app/Contents/Versions/16/include
+    INCLUDEPATH += /Applications/Postgres.app/Contents/Versions/16/lib
+    LIBS += -L/usr/local/lib -lpq
     INCLUDEPATH += /usr/local/mysql-connector-cpp/include
     # LIBS += -L/usr/local/mysql-connector-cpp/lib -lmysqlcppconn
     INCLUDEPATH += /Users/valeriysofin/Qt/6.6.3/macos/plugins/sqldrivers
