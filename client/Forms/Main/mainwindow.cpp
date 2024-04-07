@@ -18,7 +18,6 @@ MainWindow::MainWindow(QWidget *parent)
 
     Authentication* auth =new Authentication("sds","gtht");
     auth->SetInformationAfterAuthentication("Max","bbbbb",ADMIN,55,QList<QString>{"O725B"});
-
     //mainbutton
     ui->mainButton->setCursor(Qt::PointingHandCursor);
     ui->mainButton->setFont(FontManager::GetInstance()->getRegular());
@@ -120,7 +119,8 @@ MainWindow::MainWindow(QWidget *parent)
 
     this->resize( scr->availableGeometry().width(), scr->availableGeometry().height());
     courses->setParent(this);
-    courses->move(0, ui->profileButton->height()+13);
+    //courses->move(0, ui->profileButton->height()+13);
+    courses->move(0, 90);
     courses->show();
 
 
