@@ -7,7 +7,10 @@
 #include "../common/authentication/authentication.h"
 #include "FontManager/fontmanager.h"
 #include "Forms/CoursesMPWidget/coursesmpwidget.h"
+#include "Forms/Profile/profile.h"
+#include "Forms/Score/score.h"
 #include <QScreen>
+
 
 // #include <QScrollArea>
 
@@ -31,10 +34,16 @@ public:
 private slots:
     void on_exitButton_clicked();
     void on_profileButton_clicked();
+    void on_scoreButton_clicked();
     void on_mainButton_clicked();
+    void on_addCourseButton_clicked();
+    void on_addPotokButton_clicked();
+    void on_addGroupButton_clicked();
 private:
     Ui::MainWindow *ui;
     CoursesMPWidget * courses = new CoursesMPWidget();
+    Profile* profile = new Profile();
+    Score* score = new Score();
 
     //MyWidget * course[25];
 

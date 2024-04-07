@@ -25,6 +25,7 @@ SOURCES += \
     Forms/MyWidget/mywidget.cpp \
     Forms/Profile/profile.cpp \
     Forms/Reconnect/reconnect.cpp \
+    Forms/Score/score.cpp \
     main.cpp  \
     ../common/course/course_components/coursevideos.cpp \
     ../common/course/course_components/question.cpp
@@ -49,7 +50,8 @@ HEADERS += \
     ../common/course/course_components/question.h \
     Forms/MyWidget/mywidget.h \
     Forms/Profile/profile.h \
-    Forms/Reconnect/reconnect.h
+    Forms/Reconnect/reconnect.h \
+    Forms/Score/score.h
 
 FORMS += \
     Forms/Auth/auth.ui \
@@ -57,7 +59,8 @@ FORMS += \
     Forms/Main/mainwindow.ui \
     Forms/MyWidget/mywidget.ui \
     Forms/Profile/profile.ui \
-    Forms/Reconnect/reconnect.ui
+    Forms/Reconnect/reconnect.ui \
+    Forms/Score/score.ui
 
 
 # Default rules for deployment.

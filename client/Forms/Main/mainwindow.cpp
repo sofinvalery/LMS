@@ -1,10 +1,5 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include "Forms/Profile/profile.h"
-#include "Forms/Reconnect/reconnect.h"
-#include <QMessageBox>
-
-#define arrlen 15
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -12,78 +7,107 @@ MainWindow::MainWindow(QWidget *parent)
 {
 
     ui->setupUi(this);
-    ui->adminButton->hide();
+    this->setStyleSheet("background-color: white;");
+    ui->addCourseButton->hide();
+    ui->addPotokButton->hide();
+    ui->addGroupButton->hide();
+    ui->verticalLine->hide();
 
     QRect screenGeometry = QGuiApplication::primaryScreen()->geometry();
 
     Authentication* auth =new Authentication("sds","gtht");
     auth->SetInformationAfterAuthentication("Max","bbbbb",ADMIN,55,QList<QString>{"O725B"});
+
     //mainbutton
     ui->mainButton->setCursor(Qt::PointingHandCursor);
-    ui->mainButton->setFont(FontManager::GetInstance()->getRegular());
-    ui->mainButton->setText("Главная");
-    ui->mainButton->setFixedSize(screenGeometry.width() / 4, 90);
-    ui->mainButton->move(104, 0);
+    ui->mainButton->setFont(FontManager::GetInstance()->getBold());
+    ui->mainButton->setText("Курсы");
+    ui->mainButton->setFixedSize(96, 45);
+    ui->mainButton->move(104, 23);
     ui->mainButton->setStyleSheet(
         "QPushButton {"
+        "background-color: #4AB8FF;"
+        "border-radius: 13px;"
         "border: none;"
-        "font-size: 32px;"
-        "border-right: 2px solid grey;"
-        "border-left: 2px solid grey;"
+        "color: white;"
+        "font-size: 20px;"
         "}"
         "QPushButton:hover {"
-        "background-color: #4EB5FF;"
+        "background-color: #2194DE;"
         "}"
         "QPushButton:pressed {"
-        "background-color: #2194DE;"
+        "background-color: #0E5FA8;"
         "}");
     //scorebutton
     ui->scoreButton->setCursor(Qt::PointingHandCursor);
-    ui->scoreButton->setFont(FontManager::GetInstance()->getRegular());
+    ui->scoreButton->setFont(FontManager::GetInstance()->getBold());
     ui->scoreButton->setText("Оценки");
-    ui->scoreButton->setFixedSize(screenGeometry.width() / 4, 90);
-    ui->scoreButton->move(screenGeometry.width() / 4 + 104, 0);
+    ui->scoreButton->setFixedSize(96, 30);
+    ui->scoreButton->move(220, 30);
     ui->scoreButton->setStyleSheet(
         "QPushButton {"
         "border: none;"
-        "font-size: 32px;"
-        "border-right: 2px solid grey;"
-        "}"
-        "QPushButton:hover {"
-        "background-color: #4EB5FF;"
+        "font-size: 20px;"
         "}"
         "QPushButton:pressed {"
-        "background-color: #2194DE;"
+        "font-size: 18px;"
         "}");
-    //adminbutton
-    ui->adminButton->setCursor(Qt::PointingHandCursor);
-    ui->adminButton->setFont(FontManager::GetInstance()->getRegular());
-    ui->adminButton->setText("Админ панель");
-    ui->adminButton->setFixedSize(screenGeometry.width() / 4, 90);
-    ui->adminButton->move(screenGeometry.width() / 2 + 104, 0);
-    ui->adminButton->setStyleSheet(
+    //verticalLine
+    ui->verticalLine->move(323, 0);
+    ui->verticalLine->setStyleSheet(
+        "QFrame {"
+        "border: 3px solid lightgrey;"
+        "}");
+    //addCoursebutton
+    ui->addCourseButton->setCursor(Qt::PointingHandCursor);
+    ui->addCourseButton->setFont(FontManager::GetInstance()->getBold());
+    ui->addCourseButton->setText("Новый курс");
+    ui->addCourseButton->setFixedSize(128, 30);
+    ui->addCourseButton->move(336, 30);
+    ui->addCourseButton->setStyleSheet(
         "QPushButton {"
         "border: none;"
-        "font-size: 32px;"
-        "border-right: 2px solid grey;"
-        "}"
-        "QPushButton:hover {"
-        "background-color: #4EB5FF;"
+        "font-size: 20px;"
         "}"
         "QPushButton:pressed {"
-        "background-color: #2194DE;"
+        "font-size: 18px;"
+        "}");
+    //addPotokButton
+    ui->addPotokButton->setCursor(Qt::PointingHandCursor);
+    ui->addPotokButton->setFont(FontManager::GetInstance()->getBold());
+    ui->addPotokButton->setText("Новый поток");
+    ui->addPotokButton->setFixedSize(156, 30);
+    ui->addPotokButton->move(492, 30);
+    ui->addPotokButton->setStyleSheet(
+        "QPushButton {"
+        "border: none;"
+        "font-size: 20px;"
+        "}"
+        "QPushButton:pressed {"
+        "font-size: 18px;"
+        "}");
+    //addGroupButton
+    ui->addGroupButton->setCursor(Qt::PointingHandCursor);
+    ui->addGroupButton->setFont(FontManager::GetInstance()->getBold());
+    ui->addGroupButton->setText("Новая группа");
+    ui->addGroupButton->setFixedSize(156, 30);
+    ui->addGroupButton->move(668, 30);
+    ui->addGroupButton->setStyleSheet(
+        "QPushButton {"
+        "border: none;"
+        "font-size: 20px;"
+        "}"
+        "QPushButton:pressed {"
+        "font-size: 18px;"
         "}");
     //exitbutton
-    ui->exitButton->setCursor(Qt::PointingHandCursor);
-    //ui->exitButton->setFont(FontManager::GetInstance()->getRegular());
-    ui->exitButton->setText("");
-    ui->exitButton->setIcon(QIcon(":/img/resources/kap.jpg"));
+    ui->exitButton->setIcon(QIcon(":/img/resources/exit.png"));
     ui->exitButton->setFixedSize(64, 64);
     ui->exitButton->move(screenGeometry.width() - 84, 13);
     ui->exitButton->setStyleSheet(
         "QPushButton {"
-        "border: none;"
-        "border-left: 2px solid grey;"
+        "border-radius: 10px;"
+        "padding: 0px;"
         "}"
         "QPushButton:hover {"
         "background-color: #ed3124;"
@@ -91,10 +115,10 @@ MainWindow::MainWindow(QWidget *parent)
         "QPushButton:pressed {"
         "background-color: #C9261E;"
         "}");
+    ui->exitButton->setCursor(Qt::PointingHandCursor);
     //profilebutton
     ui->profileButton->setIcon(QIcon(":/img/resources/profile.png"));
     ui->profileButton->setFixedSize(64, 64);
-    // ui->profileButton->move(screenGeometry.width() / 2 + 20, 13);
     ui->profileButton->move(20, 13);
     ui->profileButton->setStyleSheet(
         "QPushButton {"
@@ -111,7 +135,10 @@ MainWindow::MainWindow(QWidget *parent)
 
     if (auth->GetCurrentRole() == ADMIN)
     {
-        ui->adminButton->show();
+        ui->addCourseButton->show();
+        ui->addPotokButton->show();
+        ui->addGroupButton->show();
+        ui->verticalLine->show();
     }
 
 
@@ -119,11 +146,11 @@ MainWindow::MainWindow(QWidget *parent)
 
     this->resize( scr->availableGeometry().width(), scr->availableGeometry().height());
     courses->setParent(this);
-    //courses->move(0, ui->profileButton->height()+13);
-    courses->move(0, 90);
+    profile->setParent(this);
+    score->setParent(this);
+    profile->hide();
+    score->hide();
     courses->show();
-
-
 }
 
 MainWindow::~MainWindow()
@@ -133,23 +160,42 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_profileButton_clicked()
 {
-    Profile* profileWidget = new Profile(this);
-    profileWidget->raise();
-    profileWidget->show();
+    courses->hide();
+    score->hide();
+    profile->show();
+}
+
+void MainWindow::on_scoreButton_clicked()
+{
+    courses->hide();
+    profile->hide();
+    score->show();
 }
 
 void MainWindow::on_mainButton_clicked()
 {
-    Reconnect* reconnect = new Reconnect(this);
-    reconnect->raise();
-    reconnect->exec();
+    profile->hide();
+    score->hide();
+    courses->show();
+}
+
+void MainWindow::on_addCourseButton_clicked()
+{
+
+}
+
+void MainWindow::on_addPotokButton_clicked()
+{
+
+}
+
+void MainWindow::on_addGroupButton_clicked()
+{
+
 }
 
 void MainWindow::on_exitButton_clicked()
 {
-    QMessageBox::StandardButton reply;
-    reply = QMessageBox::question(this, "Подтверждение выхода", "Вы уверены, что хотите выйти?", QMessageBox::Yes|QMessageBox::No);
-    if (reply == QMessageBox::Yes)
-        QApplication::quit();
+    QApplication::quit();
 }
 

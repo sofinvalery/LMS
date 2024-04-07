@@ -1,6 +1,7 @@
 #include "coursesmpwidget.h"
 #include "ui_coursesmpwidget.h"
 #include <QScreen>
+#include <QScrollBar>
 
 
 #define arrlen 25
@@ -12,7 +13,7 @@ CoursesMPWidget::CoursesMPWidget(QWidget *parent) :
     ui->setupUi(this);
     ui->groupBox->setStyleSheet("background-color: white;");
     ui->scrollAreaWidgetContents->setStyleSheet("background-color: white;");
-
+    this->move(0, 90);
     QScreen* scr = QGuiApplication::primaryScreen();
 
     this->resize( scr->availableGeometry().width(), scr->availableGeometry().height());
@@ -32,9 +33,25 @@ CoursesMPWidget::CoursesMPWidget(QWidget *parent) :
     ui->scrollArea->setStyleSheet(
         "QScrollArea {"
         "border: none;"
-        "border-top: 2px solid grey;"
+        "border-top: 3px solid lightgrey;"
         "}");
-
+    ui->scrollArea->verticalScrollBar()->setStyleSheet(
+        "QScrollBar:vertical {"
+        "    border: none;"
+        "    background: #F0F0F0;"
+        "    width: 10px;"
+        "    margin: 0px 0px 0px 0px;"
+        "}"
+        "QScrollBar::handle:vertical {"
+        "    background: #C0C0C0;"
+        "    min-height: 20px;"
+        "}"
+        "QScrollBar::add-line:vertical, QScrollBar::sub-line:vertical {"
+        "    height: 0px;"
+        "}"
+        "QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {"
+        "    background: none;"
+        "}");
 
     int widgetwidth = MyWidget().width();
     int widgetheight = MyWidget().height();
