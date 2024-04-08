@@ -26,6 +26,7 @@ SOURCES += \
     Forms/Profile/profile.cpp \
     Forms/Reconnect/reconnect.cpp \
     Forms/Score/score.cpp \
+    StyleManager/stylemanager.cpp \
     main.cpp  \
     ../common/course/course_components/coursevideos.cpp \
     ../common/course/course_components/question.cpp
@@ -51,7 +52,8 @@ HEADERS += \
     Forms/MyWidget/mywidget.h \
     Forms/Profile/profile.h \
     Forms/Reconnect/reconnect.h \
-    Forms/Score/score.h
+    Forms/Score/score.h \
+    StyleManager/stylemanager.h
 
 FORMS += \
     Forms/Auth/auth.ui \

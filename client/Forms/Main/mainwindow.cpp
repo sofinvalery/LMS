@@ -1,5 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include "StyleManager/stylemanager.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -158,6 +159,7 @@ void MainWindow::ShowManePage()
     widget = new CoursesMPWidget();
     widget->setParent(this);
     widget->show();
+
 }
 
 void MainWindow::on_profileButton_clicked()
@@ -166,6 +168,9 @@ void MainWindow::on_profileButton_clicked()
     widget = new Profile();
     widget->setParent(this);
     widget->show();
+    StyleManager::GetInstance()->setSimpleStyle(ui->mainButton);
+    StyleManager::GetInstance()->setSimpleStyle(ui->scoreButton);
+    StyleManager::GetInstance()->setBlueStyle(ui->profileButton);
 }
 
 void MainWindow::on_scoreButton_clicked()
@@ -174,6 +179,9 @@ void MainWindow::on_scoreButton_clicked()
     widget = new Score();
     widget->setParent(this);
     widget->show();
+    StyleManager::GetInstance()->setSimpleStyle(ui->mainButton);
+    StyleManager::GetInstance()->setSimpleStyle(ui->profileButton);
+    StyleManager::GetInstance()->setBlueStyle(ui->scoreButton);
 }
 
 void MainWindow::on_mainButton_clicked()
@@ -181,6 +189,9 @@ void MainWindow::on_mainButton_clicked()
     widget = new CoursesMPWidget();
     widget->setParent(this);
     widget->show();
+    StyleManager::GetInstance()->setSimpleStyle(ui->profileButton);
+    StyleManager::GetInstance()->setSimpleStyle(ui->scoreButton);
+    StyleManager::GetInstance()->setBlueStyle(ui->mainButton);
 }
 
 void MainWindow::on_addCourseButton_clicked()
