@@ -28,7 +28,7 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
-
+    void ShowManePage();
 
 
 private slots:
@@ -41,10 +41,7 @@ private slots:
     void on_addGroupButton_clicked();
 private:
     Ui::MainWindow *ui;
-    CoursesMPWidget * courses = new CoursesMPWidget();
-    Profile* profile = new Profile();
-    Score* score = new Score();
-
+    QWidget * widget;
     //MyWidget * course[25];
 
 };

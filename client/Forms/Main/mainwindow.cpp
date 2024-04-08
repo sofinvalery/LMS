@@ -145,12 +145,7 @@ MainWindow::MainWindow(QWidget *parent)
     QScreen* scr = QGuiApplication::primaryScreen();
 
     this->resize( scr->availableGeometry().width(), scr->availableGeometry().height());
-    courses->setParent(this);
-    profile->setParent(this);
-    score->setParent(this);
-    profile->hide();
-    score->hide();
-    courses->show();
+
 }
 
 MainWindow::~MainWindow()
@@ -158,25 +153,34 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+void MainWindow::ShowManePage()
+{
+    widget = new CoursesMPWidget();
+    widget->setParent(this);
+    widget->show();
+}
+
 void MainWindow::on_profileButton_clicked()
 {
-    courses->hide();
-    score->hide();
-    profile->show();
+    widget->close();
+    widget = new Profile();
+    widget->setParent(this);
+    widget->show();
 }
 
 void MainWindow::on_scoreButton_clicked()
 {
-    courses->hide();
-    profile->hide();
-    score->show();
+    widget->close();
+    widget = new Score();
+    widget->setParent(this);
+    widget->show();
 }
 
 void MainWindow::on_mainButton_clicked()
 {
-    profile->hide();
-    score->hide();
-    courses->show();
+    widget = new CoursesMPWidget();
+    widget->setParent(this);
+    widget->show();
 }
 
 void MainWindow::on_addCourseButton_clicked()
