@@ -20,39 +20,13 @@ MainWindow::MainWindow(QWidget *parent)
     auth->SetInformationAfterAuthentication("Max","bbbbb",ADMIN,55,QList<QString>{"O725B"});
 
     //mainbutton
-    ui->mainButton->setCursor(Qt::PointingHandCursor);
-    ui->mainButton->setFont(FontManager::GetInstance()->getBold());
-    ui->mainButton->setText("Курсы");
+    StyleManager::GetInstance()->setBlueButtonStyle(ui->mainButton, "Курсы", "bold", 20, 13);
     ui->mainButton->setFixedSize(96, 45);
     ui->mainButton->move(104, 23);
-    ui->mainButton->setStyleSheet(
-        "QPushButton {"
-        "background-color: #4AB8FF;"
-        "border-radius: 13px;"
-        "border: none;"
-        "color: white;"
-        "font-size: 20px;"
-        "}"
-        "QPushButton:hover {"
-        "background-color: #2194DE;"
-        "}"
-        "QPushButton:pressed {"
-        "background-color: #0E5FA8;"
-        "}");
     //scorebutton
-    ui->scoreButton->setCursor(Qt::PointingHandCursor);
-    ui->scoreButton->setFont(FontManager::GetInstance()->getBold());
-    ui->scoreButton->setText("Оценки");
-    ui->scoreButton->setFixedSize(96, 30);
-    ui->scoreButton->move(220, 30);
-    ui->scoreButton->setStyleSheet(
-        "QPushButton {"
-        "border: none;"
-        "font-size: 20px;"
-        "}"
-        "QPushButton:pressed {"
-        "font-size: 18px;"
-        "}");
+    StyleManager::GetInstance()->setSimpleButtonStyle(ui->scoreButton, "Оценки", "bold", 20, 18);
+    ui->scoreButton->setFixedSize(96, 45);
+    ui->scoreButton->move(220, 23);
     //verticalLine
     ui->verticalLine->move(323, 0);
     ui->verticalLine->setStyleSheet(
@@ -60,47 +34,17 @@ MainWindow::MainWindow(QWidget *parent)
         "border: 3px solid lightgrey;"
         "}");
     //addCoursebutton
-    ui->addCourseButton->setCursor(Qt::PointingHandCursor);
-    ui->addCourseButton->setFont(FontManager::GetInstance()->getBold());
-    ui->addCourseButton->setText("Новый курс");
+    StyleManager::GetInstance()->setSimpleButtonStyle(ui->addCourseButton, "Новый курс", "bold", 20, 18);
     ui->addCourseButton->setFixedSize(128, 30);
     ui->addCourseButton->move(336, 30);
-    ui->addCourseButton->setStyleSheet(
-        "QPushButton {"
-        "border: none;"
-        "font-size: 20px;"
-        "}"
-        "QPushButton:pressed {"
-        "font-size: 18px;"
-        "}");
     //addPotokButton
-    ui->addPotokButton->setCursor(Qt::PointingHandCursor);
-    ui->addPotokButton->setFont(FontManager::GetInstance()->getBold());
-    ui->addPotokButton->setText("Новый поток");
+    StyleManager::GetInstance()->setSimpleButtonStyle(ui->addPotokButton, "Новый поток", "bold", 20, 18);
     ui->addPotokButton->setFixedSize(156, 30);
     ui->addPotokButton->move(492, 30);
-    ui->addPotokButton->setStyleSheet(
-        "QPushButton {"
-        "border: none;"
-        "font-size: 20px;"
-        "}"
-        "QPushButton:pressed {"
-        "font-size: 18px;"
-        "}");
     //addGroupButton
-    ui->addGroupButton->setCursor(Qt::PointingHandCursor);
-    ui->addGroupButton->setFont(FontManager::GetInstance()->getBold());
-    ui->addGroupButton->setText("Новая группа");
+    StyleManager::GetInstance()->setSimpleButtonStyle(ui->addGroupButton, "Новая группа", "bold", 20, 18);
     ui->addGroupButton->setFixedSize(156, 30);
     ui->addGroupButton->move(668, 30);
-    ui->addGroupButton->setStyleSheet(
-        "QPushButton {"
-        "border: none;"
-        "font-size: 20px;"
-        "}"
-        "QPushButton:pressed {"
-        "font-size: 18px;"
-        "}");
     //exitbutton
     ui->exitButton->setIcon(QIcon(":/img/resources/exit.png"));
     ui->exitButton->setFixedSize(64, 64);
@@ -168,30 +112,25 @@ void MainWindow::on_profileButton_clicked()
     widget = new Profile();
     widget->setParent(this);
     widget->show();
-    StyleManager::GetInstance()->setSimpleStyle(ui->mainButton);
-    StyleManager::GetInstance()->setSimpleStyle(ui->scoreButton);
-    StyleManager::GetInstance()->setBlueStyle(ui->profileButton);
 }
 
 void MainWindow::on_scoreButton_clicked()
 {
+    StyleManager::GetInstance()->setSimpleButtonStyle(ui->mainButton, "Курсы", "bold", 20, 18);
+    StyleManager::GetInstance()->setBlueButtonStyle(ui->scoreButton, "Оценки", "bold", 20, 13);
     widget->close();
     widget = new Score();
     widget->setParent(this);
     widget->show();
-    StyleManager::GetInstance()->setSimpleStyle(ui->mainButton);
-    StyleManager::GetInstance()->setSimpleStyle(ui->profileButton);
-    StyleManager::GetInstance()->setBlueStyle(ui->scoreButton);
 }
 
 void MainWindow::on_mainButton_clicked()
 {
+    StyleManager::GetInstance()->setBlueButtonStyle(ui->mainButton, "Курсы", "bold", 20, 13);
+    StyleManager::GetInstance()->setSimpleButtonStyle(ui->scoreButton, "Оценки", "bold", 20, 18);
     widget = new CoursesMPWidget();
     widget->setParent(this);
     widget->show();
-    StyleManager::GetInstance()->setSimpleStyle(ui->profileButton);
-    StyleManager::GetInstance()->setSimpleStyle(ui->scoreButton);
-    StyleManager::GetInstance()->setBlueStyle(ui->mainButton);
 }
 
 void MainWindow::on_addCourseButton_clicked()

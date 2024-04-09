@@ -2,26 +2,58 @@
 
 StyleManager* StyleManager::s_Instance = nullptr;
 
-StyleManager::StyleManager() {}
+StyleManager::StyleManager() {
+    QFontDatabase::addApplicationFont(":/font/resources/Comfortaa-Regular.ttf");
+    QFontDatabase::addApplicationFont(":/font/resources/Comfortaa-Bold.ttf");
 
-void StyleManager::setSimpleStyle(QPushButton* buttonName)
+    regularFont.setFamily("Comfortaa");
+    regularFont.setWeight(QFont::Normal);
+
+    boldFont.setFamily("Comfortaa");
+    boldFont.setWeight(QFont::Bold);
+}
+
+void StyleManager::setSimpleButtonStyle(QPushButton* buttonName, QString buttonText, QString fontWeight, unsigned short int fontSize, unsigned short int fontSizeAnim = 18)
 {
+    if (fontWeight == "regular")
+    {
+        regularFont.setPixelSize(fontSize);
+        buttonName->setFont(regularFont);
+    }
+    else if (fontWeight == "bold")
+    {
+        boldFont.setPixelSize(fontSize);
+        buttonName->setFont(boldFont);
+    }
+    buttonName->setCursor(Qt::PointingHandCursor);
+    buttonName->setText(buttonText);
     buttonName->setStyleSheet(
         "QPushButton {"
         "border: none;"
-        "font-size: 20px;"
         "}"
         "QPushButton:pressed {"
-        "font-size: 18px;"
+        "font-size: " + QString::number(fontSizeAnim) + "px;"
         "}");
 }
 
-void StyleManager::setBlueStyle(QPushButton* buttonName)
+void StyleManager::setBlueButtonStyle(QPushButton* buttonName, QString buttonText, QString fontWeight, unsigned short int fontSize, unsigned short int borderRadius = 10)
 {
+    if (fontWeight == "regular")
+    {
+        regularFont.setPixelSize(fontSize);
+        buttonName->setFont(regularFont);
+    }
+    else if (fontWeight == "bold")
+    {
+        boldFont.setPixelSize(fontSize);
+        buttonName->setFont(boldFont);
+    }
+    buttonName->setCursor(Qt::PointingHandCursor);
+    buttonName->setText(buttonText);
     buttonName->setStyleSheet(
         "QPushButton {"
         "background-color: #4AB8FF;"
-        "border-radius: 13px;"
+        "border-radius: " + QString::number(borderRadius) + "px;"
         "border: none;"
         "color: white;"
         "font-size: 20px;"
