@@ -1,6 +1,6 @@
 #include "mywidget.h"
 #include "ui_mywidget.h"
-#include "FontManager/fontmanager.h"
+#include "StyleManager/stylemanager.h"
 #include <QPixmap>
 
 MyWidget::MyWidget(QWidget *parent)
@@ -10,7 +10,7 @@ MyWidget::MyWidget(QWidget *parent)
     ui->setupUi(this);
 
     //progressbar
-    ui->progressBar->setFont(FontManager::GetInstance()->getRegular());
+    ui->progressBar->setFont(StyleManager::GetInstance()->getRegular());
     ui->progressBar->setStyleSheet(
         "QProgressBar {"
         "border: none;"
@@ -32,7 +32,7 @@ MyWidget::MyWidget(QWidget *parent)
         "border: 2px solid lightgrey;"
         "}");
     //coursename
-    ui->CourseName->setFont(FontManager::GetInstance()->getBold());
+    ui->CourseName->setFont(StyleManager::GetInstance()->getBold());
     ui->CourseName->setStyleSheet(
         "QLabel {"
         "font-size: 15px;"

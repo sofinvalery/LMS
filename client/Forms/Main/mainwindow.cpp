@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "StyleManager/stylemanager.h"
+#include "Forms/Reconnect/reconnect.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -135,7 +136,9 @@ void MainWindow::on_mainButton_clicked()
 
 void MainWindow::on_addCourseButton_clicked()
 {
-
+    Reconnect* reconnect = new Reconnect(this);
+    reconnect->raise();
+    reconnect->show();
 }
 
 void MainWindow::on_addPotokButton_clicked()

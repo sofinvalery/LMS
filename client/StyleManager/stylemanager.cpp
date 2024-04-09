@@ -65,3 +65,13 @@ void StyleManager::setBlueButtonStyle(QPushButton* buttonName, QString buttonTex
         "background-color: #0E5FA8;"
         "}");
 }
+
+QFont StyleManager::getRegular()
+{
+    return GetInstance()->regularFont;
+}
+
+QFont StyleManager::getBold()
+{
+    return GetInstance()->boldFont;
+}

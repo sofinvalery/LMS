@@ -1,5 +1,6 @@
 #include "auth.h"
 #include "ui_auth.h"
+#include "StyleManager/stylemanager.h"
 
 Auth::Auth(QWidget *parent)
     : QDialog(parent)
@@ -12,10 +13,9 @@ Auth::Auth(QWidget *parent)
     this->setStyleSheet("background-color: white;");
     this->setFixedSize(this->size());
     //groupbox
-    ui->groupBox->setFont(FontManager::GetInstance()->getBold());
     ui->groupBox->setStyleSheet("QGroupBox { border: none; }");
     //errorbox
-    ui->errorbox->setFont(FontManager::GetInstance()->getBold());
+    ui->errorbox->setFont(StyleManager::GetInstance()->getBold());
     ui->errorbox->setStyleSheet(
         "QLabel {"
         "qproperty-alignment: AlignCenter;"
@@ -23,7 +23,7 @@ Auth::Auth(QWidget *parent)
         "font-size: 14px;"
         "}");
     //labelAuth
-    ui->labelAuth->setFont(FontManager::GetInstance()->getBold());
+    ui->labelAuth->setFont(StyleManager::GetInstance()->getBold());
     ui->labelAuth->setStyleSheet(
         "QLabel {"
         "qproperty-alignment: AlignCenter;"
@@ -31,7 +31,7 @@ Auth::Auth(QWidget *parent)
         "}"
         );
     //дизайн логина
-    ui->login->setFont(FontManager::GetInstance()->getRegular());
+    ui->login->setFont(StyleManager::GetInstance()->getRegular());
     ui->login->setStyleSheet(
         "QLineEdit {"
         "border: none;"
@@ -42,7 +42,7 @@ Auth::Auth(QWidget *parent)
         "}"
         );
     //дизайн пароля
-    ui->password->setFont(FontManager::GetInstance()->getRegular());
+    ui->password->setFont(StyleManager::GetInstance()->getRegular());
     ui->password->setStyleSheet(
         "QLineEdit {"
         "border: none;"
@@ -53,24 +53,8 @@ Auth::Auth(QWidget *parent)
         "}"
         );
     //дизайн кнопки
-    ui->pushButton->setCursor(Qt::PointingHandCursor);
-    ui->pushButton->setFont(FontManager::GetInstance()->getBold());
-    ui->pushButton->setStyleSheet(
-        "QPushButton {"
-        "background-color: #4AB8FF;"
-        "border-radius: 10px;"
-        "border: none;"
-        "color: white;"
-        "padding: 15px 32px;"
-        "font-size: 16px;"
-        "}"
-        "QPushButton:hover {"
-        "background-color: #2194DE;"
-        "}"
-        "QPushButton:pressed {"
-        "background-color: #0E5FA8;"
-        "}"
-        );
+    StyleManager::GetInstance()->setBlueButtonStyle(ui->pushButton, "Войти", "bold", 16, 10);
+    ui->pushButton->setFixedHeight(50);
     //errorbox
     ui->errorbox->setText("Неправильный логин или пароль");
     ui->errorbox->hide();

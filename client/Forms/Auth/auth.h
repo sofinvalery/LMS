@@ -2,7 +2,6 @@
 #define AUTH_H
 
 #include <QDialog>
-#include "FontManager/fontmanager.h"
 #include "../common/authentication/authentication.h"
 #include "ClientManager/socketparser.h"
 #include "ClientManager/clientmanager.h"
