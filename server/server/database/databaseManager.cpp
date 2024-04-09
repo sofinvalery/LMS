@@ -34,15 +34,6 @@ bool DatabaseManager::createConnection() {
     }
 }
 
-QSqlQuery DatabaseManager::executeQuery(const QString& query) {
-    QSqlQuery q(m_db);
-    if (!q.exec(query)) {
-        qDebug() << "Query failed:" << q.lastError().text();
-        qDebug() << "Executed query:" << q.executedQuery();
-    }
-    return q;
-}
-
 QVariant DatabaseManager::getScalarValue(const QString& query) {
     QSqlQuery q = executeQuery(query);
     if (q.next()) {
