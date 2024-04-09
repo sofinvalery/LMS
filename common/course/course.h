@@ -6,6 +6,7 @@
 #include <QJsonObject>
 #include <QJsonDocument>
 #include <QJsonArray>
+#include <QFile>
 #include "course_components/coursecomponent.h"
 #include "course_components/coursepdf.h"
 #include "course_components/coursetask.h"

@@ -31,6 +31,7 @@ int32_t Authentication::getId() const
     return id;
 }
 
+
 void Authentication::HashPassword()
 {
     QByteArray salt,log;

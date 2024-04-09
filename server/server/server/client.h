@@ -23,6 +23,7 @@ private slots:
     void sslErrorOccured(QList<QSslError> list);
 
 private:
+    quint64 nextBlockSize=0;
     Authentication* auth=nullptr;
     QSslSocket* m_client;
 };

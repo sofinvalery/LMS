@@ -9,15 +9,14 @@ bool DatabaseManager::Login(Authentication* auth) {
                   "WHERE u.login = :login AND u.password = :password");
     query.bindValue(":login", auth->GetLogin());
     query.bindValue(":password", auth->GetPassword());
-    //для вставки логина пароля в бд закоментировать выше разкомментировать ниже
-    // query.prepare("INSERT INTO users (id, fio, login, password, avatar_url, role) "
-    //               "VALUES (:id, :fio, :login, :password, :avatar_url, :role)");
+    // для вставки логина пароля в бд закоментировать выше разкомментировать ниже
+    // query.prepare("INSERT INTO users ( fio, login, password, avatar_url, role) "
+    //               "VALUES ( :fio, :login, :password, :avatar_url, :role)");
     // query.bindValue(":login", auth->GetLogin());
     // query.bindValue(":password", auth->GetPassword());
-    // query.bindValue(":id", 100);
-    // query.bindValue(":fio", "EGOR");
+    // query.bindValue(":fio", "Pasha");
     // query.bindValue(":avatar_url", "avatarUrl");
-    // query.bindValue(":role", 0);
+    // query.bindValue(":role", 1);
     if (!query.exec()) {
         qDebug() << "Error executing query:" << query.lastError().text();
         return false;
@@ -57,7 +56,7 @@ bool DatabaseManager::Login(Authentication* auth) {
 
 
 QList<Course*> DatabaseManager::GetMainPage(Authentication* auth) {
-    QSqlQuery query;
+    QSqlQuery query(m_db);
     QList<Course*> courses;
 
     if (auth->GetCurrentRole() == STUDENT) {
@@ -78,22 +77,31 @@ QList<Course*> DatabaseManager::GetMainPage(Authentication* auth) {
     }
 
     query.bindValue(":userId", auth->getId());
+    if (!query.exec()) {
+        qDebug() << "Error executing query:" << query.lastError().text();
+        return courses;
+    }
 
-    QSqlQuery result = executeQuery(query.executedQuery());
-
-    while (result.next()) {
-        int courseId = result.value("id").toInt();
-        QString title = result.value("title").toString();
-        QString avaUrl = result.value("ava_title_url").toString();
-        QDate start = result.value("start_time").toDate();
-        QDate end = result.value("end_time").toDate();
+    if (!query.first()) {
+        qDebug() << "No user found with the given login and password.";
+        return courses;
+    }
+    else
+    {
+    do {
+        int courseId = query.value("id").toInt();
+        QString title = query.value("title").toString();
+        QString avaUrl = query.value("ava_title_url").toString();
+        QDate start = query.value("start_time").toDate();
+        QDate end = query.value("end_time").toDate();
         int sumpoints = 0;
         int maxSumpoints = 0;
 
         Course* course = new Course(courseId, title, avaUrl, start, end, sumpoints, maxSumpoints);
         courses.append(course);
     }
-
+    while (query.next());
+    }
     return courses;
 }
 

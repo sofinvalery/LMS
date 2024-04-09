@@ -1,7 +1,6 @@
 #include "course.h"
 
 
-
 Course::Course(int32_t id, QString title, QString avaUrl, QDate start, QDate end,
                int32_t sumpoints,int32_t maxSumpoints, QObject *parent): QObject{parent}
 {
@@ -66,10 +65,24 @@ void Course::DeserializeListComponents(QJsonObject jsonObj)
 
 Course* Course::Deserialize(QJsonObject jsonObj)
 {
+    QString latin = jsonObj["avaTitleUrl"].toString();
+    QString url;
+    if(!latin.isEmpty())
+    {
+        url="./data/Courses/"+QString::number(jsonObj["id"].toInt())+".jpg";
+        QFile file (url);
+    if (file.open(QIODevice::WriteOnly))
+        file.write(QByteArray::fromBase64( latin.toLatin1()));
+    }
+    else
+    {
+        url=":/img/resources/kap.jpg";
+    }
+
     QDate start=QDate::fromString(jsonObj["startTime"].toString(),"yyyy.MM.dd");
     QDate end = QDate::fromString(jsonObj["endTime"].toString(),"yyyy.MM.dd");
     return new Course(jsonObj["id"].toInt(),jsonObj["title"].toString(),
-                      jsonObj["avaTitleUrl"].toString(),start,end,jsonObj["sumpoints"].toInt(),jsonObj["maxSumpoints"].toInt());
+                      url,start,end,jsonObj["sumpoints"].toInt(),jsonObj["maxSumpoints"].toInt());
 }
 
 QJsonObject Course::Serialize()
@@ -77,7 +90,16 @@ QJsonObject Course::Serialize()
     QJsonObject json;
     json["id"]=id;
     json["title"]=title;
-    json["avaTitleUrl"]=avaTitleUrl;
+    QByteArray data;
+    data.clear();
+    if(avaTitleUrl!=""&&avaTitleUrl!=":/img/resources/kap.jpg")
+    {
+    QFile file (avaTitleUrl);
+    data.clear();
+    if (file.open(QIODevice::ReadOnly))
+        data = file.readAll();
+    }
+    json["avaTitleUrl"]=QLatin1String(data.toBase64());
     json["startTime"]= startTime.toString("yyyy.MM.dd");
     json["endTime"]= endTime.toString("yyyy.MM.dd");
     json["sumpoints"]=sumpoints;

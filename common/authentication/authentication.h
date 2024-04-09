@@ -7,6 +7,7 @@
 #include <QPasswordDigestor>
 #include <QCryptographicHash>
 #include <QJsonArray>
+#include <QFile>
 
 enum EnumRoles{
     ADMIN=0,

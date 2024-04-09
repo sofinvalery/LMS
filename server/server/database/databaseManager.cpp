@@ -28,6 +28,7 @@ bool DatabaseManager::createConnection() {
         }
         else{
         mDatabasePool.setLocalData(m_db);
+        m_db=mDatabasePool.localData();
                 return true;
         }
     }

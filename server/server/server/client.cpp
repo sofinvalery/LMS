@@ -23,7 +23,6 @@ Client::Client(qintptr socketDescriptor, QObject* parent) :
  void Client::readyRead()
 {
      qInfo()<<"readyRead";
-    quint64 nextBlockSize=0;
     QDataStream in(m_client);
     in.setVersion(QDataStream::Qt_6_2);
     if(in.status()==QDataStream::Ok){
@@ -42,6 +41,7 @@ Client::Client(qintptr socketDescriptor, QObject* parent) :
             QJsonObject json;
 
             in>>json;
+            nextBlockSize=0;
             ServerTask *mytask = new ServerTask(json,auth);
             mytask->setAutoDelete(true);
             connect(mytask, SIGNAL(Result(QJsonObject)), this, SLOT(SendToClient(QJsonObject)), Qt::QueuedConnection);
