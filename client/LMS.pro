@@ -18,7 +18,6 @@ SOURCES += \
     ClientManager/clientmanager.cpp \
     ClientManager/socketparser.cpp \
     ClientState/clientstate.cpp \
-    FontManager/fontmanager.cpp \
     Forms/Auth/auth.cpp \
     Forms/CoursesMPWidget/coursesmpwidget.cpp \
     Forms/Main/mainwindow.cpp \
@@ -43,7 +42,6 @@ HEADERS += \
     ClientManager/clientmanager.h \
     ClientManager/socketparser.h \
     ClientState/clientstate.h \
-    FontManager/fontmanager.h \
     Forms/Auth/auth.h \
     Forms/CoursesMPWidget/coursesmpwidget.h \
     Forms/Main/mainwindow.h  \
