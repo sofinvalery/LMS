@@ -13,7 +13,7 @@ DatabaseManager::~DatabaseManager() {
 
 bool DatabaseManager::createConnection() {
     if(mDatabasePool.hasLocalData()) {
-        m_db= mDatabasePool.localData();
+        m_db = mDatabasePool.localData();
         return true;
     } else {
         m_db = QSqlDatabase::addDatabase("QPSQL", QUuid::createUuid().toString());
@@ -28,7 +28,7 @@ bool DatabaseManager::createConnection() {
         }
         else{
         mDatabasePool.setLocalData(m_db);
-        m_db=mDatabasePool.localData();
+        m_db = mDatabasePool.localData();
                 return true;
         }
     }
