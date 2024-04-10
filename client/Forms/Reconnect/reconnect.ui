@@ -13,44 +13,60 @@
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
-  <widget class="QPushButton" name="reconnectButton">
+  <widget class="QGroupBox" name="groupBox">
    <property name="geometry">
     <rect>
-     <x>300</x>
-     <y>250</y>
-     <width>80</width>
-     <height>24</height>
+     <x>0</x>
+     <y>0</y>
+     <width>426</width>
+     <height>300</height>
     </rect>
    </property>
-   <property name="text">
-    <string>PushButton</string>
+   <property name="title">
+    <string/>
    </property>
-  </widget>
-  <widget class="QPushButton" name="exitButton">
-   <property name="geometry">
-    <rect>
-     <x>20</x>
-     <y>250</y>
-     <width>80</width>
-     <height>24</height>
-    </rect>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
    </property>
-   <property name="text">
-    <string>PushButton</string>
-   </property>
-  </widget>
-  <widget class="QLabel" name="statusLabel">
-   <property name="geometry">
-    <rect>
-     <x>60</x>
-     <y>190</y>
-     <width>311</width>
-     <height>41</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>TextLabel</string>
-   </property>
+   <widget class="QPushButton" name="reconnectButton">
+    <property name="geometry">
+     <rect>
+      <x>330</x>
+      <y>280</y>
+      <width>80</width>
+      <height>24</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>PushButton</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="exitButton">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>280</y>
+      <width>80</width>
+      <height>24</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>PushButton</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="statusLabel">
+    <property name="geometry">
+     <rect>
+      <x>70</x>
+      <y>200</y>
+      <width>311</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>TextLabel</string>
+    </property>
+   </widget>
   </widget>
  </widget>
  <resources/>

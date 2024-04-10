@@ -4,7 +4,7 @@
 #include <QObject>
 #include "../../common/authentication/authentication.h"
 #include "../../common/course/course.h"
-
+#include "../Forms/Main/mainwindow.h"
 
 class ClientState : public QObject
 {
@@ -17,6 +17,8 @@ private:
     Authentication* auth=nullptr;
 
     static ClientState* s_Instance;
+
+    MainWindow* mainwindow = new MainWindow();
 
 private slots:
 
@@ -32,6 +34,8 @@ public:
     QList<Course *> getListCourses() const;
 
     void setListCourses(const QList<Course *> &newListCourses);
+
+    MainWindow* getMainwindow() const;
 
 signals:
    void DataReady();

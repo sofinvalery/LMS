@@ -60,7 +60,7 @@ void ClientManager::slotReadyRead()
 
 
 
-
+    qInfo()<<socket->bytesAvailable();
 
 }
 //вывести как нибудь что все пошло не туда...

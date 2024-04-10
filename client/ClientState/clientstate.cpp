@@ -9,6 +9,11 @@ ClientState::ClientState(QObject *parent)
     : QObject{parent}
 {}
 
+MainWindow* ClientState::getMainwindow() const
+{
+    return mainwindow;
+}
+
 void ClientState::setListCourses(const QList<Course *> &newListCourses)
 {
     for(auto temp:currentListCourses)

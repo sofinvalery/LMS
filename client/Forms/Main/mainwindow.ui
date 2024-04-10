@@ -20,60 +20,6 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QGroupBox" name="groupBox">
-    <property name="geometry">
-     <rect>
-      <x>0</x>
-      <y>70</y>
-      <width>781</width>
-      <height>481</height>
-     </rect>
-    </property>
-    <property name="title">
-     <string/>
-    </property>
-    <widget class="QScrollArea" name="scrollArea">
-     <property name="geometry">
-      <rect>
-       <x>0</x>
-       <y>20</y>
-       <width>781</width>
-       <height>461</height>
-      </rect>
-     </property>
-     <property name="autoFillBackground">
-      <bool>false</bool>
-     </property>
-     <property name="widgetResizable">
-      <bool>true</bool>
-     </property>
-     <widget class="QWidget" name="scrollAreaWidgetContents">
-      <property name="geometry">
-       <rect>
-        <x>0</x>
-        <y>0</y>
-        <width>779</width>
-        <height>459</height>
-       </rect>
-      </property>
-      <widget class="QWidget" name="gridLayoutWidget">
-       <property name="geometry">
-        <rect>
-         <x>10</x>
-         <y>10</y>
-         <width>761</width>
-         <height>451</height>
-        </rect>
-       </property>
-       <layout class="QGridLayout" name="gridLayout" columnminimumwidth="0">
-        <property name="sizeConstraint">
-         <enum>QLayout::SetDefaultConstraint</enum>
-        </property>
-       </layout>
-      </widget>
-     </widget>
-    </widget>
-   </widget>
    <widget class="QPushButton" name="profileButton">
     <property name="geometry">
      <rect>
@@ -119,7 +65,7 @@
      <string>PushButton</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="adminButton">
+   <widget class="QPushButton" name="addCourseButton">
     <property name="geometry">
      <rect>
       <x>330</x>
@@ -142,7 +88,52 @@
      </rect>
     </property>
     <property name="text">
+     <string/>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>32</width>
+      <height>32</height>
+     </size>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="addPotokButton">
+    <property name="geometry">
+     <rect>
+      <x>470</x>
+      <y>40</y>
+      <width>80</width>
+      <height>24</height>
+     </rect>
+    </property>
+    <property name="text">
      <string>PushButton</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="addGroupButton">
+    <property name="geometry">
+     <rect>
+      <x>470</x>
+      <y>90</y>
+      <width>80</width>
+      <height>24</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>PushButton</string>
+    </property>
+   </widget>
+   <widget class="Line" name="verticalLine">
+    <property name="geometry">
+     <rect>
+      <x>160</x>
+      <y>20</y>
+      <width>3</width>
+      <height>90</height>
+     </rect>
+    </property>
+    <property name="orientation">
+     <enum>Qt::Vertical</enum>
     </property>
    </widget>
   </widget>

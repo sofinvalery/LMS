@@ -63,6 +63,7 @@ void Client::SendToClient(QJsonObject json){
     out<<quint64(0)<<json;
     out.device()->seek(0);
     out<<quint64(Data.size()-sizeof(quint64));
+    qInfo()<<quint64(Data.size()-sizeof(quint64));
     m_client->write(Data);
 }
 

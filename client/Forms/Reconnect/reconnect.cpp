@@ -1,18 +1,24 @@
 #include "reconnect.h"
 #include "ui_reconnect.h"
-#include "FontManager/fontmanager.h"
+#include "StyleManager/stylemanager.h"
 
 Reconnect::Reconnect(QWidget *parent)
-    : QDialog(parent,Qt::WindowStaysOnTopHint)
+    : QDialog(parent)
     , ui(new Ui::Reconnect)
 {
     ui->setupUi(this);
     this->hide();
     this->setStyleSheet("background-color: white;");
     this->setWindowFlag(Qt::WindowCloseButtonHint, false);
+    this->setWindowFlags(Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint);
     this->setFixedSize(this->size());
+    ui->groupBox->setStyleSheet(
+        "QGroupBox {"
+        "border: 2px solid grey;"
+        "border-radius: 10px;"
+        "}");
     //statuslabel
-    ui->statusLabel->setFont(FontManager::GetInstance()->getRegular());
+    ui->statusLabel->setFont(StyleManager::GetInstance()->getRegular());
     ui->statusLabel->setText("Потеряно соединение");
     ui->statusLabel->setStyleSheet(
         "QLabel {"
@@ -21,47 +27,14 @@ Reconnect::Reconnect(QWidget *parent)
         "qproperty-alignment: AlignCenter;"
         "}");
     //exitbutton
-    ui->exitButton->setEnabled(true);
-    ui->exitButton->setFont(FontManager::GetInstance()->getBold());
-    ui->exitButton->setText("Выход");
+    StyleManager::GetInstance()->setBlueButtonStyle(ui->exitButton, "Выход", "bold", 16, 10);
     ui->exitButton->setFixedSize(178, 40);
     ui->exitButton->move(30, 250);
-    ui->exitButton->setStyleSheet(
-        "QPushButton {"
-        "background-color: #4AB8FF;"
-        "border-radius: 10px;"
-        "border: none;"
-        "color: white;"
-        //"padding: 15px 32px;"
-        "font-size: 16px;"
-        "}"
-        "QPushButton:hover {"
-        "background-color: #2194DE;"
-        "}"
-        "QPushButton:pressed {"
-        "background-color: #0E5FA8;"
-        "}");
     //reconnectbutton
+    StyleManager::GetInstance()->setBlueButtonStyle(ui->reconnectButton, "Переподключиться", "bold", 10, 10);
     ui->reconnectButton->setEnabled(true);
-    ui->reconnectButton->setFont(FontManager::GetInstance()->getBold());
-    ui->reconnectButton->setText("Переподключиться");
     ui->reconnectButton->setFixedSize(178, 40);
     ui->reconnectButton->move(40 + 178, 250);
-    ui->reconnectButton->setStyleSheet(
-        "QPushButton {"
-        "background-color: #4AB8FF;"
-        "border-radius: 10px;"
-        "border: none;"
-        "color: white;"
-        //"padding: 15px 32px;"
-        "font-size: 16px;"
-        "}"
-        "QPushButton:hover {"
-        "background-color: #2194DE;"
-        "}"
-        "QPushButton:pressed {"
-        "background-color: #0E5FA8;"
-        "}");
 
 }
 

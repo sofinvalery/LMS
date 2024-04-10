@@ -6,6 +6,7 @@
 #include "../../../common/transferEnum/transferEnum.h"
 #include "ClientManager/clientmanager.h"
 #include "ClientState/clientstate.h"
+
 namespace Ui {
 class Reconnect;
 }
