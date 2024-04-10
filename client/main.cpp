@@ -6,14 +6,12 @@
 #include <QPalette>
 #include <QStyle>
 
-
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
     Auth auth;
     //штука гледа для лога
     a.setStyle("Fusion");
-
     QPalette palette;
     palette.setColor(QPalette::Window, QColor(245, 245, 245));
     palette.setColor(QPalette::WindowText, Qt::black);
