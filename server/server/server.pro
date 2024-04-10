@@ -59,9 +59,6 @@ macx {
     LIBS += -L/usr/local/lib -lpq
     INCLUDEPATH += /usr/local/mysql-connector-cpp/include
     # LIBS += -L/usr/local/mysql-connector-cpp/lib -lmysqlcppconn
-    INCLUDEPATH += /Users/valeriysofin/Qt/6.6.3/macos/plugins/sqldrivers
-    INCLUDEPATH += /Applications/Postgres.app/Contents/Versions/16/include
-    INCLUDEPATH += /Applications/Postgres.app/Contents/Versions/16/lib
 }
 
 

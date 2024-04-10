@@ -34,25 +34,4 @@ bool DatabaseManager::createConnection() {
     }
 }
 
-QVariant DatabaseManager::getScalarValue(const QString& query) {
-    QSqlQuery q = executeQuery(query);
-    if (q.next()) {
-        return q.value(0);
-    }
-    return QVariant();
-}
-
-QList<QVariantMap> DatabaseManager::getQueryResults(const QString& query) {
-    QList<QVariantMap> results;
-    QSqlQuery q = executeQuery(query);
-    while (q.next()) {
-        QVariantMap row;
-        for (int i = 0; i < q.record().count(); i++) {
-            row[q.record().fieldName(i)] = q.value(i);
-        }
-        results.append(row);
-    }
-    return results;
-}
-
 

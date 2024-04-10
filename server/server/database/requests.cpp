@@ -1,4 +1,4 @@
-#include "databasemanager.h"
+#include "databaseManager.h"
 #include "../../common/authentication/authentication.h"
 
 #include <QThread>

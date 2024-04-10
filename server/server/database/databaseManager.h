@@ -32,9 +32,6 @@ public:
 
 private:
     bool createConnection();
-    QSqlQuery executeQuery(const QString& query);
-    QVariant getScalarValue(const QString& query);
-    QList<QVariantMap> getQueryResults(const QString& query);
     DatabaseManager(const DatabaseManager&) = delete;
     DatabaseManager& operator=(const DatabaseManager&) = delete;
 
