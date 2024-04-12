@@ -19,6 +19,7 @@ SOURCES += \
     ClientManager/clientmanager.cpp \
     ClientManager/socketparser.cpp \
     ClientState/clientstate.cpp \
+    Forms/AddGroup/addgroup.cpp \
     Forms/Auth/auth.cpp \
     Forms/CoursesMPWidget/coursesmpwidget.cpp \
     Forms/Download/download.cpp \
@@ -45,6 +46,7 @@ HEADERS += \
     ClientManager/clientmanager.h \
     ClientManager/socketparser.h \
     ClientState/clientstate.h \
+    Forms/AddGroup/addgroup.h \
     Forms/Auth/auth.h \
     Forms/CoursesMPWidget/coursesmpwidget.h \
     Forms/Download/download.h \
@@ -58,6 +60,7 @@ HEADERS += \
     StyleManager/stylemanager.h
 
 FORMS += \
+    Forms/AddGroup/addgroup.ui \
     Forms/Auth/auth.ui \
     Forms/CoursesMPWidget/coursesmpwidget.ui \
     Forms/Download/download.ui \

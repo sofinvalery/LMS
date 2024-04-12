@@ -36,16 +36,16 @@ MainWindow::MainWindow(QWidget *parent)
         "}");
     //addCoursebutton
     StyleManager::GetInstance()->setSimpleButtonStyle(ui->addCourseButton, "Новый курс", "bold", 20, 18);
-    ui->addCourseButton->setFixedSize(128, 30);
-    ui->addCourseButton->move(336, 30);
+    ui->addCourseButton->setFixedSize(128, 45);
+    ui->addCourseButton->move(336, 23);
     //addPotokButton
     StyleManager::GetInstance()->setSimpleButtonStyle(ui->addPotokButton, "Новый поток", "bold", 20, 18);
-    ui->addPotokButton->setFixedSize(156, 30);
-    ui->addPotokButton->move(492, 30);
+    ui->addPotokButton->setFixedSize(156, 45);
+    ui->addPotokButton->move(492, 23);
     //addGroupButton
     StyleManager::GetInstance()->setSimpleButtonStyle(ui->addGroupButton, "Новая группа", "bold", 20, 18);
-    ui->addGroupButton->setFixedSize(156, 30);
-    ui->addGroupButton->move(668, 30);
+    ui->addGroupButton->setFixedSize(156, 45);
+    ui->addGroupButton->move(668, 23);
     //exitbutton
     ui->exitButton->setIcon(QIcon(":/img/resources/exit.png"));
     ui->exitButton->setFixedSize(64, 64);
@@ -118,6 +118,7 @@ void MainWindow::on_profileButton_clicked()
 void MainWindow::on_scoreButton_clicked()
 {
     StyleManager::GetInstance()->setSimpleButtonStyle(ui->mainButton, "Курсы", "bold", 20, 18);
+    StyleManager::GetInstance()->setSimpleButtonStyle(ui->addGroupButton, "Новая группа", "bold", 20, 18);
     StyleManager::GetInstance()->setBlueButtonStyle(ui->scoreButton, "Оценки", "bold", 20, 13);
     widget->close();
     widget = new Score();
@@ -129,6 +130,8 @@ void MainWindow::on_mainButton_clicked()
 {
     StyleManager::GetInstance()->setBlueButtonStyle(ui->mainButton, "Курсы", "bold", 20, 13);
     StyleManager::GetInstance()->setSimpleButtonStyle(ui->scoreButton, "Оценки", "bold", 20, 18);
+    StyleManager::GetInstance()->setSimpleButtonStyle(ui->addGroupButton, "Новая группа", "bold", 20, 18);
+    widget->close();
     widget = new CoursesMPWidget();
     widget->setParent(this);
     widget->show();
@@ -136,6 +139,7 @@ void MainWindow::on_mainButton_clicked()
 
 void MainWindow::on_addCourseButton_clicked()
 {
+    widget->close();
     Reconnect* reconnect = new Reconnect(this);
     reconnect->raise();
     reconnect->show();
@@ -143,12 +147,18 @@ void MainWindow::on_addCourseButton_clicked()
 
 void MainWindow::on_addPotokButton_clicked()
 {
-
+    widget->close();
 }
 
 void MainWindow::on_addGroupButton_clicked()
 {
-
+    StyleManager::GetInstance()->setSimpleButtonStyle(ui->mainButton, "Курсы", "bold", 20, 18);
+    StyleManager::GetInstance()->setSimpleButtonStyle(ui->scoreButton, "Оценки", "bold", 20, 18);
+    StyleManager::GetInstance()->setBlueButtonStyle(ui->addGroupButton, "Новая группа", "bold", 20, 13);
+    widget->close();
+    widget = new AddGroup();
+    widget->setParent(this);
+    widget->show();
 }
 
 void MainWindow::on_exitButton_clicked()
