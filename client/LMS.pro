@@ -20,6 +20,7 @@ SOURCES += \
     ClientState/clientstate.cpp \
     Forms/Auth/auth.cpp \
     Forms/CoursesMPWidget/coursesmpwidget.cpp \
+    Forms/Download/download.cpp \
     Forms/Main/mainwindow.cpp \
     Forms/MyWidget/mywidget.cpp \
     Forms/Profile/profile.cpp \
@@ -44,6 +45,7 @@ HEADERS += \
     ClientState/clientstate.h \
     Forms/Auth/auth.h \
     Forms/CoursesMPWidget/coursesmpwidget.h \
+    Forms/Download/download.h \
     Forms/Main/mainwindow.h  \
     ../common/course/course_components/coursevideos.h \
     ../common/course/course_components/question.h \
@@ -56,6 +58,7 @@ HEADERS += \
 FORMS += \
     Forms/Auth/auth.ui \
     Forms/CoursesMPWidget/coursesmpwidget.ui \
+    Forms/Download/download.ui \
     Forms/Main/mainwindow.ui \
     Forms/MyWidget/mywidget.ui \
     Forms/Profile/profile.ui \

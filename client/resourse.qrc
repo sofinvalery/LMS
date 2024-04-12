@@ -8,4 +8,7 @@
         <file>resources/Comfortaa-Bold.ttf</file>
         <file>resources/Comfortaa-Regular.ttf</file>
     </qresource>
+    <qresource prefix="/gif">
+        <file>resources/download.gif</file>
+    </qresource>
 </RCC>
