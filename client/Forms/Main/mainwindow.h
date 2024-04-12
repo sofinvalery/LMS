@@ -10,6 +10,7 @@
 #include "Forms/Score/score.h"
 #include "StyleManager/stylemanager.h"
 #include "../Download/download.h"
+#include "Forms/AddGroup/addgroup.h"
 #include <QScreen>
 
 
