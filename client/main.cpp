@@ -35,6 +35,5 @@ int main(int argc, char *argv[])
     a.setPalette(palette);
     auth.open();
 
-
     return a.exec();
 }
