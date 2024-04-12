@@ -1,6 +1,5 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include "StyleManager/stylemanager.h"
 #include "../../ClientState/clientstate.h"
 
 MainWindow::MainWindow(QWidget *parent)
@@ -16,10 +15,6 @@ MainWindow::MainWindow(QWidget *parent)
     ui->verticalLine->hide();
 
     QRect screenGeometry = QGuiApplication::primaryScreen()->geometry();
-
-    Authentication* auth =new Authentication("sds","gtht");
-    auth->SetInformationAfterAuthentication("Max","bbbbb",ADMIN,55,QList<QString>{"O725B"});
-
 
     //mainbutton
     StyleManager::GetInstance()->setBlueButtonStyle(ui->mainButton, "Курсы", "bold", 20, 13);
@@ -80,9 +75,6 @@ MainWindow::MainWindow(QWidget *parent)
         "}");
     ui->profileButton->setCursor(Qt::PointingHandCursor);
 
-
-
-
     QScreen* scr = QGuiApplication::primaryScreen();
 
     this->resize( scr->availableGeometry().width(), scr->availableGeometry().height());
@@ -113,16 +105,20 @@ void MainWindow::ShowManePage()
 void MainWindow::on_profileButton_clicked()
 {
     widget->close();
+    delete widget;
     widget = new Profile();
     widget->setParent(this);
     widget->show();
+
 }
 
 void MainWindow::on_scoreButton_clicked()
 {
     StyleManager::GetInstance()->setSimpleButtonStyle(ui->mainButton, "Курсы", "bold", 20, 18);
     StyleManager::GetInstance()->setBlueButtonStyle(ui->scoreButton, "Оценки", "bold", 20, 13);
+
     widget->close();
+    delete widget;
     widget = new Score();
     widget->setParent(this);
     widget->show();
@@ -132,6 +128,8 @@ void MainWindow::on_mainButton_clicked()
 {
     StyleManager::GetInstance()->setBlueButtonStyle(ui->mainButton, "Курсы", "bold", 20, 13);
     StyleManager::GetInstance()->setSimpleButtonStyle(ui->scoreButton, "Оценки", "bold", 20, 18);
+    widget->close();
+    delete widget;
     widget = new CoursesMPWidget();
     widget->setParent(this);
     widget->show();

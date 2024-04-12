@@ -8,6 +8,7 @@
 #include "Forms/CoursesMPWidget/coursesmpwidget.h"
 #include "Forms/Profile/profile.h"
 #include "Forms/Score/score.h"
+#include "StyleManager/stylemanager.h"
 #include <QScreen>
 
 
