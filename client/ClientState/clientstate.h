@@ -5,6 +5,7 @@
 #include "../../common/authentication/authentication.h"
 #include "../../common/course/course.h"
 #include "../Forms/Main/mainwindow.h"
+#include "../../common/authentication/group.h"
 
 class ClientState : public QObject
 {
@@ -15,6 +16,8 @@ private:
     QList<Course*> currentListCourses;
 
     Authentication* auth=nullptr;
+
+    QList<Group*> groups;
 
     static ClientState* s_Instance;
 
@@ -36,6 +39,9 @@ public:
     void setListCourses(const QList<Course *> &newListCourses);
 
     MainWindow* getMainwindow() const;
+
+    QList<Group *> getGroups() const;
+    void setGroups(const QList<Group *> &newGroups);
 
 signals:
    void DataReady();

@@ -3,6 +3,9 @@
 #include <QApplication>
 #include "ClientManager/socketparser.h"
 #include "ClientState/clientstate.h"
+#include "../common/authentication/group.h"
+#include "../common/authentication/authentication.h"
+
 
 int main(int argc, char *argv[])
 {
@@ -19,8 +22,21 @@ int main(int argc, char *argv[])
                              new Course(15,"phisyc","bbbbb", QDate(2004,4,4),QDate(2005,1,1),11,80)};
     ClientState::GetInstance()->setAuth(authentication);
     ClientState::GetInstance()->setListCourses(list);
-
-
+    QList<Group*> groups = {
+                             new Group(1,"О725Б",false,QList<Authentication*> {new Authentication("asdasd","asdsad",1,"Попов ГЕоргий","sadsad",STUDENT,QList<QString>{"О725Б"}),
+                                new Authentication("asdasd","asdsad",1,"Эдуард","sadsad",STUDENT,QList<QString>{"О725Б"}),
+                                new Authentication("asdasd","asdsad",1,"Поп","sadsad",STUDENT,QList<QString>{"О725Б"}),
+                                new Authentication("asdasd","asdsad",1,"ГЕоргий","sadsad",STUDENT,QList<QString>{"О725Б"})}),
+        new Group(1,"А725Б",false,QList<Authentication*> {new Authentication("asdasd","asdsad",1,"Попов ГЕоргий","sadsad",STUDENT,QList<QString>{"О725Б"}),
+                                                             new Authentication("asdasd","asdsad",1,"Эдуард","sadsad",STUDENT,QList<QString>{"О725Б"}),
+                                                             new Authentication("asdasd","asdsad",1,"Поп","sadsad",STUDENT,QList<QString>{"О725Б"}),
+                                                             new Authentication("asdasd","asdsad",1,"ГЕоргий","sadsad",STUDENT,QList<QString>{"О725Б"})}),
+        new Group(1,"У725Б",false,QList<Authentication*> {new Authentication("asdasd","asdsad",1,"Попов ГЕоргий","sadsad",STUDENT,QList<QString>{"О725Б"}),
+                                                             new Authentication("asdasd","asdsad",1,"Эдуард","sadsad",STUDENT,QList<QString>{"О725Б"}),
+                                                             new Authentication("asdasd","asdsad",1,"Поп","sadsad",STUDENT,QList<QString>{"О725Б"}),
+                                                             new Authentication("asdasd","asdsad",1,"ГЕоргий","sadsad",STUDENT,QList<QString>{"О725Б"})}),
+        };
+    ClientState::GetInstance()->setGroups(groups);
     auth.setModal(true);
     auth.exec();  //auth.open();
     if (auth.authstatus == 1){

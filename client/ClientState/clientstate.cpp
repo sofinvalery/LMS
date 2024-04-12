@@ -9,6 +9,19 @@ ClientState::ClientState(QObject *parent)
     : QObject{parent}
 {}
 
+QList<Group *> ClientState::getGroups() const
+{
+    return groups;
+}
+
+void ClientState::setGroups(const QList<Group *> &newGroups)
+{
+    for(auto temp:groups)
+        delete temp;
+    groups.clear();
+    groups = newGroups;
+}
+
 MainWindow* ClientState::getMainwindow() const
 {
     return mainwindow;
