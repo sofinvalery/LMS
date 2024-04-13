@@ -1,4 +1,5 @@
 #include "addgroup.h"
+#include "qforeach.h"
 #include "ui_addgroup.h"
 #include "ClientState/clientstate.h"
 #include "StyleManager/stylemanager.h"
@@ -15,6 +16,27 @@ AddGroup::AddGroup(QWidget *parent)
         "}");
     ui->addButton->setEnabled(false);
     ui->createButton->setEnabled(false);
+
+    ui->warningLabel->hide();
+    ui->warningLabel->setText("Данная группа уже существует");
+    ui->warningLabel->setFont(StyleManager::GetInstance()->getBold());
+    ui->warningLabel->setStyleSheet(
+        "QLabel {"
+        "font-size: 16px;"
+        "color: red;"
+        "}");
+    ui->warningLabel->move(250,200);
+
+    ui->successLabel->hide();
+    ui->successLabel->setText("Группа успешно создана");
+    ui->successLabel->setFont(StyleManager::GetInstance()->getBold());
+    ui->successLabel->setStyleSheet(
+        "QLabel {"
+        "font-size: 16px;"
+        "color: green;"
+        "}");
+    ui->successLabel->move(250,200);
+
     StyleManager::GetInstance()->setDisableButtonStyle(ui->createButton, "Создать группу", "bold", 16, 13);
     ui->createButton->setFixedSize(145, 45);
 
@@ -128,10 +150,30 @@ void AddGroup::on_addButton_clicked()
 
 void AddGroup::on_createButton_clicked()
 {
-    foreach(QLineEdit* lineEdit, nameList)
+    bool groupExist = false;
+    // список ФИО - nameList
+    // ui->studentBox->isEnabled(); - проверка нажат ли чекбокс студентов
+    // ui->teacherBox->isEnabled(); - проверка нажат ли чекбокс преподов
+    foreach(QString name, ClientState::GetInstance()->getGroupsName()) // проверка на группы
     {
-        QString text = lineEdit->text();
-        qDebug() << text;
+        //qDebug() << name;
+        if (name == ui->groupLineEdit->text())
+        {
+            groupExist = true;
+            break;
+        }
+    }
+    if (groupExist)
+    {
+        ui->warningLabel->show();
+        ui->successLabel->hide();
+    }
+    else
+    {
+        //добавление группы
+
+        ui->warningLabel->hide();
+        ui->successLabel->show();
     }
 }
 
