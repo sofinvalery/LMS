@@ -3,7 +3,6 @@
 #include <QWidget>
 #include <QList>
 #include <QLineEdit>
-#include <QLabel>
 
 
 namespace Ui {
@@ -25,13 +24,12 @@ private slots:
 
     void on_addButton_clicked();
 
-    void on_createButton_clicked();
+    void on_createButton_clicked(); //кнопка создания
 
 private:
     Ui::AddGroup *ui;
 
-    QList<QLineEdit*> nameList;
-    QList<QLabel*> numberList;
+    QList<QLineEdit*> nameList;  //список фио
 
     int heightLine = 0;
     int count = 1;
