@@ -64,19 +64,6 @@
      <string>Название группы</string>
     </property>
    </widget>
-   <widget class="QLineEdit" name="studentLineEdit">
-    <property name="geometry">
-     <rect>
-      <x>90</x>
-      <y>120</y>
-      <width>113</width>
-      <height>24</height>
-     </rect>
-    </property>
-    <property name="placeholderText">
-     <string>ФИО Студента</string>
-    </property>
-   </widget>
    <widget class="QPushButton" name="createButton">
     <property name="geometry">
      <rect>
@@ -87,20 +74,58 @@
      </rect>
     </property>
     <property name="text">
-     <string>PushButton</string>
+     <string>Создать группу</string>
     </property>
    </widget>
    <widget class="QPushButton" name="addButton">
     <property name="geometry">
      <rect>
-      <x>180</x>
-      <y>170</y>
+      <x>310</x>
+      <y>160</y>
       <width>80</width>
       <height>24</height>
      </rect>
     </property>
     <property name="text">
      <string>PushButton</string>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>40</width>
+      <height>40</height>
+     </size>
+    </property>
+   </widget>
+   <widget class="QLabel" name="numberLabel">
+    <property name="geometry">
+     <rect>
+      <x>50</x>
+      <y>120</y>
+      <width>21</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>1</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="studentLineEdit">
+    <property name="geometry">
+     <rect>
+      <x>80</x>
+      <y>120</y>
+      <width>81</width>
+      <height>24</height>
+     </rect>
+    </property>
+    <property name="inputMask">
+     <string/>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="placeholderText">
+     <string>ФИО</string>
     </property>
    </widget>
   </widget>
