@@ -9,18 +9,36 @@ ClientState::ClientState(QObject *parent)
     : QObject{parent}
 {}
 
-QList<Group *> ClientState::getGroups() const
+QList<QString> ClientState::getPotoksName() const
+{
+    return potoksName;
+}
+
+void ClientState::setPotoksName(const QList<QString> &newPotoksName)
+{
+    potoksName = newPotoksName;
+}
+
+QList<QString> ClientState::getGroupsName() const
+{
+    return groupsName;
+}
+
+void ClientState::setGroupsName(const QList<QString> &newGroupsName)
+{
+    groupsName = newGroupsName;
+}
+
+Group *ClientState::getGroups() const
 {
     return groups;
 }
 
-void ClientState::setGroups(const QList<Group *> &newGroups)
+void ClientState::setGroups(Group *newGroups)
 {
-    for(auto temp:groups)
-        delete temp;
-    groups.clear();
     groups = newGroups;
 }
+
 
 MainWindow* ClientState::getMainwindow() const
 {
