@@ -17,7 +17,11 @@ private:
 
     Authentication* auth=nullptr;
 
-    QList<Group*> groups;
+    Group* groups;
+
+    QList<QString> groupsName;
+
+    QList<QString> potoksName;
 
     static ClientState* s_Instance;
 
@@ -40,8 +44,14 @@ public:
 
     MainWindow* getMainwindow() const;
 
-    QList<Group *> getGroups() const;
-    void setGroups(const QList<Group *> &newGroups);
+    Group *getGroups() const;
+    void setGroups(Group *newGroups);
+
+    QList<QString> getGroupsName() const;
+    void setGroupsName(const QList<QString> &newGroupsName);
+
+    QList<QString> getPotoksName() const;
+    void setPotoksName(const QList<QString> &newPotoksName);
 
 signals:
    void DataReady();
