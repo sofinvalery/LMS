@@ -21,6 +21,7 @@ SOURCES += \
     ClientState/clientstate.cpp \
     Forms/AddGroup/addgroup.cpp \
     Forms/Auth/auth.cpp \
+    Forms/CourseAdder/courseadder.cpp \
     Forms/CoursesMPWidget/coursesmpwidget.cpp \
     Forms/Download/download.cpp \
     Forms/Main/mainwindow.cpp \
@@ -49,6 +50,7 @@ HEADERS += \
     ClientState/clientstate.h \
     Forms/AddGroup/addgroup.h \
     Forms/Auth/auth.h \
+    Forms/CourseAdder/courseadder.h \
     Forms/CoursesMPWidget/coursesmpwidget.h \
     Forms/Download/download.h \
     Forms/Main/mainwindow.h  \
@@ -64,6 +66,7 @@ HEADERS += \
 FORMS += \
     Forms/AddGroup/addgroup.ui \
     Forms/Auth/auth.ui \
+    Forms/CourseAdder/courseadder.ui \
     Forms/CoursesMPWidget/coursesmpwidget.ui \
     Forms/Download/download.ui \
     Forms/Main/mainwindow.ui \
