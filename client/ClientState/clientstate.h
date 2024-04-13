@@ -17,7 +17,7 @@ private:
 
     Authentication* auth=nullptr;
 
-    Group* groups;
+    Group* group;
 
     QList<QString> groupsName;
 
@@ -44,8 +44,8 @@ public:
 
     MainWindow* getMainwindow() const;
 
-    Group *getGroups() const;
-    void setGroups(Group *newGroups);
+    Group *getGroup() const;
+    void setGroup(Group *newGroups);
 
     QList<QString> getGroupsName() const;
     void setGroupsName(const QList<QString> &newGroupsName);
