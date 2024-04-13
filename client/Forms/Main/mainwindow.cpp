@@ -146,9 +146,11 @@ void MainWindow::on_addCourseButton_clicked()
 
 void MainWindow::on_addPotokButton_clicked()
 {
-    Profile* profileWidget = new Profile(this);
-    profileWidget->raise();
-    profileWidget->show();
+    widget->close();
+    delete widget;
+    widget = new PotokAdder();
+    widget->setParent(this);
+    widget->show();
 }
 
 
