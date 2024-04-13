@@ -6,10 +6,7 @@
 #include "../../common/course/course.h"
 #include "../Forms/Main/mainwindow.h"
 #include "../../common/authentication/group.h"
-<<<<<<< HEAD
 #include "Forms/Reconnect/reconnect.h"
-=======
->>>>>>> 6c3bbf7 (add class group)
 
 class ClientState : public QObject
 {

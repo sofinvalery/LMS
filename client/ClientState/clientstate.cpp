@@ -58,6 +58,7 @@ void ClientState::setGroups(Group *newGroups)
     groups = newGroups;
 }
 
+
 MainWindow* ClientState::getMainwindow() const
 {
     return mainwindow;
