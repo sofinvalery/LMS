@@ -148,6 +148,11 @@ void MainWindow::on_addCourseButton_clicked()
 void MainWindow::on_addPotokButton_clicked()
 {
     widget->close();
+
+    widget = new PotokAdder();
+    widget->setParent(this);
+    widget->show();
+
 }
 
 void MainWindow::on_addGroupButton_clicked()

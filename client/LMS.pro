@@ -25,6 +25,7 @@ SOURCES += \
     Forms/Download/download.cpp \
     Forms/Main/mainwindow.cpp \
     Forms/MyWidget/mywidget.cpp \
+    Forms/PotokAdder/potokadder.cpp \
     Forms/Profile/profile.cpp \
     Forms/Reconnect/reconnect.cpp \
     Forms/Score/score.cpp \
@@ -54,6 +55,7 @@ HEADERS += \
     ../common/course/course_components/coursevideos.h \
     ../common/course/course_components/question.h \
     Forms/MyWidget/mywidget.h \
+    Forms/PotokAdder/potokadder.h \
     Forms/Profile/profile.h \
     Forms/Reconnect/reconnect.h \
     Forms/Score/score.h \
@@ -66,6 +68,7 @@ FORMS += \
     Forms/Download/download.ui \
     Forms/Main/mainwindow.ui \
     Forms/MyWidget/mywidget.ui \
+    Forms/PotokAdder/potokadder.ui \
     Forms/Profile/profile.ui \
     Forms/Reconnect/reconnect.ui \
     Forms/Score/score.ui

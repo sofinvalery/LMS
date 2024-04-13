@@ -8,7 +8,11 @@
 #include "Forms/CoursesMPWidget/coursesmpwidget.h"
 #include "Forms/Profile/profile.h"
 #include "Forms/Score/score.h"
+
 #include "Forms/AddGroup/addgroup.h"
+
+#include "Forms/PotokAdder/potokadder.h"
+
 #include <QScreen>
 
 
