@@ -48,14 +48,14 @@ void ClientState::setGroupsName(const QList<QString> &newGroupsName)
     groupsName = newGroupsName;
 }
 
-Group *ClientState::getGroups() const
+Group *ClientState::getGroup() const
 {
-    return groups;
+    return group;
 }
 
-void ClientState::setGroups(Group *newGroups)
+void ClientState::setGroup(Group *newGroup)
 {
-    groups = newGroups;
+    group = newGroup;
 }
 
 

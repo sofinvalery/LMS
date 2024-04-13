@@ -34,6 +34,5 @@ int main(int argc, char *argv[])
     palette.setColor(QPalette::HighlightedText, Qt::white);
     a.setPalette(palette);
     auth.open();
-
     return a.exec();
 }
