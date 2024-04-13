@@ -53,7 +53,7 @@ Auth::Auth(QWidget *parent)
         "}"
         );
     //дизайн кнопки
-    StyleManager::GetInstance()->setBlueButtonStyle(ui->pushButton, "Войти", "bold", 16, 10);
+    StyleManager::GetInstance()->setBlueButtonStyle(ui->pushButton, "Войти", "bold", 20, 10);
     ui->pushButton->setFixedHeight(50);
     //errorbox
     ui->errorbox->setText("Неправильный логин или пароль");
