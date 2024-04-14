@@ -4,7 +4,7 @@
 #include <QScrollBar>
 #include "../../ClientState/clientstate.h"
 
-
+#define arrlen 25
 
 CoursesMPWidget::CoursesMPWidget(QWidget *parent) :
     QWidget(parent),
@@ -62,7 +62,7 @@ CoursesMPWidget::CoursesMPWidget(QWidget *parent) :
 
     //ui->scrollArea->resize(this->frameGeometry().width()-20,this->frameGeometry().height()-100);
     //ui->scrollAreaWidgetContents->setMinimumWidth(this->frameGeometry().width()-20); - ширина области в которой работает скролл
-    ui->scrollAreaWidgetContents->setMinimumHeight((ClientState::GetInstance()->getListCourses().size()/columncnt)*(2*vertspace+widgetheight)+widgetheight/2);//+350);
+    ui->scrollAreaWidgetContents->setMinimumHeight((arrlen/columncnt)*(2*vertspace+widgetheight)+widgetheight/2 + 20);//+350);
     // ui->gridLayoutWidget->setFixedWidth(this->frameGeometry().width());
     // ui->gridLayoutWidget->setFixedWidth(this->frameGeometry().height());
     ui->gridLayoutWidget->resize(this->frameGeometry().width(),this->frameGeometry().height());
