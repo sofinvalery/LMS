@@ -24,6 +24,8 @@ public:
 private slots:
     void on_Add_line_clicked();
 
+    void on_Add_line_2_clicked();
+
 private:
     Ui::PotokAdder *ui;
 };
