@@ -140,9 +140,14 @@ void MainWindow::on_mainButton_clicked()
 void MainWindow::on_addCourseButton_clicked()
 {
     widget->close();
-    Reconnect* reconnect = new Reconnect(this);
-    reconnect->raise();
-    reconnect->show();
+
+
+    widget = new CourseAdder();
+    widget->setParent(this);
+    widget->show();
+    // Reconnect* reconnect = new Reconnect(this);
+    // reconnect->raise();
+    // reconnect->show();
 }
 
 void MainWindow::on_addPotokButton_clicked()

@@ -13,6 +13,8 @@
 
 #include "Forms/PotokAdder/potokadder.h"
 
+#include "Forms/CourseAdder/courseadder.h"
+
 #include <QScreen>
 
 
