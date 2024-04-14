@@ -11,6 +11,7 @@
 #include <QtSql/QSqlRecord>
 #include <QSqlQuery>
 #include "../../common/authentication/authentication.h"
+#include "../../common/authentication/group.h"
 #include "../../common/course/course.h"
 #include "../../common/course/course_components/coursetest.h"
 #include <QUuid>
@@ -28,6 +29,12 @@ public:
     //тут скорее всего будет не bool я еще почитаю как лучше реализовать обновление этих штук
     bool SetNewTest(CourseTest* test);
     bool SetNewCourse(Course* course);
+    QList<QString> GetEveryGroupName();
+    QList<QString> GetEveryUnionName();
+    bool AddNewGroup(Group*);
+    bool AddNewUnion(QList<QString> groupsList, QString unionName);
+    bool AddNewCourse(QString teachersGroupName, QString unionName, Course* course);
+    bool UpdateGroup(Group* group);
     ~DatabaseManager();
 
 private:

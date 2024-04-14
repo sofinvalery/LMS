@@ -247,3 +247,59 @@ QString DatabaseManager::GetTestQuestion(int32_t testId) {
         return query.value("url_json").toString();
     }
 }
+
+QList<QString> DatabaseManager::GetEveryGroupName() {
+    QSqlQuery query(m_db);
+    QList<QString> groupNames;
+
+    query.prepare("SELECT classname FROM `groups`");
+
+    if (!query.exec()) {
+        qDebug() << "Error executing query:" << query.lastError().text();
+        return groupNames;
+    }
+
+    while (query.next()) {
+        QString groupName = query.value("classname").toString();
+        groupNames.append(groupName);
+    }
+
+    return groupNames;
+}
+
+QList<QString> DatabaseManager::GetEveryUnionName() {
+    QSqlQuery query(m_db);
+    QList<QString> unionNames;
+
+    query.prepare("SELECT classname FROM students_groups_union");
+
+    if (!query.exec()) {
+        qDebug() << "Error executing query:" << query.lastError().text();
+        return unionNames;
+    }
+
+    while (query.next()) {
+        QString unionName = query.value("classname").toString();
+        unionNames.append(unionName);
+    }
+
+    return unionNames;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
