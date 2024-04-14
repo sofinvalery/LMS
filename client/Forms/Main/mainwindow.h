@@ -9,6 +9,7 @@
 #include "Forms/Profile/profile.h"
 #include "Forms/Score/score.h"
 #include "StyleManager/stylemanager.h"
+#include "../Download/download.h"
 #include <QScreen>
 
 
@@ -28,7 +29,7 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
-    void ShowManePage();
+public slots:    void ShowManePage();
 
 
 private slots:
@@ -41,7 +42,8 @@ private slots:
     void on_addGroupButton_clicked();
 private:
     Ui::MainWindow *ui;
-    QWidget * widget;
+    QWidget * widget=nullptr;
+    Download * download = new Download();
     //MyWidget * course[25];
 
 };

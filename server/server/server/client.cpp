@@ -3,6 +3,7 @@
 Client::Client(qintptr socketDescriptor, QObject* parent) :
     QObject(parent)
 {
+    auth=new Authentication*();
     qInfo() << "new connection";
     m_client = new QSslSocket(this);
     if (m_client->setSocketDescriptor(socketDescriptor)) {
@@ -55,7 +56,6 @@ Client::Client(qintptr socketDescriptor, QObject* parent) :
 }
 
 void Client::SendToClient(QJsonObject json){
-
     QByteArray Data;
     Data.clear();
     QDataStream out(&Data,QIODevice::WriteOnly);

@@ -3,12 +3,12 @@
 #include "StyleManager/stylemanager.h"
 #include <QPixmap>
 
-MyWidget::MyWidget(QWidget *parent)
+MyWidget::MyWidget(Course* course,QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::MyWidget)
 {
     ui->setupUi(this);
-
+    this->course=course;
     //progressbar
     ui->progressBar->setFont(StyleManager::GetInstance()->getRegular());
     ui->progressBar->setStyleSheet(
@@ -32,6 +32,7 @@ MyWidget::MyWidget(QWidget *parent)
         "border: 2px solid lightgrey;"
         "}");
     //coursename
+    ui->CourseName->setText(course->GetTitle());
     ui->CourseName->setFont(StyleManager::GetInstance()->getBold());
     ui->CourseName->setStyleSheet(
         "QLabel {"
@@ -54,7 +55,7 @@ MyWidget::MyWidget(QWidget *parent)
     //QPixmap pixmap("kapipng.png");
     //QIcon ButtonIcon(pixmap);
 
-    ui->CourseButtonIMG->setIcon(QIcon(":/img/resources/kap.jpg"));
+    ui->CourseButtonIMG->setIcon(QIcon(course->GetAvaTitleUrl()));
     //ui->CourseButtonIMG->setIconSize(pixmap.rect().size());
 }
 

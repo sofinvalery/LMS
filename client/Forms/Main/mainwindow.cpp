@@ -1,12 +1,15 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "../../ClientState/clientstate.h"
+#include "../../ClientManager/clientmanager.h"
+#include "../../ClientManager/socketparser.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
 
+    connect(SocketParser::GetInstance(),SIGNAL(getMainPage()),this,SLOT(ShowManePage()));
     ui->setupUi(this);
     this->setStyleSheet("background-color: white;");
     ui->addCourseButton->hide();
@@ -78,7 +81,7 @@ MainWindow::MainWindow(QWidget *parent)
     QScreen* scr = QGuiApplication::primaryScreen();
 
     this->resize( scr->availableGeometry().width(), scr->availableGeometry().height());
-
+    download->setParent(this);
 }
 
 MainWindow::~MainWindow()
@@ -89,6 +92,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::ShowManePage()
 {
+    download->close();
     if ( ClientState::GetInstance()->getAuth()->GetCurrentRole() == ADMIN)
     {
         ui->addCourseButton->show();
@@ -129,10 +133,9 @@ void MainWindow::on_mainButton_clicked()
     StyleManager::GetInstance()->setBlueButtonStyle(ui->mainButton, "Курсы", "bold", 20, 13);
     StyleManager::GetInstance()->setSimpleButtonStyle(ui->scoreButton, "Оценки", "bold", 20, 18);
     widget->close();
+    download->show();
     delete widget;
-    widget = new CoursesMPWidget();
-    widget->setParent(this);
-    widget->show();
+    ClientManager::GetInstance()->Send(GETMAINPAGE,ClientState::GetInstance()->getAuth()->Serialize());
 }
 
 void MainWindow::on_addCourseButton_clicked()

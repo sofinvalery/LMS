@@ -2,9 +2,9 @@
 #include "ui_coursesmpwidget.h"
 #include <QScreen>
 #include <QScrollBar>
+#include "../../ClientState/clientstate.h"
 
 
-#define arrlen 25
 
 CoursesMPWidget::CoursesMPWidget(QWidget *parent) :
     QWidget(parent),
@@ -53,8 +53,8 @@ CoursesMPWidget::CoursesMPWidget(QWidget *parent) :
         "    background: none;"
         "}");
 
-    int widgetwidth = MyWidget().width();
-    int widgetheight = MyWidget().height();
+    int widgetwidth = MyWidget(ClientState::GetInstance()->getListCourses()[0]).width();
+    int widgetheight = MyWidget(ClientState::GetInstance()->getListCourses()[0]).height();
     int vertspace = scr->availableGeometry().height()/ 17;
     int horizspace = scr->availableGeometry().width()/ 30;
 
@@ -62,11 +62,11 @@ CoursesMPWidget::CoursesMPWidget(QWidget *parent) :
 
     //ui->scrollArea->resize(this->frameGeometry().width()-20,this->frameGeometry().height()-100);
     //ui->scrollAreaWidgetContents->setMinimumWidth(this->frameGeometry().width()-20); - ширина области в которой работает скролл
-    ui->scrollAreaWidgetContents->setMinimumHeight((arrlen/columncnt)*(2*vertspace+widgetheight)+widgetheight/2);//+350);
+    ui->scrollAreaWidgetContents->setMinimumHeight((ClientState::GetInstance()->getListCourses().size()/columncnt)*(2*vertspace+widgetheight)+widgetheight/2);//+350);
     // ui->gridLayoutWidget->setFixedWidth(this->frameGeometry().width());
     // ui->gridLayoutWidget->setFixedWidth(this->frameGeometry().height());
     ui->gridLayoutWidget->resize(this->frameGeometry().width(),this->frameGeometry().height());
-    ui->gridLayoutWidget->setMinimumHeight((arrlen/columncnt)*(2*vertspace+widgetheight)+widgetheight/2);//+350);
+    ui->gridLayoutWidget->setMinimumHeight((ClientState::GetInstance()->getListCourses().size()/columncnt)*(2*vertspace+widgetheight)+widgetheight/2);//+350);
     // ui->gridLayout->setColumnMinimumWidth(0,351);
     // ui->gridLayout->setColumnMinimumWidth(1,351);
     // ui->gridLayout->setColumnMinimumWidth(2,351);
@@ -76,15 +76,13 @@ CoursesMPWidget::CoursesMPWidget(QWidget *parent) :
     ui->gridLayout->setHorizontalSpacing(horizspace);
     //ui->gridLayout->setContentsMargins(0,0,0,0);
     //ui->gridLayout->setGeometry(this->frameGeometry());
-    for (int i = 0, j = 0, z = 0; z < arrlen; z++, j++){
-        course[z] = new MyWidget();
+    for (int i = 0, j = 0, z = 0; z < ClientState::GetInstance()->getListCourses().size(); z++, j++){
         if (z % columncnt == 0){
             j = 0;
             i++;
             //ui->gridLayout->setRowMinimumHeight(i,1);
         }
-        ui->gridLayout->addWidget(course[z],i,j);
-
+        ui->gridLayout->addWidget(new MyWidget(ClientState::GetInstance()->getListCourses()[z]),i,j);
     }
 
 }

@@ -11,4 +11,7 @@
     <qresource prefix="/sll">
         <file>ClientManager/certificate/client.key</file>
     </qresource>
+    <qresource prefix="/gif">
+            <file>resources/download.gif</file>
+    </qresource>
 </RCC>

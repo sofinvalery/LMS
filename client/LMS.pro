@@ -21,6 +21,7 @@ SOURCES += \
     ClientState/clientstate.cpp \
     Forms/Auth/auth.cpp \
     Forms/CoursesMPWidget/coursesmpwidget.cpp \
+    Forms/Download/download.cpp \
     Forms/Main/mainwindow.cpp \
     Forms/MyWidget/mywidget.cpp \
     Forms/Profile/profile.cpp \
@@ -33,6 +34,7 @@ SOURCES += \
 
 HEADERS += \
     ../common/authentication/authentication.h \
+    ../common/authentication/generate_password.h \
     ../common/authentication/group.h \
     ../common/course/course.h \
     ../common/course/course_components/coursecomponent.h \
@@ -46,6 +48,7 @@ HEADERS += \
     ClientState/clientstate.h \
     Forms/Auth/auth.h \
     Forms/CoursesMPWidget/coursesmpwidget.h \
+    Forms/Download/download.h \
     Forms/Main/mainwindow.h  \
     ../common/course/course_components/coursevideos.h \
     ../common/course/course_components/question.h \
@@ -58,6 +61,7 @@ HEADERS += \
 FORMS += \
     Forms/Auth/auth.ui \
     Forms/CoursesMPWidget/coursesmpwidget.ui \
+    Forms/Download/download.ui \
     Forms/Main/mainwindow.ui \
     Forms/MyWidget/mywidget.ui \
     Forms/Profile/profile.ui \
@@ -72,3 +76,8 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 RESOURCES += \
     resourse.qrc
+
+QXLSX_PARENTPATH = $$PWD/QXlsx/
+QXLSX_HEADERPATH = $$PWD/QXlsx/header/
+QXLSX_SOURCEPATH = $$PWD/QXlsx/source/
+include($$PWD/QXlsx/QXlsx.pri)

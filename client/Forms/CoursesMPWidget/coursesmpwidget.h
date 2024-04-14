@@ -18,7 +18,6 @@ public:
 
 private:
     Ui::CoursesMPWidget *ui;
-    MyWidget * course[25];
 };
 
 #endif // COURSESMPWIDGET_H

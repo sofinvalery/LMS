@@ -13,6 +13,7 @@ CONFIG += c++17 cmdline console
 
 SOURCES += \
         ../../common/authentication/authentication.cpp \
+        ../../common/authentication/group.cpp \
         ../../common/course/course.cpp \
         ../../common/course/course_components/coursepdf.cpp \
         ../../common/course/course_components/coursetask.cpp \
@@ -35,6 +36,8 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 HEADERS += \
     ../../common/authentication/authentication.h \
+    ../../common/authentication/generate_password.h \
+    ../../common/authentication/group.h \
     ../../common/course/course.h \
     ../../common/course/course_components/coursecomponent.h \
     ../../common/course/course_components/coursepdf.h \

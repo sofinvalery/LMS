@@ -74,7 +74,6 @@ QList<Course*> DatabaseManager::GetMainPage(Authentication* auth) {
     } else {
         query.prepare("SELECT c.id, c.title, c.ava_title_url, c.start_time, c.end_time "
                       "FROM courses AS c");
-        return courses;
     }
 
     query.bindValue(":userId", auth->getId());

@@ -24,7 +24,7 @@ private slots:
 
 private:
     quint64 nextBlockSize=0;
-    Authentication* auth=nullptr;
+    Authentication** auth;
     QSslSocket* m_client;
 };
 
