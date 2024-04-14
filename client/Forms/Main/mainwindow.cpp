@@ -141,7 +141,11 @@ void MainWindow::on_mainButton_clicked()
 
 void MainWindow::on_addCourseButton_clicked()
 {
-    ClientManager::GetInstance()->SendFileToServer("C:/Users/user/Downloads/mysql-8.3.0-winx64(2).msi","./data/");
+    widget->close();
+    delete widget;
+    widget = new CourseAdder();
+    widget->setParent(this);
+    widget->show();
 }
 
 void MainWindow::on_addPotokButton_clicked()
