@@ -59,6 +59,17 @@ MyWidget::MyWidget(Course* course,QWidget *parent)
     //ui->CourseButtonIMG->setIconSize(pixmap.rect().size());
 }
 
+void MyWidget::setName(QString name)
+{
+    ui->CourseName->setText(name);
+}
+
+void MyWidget::setIMG(QString path)
+{
+    ui->CourseButtonIMG->setIcon(QIcon(path));
+}
+
+
 MyWidget::~MyWidget()
 {
     delete ui;

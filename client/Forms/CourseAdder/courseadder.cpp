@@ -1,7 +1,7 @@
 #include "courseadder.h"
 #include "ui_courseadder.h"
 #include <QScreen>
-#include "Forms/MyWidget/mywidget.h"
+
 
 CourseAdder::CourseAdder(QWidget *parent)
     : QWidget(parent)
@@ -18,9 +18,21 @@ CourseAdder::CourseAdder(QWidget *parent)
     this->resize( scr->availableGeometry().width(), scr->availableGeometry().height() - 20);
     ui->groupBox->setMinimumSize(this->frameGeometry().width(),this->frameGeometry().height() - 20);
     this->move(0, 90);
+    course = new MyWidget();
+    ui->verticalLayout->addWidget(course);
+    course->show();
 }
 
 CourseAdder::~CourseAdder()
 {
     delete ui;
 }
+
+void CourseAdder::on_Apply_clicked()
+{
+    course->setName(ui->CourseName->text());
+    if (!ui->ImgPath->text().isNull())
+        course->setIMG(ui->ImgPath->text());
+
+}
+

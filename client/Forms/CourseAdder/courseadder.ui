@@ -35,7 +35,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>Путь к картинке</string>
+     <string/>
     </property>
    </widget>
    <widget class="QLineEdit" name="CourseName">
@@ -48,10 +48,10 @@
      </rect>
     </property>
     <property name="inputMask">
-     <string>Название курса</string>
+     <string/>
     </property>
     <property name="text">
-     <string>Название курса</string>
+     <string/>
     </property>
    </widget>
    <widget class="QLineEdit" name="GropuTeachers">
@@ -64,7 +64,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>Группа учителей</string>
+     <string/>
     </property>
    </widget>
    <widget class="QLineEdit" name="PotokStudents">
@@ -77,7 +77,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>Поток студентов</string>
+     <string/>
     </property>
    </widget>
    <widget class="QLabel" name="TeachersError">
@@ -111,11 +111,76 @@
      <rect>
       <x>279</x>
       <y>329</y>
-      <width>261</width>
-      <height>141</height>
+      <width>441</width>
+      <height>271</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" name="verticalLayout"/>
+   </widget>
+   <widget class="QPushButton" name="Apply">
+    <property name="geometry">
+     <rect>
+      <x>40</x>
+      <y>280</y>
+      <width>151</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Применить изменения</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label">
+    <property name="geometry">
+     <rect>
+      <x>40</x>
+      <y>180</y>
+      <width>161</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Путь к картинке</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_3">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>20</y>
+      <width>161</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Название курса</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_4">
+    <property name="geometry">
+     <rect>
+      <x>300</x>
+      <y>20</y>
+      <width>161</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Группа учителей</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_5">
+    <property name="geometry">
+     <rect>
+      <x>570</x>
+      <y>20</y>
+      <width>161</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Поток студентов</string>
+    </property>
    </widget>
   </widget>
  </widget>

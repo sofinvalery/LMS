@@ -15,6 +15,9 @@ class MyWidget : public QWidget
 
 public:
     explicit MyWidget(Course* course,QWidget *parent = nullptr);
+    explicit MyWidget(QWidget *parent = nullptr);
+    void setName(QString name);
+    void setIMG(QString path);
     ~MyWidget();
 private:
     Ui::MyWidget *ui;
