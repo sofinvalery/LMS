@@ -20,6 +20,8 @@ public:
 private slots:
     void on_Apply_clicked();
 
+    void on_FoundIMG_clicked();
+
 private:
     Ui::CourseAdder *ui;
 };

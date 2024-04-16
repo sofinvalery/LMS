@@ -26,6 +26,8 @@ private slots:
 
     void on_Add_line_2_clicked();
 
+    void on_FoundExcel_clicked();
+
 private:
     Ui::PotokAdder *ui;
 };
