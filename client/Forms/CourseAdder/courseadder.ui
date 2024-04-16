@@ -182,6 +182,19 @@
      <string>Поток студентов</string>
     </property>
    </widget>
+   <widget class="QPushButton" name="FoundIMG">
+    <property name="geometry">
+     <rect>
+      <x>320</x>
+      <y>210</y>
+      <width>141</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Добавить картинку</string>
+    </property>
+   </widget>
   </widget>
  </widget>
  <resources/>

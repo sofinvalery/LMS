@@ -1,6 +1,7 @@
 #include "potokadder.h"
 #include "ui_potokadder.h"
 #include <QScreen>
+#include <QFileDialog>
 
 PotokAdder::PotokAdder(QWidget *parent)
     : QWidget(parent)
@@ -60,5 +61,14 @@ void PotokAdder::on_Add_line_2_clicked()
         ui->scrollAreaWidgetContents->setMinimumHeight(this->frameGeometry().height() - 20);
     counter--;
     }
+}
+
+
+void PotokAdder::on_FoundExcel_clicked()
+{
+    QString path;
+    path = QFileDialog::getOpenFileName(this, "Выбор таблицы", "C:\\", "Excel files (*.xlsx *.xls);");
+
+    ui->Excel_Path->setText(path);
 }
 
