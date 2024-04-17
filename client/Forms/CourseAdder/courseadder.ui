@@ -41,7 +41,7 @@
      <string/>
     </property>
    </widget>
-   <widget class="QLineEdit" name="GropuTeachers">
+   <widget class="QLineEdit" name="GroupTeachers">
     <property name="geometry">
      <rect>
       <x>310</x>
@@ -72,15 +72,15 @@
      <rect>
       <x>310</x>
       <y>110</y>
-      <width>141</width>
-      <height>21</height>
+      <width>201</width>
+      <height>41</height>
      </rect>
     </property>
     <property name="styleSheet">
      <string notr="true">color: rgb(255, 0, 0);</string>
     </property>
     <property name="text">
-     <string>Ошибка</string>
+     <string/>
     </property>
    </widget>
    <widget class="QLabel" name="StudentsError">
@@ -88,7 +88,7 @@
      <rect>
       <x>580</x>
       <y>110</y>
-      <width>141</width>
+      <width>211</width>
       <height>21</height>
      </rect>
     </property>
@@ -96,7 +96,7 @@
      <string notr="true">color: rgb(255, 0, 0);</string>
     </property>
     <property name="text">
-     <string>Ошибка</string>
+     <string/>
     </property>
    </widget>
    <widget class="QWidget" name="verticalLayoutWidget">
@@ -188,7 +188,7 @@
      <string>Добавить картинку</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="Apply_2">
+   <widget class="QPushButton" name="CreateCourse">
     <property name="geometry">
      <rect>
       <x>20</x>
