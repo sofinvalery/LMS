@@ -28,6 +28,7 @@ SOURCES += \
     Forms/Reconnect/reconnect.cpp \
     Forms/Score/score.cpp \
     StyleManager/stylemanager.cpp \
+    XlsxUtils/xlsxutils.cpp \
     main.cpp  \
     ../common/course/course_components/coursevideos.cpp \
     ../common/course/course_components/question.cpp
@@ -36,6 +37,7 @@ HEADERS += \
     ../common/authentication/authentication.h \
     ../common/authentication/generate_password.h \
     ../common/authentication/group.h \
+    ../common/authentication/translate.h \
     ../common/course/course.h \
     ../common/course/course_components/coursecomponent.h \
     ../common/course/course_components/coursepdf.h \
@@ -56,7 +58,8 @@ HEADERS += \
     Forms/Profile/profile.h \
     Forms/Reconnect/reconnect.h \
     Forms/Score/score.h \
-    StyleManager/stylemanager.h
+    StyleManager/stylemanager.h \
+    XlsxUtils/xlsxutils.h
 
 FORMS += \
     Forms/Auth/auth.ui \

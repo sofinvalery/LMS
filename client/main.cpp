@@ -1,4 +1,3 @@
-#include "Forms/Main/mainwindow.h"
 #include "Forms/Auth/auth.h"
 #include <QApplication>
 #include "ClientManager/socketparser.h"
@@ -27,8 +26,6 @@ int main(int argc, char *argv[])
     palette.setColor(QPalette::Highlight, QColor(0, 120, 215));
     palette.setColor(QPalette::HighlightedText, Qt::white);
     a.setPalette(palette);
-
-
     auth.open();
 
     ClientManager::GetInstance();
