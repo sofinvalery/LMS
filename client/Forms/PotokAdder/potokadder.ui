@@ -88,6 +88,9 @@
         <pointsize>10</pointsize>
        </font>
       </property>
+      <property name="styleSheet">
+       <string notr="true">color: rgb(255, 0, 0);</string>
+      </property>
       <property name="text">
        <string>Ошибка</string>
       </property>
@@ -180,16 +183,6 @@
  заполнения данных отдается ей</string>
     </property>
    </widget>
-   <widget class="QLineEdit" name="Excel_Path">
-    <property name="geometry">
-     <rect>
-      <x>20</x>
-      <y>450</y>
-      <width>181</width>
-      <height>31</height>
-     </rect>
-    </property>
-   </widget>
    <widget class="QLabel" name="label">
     <property name="geometry">
      <rect>
@@ -214,6 +207,19 @@
     </property>
     <property name="text">
      <string>Добавить таблицу</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="Excel_Path">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>450</y>
+      <width>331</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
     </property>
    </widget>
   </widget>

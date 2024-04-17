@@ -2,6 +2,7 @@
 #include "ui_courseadder.h"
 #include <QScreen>
 #include <QFileDialog>
+#include <QDir>
 
 
 CourseAdder::CourseAdder(QWidget *parent)
@@ -32,7 +33,7 @@ CourseAdder::~CourseAdder()
 void CourseAdder::on_Apply_clicked()
 {
     course->setName(ui->CourseName->text());
-    if (!ui->ImgPath->text().isNull())
+    if (ui->ImgPath->text() != "")
         course->setIMG(ui->ImgPath->text());
 
 }
@@ -41,8 +42,7 @@ void CourseAdder::on_Apply_clicked()
 void CourseAdder::on_FoundIMG_clicked()
 {
     QString path;
-    path = QFileDialog::getOpenFileName(this, "Выбор картинки", "C:\\", "JPEG Image (*.jpg);; PNG Image (*.png);");
-
+    path = QFileDialog::getOpenFileName(this, "Выбор картинки", QDir::homePath(), "JPEG Image (*.jpg);; PNG Image (*.png);");
     ui->ImgPath->setText(path);
 }
 
