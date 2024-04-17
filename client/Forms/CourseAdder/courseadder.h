@@ -22,6 +22,8 @@ private slots:
 
     void on_FoundIMG_clicked();
 
+    void on_CreateCourse_clicked();
+
 private:
     Ui::CourseAdder *ui;
 };
