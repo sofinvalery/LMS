@@ -8,16 +8,8 @@ Download::Download(QWidget *parent)
     , ui(new Ui::Download)
 {
     ui->setupUi(this);
-    ui->groupBox->setStyleSheet(
-        "QGroupBox {"
-        "border-top: 3px solid lightgrey;"
-        "}");
-
-    QScreen* scr = QGuiApplication::primaryScreen();
+    StyleManager::GetInstance()->setWidgetStyle(this, ui->groupBox, 90);
     QRect screenGeometry = QGuiApplication::primaryScreen()->geometry();
-    this->resize( scr->availableGeometry().width(), scr->availableGeometry().height() - 20);
-    ui->groupBox->setMinimumSize(this->frameGeometry().width(),this->frameGeometry().height() - 20);
-    this->move(0, 90);
 
     QMovie *movie = new QMovie(":/gif/resources/download.gif");
     ui->processLabel->setMovie(movie);
