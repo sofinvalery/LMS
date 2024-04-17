@@ -3,24 +3,20 @@
 #include <QScreen>
 #include <QFileDialog>
 #include <QDir>
+#include "StyleManager/stylemanager.h"
 
 PotokAdder::PotokAdder(QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::PotokAdder)
 {
     ui->setupUi(this);
-    ui->groupBox->setStyleSheet(
-        "QGroupBox {"
-        "border-top: 3px solid lightgrey;"
-        "}");
+    StyleManager::GetInstance()->setWidgetStyle(this, ui->groupBox, 80);
 
     QScreen* scr = QGuiApplication::primaryScreen();
 
-    this->resize( scr->availableGeometry().width(), scr->availableGeometry().height() - 20);
-    ui->groupBox->setMinimumSize(this->frameGeometry().width(),this->frameGeometry().height() - 20);
     ui->scrollArea->setWidgetResizable(true);
     ui->scrollArea->resize(this->frameGeometry().width()-25-350,this->frameGeometry().height() - 20);
-    this->move(0, 90);
+
     GroupNames.clear();
     GroupErrors.clear();
     GroupNames.append(ui->Group_name);

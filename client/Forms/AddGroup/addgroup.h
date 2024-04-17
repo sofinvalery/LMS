@@ -26,6 +26,8 @@ private slots:
 
     void on_createButton_clicked(); //кнопка создания
 
+    void on_FindExcelButton_clicked();
+
 private:
     Ui::AddGroup *ui;
 

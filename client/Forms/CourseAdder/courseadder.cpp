@@ -4,6 +4,7 @@
 #include <QFileDialog>
 #include <QDir>
 #include "ClientState/clientstate.h"
+#include "StyleManager/stylemanager.h"
 
 
 CourseAdder::CourseAdder(QWidget *parent)
@@ -11,16 +12,8 @@ CourseAdder::CourseAdder(QWidget *parent)
     , ui(new Ui::CourseAdder)
 {
     ui->setupUi(this);
-    ui->groupBox->setStyleSheet(
-        "QGroupBox {"
-        "border-top: 3px solid lightgrey;"
-        "}");
+    StyleManager::GetInstance()->setWidgetStyle(this, ui->groupBox, 81);
 
-    QScreen* scr = QGuiApplication::primaryScreen();
-
-    this->resize( scr->availableGeometry().width(), scr->availableGeometry().height() - 20);
-    ui->groupBox->setMinimumSize(this->frameGeometry().width(),this->frameGeometry().height() - 20);
-    this->move(0, 90);
     course = new MyWidget();
     ui->verticalLayout->addWidget(course);
     course->show();

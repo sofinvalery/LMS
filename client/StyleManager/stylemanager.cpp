@@ -87,6 +87,18 @@ void StyleManager::setDisableButtonStyle(QPushButton* buttonName, QString button
         "}");
 }
 
+void StyleManager::setWidgetStyle(QWidget* widgetName, QGroupBox* groupboxName, unsigned short int moveY)
+{
+    groupboxName->setStyleSheet(
+        "QGroupBox {"
+        "border-top: 3px solid lightgrey;"
+        "}");
+    QScreen* scr = QGuiApplication::primaryScreen();
+    widgetName->resize(scr->availableGeometry().width(), scr->availableGeometry().height() - 20);
+    groupboxName->setMinimumSize(widgetName->frameGeometry().width(),widgetName->frameGeometry().height() - 20);
+    widgetName->move(0, moveY);
+}
+
 QFont StyleManager::getRegular()
 {
     return GetInstance()->regularFont;

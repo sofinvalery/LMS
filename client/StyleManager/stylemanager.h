@@ -4,6 +4,9 @@
 #include <QPushButton>
 #include <QFontDatabase>
 #include <QString>
+#include <QGroupBox>
+#include <QScreen>
+#include <QGuiApplication>
 
 class StyleManager
 {
@@ -14,6 +17,7 @@ public:
     void setSimpleButtonStyle(QPushButton* buttonName, QString buttonText, QString fontWeight, unsigned short int fontSize, unsigned short int fontSizeAnim);
     void setBlueButtonStyle(QPushButton* buttonName, QString buttonText, QString fontWeight, unsigned short int fontSize, unsigned short int borderRadius);
     void setDisableButtonStyle(QPushButton* buttonName, QString buttonText, QString fontWeight, unsigned short int fontSize, unsigned short int borderRadius);
+    void setWidgetStyle(QWidget* widgetName, QGroupBox* groupboxName, unsigned short int moveY);
     void setGroupBoxStyle();
     void setLabelStyle();
 

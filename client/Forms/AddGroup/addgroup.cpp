@@ -4,16 +4,14 @@
 #include "ClientState/clientstate.h"
 #include "StyleManager/stylemanager.h"
 #include <QScreen>
+#include <QFileDialog>
 
 AddGroup::AddGroup(QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::AddGroup)
 {
     ui->setupUi(this);
-    ui->groupBox->setStyleSheet(
-        "QGroupBox {"
-        "border-top: 3px solid lightgrey;"
-        "}");
+    StyleManager::GetInstance()->setWidgetStyle(this, ui->groupBox, 90);
     ui->addButton->setEnabled(false);
     ui->createButton->setEnabled(false);
 
@@ -37,20 +35,22 @@ AddGroup::AddGroup(QWidget *parent)
         "}");
     ui->successLabel->move(250,200);
 
+    ui->ExcelPath->setFont(StyleManager::GetInstance()->getBold());
+    ui->ExcelPath->move(500, 500);
+    ui->ExcelPath->setStyleSheet("font-size: 12px;");
+
     StyleManager::GetInstance()->setDisableButtonStyle(ui->createButton, "Создать группу", "bold", 16, 13);
     ui->createButton->setFixedSize(145, 45);
 
-    QScreen* scr = QGuiApplication::primaryScreen();
-
     nameList.append(ui->studentLineEdit);
-
-    this->resize( scr->availableGeometry().width(), scr->availableGeometry().height() - 20);
-    ui->groupBox->setMinimumSize(this->frameGeometry().width(),this->frameGeometry().height() - 20);
-    this->move(0, 90);
 
     //numberlabel
     ui->numberLabel->setFont(StyleManager::GetInstance()->getBold());
     ui->numberLabel->setStyleSheet("font-size: 16px;");
+
+    //excelfind
+    StyleManager::GetInstance()->setBlueButtonStyle(ui->FindExcelButton, "Выбрать таблицу", "bold", 16, 13);
+    ui->FindExcelButton->setFixedSize(145, 45);
 
     //addbutton
     StyleManager::GetInstance()->setSimpleButtonStyle(ui->addButton, "", "bold", 1, 1);
@@ -175,5 +175,14 @@ void AddGroup::on_createButton_clicked()
         ui->warningLabel->hide();
         ui->successLabel->show();
     }
+}
+
+
+void AddGroup::on_FindExcelButton_clicked()
+{
+    QString path;
+    path = QFileDialog::getOpenFileName(this, "Выбор таблицы", QDir::homePath(), "Excel files (*.xlsx *.xls);");
+
+    ui->ExcelPath->setText(path);
 }
 
