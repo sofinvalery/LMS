@@ -2,6 +2,7 @@
 #include "ui_potokadder.h"
 #include <QScreen>
 #include <QFileDialog>
+#include <QDir>
 
 PotokAdder::PotokAdder(QWidget *parent)
     : QWidget(parent)
@@ -67,7 +68,7 @@ void PotokAdder::on_Add_line_2_clicked()
 void PotokAdder::on_FoundExcel_clicked()
 {
     QString path;
-    path = QFileDialog::getOpenFileName(this, "Выбор таблицы", "C:\\", "Excel files (*.xlsx *.xls);");
+    path = QFileDialog::getOpenFileName(this, "Выбор таблицы", QDir::homePath(), "Excel files (*.xlsx *.xls);");
 
     ui->Excel_Path->setText(path);
 }

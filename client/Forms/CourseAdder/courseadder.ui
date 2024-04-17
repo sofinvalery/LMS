@@ -25,19 +25,6 @@
    <property name="title">
     <string/>
    </property>
-   <widget class="QLineEdit" name="ImgPath">
-    <property name="geometry">
-     <rect>
-      <x>40</x>
-      <y>210</y>
-      <width>161</width>
-      <height>31</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string/>
-    </property>
-   </widget>
    <widget class="QLineEdit" name="CourseName">
     <property name="geometry">
      <rect>
@@ -89,11 +76,14 @@
       <height>21</height>
      </rect>
     </property>
+    <property name="styleSheet">
+     <string notr="true">color: rgb(255, 0, 0);</string>
+    </property>
     <property name="text">
      <string>Ошибка</string>
     </property>
    </widget>
-   <widget class="QLabel" name="TeachersError_2">
+   <widget class="QLabel" name="StudentsError">
     <property name="geometry">
      <rect>
       <x>580</x>
@@ -101,6 +91,9 @@
       <width>141</width>
       <height>21</height>
      </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: rgb(255, 0, 0);</string>
     </property>
     <property name="text">
      <string>Ошибка</string>
@@ -185,14 +178,45 @@
    <widget class="QPushButton" name="FoundIMG">
     <property name="geometry">
      <rect>
-      <x>320</x>
-      <y>210</y>
+      <x>290</x>
+      <y>270</y>
       <width>141</width>
       <height>41</height>
      </rect>
     </property>
     <property name="text">
      <string>Добавить картинку</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="Apply_2">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>520</y>
+      <width>201</width>
+      <height>71</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>15</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>Создать курс</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="ImgPath">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>225</y>
+      <width>671</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
     </property>
    </widget>
   </widget>
