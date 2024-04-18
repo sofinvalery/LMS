@@ -15,21 +15,10 @@ Auth::Auth(QWidget *parent)
     //groupbox
     ui->groupBox->setStyleSheet("QGroupBox { border: none; }");
     //errorbox
-    ui->errorbox->setFont(StyleManager::GetInstance()->getBold());
-    ui->errorbox->setStyleSheet(
-        "QLabel {"
-        "qproperty-alignment: AlignCenter;"
-        "color: red;"
-        "font-size: 14px;"
-        "}");
+    StyleManager::GetInstance()->setLabelStyle(ui->errorbox, "Неправильный логин или пароль", "bold", "red", false, 14);
     //labelAuth
-    ui->labelAuth->setFont(StyleManager::GetInstance()->getBold());
-    ui->labelAuth->setStyleSheet(
-        "QLabel {"
-        "qproperty-alignment: AlignCenter;"
-        "font-size: 26px;"
-        "}"
-        );
+    StyleManager::GetInstance()->setLabelStyle(ui->labelAuth, "Авторизация", "bold", "black", true, 26);
+    ui->labelAuth->setAlignment(Qt::AlignHCenter);
     //дизайн логина
     ui->login->setFont(StyleManager::GetInstance()->getRegular());
     ui->login->setStyleSheet(
@@ -55,9 +44,6 @@ Auth::Auth(QWidget *parent)
     //дизайн кнопки
     StyleManager::GetInstance()->setBlueButtonStyle(ui->pushButton, "Войти", "bold", 20, 10);
     ui->pushButton->setFixedHeight(50);
-    //errorbox
-    ui->errorbox->setText("Неправильный логин или пароль");
-    ui->errorbox->hide();
 }
 
 Auth::~Auth()
@@ -92,7 +78,7 @@ void Auth::showMainPage()
     }
     else
     {
-         ui->errorbox->show();
+        ui->errorbox->show();
     }
 }
 

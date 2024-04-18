@@ -3,7 +3,11 @@
 #include <QWidget>
 #include <QList>
 #include <QLineEdit>
-
+#include "ClientState/clientstate.h"
+#include "StyleManager/stylemanager.h"
+#include "qforeach.h"
+#include <QScreen>
+#include <QFileDialog>
 
 namespace Ui {
 class AddGroup;
@@ -27,6 +31,8 @@ private slots:
     void on_createButton_clicked(); //кнопка создания
 
     void on_FindExcelButton_clicked();
+
+    void on_deleteButton_clicked();
 
 private:
     Ui::AddGroup *ui;

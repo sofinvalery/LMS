@@ -19,14 +19,8 @@ Reconnect::Reconnect(QWidget *parent)
         "border-radius: 10px;"
         "}");
     //statuslabel
-    ui->statusLabel->setFont(StyleManager::GetInstance()->getRegular());
-    ui->statusLabel->setText("Потеряно соединение");
-    ui->statusLabel->setStyleSheet(
-        "QLabel {"
-        "font-size: 20px;"
-        "color: red;"
-        "qproperty-alignment: AlignCenter;"
-        "}");
+    StyleManager::GetInstance()->setLabelStyle(ui->statusLabel, "Потеряно соединение", "regular", "red", true, 20);
+    ui->statusLabel->setAlignment(Qt::AlignHCenter);
     //exitbutton
     StyleManager::GetInstance()->setBlueButtonStyle(ui->exitButton, "Выход", "bold", 16, 10);
     ui->exitButton->setFixedSize(178, 40);

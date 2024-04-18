@@ -6,6 +6,7 @@
 #include <QString>
 #include <QGroupBox>
 #include <QScreen>
+#include <QLabel>
 #include <QGuiApplication>
 
 class StyleManager
@@ -19,7 +20,7 @@ public:
     void setDisableButtonStyle(QPushButton* buttonName, QString buttonText, QString fontWeight, unsigned short int fontSize, unsigned short int borderRadius);
     void setWidgetStyle(QWidget* widgetName, QGroupBox* groupboxName, unsigned short int moveY);
     void setGroupBoxStyle();
-    void setLabelStyle();
+    void setLabelStyle(QLabel* labelName, QString labelText, QString fontWeight, QString textColour, bool hideStatus, unsigned short int fontSize);
 
 private:
     StyleManager();

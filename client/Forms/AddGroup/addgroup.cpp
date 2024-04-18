@@ -1,10 +1,5 @@
 #include "addgroup.h"
-#include "qforeach.h"
 #include "ui_addgroup.h"
-#include "ClientState/clientstate.h"
-#include "StyleManager/stylemanager.h"
-#include <QScreen>
-#include <QFileDialog>
 
 AddGroup::AddGroup(QWidget *parent)
     : QWidget(parent)
@@ -15,24 +10,10 @@ AddGroup::AddGroup(QWidget *parent)
     ui->addButton->setEnabled(false);
     ui->createButton->setEnabled(false);
 
-    ui->warningLabel->hide();
-    ui->warningLabel->setText("Данная группа уже существует");
-    ui->warningLabel->setFont(StyleManager::GetInstance()->getBold());
-    ui->warningLabel->setStyleSheet(
-        "QLabel {"
-        "font-size: 16px;"
-        "color: red;"
-        "}");
+    StyleManager::GetInstance()->setLabelStyle(ui->warningLabel, "Данная группа уже существует", "bold", "red", false, 16);
     ui->warningLabel->move(250,200);
 
-    ui->successLabel->hide();
-    ui->successLabel->setText("Группа успешно создана");
-    ui->successLabel->setFont(StyleManager::GetInstance()->getBold());
-    ui->successLabel->setStyleSheet(
-        "QLabel {"
-        "font-size: 16px;"
-        "color: green;"
-        "}");
+    StyleManager::GetInstance()->setLabelStyle(ui->successLabel, "Группа успешно создана", "bold", "green", false, 16);
     ui->successLabel->move(250,200);
 
     ui->ExcelPath->setFont(StyleManager::GetInstance()->getBold());
@@ -49,8 +30,9 @@ AddGroup::AddGroup(QWidget *parent)
     ui->numberLabel->setStyleSheet("font-size: 16px;");
 
     //excelfind
-    StyleManager::GetInstance()->setBlueButtonStyle(ui->FindExcelButton, "Выбрать таблицу", "bold", 16, 13);
+    StyleManager::GetInstance()->setBlueButtonStyle(ui->FindExcelButton, "Выбрать таблицу", "bold", 14, 13);
     ui->FindExcelButton->setFixedSize(145, 45);
+    ui->FindExcelButton->move(1000, 700);
 
     //addbutton
     StyleManager::GetInstance()->setSimpleButtonStyle(ui->addButton, "", "bold", 1, 1);
@@ -147,6 +129,16 @@ void AddGroup::on_addButton_clicked()
     newLine->show();
 }
 
+void AddGroup::on_deleteButton_clicked()
+{
+    // heightLine -= 30;
+    // count--;
+    // if (count == 1)
+    // {
+    //     ui->deleteButton->setEnabled(false);
+    // }
+    // nameList.removeLast();
+}
 
 void AddGroup::on_createButton_clicked()
 {
@@ -185,4 +177,5 @@ void AddGroup::on_FindExcelButton_clicked()
 
     ui->ExcelPath->setText(path);
 }
+
 
