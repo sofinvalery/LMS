@@ -3,9 +3,6 @@
 #include <QWidget>
 #include <QList>
 #include <QLineEdit>
-#include "ClientState/clientstate.h"
-#include "StyleManager/stylemanager.h"
-#include "qforeach.h"
 #include <QScreen>
 #include <QFileDialog>
 

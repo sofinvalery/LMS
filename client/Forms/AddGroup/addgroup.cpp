@@ -1,5 +1,8 @@
 #include "addgroup.h"
 #include "ui_addgroup.h"
+#include "ClientState/clientstate.h"
+#include "StyleManager/stylemanager.h"
+#include "qforeach.h"
 
 AddGroup::AddGroup(QWidget *parent)
     : QWidget(parent)
