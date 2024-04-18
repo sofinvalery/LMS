@@ -135,7 +135,7 @@ void MainWindow::on_mainButton_clicked()
     widget->close();
     download->show();
     delete widget;
-    ClientManager::GetInstance()->Send(GETMAINPAGE,ClientState::GetInstance()->getAuth()->Serialize());
+    ClientManager::GetInstance()->SendJson(GETMAINPAGE,ClientState::GetInstance()->getAuth()->Serialize());
 }
 
 void MainWindow::on_addCourseButton_clicked()
@@ -153,7 +153,7 @@ void MainWindow::on_addPotokButton_clicked()
 
 void MainWindow::on_addGroupButton_clicked()
 {
-
+    ClientManager::GetInstance()->SendRequestFile("./data/dz toe.txt");
 }
 
 void MainWindow::on_exitButton_clicked()

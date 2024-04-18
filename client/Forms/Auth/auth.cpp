@@ -77,8 +77,8 @@ void Auth::on_pushButton_clicked()
      Authentication* auth =new Authentication(log,pass);
      QJsonObject json = auth->Serialize();
      delete auth;
-     ClientManager::GetInstance()->Send(LOGINING,json);
-
+     ClientManager::GetInstance()->SendJson(LOGINING,json);
+     //ClientManager::GetInstance()->SendRequestFile("asdass");
 }
 
 void Auth::showMainPage()

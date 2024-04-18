@@ -36,7 +36,6 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 HEADERS += \
     ../../common/authentication/authentication.h \
-    ../../common/authentication/generate_password.h \
     ../../common/authentication/group.h \
     ../../common/course/course.h \
     ../../common/course/course_components/coursecomponent.h \

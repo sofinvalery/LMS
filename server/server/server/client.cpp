@@ -3,6 +3,7 @@
 Client::Client(qintptr socketDescriptor, QObject* parent) :
     QObject(parent)
 {
+    connect(this,SIGNAL(FileData()),this,SLOT(SendFileData()), Qt::QueuedConnection);
     auth=new Authentication*();
     qInfo() << "new connection";
     m_client = new QSslSocket(this);
@@ -29,12 +30,14 @@ Client::Client(qintptr socketDescriptor, QObject* parent) :
     if(in.status()==QDataStream::Ok){
         for(;;){
             if(nextBlockSize==0){
-                if(m_client->bytesAvailable()<sizeof(quint64))
+                if(m_client->bytesAvailable()<(sizeof(quint64)+sizeof(quint32)))
                 {
                     break;
                 }
                 in>>nextBlockSize;
+                in>>typeMessage;
             }
+            if(typeMessage==JSONMESSAGE){
             if(m_client->bytesAvailable()<nextBlockSize)
             {
                 break;
@@ -48,6 +51,22 @@ Client::Client(qintptr socketDescriptor, QObject* parent) :
             connect(mytask, SIGNAL(Result(QJsonObject)), this, SLOT(SendToClient(QJsonObject)), Qt::QueuedConnection);
             QThreadPool::globalInstance()->start(mytask);
             break;
+            }
+            else if(typeMessage==REQUESTFILEMESSAGE){
+                if(m_client->bytesAvailable()<nextBlockSize)
+                {
+                    break;
+                }
+                QString path;
+                in>>path;
+                SendFile(path);
+                nextBlockSize=0;
+                break;
+            }
+            else if(typeMessage==SENDFILEMESSAGE){
+
+                break;
+            }
         }
     }
     else{
@@ -73,6 +92,56 @@ void Client::sslErrorOccured(const QList<QSslError> list)
     for (const QSslError &error : list) {
         qInfo() << "SSL error:" << error.errorString();
     }
+}
+
+void Client::SendFile(QString path)
+{
+    QFile sendFile = QFile(path);
+    if (sendFile.open(QIODevice::ReadOnly))
+    {
+        QFileInfo fileInfo(path);
+        QString name = fileInfo.fileName();
+        QDataStream read(&sendFile);
+        read.setVersion(QDataStream::Qt_6_2);
+        QByteArray send;
+        send.clear();
+        QDataStream sendStream(&send, QIODevice::WriteOnly);
+        sendStream.setVersion(QDataStream::Qt_6_2);
+        sendStream<<qint64(0)<<qint64(sendFile.size())<<name;
+        qInfo()<<sendFile.size();
+        sendStream.device()->seek(0);
+        sendStream<<quint64(send.size()-sizeof(quint64)-sizeof(quint64));
+        m_client->write(send);
+        m_client->waitForBytesWritten();
+        while(!read.atEnd())
+        {
+            sizeFile = read.readRawData(DataFile,sizeof(char)*1024);
+            alreadySendFile =m_client->write(DataFile,sizeFile);
+            m_client->waitForBytesWritten();
+            if(alreadySendFile==-1)
+            {
+                qInfo()<<"ошибка отправки файла";
+                disconnected();
+            }
+            while(alreadySendFile!=sizeFile)
+            {
+              alreadySendFile +=m_client->write(DataFile+alreadySendFile,sizeFile-alreadySendFile);
+              m_client->waitForBytesWritten();
+              if(alreadySendFile==-1)
+              {
+                    qInfo()<<"ошибка отправки файла";
+                    disconnected();
+              }
+            }
+        }
+        alreadySendFile=0;
+    }
+}
+
+void Client::SendFileData()
+{
+    alreadySendFile +=m_client->write(DataFile+alreadySendFile,sizeFile-alreadySendFile);
+    m_client->waitForBytesWritten();
 }
 
 void Client::disconnected()

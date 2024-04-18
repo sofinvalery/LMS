@@ -62,7 +62,7 @@ void Reconnect::reconnectGood()
     qInfo()<<"reconnectGood";
     if(ClientState::GetInstance()->getAuth()!= nullptr)
     {
-       ClientManager::GetInstance()->Send(RECONECT,ClientState::GetInstance()->getAuth()->Serialize());
+       ClientManager::GetInstance()->SendJson(RECONECT,ClientState::GetInstance()->getAuth()->Serialize());
     }
     this->done(0);
 }
