@@ -4,6 +4,7 @@
 #include <QFileDialog>
 #include <QDir>
 #include "StyleManager/stylemanager.h"
+#include "ClientState/clientstate.h"
 
 PotokAdder::PotokAdder(QWidget *parent)
     : QWidget(parent)
@@ -36,7 +37,12 @@ void PotokAdder::on_Add_line_clicked()
     GroupErrors.append(new QLabel(ui->scrollAreaWidgetContents));
     GroupNames[counter]->setGeometry(ui->Group_name->x(), counter == 1 ? ui->Group_name->y()*2 : ui->Group_name->y()*(counter + 1), ui->Group_name->width(), ui->Group_name->height());
     GroupErrors[counter]->setGeometry(ui->Error_Box->x(), counter == 1 ? ui->Error_Box->y()*2 : ui->Error_Box->y()*(counter + 1), ui->Error_Box->width(), ui->Error_Box->height());
-    GroupErrors[counter]->setText(ui->Error_Box->text());
+    GroupErrors[counter]->setText("");
+
+    GroupErrors[counter]->setStyleSheet(
+                            "QLabel {"
+                            "color: rgb(255, 0, 0);"
+        "}");
     GroupNames[counter]->show();
     GroupErrors[counter]->show();
     if (counter*(ui->Group_name->height()*4) > this->frameGeometry().height() - 20)
@@ -67,5 +73,16 @@ void PotokAdder::on_FoundExcel_clicked()
     path = QFileDialog::getOpenFileName(this, "Выбор таблицы", QDir::homePath(), "Excel files (*.xlsx *.xls);");
 
     ui->Excel_Path->setText(path);
+}
+
+
+void PotokAdder::on_Create_potok_clicked()
+{
+    for (int i = 0; i < counter; i++){
+        if (!ClientState::GetInstance()->getGroupsName().contains(GroupNames[i]->text()))
+            GroupErrors[i]->setText("Ошибка, такой группы не существует");
+            }
+    if ()
+
 }
 
