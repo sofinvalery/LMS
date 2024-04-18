@@ -67,7 +67,7 @@
      <widget class="QLineEdit" name="Group_name">
       <property name="geometry">
        <rect>
-        <x>430</x>
+        <x>20</x>
         <y>80</y>
         <width>181</width>
         <height>31</height>
@@ -77,9 +77,9 @@
      <widget class="QLabel" name="Error_Box">
       <property name="geometry">
        <rect>
-        <x>630</x>
+        <x>230</x>
         <y>80</y>
-        <width>171</width>
+        <width>511</width>
         <height>21</height>
        </rect>
       </property>
@@ -92,7 +92,7 @@
        <string notr="true">color: rgb(255, 0, 0);</string>
       </property>
       <property name="text">
-       <string>Ошибка</string>
+       <string/>
       </property>
      </widget>
     </widget>
