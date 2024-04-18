@@ -99,6 +99,18 @@ void StyleManager::setWidgetStyle(QWidget* widgetName, QGroupBox* groupboxName, 
     widgetName->move(0, moveY);
 }
 
+void StyleManager::setLabelStyle(QLabel* labelName, QString labelText, QString fontWeight, QString textColour, bool hideStatus, unsigned short int fontSize)
+{
+    labelName->setFont(fontWeight == "bold" ? StyleManager::GetInstance()->getBold() : StyleManager::GetInstance()->getRegular());
+    labelName->setVisible(hideStatus);
+    labelName->setText(labelText);
+    labelName->setStyleSheet(
+        "QLabel {"
+        "font-size: " + QString::number(fontSize) + "px;"
+        "color: " + textColour + ";"
+        "}");
+}
+
 QFont StyleManager::getRegular()
 {
     return GetInstance()->regularFont;
