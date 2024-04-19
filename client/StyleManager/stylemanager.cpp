@@ -8,9 +8,11 @@ StyleManager::StyleManager() {
 
     regularFont.setFamily("Comfortaa");
     regularFont.setWeight(QFont::Normal);
+    regularFont.setPixelSize(16);
 
     boldFont.setFamily("Comfortaa");
     boldFont.setWeight(QFont::Bold);
+    boldFont.setPixelSize(16);
 }
 
 void StyleManager::setSimpleButtonStyle(QPushButton* buttonName, QString buttonText, QString fontWeight, unsigned short int fontSize, unsigned short int fontSizeAnim = 18)
@@ -20,7 +22,7 @@ void StyleManager::setSimpleButtonStyle(QPushButton* buttonName, QString buttonT
         regularFont.setPixelSize(fontSize);
         buttonName->setFont(regularFont);
     }
-    else if (fontWeight == "bold")
+    else
     {
         boldFont.setPixelSize(fontSize);
         buttonName->setFont(boldFont);
@@ -43,7 +45,7 @@ void StyleManager::setBlueButtonStyle(QPushButton* buttonName, QString buttonTex
         regularFont.setPixelSize(fontSize);
         buttonName->setFont(regularFont);
     }
-    else if (fontWeight == "bold")
+    else
     {
         boldFont.setPixelSize(fontSize);
         buttonName->setFont(boldFont);
@@ -72,7 +74,7 @@ void StyleManager::setDisableButtonStyle(QPushButton* buttonName, QString button
         regularFont.setPixelSize(fontSize);
         buttonName->setFont(regularFont);
     }
-    else if (fontWeight == "bold")
+    else
     {
         boldFont.setPixelSize(fontSize);
         buttonName->setFont(boldFont);
@@ -99,9 +101,9 @@ void StyleManager::setWidgetStyle(QWidget* widgetName, QGroupBox* groupboxName, 
     widgetName->move(0, moveY);
 }
 
-void StyleManager::setLabelStyle(QLabel* labelName, QString labelText, QString fontWeight, QString textColour, bool hideStatus, unsigned short int fontSize)
+void StyleManager::setLabelStyle(QLabel* labelName, QString labelText, bool boldStatus, QString textColour, bool hideStatus, unsigned short int fontSize)
 {
-    labelName->setFont(fontWeight == "bold" ? StyleManager::GetInstance()->getBold() : StyleManager::GetInstance()->getRegular());
+    labelName->setFont(boldStatus == true ? StyleManager::GetInstance()->getBold() : StyleManager::GetInstance()->getRegular());
     labelName->setVisible(hideStatus);
     labelName->setText(labelText);
     labelName->setStyleSheet(
@@ -109,6 +111,21 @@ void StyleManager::setLabelStyle(QLabel* labelName, QString labelText, QString f
         "font-size: " + QString::number(fontSize) + "px;"
         "color: " + textColour + ";"
         "}");
+}
+
+void StyleManager::setLineEditStyle(QLineEdit* lineEditName, QString placeHolderText, bool boldStatus, unsigned short int fontSize, unsigned short int W = 100, unsigned short int H = 50)
+{
+    lineEditName->setFont(boldStatus == true ? StyleManager::GetInstance()->getBold() : StyleManager::GetInstance()->getRegular());
+    lineEditName->setPlaceholderText(placeHolderText);
+    lineEditName->setStyleSheet(
+        "QLineEdit {"
+        "border: none;"
+        "width: " + QString::number(W) + "px;"
+        "height: " + QString::number(H) + "px;"
+        "font-size: " + QString::number(fontSize) + "px;"
+        "border-bottom: 2px solid lightgrey;"
+        "}"
+        );
 }
 
 QFont StyleManager::getRegular()

@@ -8,6 +8,7 @@
 #include <QScreen>
 #include <QLabel>
 #include <QGuiApplication>
+#include <QLineEdit>
 
 class StyleManager
 {
@@ -20,7 +21,8 @@ public:
     void setDisableButtonStyle(QPushButton* buttonName, QString buttonText, QString fontWeight, unsigned short int fontSize, unsigned short int borderRadius);
     void setWidgetStyle(QWidget* widgetName, QGroupBox* groupboxName, unsigned short int moveY);
     void setGroupBoxStyle();
-    void setLabelStyle(QLabel* labelName, QString labelText, QString fontWeight, QString textColour, bool hideStatus, unsigned short int fontSize);
+    void setLabelStyle(QLabel* labelName, QString labelText, bool boldStatus, QString textColour, bool hideStatus, unsigned short int fontSize);
+    void setLineEditStyle(QLineEdit* lineEditName, QString placeHolderText, bool boldStatus, unsigned short int fontSize, unsigned short int W, unsigned short int H);
 
 private:
     StyleManager();
