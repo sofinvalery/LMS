@@ -7,6 +7,7 @@
 #include "StyleManager/stylemanager.h"
 
 
+
 CourseAdder::CourseAdder(QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::CourseAdder)
@@ -43,6 +44,7 @@ void CourseAdder::on_FoundIMG_clicked()
 {
     QString path;
     path = QFileDialog::getOpenFileName(this, "Выбор картинки", QDir::homePath(), "JPEG Image (*.jpg);; PNG Image (*.png);");
+
     ui->ImgPath->setText(path);
 }
 
