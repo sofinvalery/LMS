@@ -3,13 +3,13 @@
 StyleManager* StyleManager::s_Instance = nullptr;
 
 StyleManager::StyleManager() {
-    QFontDatabase::addApplicationFont(":/font/resources/Comfortaa-Regular.ttf");
-    QFontDatabase::addApplicationFont(":/font/resources/Comfortaa-Bold.ttf");
+    QFontDatabase::addApplicationFont(":/font/resources/ProductSans-Regular.ttf");
+    QFontDatabase::addApplicationFont(":/font/resources/ProductSans-Bold.ttf");
 
-    regularFont.setFamily("Comfortaa");
+    regularFont.setFamily("Product Sans");
     regularFont.setWeight(QFont::Normal);
 
-    boldFont.setFamily("Comfortaa");
+    boldFont.setFamily("Product Sans");
     boldFont.setWeight(QFont::Bold);
 }
 
