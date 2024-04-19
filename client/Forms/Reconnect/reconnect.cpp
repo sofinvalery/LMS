@@ -19,7 +19,7 @@ Reconnect::Reconnect(QWidget *parent)
         "border-radius: 10px;"
         "}");
     //statuslabel
-    StyleManager::GetInstance()->setLabelStyle(ui->statusLabel, "Потеряно соединение", "regular", "red", true, 20);
+    StyleManager::GetInstance()->setLabelStyle(ui->statusLabel, "Потеряно соединение", false, "red", true, 20);
     ui->statusLabel->setAlignment(Qt::AlignHCenter);
     //exitbutton
     StyleManager::GetInstance()->setBlueButtonStyle(ui->exitButton, "Выход", "bold", 16, 10);

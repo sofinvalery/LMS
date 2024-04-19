@@ -15,32 +15,16 @@ Auth::Auth(QWidget *parent)
     //groupbox
     ui->groupBox->setStyleSheet("QGroupBox { border: none; }");
     //errorbox
-    StyleManager::GetInstance()->setLabelStyle(ui->errorbox, "Неправильный логин или пароль", "bold", "red", false, 14);
+    StyleManager::GetInstance()->setLabelStyle(ui->errorbox, "Неправильный логин или пароль", true, "red", false, 14);
     //labelAuth
-    StyleManager::GetInstance()->setLabelStyle(ui->labelAuth, "Авторизация", "bold", "black", true, 26);
+    StyleManager::GetInstance()->setLabelStyle(ui->labelAuth, "Авторизация", true, "black", true, 26);
     ui->labelAuth->setAlignment(Qt::AlignHCenter);
     //дизайн логина
-    ui->login->setFont(StyleManager::GetInstance()->getRegular());
-    ui->login->setStyleSheet(
-        "QLineEdit {"
-        "border: none;"
-        "width: 100px;"
-        "height: 50px;"
-        "font-size: 20px;"
-        "border-bottom: 2px solid lightgrey;"
-        "}"
-        );
+    StyleManager::GetInstance()->setLineEditStyle(ui->login, "Логин", false, 20, 100, 50);
+
     //дизайн пароля
-    ui->password->setFont(StyleManager::GetInstance()->getRegular());
-    ui->password->setStyleSheet(
-        "QLineEdit {"
-        "border: none;"
-        "width: 100px;"
-        "height: 50px;"
-        "font-size: 20px;"
-        "border-bottom: 2px solid lightgrey;"
-        "}"
-        );
+    StyleManager::GetInstance()->setLineEditStyle(ui->password, "Пароль", false, 20, 100, 50);
+
     //дизайн кнопки
     StyleManager::GetInstance()->setBlueButtonStyle(ui->pushButton, "Войти", "bold", 20, 10);
     ui->pushButton->setFixedHeight(50);

@@ -32,12 +32,17 @@ MyWidget::MyWidget(Course* course,QWidget *parent)
         "border: 2px solid lightgrey;"
         "}");
     //coursename
+<<<<<<< HEAD
     ui->CourseName->setText(course->GetTitle());
     ui->CourseName->setFont(StyleManager::GetInstance()->getBold());
     ui->CourseName->setStyleSheet(
         "QLabel {"
         "font-size: 15px;"
         "}");
+=======
+    StyleManager::GetInstance()->setLabelStyle(ui->CourseName, "CourseName", true, "black", false, 15);
+
+>>>>>>> 6eaef76 (style manager 7.856)
     //coursebuttonimg
     ui->CourseButtonIMG->setCursor(Qt::PointingHandCursor);
     ui->CourseButtonIMG->setStyleSheet(

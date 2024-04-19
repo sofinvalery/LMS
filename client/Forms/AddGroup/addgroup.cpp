@@ -13,10 +13,10 @@ AddGroup::AddGroup(QWidget *parent)
     ui->addButton->setEnabled(false);
     ui->createButton->setEnabled(false);
 
-    StyleManager::GetInstance()->setLabelStyle(ui->warningLabel, "Данная группа уже существует", "bold", "red", false, 16);
+    StyleManager::GetInstance()->setLabelStyle(ui->warningLabel, "Данная группа уже существует", true, "red", false, 16);
     ui->warningLabel->move(250,200);
 
-    StyleManager::GetInstance()->setLabelStyle(ui->successLabel, "Группа успешно создана", "bold", "green", false, 16);
+    StyleManager::GetInstance()->setLabelStyle(ui->successLabel, "Группа успешно создана", true, "green", false, 16);
     ui->successLabel->move(250,200);
 
     ui->ExcelPath->setFont(StyleManager::GetInstance()->getBold());
