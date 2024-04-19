@@ -78,11 +78,14 @@ void PotokAdder::on_FoundExcel_clicked()
 
 void PotokAdder::on_Create_potok_clicked()
 {
-    for (int i = 0; i < counter; i++){
+    if (!ClientState::GetInstance()->getGroupsName().contains(ui->Group_name->text()))
+        ui->Error_Box->setText("Ошибка, такой группы не существует");
+    for (int i = 1; i < counter+1; i++){
         if (!ClientState::GetInstance()->getGroupsName().contains(GroupNames[i]->text()))
             GroupErrors[i]->setText("Ошибка, такой группы не существует");
             }
-    if ()
+    if (ClientState::GetInstance()->getPotoksName().contains(ui->Potok_name->text()))
+                ui->PotoknameError->setText("Ошибка, это название занято");
 
 }
 

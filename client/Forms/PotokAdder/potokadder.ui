@@ -129,7 +129,7 @@
     <property name="geometry">
      <rect>
       <x>50</x>
-      <y>150</y>
+      <y>210</y>
       <width>161</width>
       <height>31</height>
      </rect>
@@ -142,7 +142,7 @@
     <property name="geometry">
      <rect>
       <x>50</x>
-      <y>200</y>
+      <y>250</y>
       <width>161</width>
       <height>31</height>
      </rect>
@@ -155,7 +155,7 @@
     <property name="geometry">
      <rect>
       <x>50</x>
-      <y>250</y>
+      <y>290</y>
       <width>161</width>
       <height>41</height>
      </rect>
@@ -217,6 +217,22 @@
       <width>331</width>
       <height>16</height>
      </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QLabel" name="PotoknameError">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>150</y>
+      <width>261</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: red;</string>
     </property>
     <property name="text">
      <string/>
