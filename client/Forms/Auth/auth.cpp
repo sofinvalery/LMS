@@ -26,7 +26,7 @@ Auth::Auth(QWidget *parent)
     StyleManager::GetInstance()->setLineEditStyle(ui->password, "Пароль", false, 20, 100, 50);
 
     //дизайн кнопки
-    StyleManager::GetInstance()->setBlueButtonStyle(ui->pushButton, "Войти", "bold", 20, 10);
+    StyleManager::GetInstance()->setBlueButtonStyle(ui->pushButton, "Войти", true, 20, 10);
     ui->pushButton->setFixedHeight(50);
 }
 

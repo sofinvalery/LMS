@@ -23,7 +23,7 @@ AddGroup::AddGroup(QWidget *parent)
     ui->ExcelPath->move(500, 500);
     ui->ExcelPath->setStyleSheet("font-size: 12px;");
 
-    StyleManager::GetInstance()->setDisableButtonStyle(ui->createButton, "Создать группу", "bold", 16, 13);
+    StyleManager::GetInstance()->setDisableButtonStyle(ui->createButton, "Создать группу", true, 16, 13);
     ui->createButton->setFixedSize(145, 45);
 
     nameList.append(ui->studentLineEdit);
@@ -33,12 +33,12 @@ AddGroup::AddGroup(QWidget *parent)
     ui->numberLabel->setStyleSheet("font-size: 16px;");
 
     //excelfind
-    StyleManager::GetInstance()->setBlueButtonStyle(ui->FindExcelButton, "Выбрать таблицу", "bold", 14, 13);
+    StyleManager::GetInstance()->setBlueButtonStyle(ui->FindExcelButton, "Выбрать таблицу", true, 14, 13);
     ui->FindExcelButton->setFixedSize(145, 45);
     ui->FindExcelButton->move(1000, 700);
 
     //addbutton
-    StyleManager::GetInstance()->setSimpleButtonStyle(ui->addButton, "", "bold", 1, 1);
+    StyleManager::GetInstance()->setSimpleButtonStyle(ui->addButton, "", true, 1, 1);
     ui->addButton->setIconSize(QSize(40, 40));
     ui->addButton->setIcon(QIcon(":/img/resources/addButton.png"));
     ui->addButton->setFixedSize(40, 40);
@@ -65,7 +65,7 @@ void AddGroup::on_studentBox_clicked()
     if (!ui->createButton->isEnabled())
     {
         ui->createButton->setEnabled(true);
-        StyleManager::GetInstance()->setBlueButtonStyle(ui->createButton, "Создать группу", "bold", 16, 13);
+        StyleManager::GetInstance()->setBlueButtonStyle(ui->createButton, "Создать группу", true, 16, 13);
     }
 
     if (ui->teacherBox->isEnabled())
@@ -76,7 +76,7 @@ void AddGroup::on_studentBox_clicked()
     {
         ui->addButton->setEnabled(false);
         ui->createButton->setEnabled(false);
-        StyleManager::GetInstance()->setDisableButtonStyle(ui->createButton, "Создать группу", "bold", 16, 13);
+        StyleManager::GetInstance()->setDisableButtonStyle(ui->createButton, "Создать группу", true, 16, 13);
         ui->teacherBox->setEnabled(true);
     }
 }
@@ -92,7 +92,7 @@ void AddGroup::on_teacherBox_clicked()
     if (!ui->createButton->isEnabled())
     {
         ui->createButton->setEnabled(true);
-        StyleManager::GetInstance()->setBlueButtonStyle(ui->createButton, "Создать группу", "bold", 16, 13);
+        StyleManager::GetInstance()->setBlueButtonStyle(ui->createButton, "Создать группу", true, 16, 13);
     }
 
     if (ui->studentBox->isEnabled())
@@ -103,7 +103,7 @@ void AddGroup::on_teacherBox_clicked()
     {
         ui->addButton->setEnabled(false);
         ui->createButton->setEnabled(false);
-        StyleManager::GetInstance()->setDisableButtonStyle(ui->createButton, "Создать группу", "bold", 16, 13);
+        StyleManager::GetInstance()->setDisableButtonStyle(ui->createButton, "Создать группу", true, 16, 13);
         ui->studentBox->setEnabled(true);
     }
 }
