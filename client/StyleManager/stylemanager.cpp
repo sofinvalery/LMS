@@ -15,47 +15,31 @@ StyleManager::StyleManager() {
     boldFont.setPixelSize(16);
 }
 
-void StyleManager::setSimpleButtonStyle(QPushButton* buttonName, QString buttonText, QString fontWeight, unsigned short int fontSize, unsigned short int fontSizeAnim = 18)
+void StyleManager::setSimpleButtonStyle(QPushButton* buttonName, QString buttonText, bool boldStatus, unsigned short int fontSize, unsigned short int fontSizeAnim = 18)
 {
-    if (fontWeight == "regular")
-    {
-        regularFont.setPixelSize(fontSize);
-        buttonName->setFont(regularFont);
-    }
-    else
-    {
-        boldFont.setPixelSize(fontSize);
-        buttonName->setFont(boldFont);
-    }
+    buttonName->setFont(boldStatus == true ? StyleManager::GetInstance()->getBold() : StyleManager::GetInstance()->getRegular());
     buttonName->setCursor(Qt::PointingHandCursor);
     buttonName->setText(buttonText);
     buttonName->setStyleSheet(
         "QPushButton {"
         "border: none;"
+        "font-size: " + QString::number(fontSize) + "px;"
         "}"
         "QPushButton:pressed {"
         "font-size: " + QString::number(fontSizeAnim) + "px;"
         "}");
 }
 
-void StyleManager::setBlueButtonStyle(QPushButton* buttonName, QString buttonText, QString fontWeight, unsigned short int fontSize, unsigned short int borderRadius = 10)
+void StyleManager::setBlueButtonStyle(QPushButton* buttonName, QString buttonText, bool boldStatus, unsigned short int fontSize, unsigned short int borderRadius = 10)
 {
-    if (fontWeight == "regular")
-    {
-        regularFont.setPixelSize(fontSize);
-        buttonName->setFont(regularFont);
-    }
-    else
-    {
-        boldFont.setPixelSize(fontSize);
-        buttonName->setFont(boldFont);
-    }
+    buttonName->setFont(boldStatus == true ? StyleManager::GetInstance()->getBold() : StyleManager::GetInstance()->getRegular());
     buttonName->setCursor(Qt::PointingHandCursor);
     buttonName->setText(buttonText);
     buttonName->setStyleSheet(
         "QPushButton {"
         "background-color: #4AB8FF;"
         "border-radius: " + QString::number(borderRadius) + "px;"
+        "font-size: " + QString::number(fontSize) + "px;"
         "border: none;"
         "color: white;"
         "}"
@@ -67,23 +51,15 @@ void StyleManager::setBlueButtonStyle(QPushButton* buttonName, QString buttonTex
         "}");
 }
 
-void StyleManager::setDisableButtonStyle(QPushButton* buttonName, QString buttonText, QString fontWeight, unsigned short int fontSize, unsigned short int borderRadius = 10)
+void StyleManager::setDisableButtonStyle(QPushButton* buttonName, QString buttonText, bool boldStatus, unsigned short int fontSize, unsigned short int borderRadius = 10)
 {
-    if (fontWeight == "regular")
-    {
-        regularFont.setPixelSize(fontSize);
-        buttonName->setFont(regularFont);
-    }
-    else
-    {
-        boldFont.setPixelSize(fontSize);
-        buttonName->setFont(boldFont);
-    }
+    buttonName->setFont(boldStatus == true ? StyleManager::GetInstance()->getBold() : StyleManager::GetInstance()->getRegular());
     buttonName->setText(buttonText);
     buttonName->setStyleSheet(
         "QPushButton {"
         "background-color: lightgrey;"
         "border-radius: " + QString::number(borderRadius) + "px;"
+        "font-size: " + QString::number(fontSize) + "px;"
         "border: none;"
         "color: grey;"
         "}");

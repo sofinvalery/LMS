@@ -20,11 +20,11 @@ MainWindow::MainWindow(QWidget *parent)
     QRect screenGeometry = QGuiApplication::primaryScreen()->geometry();
 
     //mainbutton
-    StyleManager::GetInstance()->setBlueButtonStyle(ui->mainButton, "Курсы", "bold", 20, 13);
+    StyleManager::GetInstance()->setBlueButtonStyle(ui->mainButton, "Курсы", true, 20, 13);
     ui->mainButton->setFixedSize(96, 45);
     ui->mainButton->move(104, 23);
     //scorebutton
-    StyleManager::GetInstance()->setSimpleButtonStyle(ui->scoreButton, "Оценки", "bold", 20, 18);
+    StyleManager::GetInstance()->setSimpleButtonStyle(ui->scoreButton, "Оценки", true, 20, 18);
     ui->scoreButton->setFixedSize(96, 45);
     ui->scoreButton->move(220, 23);
     //verticalLine
@@ -34,15 +34,15 @@ MainWindow::MainWindow(QWidget *parent)
         "border: 3px solid lightgrey;"
         "}");
     //addCoursebutton
-    StyleManager::GetInstance()->setSimpleButtonStyle(ui->addCourseButton, "Новый курс", "bold", 20, 18);
+    StyleManager::GetInstance()->setSimpleButtonStyle(ui->addCourseButton, "Новый курс", true, 20, 18);
     ui->addCourseButton->setFixedSize(128, 45);
     ui->addCourseButton->move(336, 23);
     //addPotokButton
-    StyleManager::GetInstance()->setSimpleButtonStyle(ui->addPotokButton, "Новый поток", "bold", 20, 18);
+    StyleManager::GetInstance()->setSimpleButtonStyle(ui->addPotokButton, "Новый поток", true, 20, 18);
     ui->addPotokButton->setFixedSize(156, 45);
     ui->addPotokButton->move(492, 23);
     //addGroupButton
-    StyleManager::GetInstance()->setSimpleButtonStyle(ui->addGroupButton, "Новая группа", "bold", 20, 18);
+    StyleManager::GetInstance()->setSimpleButtonStyle(ui->addGroupButton, "Новая группа", true, 20, 18);
     ui->addGroupButton->setFixedSize(156, 45);
     ui->addGroupButton->move(668, 23);
     //exitbutton
@@ -118,10 +118,9 @@ void MainWindow::on_profileButton_clicked()
 
 void MainWindow::on_scoreButton_clicked()
 {
-    StyleManager::GetInstance()->setSimpleButtonStyle(ui->mainButton, "Курсы", "bold", 20, 18);
-    StyleManager::GetInstance()->setSimpleButtonStyle(ui->addGroupButton, "Новая группа", "bold", 20, 18);
-    StyleManager::GetInstance()->setBlueButtonStyle(ui->scoreButton, "Оценки", "bold", 20, 13);
-
+    StyleManager::GetInstance()->setSimpleButtonStyle(ui->mainButton, "Курсы", true, 20, 18);
+    StyleManager::GetInstance()->setSimpleButtonStyle(ui->addGroupButton, "Новая группа", true, 20, 18);
+    StyleManager::GetInstance()->setBlueButtonStyle(ui->scoreButton, "Оценки", true, 20, 13);
     widget->close();
     delete widget;
     widget = new Score();
@@ -131,8 +130,9 @@ void MainWindow::on_scoreButton_clicked()
 
 void MainWindow::on_mainButton_clicked()
 {
-    StyleManager::GetInstance()->setBlueButtonStyle(ui->mainButton, "Курсы", "bold", 20, 13);
-    StyleManager::GetInstance()->setSimpleButtonStyle(ui->scoreButton, "Оценки", "bold", 20, 18);
+    StyleManager::GetInstance()->setBlueButtonStyle(ui->mainButton, "Курсы", true, 20, 13);
+    StyleManager::GetInstance()->setSimpleButtonStyle(ui->scoreButton, "Оценки", true, 20, 18);
+    StyleManager::GetInstance()->setSimpleButtonStyle(ui->addGroupButton, "Новая группа", true, 20, 18);
     widget->close();
     download->show();
     delete widget;
@@ -160,9 +160,9 @@ void MainWindow::on_addPotokButton_clicked()
 
 void MainWindow::on_addGroupButton_clicked()
 {
-    StyleManager::GetInstance()->setSimpleButtonStyle(ui->mainButton, "Курсы", "bold", 20, 18);
-    StyleManager::GetInstance()->setSimpleButtonStyle(ui->scoreButton, "Оценки", "bold", 20, 18);
-    StyleManager::GetInstance()->setBlueButtonStyle(ui->addGroupButton, "Новая группа", "bold", 20, 13);
+    StyleManager::GetInstance()->setSimpleButtonStyle(ui->mainButton, "Курсы", true, 20, 18);
+    StyleManager::GetInstance()->setSimpleButtonStyle(ui->scoreButton, "Оценки", true, 20, 18);
+    StyleManager::GetInstance()->setBlueButtonStyle(ui->addGroupButton, "Новая группа", true, 20, 13);
     widget->close();
     delete widget;
     widget = new AddGroup();
