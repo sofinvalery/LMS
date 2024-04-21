@@ -24,8 +24,10 @@ SOURCES += \
     Forms/CourseAdder/courseadder.cpp \
     Forms/CoursesMPWidget/coursesmpwidget.cpp \
     Forms/Download/download.cpp \
+    Forms/GroupEditor/groupeditor.cpp \
     Forms/Main/mainwindow.cpp \
     Forms/MyWidget/mywidget.cpp \
+    Forms/Notification/notification.cpp \
     Forms/PotokAdder/potokadder.cpp \
     Forms/Profile/profile.cpp \
     Forms/Reconnect/reconnect.cpp \
@@ -56,10 +58,12 @@ HEADERS += \
     Forms/CourseAdder/courseadder.h \
     Forms/CoursesMPWidget/coursesmpwidget.h \
     Forms/Download/download.h \
+    Forms/GroupEditor/groupeditor.h \
     Forms/Main/mainwindow.h  \
     ../common/course/course_components/coursevideos.h \
     ../common/course/course_components/question.h \
     Forms/MyWidget/mywidget.h \
+    Forms/Notification/notification.h \
     Forms/PotokAdder/potokadder.h \
     Forms/Profile/profile.h \
     Forms/Reconnect/reconnect.h \
@@ -73,8 +77,10 @@ FORMS += \
     Forms/CourseAdder/courseadder.ui \
     Forms/CoursesMPWidget/coursesmpwidget.ui \
     Forms/Download/download.ui \
+    Forms/GroupEditor/groupeditor.ui \
     Forms/Main/mainwindow.ui \
     Forms/MyWidget/mywidget.ui \
+    Forms/Notification/notification.ui \
     Forms/PotokAdder/potokadder.ui \
     Forms/Profile/profile.ui \
     Forms/Reconnect/reconnect.ui \

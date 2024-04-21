@@ -9,9 +9,12 @@
 #include "Forms/Profile/profile.h"
 #include "Forms/Score/score.h"
 #include "StyleManager/stylemanager.h"
+<<<<<<< HEAD
 #include "../Download/download.h"
+=======
+>>>>>>> 80ea3dd (added new widgets: notification, group editor. Add group 7.8)
 #include "Forms/AddGroup/addgroup.h"
-
+#include "Forms/GroupEditor/groupeditor.h"
 #include "Forms/PotokAdder/potokadder.h"
 
 #include "Forms/CourseAdder/courseadder.h"
@@ -46,6 +49,8 @@ private slots:
     void on_addCourseButton_clicked();
     void on_addPotokButton_clicked();
     void on_addGroupButton_clicked();
+    void on_editGroupButton_clicked();
+
 private:
     Ui::MainWindow *ui;
     QWidget * widget=nullptr;

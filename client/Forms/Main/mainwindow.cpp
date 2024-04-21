@@ -4,6 +4,7 @@
 #include "../../ClientManager/clientmanager.h"
 #include "../../ClientManager/socketparser.h"
 
+
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
@@ -16,6 +17,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->addPotokButton->hide();
     ui->addGroupButton->hide();
     ui->verticalLine->hide();
+    ui->editGroupButton->hide();
 
     QRect screenGeometry = QGuiApplication::primaryScreen()->geometry();
 
@@ -33,6 +35,10 @@ MainWindow::MainWindow(QWidget *parent)
         "QFrame {"
         "border: 3px solid lightgrey;"
         "}");
+    //editGroupbutton
+    StyleManager::GetInstance()->setSimpleButtonStyle(ui->editGroupButton, "Изменить группу", true, 20, 18);
+    ui->editGroupButton->setFixedSize(200, 45);
+    ui->editGroupButton->move(848, 23);
     //addCoursebutton
     StyleManager::GetInstance()->setSimpleButtonStyle(ui->addCourseButton, "Новый курс", true, 20, 18);
     ui->addCourseButton->setFixedSize(128, 45);
@@ -157,6 +163,14 @@ void MainWindow::on_addPotokButton_clicked()
     widget->show();
 }
 
+void MainWindow::on_editGroupButton_clicked()
+{
+    StyleManager::GetInstance()->setBlueButtonStyle(ui->editGroupButton, "Изменить группу", true, 20, 13);
+    widget->close();
+    widget = new groupEditor();
+    widget->setParent(this);
+    widget->show();
+}
 
 void MainWindow::on_addGroupButton_clicked()
 {
@@ -174,4 +188,6 @@ void MainWindow::on_exitButton_clicked()
 {
     QApplication::quit();
 }
+
+
 

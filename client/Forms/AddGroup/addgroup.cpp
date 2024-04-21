@@ -29,6 +29,9 @@ AddGroup::AddGroup(QWidget *parent)
     nameList.append(ui->studentLineEdit);
     numberList.append(ui->numberLabel);
 
+    StyleManager::GetInstance()->setBlueButtonStyle(ui->deleteButton, "Удалить", true, 16, 13);
+    ui->deleteButton->setFixedSize(145, 45);
+
     //numberlabel
     ui->numberLabel->setFont(StyleManager::GetInstance()->getBold());
     ui->numberLabel->setStyleSheet("font-size: 16px;");
@@ -134,7 +137,7 @@ void AddGroup::on_addButton_clicked()
 
 void AddGroup::on_deleteButton_clicked()
 {
-    if (count > 1){
+    if (count > 0){
         nameList[count]->close();
         nameList.removeAt(count);
         numberList[count]->close();
@@ -146,28 +149,16 @@ void AddGroup::on_deleteButton_clicked()
 
 void AddGroup::on_createButton_clicked()
 {
-    bool groupExist = false;
     // список ФИО - nameList
     // ui->studentBox->isEnabled(); - проверка нажат ли чекбокс студентов
     // ui->teacherBox->isEnabled(); - проверка нажат ли чекбокс преподов
-    foreach(QString name, ClientState::GetInstance()->getGroupsName()) // проверка на группы
-    {
-        //qDebug() << name;
-        if (name == ui->groupLineEdit->text())
-        {
-            groupExist = true;
-            break;
-        }
-    }
-    if (groupExist)
+    if (ClientState::GetInstance()->getGroupsName().contains(ui->groupLineEdit->text()))
     {
         ui->warningLabel->show();
         ui->successLabel->hide();
     }
     else
     {
-        //добавление группы
-
         ui->warningLabel->hide();
         ui->successLabel->show();
     }
