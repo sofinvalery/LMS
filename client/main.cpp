@@ -32,7 +32,11 @@ int main(int argc, char *argv[])
     ClientState::GetInstance()->setGroup(group);
     QList<QString> potoksName{"О1","О2","О3","А3","А1","Ж6","Б0","КА","КВ","ВК"};
     ClientState::GetInstance()->setPotoksName(potoksName);
-    QList<QString> gtoupsname{"О721","О212","О2133","А2133","А1123","Ж6123","Б1230","К12А","КВ12","ВК12"};
+    QList<QString> gtoupsname{"О721", "О212", "О2133", "О214", "О215", "О216", "О217", "О218", "О219", "О220",
+                              "О221", "О222", "О223", "О224", "О225", "О226", "О227", "О228", "О229", "О230",
+                              "О231", "О232", "О233", "О234", "О235", "О236", "О237", "О238", "О239", "О240",
+                              "О241", "О242", "О243", "О244", "О245", "О246", "О247", "О248", "О249", "О250",
+                              "О251", "О252", "О253", "О254", "О255", "О256", "О257", "О258", "О259", "О260"};
     ClientState::GetInstance()->setGroupsName(gtoupsname);
     auth.setModal(true);
     auth.exec();  //auth.open();

@@ -8,9 +8,9 @@
 #include "Forms/CoursesMPWidget/coursesmpwidget.h"
 #include "Forms/Profile/profile.h"
 #include "Forms/Score/score.h"
-
+#include "StyleManager/stylemanager.h"
 #include "Forms/AddGroup/addgroup.h"
-
+#include "Forms/GroupEditor/groupeditor.h"
 #include "Forms/PotokAdder/potokadder.h"
 
 #include "Forms/CourseAdder/courseadder.h"
@@ -45,6 +45,8 @@ private slots:
     void on_addCourseButton_clicked();
     void on_addPotokButton_clicked();
     void on_addGroupButton_clicked();
+    void on_editGroupButton_clicked();
+
 private:
     Ui::MainWindow *ui;
     QWidget * widget;

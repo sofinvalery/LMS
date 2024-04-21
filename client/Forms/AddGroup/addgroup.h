@@ -1,7 +1,6 @@
 #ifndef ADDGROUP_H
 #define ADDGROUP_H
 #include <QWidget>
-#include <QList>
 #include <QLineEdit>
 #include <QScreen>
 #include <QFileDialog>

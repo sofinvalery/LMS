@@ -1,7 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include "StyleManager/stylemanager.h"
-#include "Forms/Reconnect/reconnect.h"
+#include "Forms/Notification/notification.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -14,6 +13,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->addPotokButton->hide();
     ui->addGroupButton->hide();
     ui->verticalLine->hide();
+    ui->editGroupButton->hide();
 
     QRect screenGeometry = QGuiApplication::primaryScreen()->geometry();
 
@@ -34,6 +34,10 @@ MainWindow::MainWindow(QWidget *parent)
         "QFrame {"
         "border: 3px solid lightgrey;"
         "}");
+    //editGroupbutton
+    StyleManager::GetInstance()->setSimpleButtonStyle(ui->editGroupButton, "Изменить группу", true, 20, 18);
+    ui->editGroupButton->setFixedSize(200, 45);
+    ui->editGroupButton->move(848, 23);
     //addCoursebutton
     StyleManager::GetInstance()->setSimpleButtonStyle(ui->addCourseButton, "Новый курс", true, 20, 18);
     ui->addCourseButton->setFixedSize(128, 45);
@@ -85,6 +89,7 @@ MainWindow::MainWindow(QWidget *parent)
         ui->addPotokButton->show();
         ui->addGroupButton->show();
         ui->verticalLine->show();
+        ui->editGroupButton->show();
     }
 
 
@@ -121,7 +126,8 @@ void MainWindow::on_scoreButton_clicked()
     StyleManager::GetInstance()->setSimpleButtonStyle(ui->addGroupButton, "Новая группа", true, 20, 18);
     StyleManager::GetInstance()->setBlueButtonStyle(ui->scoreButton, "Оценки", true, 20, 13);
     widget->close();
-    widget = new Score();
+    //widget = new Score();
+    widget = new Notification();
     widget->setParent(this);
     widget->show();
 }
@@ -160,6 +166,15 @@ void MainWindow::on_addPotokButton_clicked()
 
 }
 
+void MainWindow::on_editGroupButton_clicked()
+{
+    StyleManager::GetInstance()->setBlueButtonStyle(ui->editGroupButton, "Изменить группу", true, 20, 13);
+    widget->close();
+    widget = new groupEditor();
+    widget->setParent(this);
+    widget->show();
+}
+
 void MainWindow::on_addGroupButton_clicked()
 {
     StyleManager::GetInstance()->setSimpleButtonStyle(ui->mainButton, "Курсы", true, 20, 18);
@@ -175,4 +190,6 @@ void MainWindow::on_exitButton_clicked()
 {
     QApplication::quit();
 }
+
+
 
