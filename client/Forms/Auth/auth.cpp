@@ -45,13 +45,11 @@ void Auth::on_pushButton_clicked()
     QString log = ui->login->text();
     QString pass = ui->password->text();
     if (log == "" && pass == ""){
-        //QMessageBox::information(this, "Статус входа", "Успешный вход");
         authstatus = 1;
         this->close();
     }
     else
     {
-        //QMessageBox::warning(this, "Статус входа", "Ошибка входа");
         ui->errorbox->show();
     }
     //штука гледа полезная оч

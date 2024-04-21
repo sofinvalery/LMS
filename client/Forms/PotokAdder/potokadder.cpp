@@ -37,12 +37,12 @@ void PotokAdder::on_Add_line_clicked()
     GroupErrors.append(new QLabel(ui->scrollAreaWidgetContents));
     GroupNames[counter]->setGeometry(ui->Group_name->x(), counter == 1 ? ui->Group_name->y()*2 : ui->Group_name->y()*(counter + 1), ui->Group_name->width(), ui->Group_name->height());
     GroupErrors[counter]->setGeometry(ui->Error_Box->x(), counter == 1 ? ui->Error_Box->y()*2 : ui->Error_Box->y()*(counter + 1), ui->Error_Box->width(), ui->Error_Box->height());
-    GroupErrors[counter]->setText("");
 
-    GroupErrors[counter]->setStyleSheet(
-                            "QLabel {"
-                            "color: rgb(255, 0, 0);"
-        "}");
+    StyleManager::GetInstance()->setLabelStyle(GroupErrors[counter], "", false, "red", false, 16);
+    // GroupErrors[counter]->setStyleSheet(
+    //                         "QLabel {"
+    //                         "color: rgb(255, 0, 0);"
+    //     "}");
     GroupNames[counter]->show();
     GroupErrors[counter]->show();
     if (counter*(ui->Group_name->height()*4) > this->frameGeometry().height() - 20)
