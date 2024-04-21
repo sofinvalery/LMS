@@ -27,6 +27,7 @@ AddGroup::AddGroup(QWidget *parent)
     ui->createButton->setFixedSize(145, 45);
 
     nameList.append(ui->studentLineEdit);
+    numberList.append(ui->numberLabel);
 
     //numberlabel
     ui->numberLabel->setFont(StyleManager::GetInstance()->getBold());
@@ -111,8 +112,8 @@ void AddGroup::on_teacherBox_clicked()
 
 void AddGroup::on_addButton_clicked()
 {
-    heightLine += 30;
     count++;
+    heightLine += 30;
     if (count == 25)
     {
         ui->addButton->setEnabled(false);
@@ -121,26 +122,26 @@ void AddGroup::on_addButton_clicked()
     QLabel* newLabel = new QLabel(ui->groupBox);
     newLine->setPlaceholderText("ФИО");
     nameList.append(newLine);
-
     newLabel->setFont(StyleManager::GetInstance()->getBold());
-    newLabel->setText(QString::number(count));
+    newLabel->setText(QString::number(count + 1));
     newLabel->setStyleSheet("font-size: 16px;");
-    newLabel->move(ui->numberLabel->pos().x(), ui->numberLabel->pos().y() + heightLine);
-    newLabel->show();
-
-    newLine->move(ui->studentLineEdit->pos().x(), ui->studentLineEdit->pos().y() + heightLine);
-    newLine->show();
+    numberList.append(newLabel);
+    numberList[count]->setGeometry(ui->numberLabel->x(), ui->numberLabel->y() + heightLine, ui->numberLabel->width(), ui->numberLabel->height());
+    nameList[count]->setGeometry(ui->studentLineEdit->x(), ui->studentLineEdit->y() + heightLine, ui->studentLineEdit->width(), ui->studentLineEdit->height());
+    numberList[count]->show();
+    nameList[count]->show();
 }
 
 void AddGroup::on_deleteButton_clicked()
 {
-    // heightLine -= 30;
-    // count--;
-    // if (count == 1)
-    // {
-    //     ui->deleteButton->setEnabled(false);
-    // }
-    // nameList.removeLast();
+    if (count > 1){
+        nameList[count]->close();
+        nameList.removeAt(count);
+        numberList[count]->close();
+        numberList.removeAt(count);
+        count--;
+        heightLine -= 30;
+    }
 }
 
 void AddGroup::on_createButton_clicked()

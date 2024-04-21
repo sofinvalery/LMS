@@ -5,6 +5,7 @@
 #include <QLineEdit>
 #include <QScreen>
 #include <QFileDialog>
+#include <QLabel>
 
 namespace Ui {
 class AddGroup;
@@ -35,9 +36,9 @@ private:
     Ui::AddGroup *ui;
 
     QList<QLineEdit*> nameList;  //список фио
-
+    QList<QLabel*> numberList;
     int heightLine = 0;
-    int count = 1;
+    int count = 0;
 };
 
 #endif // ADDGROUP_H
