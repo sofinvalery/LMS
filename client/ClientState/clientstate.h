@@ -6,6 +6,7 @@
 #include "../../common/course/course.h"
 #include "../Forms/Main/mainwindow.h"
 #include "../../common/authentication/group.h"
+#include "Forms/Reconnect/reconnect.h"
 
 class ClientState : public QObject
 {
@@ -27,9 +28,11 @@ private:
 
     MainWindow* mainwindow = new MainWindow();
 
+    Reconnect* rec = new Reconnect();
+
 private slots:
 
-
+    void ShowRec();
 
 public:
     static ClientState* GetInstance() { return s_Instance = (s_Instance != nullptr ? s_Instance : new ClientState()); }
@@ -53,8 +56,13 @@ public:
     QList<QString> getPotoksName() const;
     void setPotoksName(const QList<QString> &newPotoksName);
 
+    Reconnect *getRec() const;
+
+    void ShowReconnect();
+
 signals:
    void DataReady();
+    void ShowReconection();
 };
 
 #endif // CLIENTSTATE_H

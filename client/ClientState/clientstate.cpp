@@ -7,7 +7,26 @@ ClientState* ClientState::s_Instance = nullptr;
 
 ClientState::ClientState(QObject *parent)
     : QObject{parent}
-{}
+{
+    connect(this,SIGNAL(ShowReconection()),this,SLOT(ShowRec()));
+}
+
+void ClientState::ShowRec()
+{
+    rec->setModal(true);
+    rec->raise();
+    rec->show();
+}
+
+Reconnect *ClientState::getRec() const
+{
+    return rec;
+}
+
+void ClientState::ShowReconnect()
+{
+    emit ShowReconection();
+}
 
 QList<QString> ClientState::getPotoksName() const
 {

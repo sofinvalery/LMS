@@ -1,6 +1,7 @@
 #include "reconnect.h"
 #include "ui_reconnect.h"
 #include "StyleManager/stylemanager.h"
+#include "ClientState/clientstate.h"
 
 Reconnect::Reconnect(QWidget *parent)
     : QDialog(parent)
@@ -62,7 +63,7 @@ void Reconnect::reconnectGood()
     qInfo()<<"reconnectGood";
     if(ClientState::GetInstance()->getAuth()!= nullptr)
     {
-       ClientManager::GetInstance()->SendJson(RECONECT,ClientState::GetInstance()->getAuth()->Serialize());
+       ClientManager::GetInstance()->SendJsonToServer(RECONECT,ClientState::GetInstance()->getAuth()->Serialize());
     }
     this->done(0);
 }

@@ -135,12 +135,12 @@ void MainWindow::on_mainButton_clicked()
     widget->close();
     download->show();
     delete widget;
-    ClientManager::GetInstance()->SendJson(GETMAINPAGE,ClientState::GetInstance()->getAuth()->Serialize());
+    ClientManager::GetInstance()->SendJsonToServer(GETMAINPAGE,ClientState::GetInstance()->getAuth()->Serialize());
 }
 
 void MainWindow::on_addCourseButton_clicked()
 {
-
+    ClientManager::GetInstance()->SendFileToServer("C:/Users/user/Downloads/mysql-8.3.0-winx64(2).msi","./data/");
 }
 
 void MainWindow::on_addPotokButton_clicked()
@@ -153,7 +153,7 @@ void MainWindow::on_addPotokButton_clicked()
 
 void MainWindow::on_addGroupButton_clicked()
 {
-    ClientManager::GetInstance()->SendRequestFile("./data/dz toe.txt");
+    ClientManager::GetInstance()->SendRequestFileToServer("./data/mysql-8.3.0-winx64.msi");
 }
 
 void MainWindow::on_exitButton_clicked()

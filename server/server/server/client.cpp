@@ -3,7 +3,8 @@
 Client::Client(qintptr socketDescriptor, QObject* parent) :
     QObject(parent)
 {
-    connect(this,SIGNAL(FileData()),this,SLOT(SendFileData()), Qt::QueuedConnection);
+    connect(this,SIGNAL(ReadFileDataToClient()),this,SLOT(ReadFileData()),Qt::QueuedConnection);
+    connect(this,SIGNAL(SendFileDataToClient()),this,SLOT(SendFileData()),Qt::DirectConnection);
     auth=new Authentication*();
     qInfo() << "new connection";
     m_client = new QSslSocket(this);
@@ -64,7 +65,48 @@ Client::Client(qintptr socketDescriptor, QObject* parent) :
                 break;
             }
             else if(typeMessage==SENDFILEMESSAGE){
-
+                if(nextBlockSize==0)//если файла нет возвращает 0 0
+                {
+                    break;
+                }
+                if(fileSocket.file==nullptr)
+                {
+                    if(m_client->bytesAvailable()<nextBlockSize)
+                    {
+                        break;
+                    }
+                    QString filename;
+                    QString path;
+                    in>>fileSocket.fileSize;
+                    fileSocket.titleSize=nextBlockSize;
+                    in >> filename;
+                    in>>path;
+                    fileSocket.file = new QFile(path+filename);
+                    if(!fileSocket.file->open(QIODevice::Append))
+                    {
+                        qInfo()<<"все плохо с путем при чтении файла";
+                    }
+                    break;
+                }
+                else{
+                    char ch[2048];
+                    int read=in.readRawData(ch,sizeof(char)*2048);
+                    fileSocket.file->write(ch,read);
+                    fileSocket.alreadyRead+=read;
+                    if(fileSocket.alreadyRead==fileSocket.fileSize)
+                    {
+                        nextBlockSize=0;
+                        fileSocket.alreadyRead=0;
+                        fileSocket.Data.clear();
+                        fileSocket.file->close();
+                        delete fileSocket.file;
+                        fileSocket.file=nullptr;
+                        fileSocket.titleSize=0;
+                        fileSocket.fileSize=0;
+                        qInfo()<<"прочитал";
+                    }
+                    break;
+                }
                 break;
             }
         }
@@ -96,52 +138,93 @@ void Client::sslErrorOccured(const QList<QSslError> list)
 
 void Client::SendFile(QString path)
 {
-    QFile sendFile = QFile(path);
-    if (sendFile.open(QIODevice::ReadOnly))
-    {
-        QFileInfo fileInfo(path);
-        QString name = fileInfo.fileName();
-        QDataStream read(&sendFile);
-        read.setVersion(QDataStream::Qt_6_2);
+        fileParams.sendFile=new QFile(path);
         QByteArray send;
-        send.clear();
         QDataStream sendStream(&send, QIODevice::WriteOnly);
+        send.clear();
         sendStream.setVersion(QDataStream::Qt_6_2);
-        sendStream<<qint64(0)<<qint64(sendFile.size())<<name;
-        qInfo()<<sendFile.size();
-        sendStream.device()->seek(0);
-        sendStream<<quint64(send.size()-sizeof(quint64)-sizeof(quint64));
-        m_client->write(send);
-        m_client->waitForBytesWritten();
-        while(!read.atEnd())
+        if(!fileParams.sendFile->open(QIODevice::ReadOnly))
         {
-            sizeFile = read.readRawData(DataFile,sizeof(char)*1024);
-            alreadySendFile =m_client->write(DataFile,sizeFile);
-            m_client->waitForBytesWritten();
-            if(alreadySendFile==-1)
-            {
-                qInfo()<<"ошибка отправки файла";
-                disconnected();
-            }
-            while(alreadySendFile!=sizeFile)
-            {
-              alreadySendFile +=m_client->write(DataFile+alreadySendFile,sizeFile-alreadySendFile);
-              m_client->waitForBytesWritten();
-              if(alreadySendFile==-1)
-              {
-                    qInfo()<<"ошибка отправки файла";
-                    disconnected();
-              }
-            }
+            sendStream<<qint64(0)<<qint64(0);
+            m_client->write(send);
+            fileParams.sendFile->close();
+            delete fileParams.sendFile;
+            return;
         }
-        alreadySendFile=0;
-    }
+        else{
+            fileParams.fileInfo = new QFileInfo(path);
+            QString name = fileParams.fileInfo->fileName();
+            sendStream<<qint64(0)<<qint64(fileParams.sendFile->size())<<name;
+            qInfo()<<fileParams.sendFile->size();
+            sendStream.device()->seek(0);
+            sendStream<<quint64(send.size()-sizeof(quint64)-sizeof(quint64));
+            m_client->write(send);
+            fileParams.read= new QDataStream(fileParams.sendFile);
+            m_client->waitForBytesWritten();
+            ReadFileData();
+        }
 }
 
 void Client::SendFileData()
 {
-    alreadySendFile +=m_client->write(DataFile+alreadySendFile,sizeFile-alreadySendFile);
+    fileParams.SendFileSize =m_client->write(fileParams.DataFile,fileParams.sizeFile);
     m_client->waitForBytesWritten();
+    if(fileParams.SendFileSize==-1)
+    {
+        qInfo()<<"ошибка отправки файла";
+        fileParams.sizeFile=0;//в функцию бы это вынести но лень
+        fileParams.SendFileSize=0;
+        delete fileParams.read;
+        fileParams.read=nullptr;
+        delete fileParams.fileInfo;
+        fileParams.fileInfo=nullptr;
+        fileParams.sendFile->close();
+        delete fileParams.sendFile;
+        fileParams.sendFile=nullptr;
+        disconnected();
+        return;
+    }
+    while(fileParams.SendFileSize!=fileParams.sizeFile)
+    {
+        fileParams.SendFileSize +=m_client->write(fileParams.DataFile+fileParams.SendFileSize,fileParams.sizeFile-fileParams.SendFileSize);
+        m_client->waitForBytesWritten();
+        if(fileParams.SendFileSize==-1)
+        {
+            qInfo()<<"ошибка отправки файла";
+            fileParams.sizeFile=0;
+            fileParams.SendFileSize=0;
+            delete fileParams.read;
+            fileParams.read=nullptr;
+            delete fileParams.fileInfo;
+            fileParams.fileInfo=nullptr;
+            fileParams.sendFile->close();
+            delete fileParams.sendFile;
+            fileParams.sendFile=nullptr;
+            disconnected();
+            return;
+        }
+    }
+    if(fileParams.read->atEnd()){
+        fileParams.sizeFile=0;
+        fileParams.SendFileSize=0;
+        delete fileParams.read;
+        fileParams.read=nullptr;
+        delete fileParams.fileInfo;
+        fileParams.fileInfo=nullptr;
+        fileParams.sendFile->close();
+        delete fileParams.sendFile;
+        fileParams.sendFile=nullptr;
+    }
+    else
+    {
+        emit ReadFileDataToClient();
+    }
+}
+
+void Client::ReadFileData()
+{
+    fileParams.sizeFile=fileParams.read->readRawData(fileParams.DataFile,sizeof(char)*2048);
+    emit SendFileDataToClient();
 }
 
 void Client::disconnected()
