@@ -22,7 +22,7 @@ SOURCES += \
         ../../common/course/course_components/coursevideos.cpp \
         ../../common/course/course_components/question.cpp \
         database/databaseManager.cpp \
-        database/requests.cpp \
+        database/queries.cpp \
         jsonManager/jsonmanager.cpp \
         main.cpp \
         server/client.cpp \

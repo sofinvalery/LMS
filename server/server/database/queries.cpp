@@ -286,7 +286,45 @@ QList<QString> DatabaseManager::GetEveryUnionName() {
     return unionNames;
 }
 
+bool DatabaseManager::AddNewGroup(Group* group) {
+    QSqlQuery query(m_db);
 
+    query.prepare("INSERT INTO groups (classname, isTeacherGroup) VALUES (:classname, :isTeacherGroup)");
+    query.bindValue(":classname", group->getClassname());
+    query.bindValue(":isTeacherGroup", group->getIsTeacherGroup());
+    if (!query.exec()) {
+        qDebug() << "Error inserting group into 'groups' table:" << query.lastError().text();
+        return false;
+    }
+
+    int groupId = query.lastInsertId().toInt();
+
+    foreach (Authentication* participant, group->getParticipants()) {
+        query.prepare("INSERT INTO users (id, username, password, fio, avatar_url, role) VALUES (:id, :username, :password, :fio, :avatar_url, :role)");
+        query.bindValue(":id", participant->getId());
+        query.bindValue(":username", participant->GetLogin());
+        query.bindValue(":password", participant->GetPassword());
+        query.bindValue(":fio", participant->GetFIO());
+        query.bindValue(":avatar_url", participant->GetUrlAvatar());
+        query.bindValue(":role", participant->GetCurrentRole());
+        if (!query.exec()) {
+            qDebug() << "Error inserting participant into 'users' table:" << query.lastError().text();
+            return false;
+        }
+    }
+
+    foreach (Authentication* participant, group->getParticipants()) {
+        query.prepare("INSERT INTO zachisleniya (users_id, groups_id) VALUES (:userId, :groupId)");
+        query.bindValue(":userId", participant->getId());
+        query.bindValue(":groupId", groupId);
+        if (!query.exec()) {
+            qDebug() << "Error inserting participant into 'zachisleniya' table:" << query.lastError().text();
+            return false;
+        }
+    }
+
+    return true;
+}
 
 
 
