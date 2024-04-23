@@ -23,16 +23,14 @@ signals:
 
 private slots:
     void on_showGroupButton_clicked();
-    void on_addButton_clicked();
-    void generateButton_clicked();
-    void deleteButton_clicked();
+    void on_addButton_clicked(); //добавить нового чела
+    void generateButton_clicked(); //пароль
+    void deleteButton_clicked(); //удалить
+    void on_createButton_clicked(); //применить
 
 private:
-    int count = 0;
     int heightLine = 0;
-    QList<QLineEdit*> nameList;
-    QList<QPushButton*> deleteList;
-    QList<QLabel*> numberList;
+    QList<QLineEdit*> nameList; //список фио
     Ui::groupEditor *ui;
 };
 

@@ -13,8 +13,12 @@ groupEditor::groupEditor(QWidget *parent)
     StyleManager::GetInstance()->setLabelStyle(ui->warningLabel, "Данной группы не существует", true, "red", false, 16);
     ui->warningLabel->move(250,200);
 
-    StyleManager::GetInstance()->setBlueButtonStyle(ui->addButton, "Изменить\nгруппу", true, 16, 13);
+    StyleManager::GetInstance()->setBlueButtonStyle(ui->createButton, "Изменить\nгруппу", true, 16, 13);
+    ui->createButton->setFixedSize(145, 45);
+
+    StyleManager::GetInstance()->setBlueButtonStyle(ui->addButton, "Добавить", true, 16, 13);
     ui->addButton->setFixedSize(145, 45);
+    ui->addButton->move(ui->createButton->x() + 165, ui->createButton->y());
 
     //searchLineEdit
     ui->searchLineEdit->setPlaceholderText("Название группы");
@@ -49,6 +53,13 @@ void groupEditor::on_showGroupButton_clicked()
             QPushButton* generateButton = new QPushButton(ui->groupBox);
             QPushButton* deleteButton = new QPushButton(ui->groupBox);
             QLineEdit* newLine = new QLineEdit(ui->groupBox);
+
+            //каждый объект строки в имя индекс получает, 1ая строка login_0 , 2ая строка login_1 и тд.
+            login->setObjectName(QString("login_%1").arg(i));
+            generateButton->setObjectName(QString("generateButton_%1").arg(i));
+            deleteButton->setObjectName(QString("deleteButton_%1").arg(i));
+            newLine->setObjectName(QString("newLine_%1").arg(i));
+
             connect(generateButton, &QPushButton::clicked, this, &groupEditor::generateButton_clicked);
             connect(deleteButton, &QPushButton::clicked, this, &groupEditor::deleteButton_clicked);
 
@@ -78,17 +89,55 @@ void groupEditor::on_showGroupButton_clicked()
     }
 }
 
+
+//если удалять в центре, то до удаленного все работает,
+//если удалять после удаленного, то из-за обновления индексов списка и не обновления индексов объектов удаляется на одну строку выше
 void groupEditor::deleteButton_clicked()
 {
     emit deleteButtonClicked();
+    QPushButton *button = qobject_cast<QPushButton*>(sender());
+    QString buttonName = button->objectName();
+    QString indexStr = buttonName.split("_").last();
+    int index = indexStr.toInt();
+
+    foreach (QObject *obj, ui->groupBox->children()) {
+        if (obj->objectName().endsWith(QString::number(index))) {
+            delete obj;
+        }
+    }
+
+    if (index >= 0 && index < nameList.size()) {
+        nameList.removeAt(index);
+    } else {
+        qDebug() << "invalid index\n-----";
+    }
+
+    foreach(QLineEdit* item, nameList) {
+        qDebug() << item->text();
+    }
+    qDebug() << "-------";
 }
 
+//генерация пароля
 void groupEditor::generateButton_clicked()
 {
     emit generateButtonClicked();
+
 }
 
+//кнопка добавить чела
 void groupEditor::on_addButton_clicked()
+{
+    heightLine += 30;
+    QLineEdit* newLine = new QLineEdit(ui->groupBox);
+    newLine->setGeometry(150, 78 + heightLine, 150, 25);
+    newLine->setPlaceholderText("ФИО");
+    newLine->show();
+    nameList.append(newLine);
+}
+
+//кнопка применить
+void groupEditor::on_createButton_clicked()
 {
 
 }
