@@ -19,17 +19,17 @@ public:
     ~AddGroup();
 
 private slots:
-    void on_studentBox_clicked();
+    void on_studentBox_clicked(); //чекбокс студентов
 
-    void on_teacherBox_clicked();
+    void on_teacherBox_clicked(); //чекбокс преподов
 
-    void on_addButton_clicked();
+    void on_addButton_clicked(); //кнопка добавления
 
     void on_createButton_clicked(); //кнопка создания
 
-    void on_FindExcelButton_clicked();
+    void on_FindExcelButton_clicked(); //выбрать эксель
 
-    void on_deleteButton_clicked();
+    void on_deleteButton_clicked(); //удалить чела
 
 private:
     Ui::AddGroup *ui;

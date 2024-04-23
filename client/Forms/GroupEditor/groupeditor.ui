@@ -61,11 +61,24 @@
      <string>TextLabel</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="addButton">
+   <widget class="QPushButton" name="createButton">
     <property name="geometry">
      <rect>
       <x>310</x>
       <y>20</y>
+      <width>80</width>
+      <height>24</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>PushButton</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="addButton">
+    <property name="geometry">
+     <rect>
+      <x>300</x>
+      <y>70</y>
       <width>80</width>
       <height>24</height>
      </rect>

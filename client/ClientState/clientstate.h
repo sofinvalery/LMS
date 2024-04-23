@@ -8,6 +8,7 @@
 #include "../../common/authentication/group.h"
 #include "Forms/Reconnect/reconnect.h"
 
+
 class ClientState : public QObject
 {
     Q_OBJECT

@@ -105,6 +105,7 @@ void MainWindow::ShowManePage()
         ui->addPotokButton->show();
         ui->addGroupButton->show();
         ui->verticalLine->show();
+        ui->editGroupButton->show();
     }
     widget = new CoursesMPWidget();
     widget->setParent(this);

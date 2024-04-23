@@ -21,7 +21,7 @@ Notification::Notification(QWidget *parent, QString notification, QString colour
     animation->start();
     connect(animation, &QPropertyAnimation::finished, this, &Notification::closeNotification);
 
-    this->move(screenGeometry.width() - 400, 160);
+    this->move(screenGeometry.width() - 290, 100);
 }
 
 void Notification::closeNotification()
