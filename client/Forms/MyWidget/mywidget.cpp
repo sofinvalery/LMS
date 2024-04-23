@@ -32,7 +32,7 @@ MyWidget::MyWidget(Course* course,QWidget *parent)
         "border: 2px solid lightgrey;"
         "}");
     //coursename
-    StyleManager::GetInstance()->setLabelStyle(ui->CourseName, "CourseName", true, "black", false, 15);
+    StyleManager::GetInstance()->setLabelStyle(ui->CourseName, course->GetTitle(), true, "black", true, 15);
 
     //coursebuttonimg
     ui->CourseButtonIMG->setCursor(Qt::PointingHandCursor);
