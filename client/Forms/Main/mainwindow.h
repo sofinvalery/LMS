@@ -35,14 +35,16 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
-public slots:    void ShowManePage();
+public slots:
+    void ShowManePage();
+    void ShowAddingPotok();
+    void on_mainButton_clicked();
 
 
 private slots:
     void on_exitButton_clicked();
     void on_profileButton_clicked();
     void on_scoreButton_clicked();
-    void on_mainButton_clicked();
     void on_addCourseButton_clicked();
     void on_addPotokButton_clicked();
     void on_addGroupButton_clicked();

@@ -330,9 +330,7 @@ QList<QString> DatabaseManager::GetAllStudentGroupName() {
     QSqlQuery query(m_db);
     QList<QString> studentGroupNames;
 
-    query.prepare("SELECT *"
-                  "FROM groups"
-                  "WHERE type = 0");
+    query.prepare("SELECT * FROM groups WHERE type = false");
     if (!query.exec()) {
         qDebug() << "Error executing query" << query.lastError().text();
         return studentGroupNames;
@@ -379,21 +377,22 @@ bool DatabaseManager::AddGroupsToUnion(QList<QString> groupsList, QString unionN
     int unionId = query.lastInsertId().toInt();
 
     foreach (QString groupName, groupsList) {
-        query.prepare("INSERT INTO students_groups_union (classname) VALUES (:groupName)");
-        query.bindValue(":groupName", groupName);
+        query.prepare("SELECT id FROM groups WHERE classname = :value");
+        query.bindValue(":value", groupName);
         if (!query.exec()) {
-            qDebug() << "Error inserting group" << query.lastError().text();
+            qDebug() << "Error select group" << query.lastError().text();
             return false;
         }
 
-        int groupId = query.lastInsertId().toInt();
-
-        query.prepare("INSERT INTO zachisleniya_in_potok (groups_id, students_groups_union_id) VALUES (:groupId, :unionId)");
-        query.bindValue(":groupId", groupId);
-        query.bindValue(":unionId", unionId);
-        if (!query.exec()) {
-            qDebug() << "Error inserting relationship" << query.lastError().text();
-            return false;
+        if (query.next()) {
+            int groupId = query.value("id").toInt();
+            query.prepare("INSERT INTO zachisleniya_in_potok (groups_id, students_groups_union_id) VALUES (:groupId, :unionId)");
+            query.bindValue(":groupId", groupId);
+            query.bindValue(":unionId", unionId);
+            if (!query.exec()) {
+                qDebug() << "Error inserting relationship" << query.lastError().text();
+                return false;
+            }
         }
     }
 

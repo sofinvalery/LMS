@@ -38,7 +38,7 @@ AddGroup::AddGroup(QWidget *parent)
     //excelfind
     StyleManager::GetInstance()->setBlueButtonStyle(ui->FindExcelButton, "Выбрать таблицу", true, 14, 13);
     ui->FindExcelButton->setFixedSize(145, 45);
-    ui->FindExcelButton->move(1000, 700);
+    //ui->FindExcelButton->move(600, 700);
 
     //addbutton
     StyleManager::GetInstance()->setSimpleButtonStyle(ui->addButton, "", true, 1, 1);

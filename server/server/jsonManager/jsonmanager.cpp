@@ -7,10 +7,13 @@ static Action Actions[] ={
     [GETMAINPAGE] = getMainPage,
     [GETCOURSECOMPONENTS] = getCourseComponents,
     [GETTESTQUESTION] = getTestQuestions,
-    [SETNEWGROUPSTUDENTS] = setNewGroupStudents,
+    [SETNEWGROUP] = setNewGroupStudents,
     [SETNEWTEST] = setNewTest,
     [SETNEWCOURSE] = setNewCourse,
     [RECONECT] = reconect,
+    [GETINFOFORADDINGPOTOK] = getInfoForAddPotok,
+    [SETNEWPOTOK] = setNewPotok
+
 };
 
 QJsonObject jsonManager(QJsonObject json,Authentication **auth)
@@ -99,4 +102,40 @@ QJsonObject setNewTest(QJsonObject json,Authentication **auth)
 QJsonObject setNewCourse(QJsonObject json,Authentication **auth)
 {
 
+}
+
+QJsonObject setNewPotok(QJsonObject json, Authentication **auth)
+{
+
+    QJsonArray groupsComponents=json.value("groupsList").toArray();
+    QList<QString> groupList;
+    for(qsizetype i=0;i<groupsComponents.size();i++)
+        groupList.append(groupsComponents[i].toString());
+
+    QString unionName=json.value("unionName").toString();
+
+    DatabaseManager db;
+    db.AddGroupsToUnion(groupList,unionName);
+    QJsonObject send;
+    return send;
+}
+
+QJsonObject getInfoForAddPotok(QJsonObject json, Authentication **auth)
+{
+    DatabaseManager db;
+    QList<QString> studentGroupName = db.GetAllStudentGroupName();
+    QList<QString> potoksName = db.GetEveryUnionName();
+    QJsonObject sendjson;
+    QJsonArray groupsComponents;
+    for (auto & user : studentGroupName)
+        groupsComponents.append(user);
+    QJsonArray potoksComponents;
+    for (auto & user : potoksName)
+        potoksComponents.append(user);
+    sendjson["Action"]=GETINFOFORADDINGPOTOK;
+    QJsonObject temp;
+    temp["studentGroupName"]=groupsComponents;
+    temp["potoksName"]=potoksComponents;
+    sendjson["Data"]=temp;
+    return sendjson;
 }

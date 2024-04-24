@@ -5,6 +5,7 @@
 #include<QList>
 #include <QLineEdit>
 #include <QLabel>
+#include "XlsxUtils/xlsxutils.h"
 
 namespace Ui {
 class PotokAdder;
@@ -31,6 +32,7 @@ private slots:
     void on_Create_potok_clicked();
 
 private:
+    AddingData* data= nullptr;
     Ui::PotokAdder *ui;
 };
 

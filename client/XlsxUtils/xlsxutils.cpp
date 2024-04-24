@@ -106,6 +106,9 @@ void XlsxUtils::getAddedPotok(AddingData* data)
     else{
         xlsxW.saveAs(QDir::homePath()+"/"+data->titleName+".xlsx");
     }
+    data->pathName.clear();
+    delete data;
+    data=nullptr;
 }
 
 AddingData *XlsxUtils::parsAddingXlsx(QString path)

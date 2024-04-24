@@ -11,6 +11,7 @@ MainWindow::MainWindow(QWidget *parent)
 {
 
     connect(SocketParser::GetInstance(),SIGNAL(getMainPage()),this,SLOT(ShowManePage()));
+    connect(SocketParser::GetInstance(),SIGNAL(getAddPotok()),this,SLOT(ShowAddingPotok()));
     ui->setupUi(this);
     this->setStyleSheet("background-color: white;");
     ui->addCourseButton->hide();
@@ -113,6 +114,14 @@ void MainWindow::ShowManePage()
 
 }
 
+void MainWindow::ShowAddingPotok()
+{
+    download->close();
+    widget = new PotokAdder();
+    widget->setParent(this);
+    widget->show();
+}
+
 void MainWindow::on_profileButton_clicked()
 {
     widget->close();
@@ -157,11 +166,13 @@ void MainWindow::on_addCourseButton_clicked()
 
 void MainWindow::on_addPotokButton_clicked()
 {
+    StyleManager::GetInstance()->setBlueButtonStyle(ui->mainButton, "Курсы", true, 20, 13);
+    StyleManager::GetInstance()->setSimpleButtonStyle(ui->scoreButton, "Оценки", true, 20, 18);
+    StyleManager::GetInstance()->setSimpleButtonStyle(ui->addGroupButton, "Новая группа", true, 20, 18);
     widget->close();
+    download->show();
     delete widget;
-    widget = new PotokAdder();
-    widget->setParent(this);
-    widget->show();
+    ClientManager::GetInstance()->SendJsonToServer(GETINFOFORADDINGPOTOK,ClientState::GetInstance()->getAuth()->Serialize());
 }
 
 void MainWindow::on_editGroupButton_clicked()

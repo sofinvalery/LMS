@@ -18,12 +18,14 @@ private:
     explicit SocketParser(QObject *parent = nullptr);
     void logining(QJsonObject json);
     void getMainPage(QJsonObject json);
+    void getAddPotok(QJsonObject json);
     static SocketParser* s_Instance;
 public:
     static SocketParser* GetInstance() { return s_Instance = (s_Instance != nullptr ? s_Instance : new SocketParser()); }
 signals:
     void logined();
     void getMainPage();
+    void getAddPotok();
 };
 
 #endif // SOCKETPARSER_H
