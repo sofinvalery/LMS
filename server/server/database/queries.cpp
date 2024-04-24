@@ -326,6 +326,126 @@ bool DatabaseManager::AddNewGroup(Group* group) {
     return true;
 }
 
+QList<QString> DatabaseManager::GetAllStudentGroupName() {
+    QSqlQuery query(m_db);
+    QList<QString> studentGroupNames;
+
+    query.prepare("SELECT *"
+                  "FROM groups"
+                  "WHERE type = 0");
+    if (!query.exec()) {
+        qDebug() << "Error executing query" << query.lastError().text();
+        return studentGroupNames;
+    }
+
+    while (query.next()) {
+        QString groupName = query.value("classname").toString();
+        studentGroupNames.append(groupName);
+    }
+
+    return studentGroupNames;
+}
+
+QList<QString> DatabaseManager::GetEveryTeacherGroupName() {
+    QSqlQuery query(m_db);
+    QList<QString> teacherGroupNames;
+
+    query.prepare("SELECT *"
+                  "FROM groups"
+                  "WHERE type = 1");
+    if (!query.exec()) {
+        qDebug() << "Error executing query" << query.lastError().text();
+        return teacherGroupNames;
+    }
+
+    while (query.next()) {
+        QString groupName = query.value("classname").toString();
+        teacherGroupNames.append(groupName);
+    }
+
+    return teacherGroupNames;
+}
+
+bool DatabaseManager::AddGroupsToUnion(QList<QString> groupsList, QString unionName) {
+    QSqlQuery query(m_db);
+
+    query.prepare("INSERT INTO students_groups_union (classname) VALUES (:unionName)");
+    query.bindValue(":unionName", unionName);
+    if (!query.exec()) {
+        qDebug() << "Error inserting new union" << query.lastError().text();
+        return false;
+    }
+
+    int unionId = query.lastInsertId().toInt();
+
+    foreach (QString groupName, groupsList) {
+        query.prepare("INSERT INTO students_groups_union (classname) VALUES (:groupName)");
+        query.bindValue(":groupName", groupName);
+        if (!query.exec()) {
+            qDebug() << "Error inserting group" << query.lastError().text();
+            return false;
+        }
+
+        int groupId = query.lastInsertId().toInt();
+
+        query.prepare("INSERT INTO zachisleniya_in_potok (groups_id, students_groups_union_id) VALUES (:groupId, :unionId)");
+        query.bindValue(":groupId", groupId);
+        query.bindValue(":unionId", unionId);
+        if (!query.exec()) {
+            qDebug() << "Error inserting relationship" << query.lastError().text();
+            return false;
+        }
+    }
+
+    return true;
+}
+
+bool DatabaseManager::AddNewCourse(QString teachersGroupName, QString unionName, Course* course) {
+
+    QSqlQuery groupQuery(m_db);
+    groupQuery.prepare("SELECT id FROM groups WHERE classname = :classname AND type = 1");
+    groupQuery.bindValue(":classname", teachersGroupName);
+    if (!groupQuery.exec()) {
+        qDebug() << "Error getting teachers group ID" << groupQuery.lastError().text();
+        return false;
+    }
+    if (!groupQuery.next()) {
+        qDebug() << "Error: Could not find teachers group with name" << teachersGroupName;
+        return false;
+    }
+    int teachersGroupId = groupQuery.value(0).toInt();
+
+    QSqlQuery unionQuery(m_db);
+    unionQuery.prepare("SELECT id FROM students_groups_union WHERE classname = :classname");
+    unionQuery.bindValue(":classname", unionName);
+    if (!unionQuery.exec()) {
+        qDebug() << "Error getting union ID" << unionQuery.lastError().text();
+        return false;
+    }
+    if (!unionQuery.next()) {
+        qDebug() << "Error: Could not find union with name" << unionName;
+        return false;
+    }
+    int unionId = unionQuery.value(0).toInt();
+
+    QSqlQuery query(m_db);
+
+    query.prepare("INSERT INTO courses (title, ava_title_url, start_time, end_time, groups_id, students_groups_union_id1) "
+                  "VALUES (:title, :ava_title_url, :start_time, :end_time, :groups_id, :students_groups_union_id1)");
+    query.bindValue(":title", course->GetTitle());
+    query.bindValue(":ava_title_url", course->GetAvaTitleUrl());
+    query.bindValue(":start_time", course->GetStartTime());
+    query.bindValue(":end_time", course->GetEndTime());
+    query.bindValue(":groups_id", teachersGroupId);
+    query.bindValue(":students_groups_union_id1", unionId);
+
+    if (!query.exec()) {
+        qDebug() << "Error inserting new course" << query.lastError().text();
+        return false;
+    }
+    return true;
+}
+
 
 
 

@@ -25,16 +25,16 @@ public:
     QList<Course*> GetMainPage(Authentication* auth);
     void GetCourseComponents(Course* course);
     QString GetTestQuestion(int32_t testId);
-    //bool SetNewGroupStudents(QList<Authentication*> listAuths, .....) //тут будет еще что то потом придумаю
-    //тут скорее всего будет не bool я еще почитаю как лучше реализовать обновление этих штук
     bool SetNewTest(CourseTest* test);
     bool SetNewCourse(Course* course);
     QList<QString> GetEveryGroupName();
     QList<QString> GetEveryUnionName();
     bool AddNewGroup(Group*);
-    bool AddNewUnion(QList<QString> groupsList, QString unionName);
+    bool AddGroupsToUnion(QList<QString> groupsList, QString unionName);
     bool AddNewCourse(QString teachersGroupName, QString unionName, Course* course);
     bool UpdateGroup(Group* group);
+    QList<QString> GetAllStudentGroupName();
+    QList<QString> GetEveryTeacherGroupName();
     ~DatabaseManager();
 
 private:
