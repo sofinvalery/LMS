@@ -122,9 +122,12 @@ void MainWindow::on_profileButton_clicked()
 
 void MainWindow::on_scoreButton_clicked()
 {
+    StyleManager::GetInstance()->setBlueButtonStyle(ui->scoreButton, "Оценки", true, 20, 13);
     StyleManager::GetInstance()->setSimpleButtonStyle(ui->mainButton, "Курсы", true, 20, 18);
     StyleManager::GetInstance()->setSimpleButtonStyle(ui->addGroupButton, "Новая группа", true, 20, 18);
-    StyleManager::GetInstance()->setBlueButtonStyle(ui->scoreButton, "Оценки", true, 20, 13);
+    StyleManager::GetInstance()->setSimpleButtonStyle(ui->editGroupButton,  "Изменить группу", true, 20, 18);
+    StyleManager::GetInstance()->setSimpleButtonStyle(ui->addCourseButton, "Новый курс", true, 20, 18);
+    StyleManager::GetInstance()->setSimpleButtonStyle(ui->addPotokButton, "Новый поток", true, 20, 18);
     widget->close();
     //widget = new Score();
     widget = new Notification();
@@ -137,6 +140,9 @@ void MainWindow::on_mainButton_clicked()
     StyleManager::GetInstance()->setBlueButtonStyle(ui->mainButton, "Курсы", true, 20, 13);
     StyleManager::GetInstance()->setSimpleButtonStyle(ui->scoreButton, "Оценки", true, 20, 18);
     StyleManager::GetInstance()->setSimpleButtonStyle(ui->addGroupButton, "Новая группа", true, 20, 18);
+    StyleManager::GetInstance()->setSimpleButtonStyle(ui->editGroupButton,  "Изменить группу", true, 20, 18);
+    StyleManager::GetInstance()->setSimpleButtonStyle(ui->addCourseButton, "Новый курс", true, 20, 18);
+    StyleManager::GetInstance()->setSimpleButtonStyle(ui->addPotokButton, "Новый поток", true, 20, 18);
     widget->close();
     widget = new CoursesMPWidget();
     widget->setParent(this);
@@ -145,9 +151,14 @@ void MainWindow::on_mainButton_clicked()
 
 void MainWindow::on_addCourseButton_clicked()
 {
+    StyleManager::GetInstance()->setBlueButtonStyle(ui->addCourseButton, "Новый курс", true, 20, 13);
+    StyleManager::GetInstance()->setSimpleButtonStyle(ui->mainButton, "Курсы", true, 20, 18);
+    StyleManager::GetInstance()->setSimpleButtonStyle(ui->scoreButton, "Оценки", true, 20, 18);
+    StyleManager::GetInstance()->setSimpleButtonStyle(ui->addGroupButton, "Новая группа", true, 20, 18);
+    StyleManager::GetInstance()->setSimpleButtonStyle(ui->editGroupButton,  "Изменить группу", true, 20, 18);
+    StyleManager::GetInstance()->setSimpleButtonStyle(ui->addPotokButton, "Новый поток", true, 20, 18);
+
     widget->close();
-
-
     widget = new CourseAdder();
     widget->setParent(this);
     widget->show();
@@ -158,8 +169,14 @@ void MainWindow::on_addCourseButton_clicked()
 
 void MainWindow::on_addPotokButton_clicked()
 {
-    widget->close();
+    StyleManager::GetInstance()->setBlueButtonStyle(ui->addPotokButton, "Новый поток", true, 20, 13);
+    StyleManager::GetInstance()->setSimpleButtonStyle(ui->addCourseButton, "Новый курс", true, 20, 18);
+    StyleManager::GetInstance()->setSimpleButtonStyle(ui->mainButton, "Курсы", true, 20, 18);
+    StyleManager::GetInstance()->setSimpleButtonStyle(ui->scoreButton, "Оценки", true, 20, 18);
+    StyleManager::GetInstance()->setSimpleButtonStyle(ui->addGroupButton, "Новая группа", true, 20, 18);
+    StyleManager::GetInstance()->setSimpleButtonStyle(ui->editGroupButton,  "Изменить группу", true, 20, 18);
 
+    widget->close();
     widget = new PotokAdder();
     widget->setParent(this);
     widget->show();
@@ -168,7 +185,13 @@ void MainWindow::on_addPotokButton_clicked()
 
 void MainWindow::on_editGroupButton_clicked()
 {
-    StyleManager::GetInstance()->setBlueButtonStyle(ui->editGroupButton, "Изменить группу", true, 20, 13);
+    StyleManager::GetInstance()->setBlueButtonStyle(ui->editGroupButton,  "Изменить группу", true, 20, 13);
+    StyleManager::GetInstance()->setSimpleButtonStyle(ui->addPotokButton, "Новый поток", true, 20, 18);
+    StyleManager::GetInstance()->setSimpleButtonStyle(ui->addCourseButton, "Новый курс", true, 20, 18);
+    StyleManager::GetInstance()->setSimpleButtonStyle(ui->mainButton, "Курсы", true, 20, 18);
+    StyleManager::GetInstance()->setSimpleButtonStyle(ui->scoreButton, "Оценки", true, 20, 18);
+    StyleManager::GetInstance()->setSimpleButtonStyle(ui->addGroupButton, "Новая группа", true, 20, 18);
+
     widget->close();
     widget = new groupEditor();
     widget->setParent(this);
@@ -177,9 +200,13 @@ void MainWindow::on_editGroupButton_clicked()
 
 void MainWindow::on_addGroupButton_clicked()
 {
+    StyleManager::GetInstance()->setBlueButtonStyle(ui->addGroupButton, "Новая группа", true, 20, 13);
+    StyleManager::GetInstance()->setSimpleButtonStyle(ui->addPotokButton, "Новый поток", true, 20, 18);
+    StyleManager::GetInstance()->setSimpleButtonStyle(ui->addCourseButton, "Новый курс", true, 20, 18);
     StyleManager::GetInstance()->setSimpleButtonStyle(ui->mainButton, "Курсы", true, 20, 18);
     StyleManager::GetInstance()->setSimpleButtonStyle(ui->scoreButton, "Оценки", true, 20, 18);
-    StyleManager::GetInstance()->setBlueButtonStyle(ui->addGroupButton, "Новая группа", true, 20, 13);
+    StyleManager::GetInstance()->setSimpleButtonStyle(ui->editGroupButton,  "Изменить группу", true, 20, 18);
+
     widget->close();
     widget = new AddGroup();
     widget->setParent(this);
