@@ -1,7 +1,6 @@
 #include "coursesmpwidget.h"
 #include "ui_coursesmpwidget.h"
-#include <QScreen>
-#include <QScrollBar>
+#include "StyleManager/stylemanager.h"
 
 
 #define arrlen 25
@@ -30,28 +29,7 @@ CoursesMPWidget::CoursesMPWidget(QWidget *parent) :
         "border: none;"
         "}");
     //scrollarea
-    ui->scrollArea->setStyleSheet(
-        "QScrollArea {"
-        "border: none;"
-        "border-top: 3px solid lightgrey;"
-        "}");
-    ui->scrollArea->verticalScrollBar()->setStyleSheet(
-        "QScrollBar:vertical {"
-        "    border: none;"
-        "    background: #F0F0F0;"
-        "    width: 10px;"
-        "    margin: 0px 0px 0px 0px;"
-        "}"
-        "QScrollBar::handle:vertical {"
-        "    background: #C0C0C0;"
-        "    min-height: 20px;"
-        "}"
-        "QScrollBar::add-line:vertical, QScrollBar::sub-line:vertical {"
-        "    height: 0px;"
-        "}"
-        "QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {"
-        "    background: none;"
-        "}");
+    StyleManager::GetInstance()->setScrollAreaStyle(ui->scrollArea, true);
 
     int widgetwidth = MyWidget().width();
     int widgetheight = MyWidget().height();

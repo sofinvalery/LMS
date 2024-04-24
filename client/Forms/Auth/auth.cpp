@@ -20,10 +20,10 @@ Auth::Auth(QWidget *parent)
     StyleManager::GetInstance()->setLabelStyle(ui->labelAuth, "Авторизация", true, "black", true, 26);
     ui->labelAuth->setAlignment(Qt::AlignHCenter);
     //дизайн логина
-    StyleManager::GetInstance()->setLineEditStyle(ui->login, "Логин", false, 20, 100, 50);
+    StyleManager::GetInstance()->setLineEditStyle(ui->login, "Логин", false, 20, 300, 50);
 
     //дизайн пароля
-    StyleManager::GetInstance()->setLineEditStyle(ui->password, "Пароль", false, 20, 100, 50);
+    StyleManager::GetInstance()->setLineEditStyle(ui->password, "Пароль", false, 20, 300, 50);
 
     //дизайн кнопки
     StyleManager::GetInstance()->setBlueButtonStyle(ui->pushButton, "Войти", true, 20, 10);

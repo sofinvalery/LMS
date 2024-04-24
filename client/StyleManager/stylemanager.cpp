@@ -71,16 +71,15 @@ void StyleManager::setWidgetStyle(QWidget* widgetName, QGroupBox* groupboxName, 
         "QGroupBox {"
         "border-top: 3px solid lightgrey;"
         "}");
-    QScreen* scr = QGuiApplication::primaryScreen();
     widgetName->resize(scr->availableGeometry().width(), scr->availableGeometry().height() - 20);
     groupboxName->setMinimumSize(widgetName->frameGeometry().width(),widgetName->frameGeometry().height() - 20);
     widgetName->move(0, moveY);
 }
 
-void StyleManager::setLabelStyle(QLabel* labelName, QString labelText, bool boldStatus, QString textColour, bool hideStatus, unsigned short int fontSize)
+void StyleManager::setLabelStyle(QLabel* labelName, QString labelText, bool boldStatus, QString textColour, bool showStatus, unsigned short int fontSize)
 {
     labelName->setFont(boldStatus == true ? StyleManager::GetInstance()->getBold() : StyleManager::GetInstance()->getRegular());
-    labelName->setVisible(hideStatus);
+    labelName->setVisible(showStatus);
     labelName->setText(labelText);
     labelName->setStyleSheet(
         "QLabel {"
@@ -93,15 +92,51 @@ void StyleManager::setLineEditStyle(QLineEdit* lineEditName, QString placeHolder
 {
     lineEditName->setFont(boldStatus == true ? StyleManager::GetInstance()->getBold() : StyleManager::GetInstance()->getRegular());
     lineEditName->setPlaceholderText(placeHolderText);
+    lineEditName->setFixedWidth(W);
+    lineEditName->setFixedHeight(H);
     lineEditName->setStyleSheet(
         "QLineEdit {"
         "border: none;"
-        "width: " + QString::number(W) + "px;"
-        "height: " + QString::number(H) + "px;"
         "font-size: " + QString::number(fontSize) + "px;"
         "border-bottom: 2px solid lightgrey;"
         "}"
         );
+}
+
+void StyleManager::setScrollAreaStyle(QScrollArea* scrollAreaName, bool topBorderStatus)
+{
+    scrollAreaName->setStyleSheet(topBorderStatus ? "QScrollArea {"
+                                                    "border: none;"
+                                                    "border-top: 3px solid lightgrey;"
+                                                    "}"
+                                                  : "border: none;");
+    scrollAreaName->verticalScrollBar()->setStyleSheet(
+        "QScrollBar:vertical {"
+        "    border: none;"
+        "    background: #F0F0F0;"
+        "    width: 10px;"
+        "    margin: 0px 0px 0px 0px;"
+        "}"
+        "QScrollBar::handle:vertical {"
+        "    background: #C0C0C0;"
+        "    min-height: 20px;"
+        "}"
+        "QScrollBar::add-line:vertical, QScrollBar::sub-line:vertical {"
+        "    height: 0px;"
+        "}"
+        "QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {"
+        "    background: none;"
+        "}");
+}
+
+int StyleManager::getScreenWidth()
+{
+    return scr->availableGeometry().width();
+}
+
+int StyleManager::getScreenHeight()
+{
+    return scr->availableGeometry().height();
 }
 
 QFont StyleManager::getRegular()

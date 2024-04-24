@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>404</width>
-    <height>295</height>
+    <width>833</width>
+    <height>545</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -18,8 +18,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>401</width>
-     <height>291</height>
+     <width>831</width>
+     <height>541</height>
     </rect>
    </property>
    <property name="title">
@@ -38,7 +38,7 @@
    <widget class="QPushButton" name="showGroupButton">
     <property name="geometry">
      <rect>
-      <x>150</x>
+      <x>280</x>
       <y>20</y>
       <width>80</width>
       <height>24</height>
@@ -64,7 +64,7 @@
    <widget class="QPushButton" name="createButton">
     <property name="geometry">
      <rect>
-      <x>310</x>
+      <x>440</x>
       <y>20</y>
       <width>80</width>
       <height>24</height>
@@ -86,6 +86,29 @@
     <property name="text">
      <string>PushButton</string>
     </property>
+   </widget>
+   <widget class="QScrollArea" name="scrollArea">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>110</y>
+      <width>551</width>
+      <height>421</height>
+     </rect>
+    </property>
+    <property name="widgetResizable">
+     <bool>true</bool>
+    </property>
+    <widget class="QWidget" name="scrollAreaWidgetContents">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>0</y>
+       <width>549</width>
+       <height>419</height>
+      </rect>
+     </property>
+    </widget>
    </widget>
   </widget>
  </widget>
