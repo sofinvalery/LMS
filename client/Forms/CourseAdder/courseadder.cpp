@@ -43,7 +43,7 @@ void CourseAdder::on_Apply_clicked()
 void CourseAdder::on_FoundIMG_clicked()
 {
     QString path;
-    path = QFileDialog::getOpenFileName(this, "Выбор картинки", QDir::homePath(), "JPEG Image (*.jpg);; PNG Image (*.png);");
+    path = QFileDialog::getOpenFileName(this, "Выбор картинки", QDir::homePath(), "JPEG Image (*.jpg);;PNG Image (*.png);;All Image Files (*.jpg *.png)");
 
     ui->ImgPath->setText(path);
 }

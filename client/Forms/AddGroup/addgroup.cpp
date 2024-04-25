@@ -217,7 +217,7 @@ void AddGroup::on_createButton_clicked()
 void AddGroup::on_FindExcelButton_clicked()
 {
     QString path;
-    path = QFileDialog::getOpenFileName(this, "Выбор таблицы", QDir::homePath(), "Excel files (*.xlsx *.xls);");
+    path = QFileDialog::getOpenFileName(this, "Выбор таблицы", QDir::homePath(), "Excel files (*.xlsx)");
 
     ui->ExcelPath->setText(path);
     count=0;

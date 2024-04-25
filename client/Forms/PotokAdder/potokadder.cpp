@@ -66,7 +66,7 @@ void PotokAdder::on_Add_line_2_clicked()
 void PotokAdder::on_FoundExcel_clicked()
 {
     QString path;
-    path = QFileDialog::getOpenFileName(this, "Выбор таблицы", QDir::homePath(), "Excel files (*.xlsx *.xls);");
+    path = QFileDialog::getOpenFileName(this, "Выбор таблицы", QDir::homePath(), "Excel files (*.xlsx)");
 
     ui->Excel_Path->setText(path);
     counter=0;
