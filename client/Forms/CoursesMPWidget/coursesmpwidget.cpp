@@ -3,6 +3,7 @@
 #include <QScreen>
 #include <QScrollBar>
 #include "../../ClientState/clientstate.h"
+#include "StyleManager/stylemanager.h"
 
 #define arrlen 25
 
@@ -30,31 +31,10 @@ CoursesMPWidget::CoursesMPWidget(QWidget *parent) :
         "border: none;"
         "}");
     //scrollarea
-    ui->scrollArea->setStyleSheet(
-        "QScrollArea {"
-        "border: none;"
-        "border-top: 3px solid lightgrey;"
-        "}");
-    ui->scrollArea->verticalScrollBar()->setStyleSheet(
-        "QScrollBar:vertical {"
-        "    border: none;"
-        "    background: #F0F0F0;"
-        "    width: 10px;"
-        "    margin: 0px 0px 0px 0px;"
-        "}"
-        "QScrollBar::handle:vertical {"
-        "    background: #C0C0C0;"
-        "    min-height: 20px;"
-        "}"
-        "QScrollBar::add-line:vertical, QScrollBar::sub-line:vertical {"
-        "    height: 0px;"
-        "}"
-        "QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {"
-        "    background: none;"
-        "}");
+    StyleManager::GetInstance()->setScrollAreaStyle(ui->scrollArea, true);
 
-    int widgetwidth = MyWidget(ClientState::GetInstance()->getListCourses()[0]).width();
-    int widgetheight = MyWidget(ClientState::GetInstance()->getListCourses()[0]).height();
+    int widgetwidth = 366;
+    int widgetheight = 261;
     int vertspace = scr->availableGeometry().height()/ 17;
     int horizspace = scr->availableGeometry().width()/ 30;
 
@@ -76,6 +56,7 @@ CoursesMPWidget::CoursesMPWidget(QWidget *parent) :
     ui->gridLayout->setHorizontalSpacing(horizspace);
     //ui->gridLayout->setContentsMargins(0,0,0,0);
     //ui->gridLayout->setGeometry(this->frameGeometry());
+    qInfo()<< ClientState::GetInstance()->getListCourses().size();
     for (int i = 0, j = 0, z = 0; z < ClientState::GetInstance()->getListCourses().size(); z++, j++){
         if (z % columncnt == 0){
             j = 0;

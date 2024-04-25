@@ -39,6 +39,7 @@ void Authentication::HashPassword()
     for(int i = 0; i<64;i+=3)
         salt.append(log[(i/3)%(log.size()-1)]);
     password=(QString)QPasswordDigestor::deriveKeyPbkdf2(QCryptographicHash::Algorithm::Sha3_512,log,salt,10000,64);
+    password = password.trimmed();
 }
 
 void Authentication:: SetInformationAfterAuthentication(

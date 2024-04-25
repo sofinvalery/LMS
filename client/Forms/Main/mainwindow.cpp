@@ -10,8 +10,9 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
 
-    connect(SocketParser::GetInstance(),SIGNAL(getMainPage()),this,SLOT(ShowManePage()));
-    connect(SocketParser::GetInstance(),SIGNAL(getAddPotok()),this,SLOT(ShowAddingPotok()));
+    connect(SocketParser::GetInstance(),SIGNAL(getMainPage()),this,SLOT(ShowManePage()),Qt::QueuedConnection);
+    connect(SocketParser::GetInstance(),SIGNAL(getAddPotok()),this,SLOT(ShowAddingPotok()),Qt::QueuedConnection);
+    connect(SocketParser::GetInstance(),SIGNAL(getAddGroup()),this,SLOT(ShowAddingGroup()),Qt::QueuedConnection);
     ui->setupUi(this);
     this->setStyleSheet("background-color: white;");
     ui->addCourseButton->hide();
@@ -55,7 +56,7 @@ MainWindow::MainWindow(QWidget *parent)
     //exitbutton
     ui->exitButton->setIcon(QIcon(":/img/resources/exit.png"));
     ui->exitButton->setFixedSize(64, 64);
-    ui->exitButton->move(screenGeometry.width() - 84, 13);
+    ui->exitButton->move(StyleManager::GetInstance()->getScreenWidth() - 84, 13);
     ui->exitButton->setStyleSheet(
         "QPushButton {"
         "border-radius: 10px;"
@@ -122,6 +123,15 @@ void MainWindow::ShowAddingPotok()
     widget->show();
 }
 
+void MainWindow::ShowAddingGroup()
+{
+    download->close();
+    widget = new AddGroup();
+    widget->setParent(this);
+    widget->show();
+
+}
+
 void MainWindow::on_profileButton_clicked()
 {
     widget->close();
@@ -134,9 +144,8 @@ void MainWindow::on_profileButton_clicked()
 
 void MainWindow::on_scoreButton_clicked()
 {
-    StyleManager::GetInstance()->setSimpleButtonStyle(ui->mainButton, "Курсы", true, 20, 18);
-    StyleManager::GetInstance()->setSimpleButtonStyle(ui->addGroupButton, "Новая группа", true, 20, 18);
-    StyleManager::GetInstance()->setBlueButtonStyle(ui->scoreButton, "Оценки", true, 20, 13);
+    on_button_clicked(ui->scoreButton);
+
     widget->close();
     delete widget;
     widget = new Score();
@@ -146,9 +155,8 @@ void MainWindow::on_scoreButton_clicked()
 
 void MainWindow::on_mainButton_clicked()
 {
-    StyleManager::GetInstance()->setBlueButtonStyle(ui->mainButton, "Курсы", true, 20, 13);
-    StyleManager::GetInstance()->setSimpleButtonStyle(ui->scoreButton, "Оценки", true, 20, 18);
-    StyleManager::GetInstance()->setSimpleButtonStyle(ui->addGroupButton, "Новая группа", true, 20, 18);
+    on_button_clicked(ui->mainButton);
+
     widget->close();
     download->show();
     delete widget;
@@ -157,6 +165,8 @@ void MainWindow::on_mainButton_clicked()
 
 void MainWindow::on_addCourseButton_clicked()
 {
+    on_button_clicked(ui->addCourseButton);
+
     widget->close();
     delete widget;
     widget = new CourseAdder();
@@ -166,9 +176,7 @@ void MainWindow::on_addCourseButton_clicked()
 
 void MainWindow::on_addPotokButton_clicked()
 {
-    StyleManager::GetInstance()->setBlueButtonStyle(ui->mainButton, "Курсы", true, 20, 13);
-    StyleManager::GetInstance()->setSimpleButtonStyle(ui->scoreButton, "Оценки", true, 20, 18);
-    StyleManager::GetInstance()->setSimpleButtonStyle(ui->addGroupButton, "Новая группа", true, 20, 18);
+    on_button_clicked(ui->addPotokButton);
     widget->close();
     download->show();
     delete widget;
@@ -177,7 +185,8 @@ void MainWindow::on_addPotokButton_clicked()
 
 void MainWindow::on_editGroupButton_clicked()
 {
-    StyleManager::GetInstance()->setBlueButtonStyle(ui->editGroupButton, "Изменить группу", true, 20, 13);
+    on_button_clicked(ui->editGroupButton);
+
     widget->close();
     widget = new groupEditor();
     widget->setParent(this);
@@ -186,14 +195,23 @@ void MainWindow::on_editGroupButton_clicked()
 
 void MainWindow::on_addGroupButton_clicked()
 {
-    StyleManager::GetInstance()->setSimpleButtonStyle(ui->mainButton, "Курсы", true, 20, 18);
-    StyleManager::GetInstance()->setSimpleButtonStyle(ui->scoreButton, "Оценки", true, 20, 18);
-    StyleManager::GetInstance()->setBlueButtonStyle(ui->addGroupButton, "Новая группа", true, 20, 13);
+    on_button_clicked(ui->addGroupButton);
     widget->close();
+    download->show();
     delete widget;
-    widget = new AddGroup();
-    widget->setParent(this);
-    widget->show();
+    ClientManager::GetInstance()->SendJsonToServer(GETINFOFORADDINGGROUP,ClientState::GetInstance()->getAuth()->Serialize());
+}
+
+void MainWindow::on_button_clicked(QPushButton* clickedButton)
+{
+    StyleManager::GetInstance()->setBlueButtonStyle(clickedButton, clickedButton->text(), true, 20, 13);
+
+    QList<QPushButton*> buttons = {ui->scoreButton, ui->mainButton, ui->addGroupButton, ui->editGroupButton, ui->addCourseButton, ui->addPotokButton};
+    for(QPushButton* button : buttons) {
+        if(button != clickedButton) {
+            StyleManager::GetInstance()->setSimpleButtonStyle(button, button->text(), true, 20, 18);
+        }
+    }
 }
 
 void MainWindow::on_exitButton_clicked()

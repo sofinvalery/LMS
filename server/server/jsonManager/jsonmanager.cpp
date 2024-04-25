@@ -7,13 +7,13 @@ static Action Actions[] ={
     [GETMAINPAGE] = getMainPage,
     [GETCOURSECOMPONENTS] = getCourseComponents,
     [GETTESTQUESTION] = getTestQuestions,
-    [SETNEWGROUP] = setNewGroupStudents,
+    [SETNEWGROUP] = setNewGroup,
     [SETNEWTEST] = setNewTest,
     [SETNEWCOURSE] = setNewCourse,
     [RECONECT] = reconect,
     [GETINFOFORADDINGPOTOK] = getInfoForAddPotok,
-    [SETNEWPOTOK] = setNewPotok
-
+    [SETNEWPOTOK] = setNewPotok,
+    [GETINFOFORADDINGGROUP] = getInfoForAddGroup
 };
 
 QJsonObject jsonManager(QJsonObject json,Authentication **auth)
@@ -89,9 +89,13 @@ QJsonObject getTestQuestions(QJsonObject json,Authentication **auth)
 
 }
 
-QJsonObject setNewGroupStudents(QJsonObject json,Authentication **auth)
+QJsonObject setNewGroup(QJsonObject json,Authentication **auth)
 {
-
+    Group* group = Group::Deserialize(json);
+    DatabaseManager db;
+    db.AddNewGroup(group);
+    QJsonObject sendjson;
+    return sendjson;
 }
 
 QJsonObject setNewTest(QJsonObject json,Authentication **auth)
@@ -136,6 +140,21 @@ QJsonObject getInfoForAddPotok(QJsonObject json, Authentication **auth)
     QJsonObject temp;
     temp["studentGroupName"]=groupsComponents;
     temp["potoksName"]=potoksComponents;
+    sendjson["Data"]=temp;
+    return sendjson;
+}
+
+QJsonObject getInfoForAddGroup(QJsonObject json, Authentication **auth)
+{
+    DatabaseManager db;
+    QList<QString> GroupName = db.GetEveryGroupName();
+    QJsonObject sendjson;
+    QJsonArray groupsComponents;
+    for (auto & user : GroupName)
+        groupsComponents.append(user);
+    sendjson["Action"]=GETINFOFORADDINGGROUP;
+    QJsonObject temp;
+    temp["GroupName"]=groupsComponents;
     sendjson["Data"]=temp;
     return sendjson;
 }

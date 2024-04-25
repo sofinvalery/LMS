@@ -5,6 +5,7 @@
 #include <QScreen>
 #include <QFileDialog>
 #include <QLabel>
+#include "XlsxUtils/xlsxutils.h"
 
 namespace Ui {
 class AddGroup;
@@ -31,6 +32,8 @@ private slots:
 
     void on_deleteButton_clicked(); //удалить чела
 
+    void on_exampleExcelButton_clicked();
+
 private:
     Ui::AddGroup *ui;
 
@@ -38,6 +41,7 @@ private:
     QList<QLabel*> numberList;
     int heightLine = 0;
     int count = 0;
+    AddingData* data= nullptr;
 };
 
 #endif // ADDGROUP_H

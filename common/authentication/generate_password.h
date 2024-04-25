@@ -17,6 +17,7 @@ QList<QString> passwordRand(qint32 quantity,quint32 complexity)
             password += chars.at(num);
         }
         list.append(password);
+        password="";
     }
     return list;
 }
