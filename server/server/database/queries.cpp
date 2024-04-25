@@ -18,7 +18,7 @@ bool DatabaseManager::Login(Authentication* auth) {
     // query.bindValue(":avatar_url", "avatarUrl");
     // query.bindValue(":role", 0);
     if (!query.exec()) {
-        qDebug() << "Error executing query:" << query.lastError().text();
+        qDebug() << "Error executing login query:" << query.lastError().text();
         return false;
     }
 
@@ -78,7 +78,7 @@ QList<Course*> DatabaseManager::GetMainPage(Authentication* auth) {
 
     query.bindValue(":userId", auth->getId());
     if (!query.exec()) {
-        qDebug() << "Error executing query:" << query.lastError().text();
+        qDebug() << "Error executing getMainPage query:" << query.lastError().text();
         return courses;
     }
 
@@ -255,7 +255,7 @@ QList<QString> DatabaseManager::GetEveryGroupName() {
     query.prepare("SELECT classname FROM groups");
 
     if (!query.exec()) {
-        qDebug() << "Error executing query:" << query.lastError().text();
+        qDebug() << "Error executing GeteveryGroupName query:" << query.lastError().text();
         return groupNames;
     }
 
@@ -274,7 +274,7 @@ QList<QString> DatabaseManager::GetEveryUnionName() {
     query.prepare("SELECT classname FROM students_groups_union");
 
     if (!query.exec()) {
-        qDebug() << "Error executing query:" << query.lastError().text();
+        qDebug() << "Error executing getEveryUnionName query:" << query.lastError().text();
         return unionNames;
     }
 
@@ -328,9 +328,9 @@ QList<QString> DatabaseManager::GetAllStudentGroupName() {
     QSqlQuery query(m_db);
     QList<QString> studentGroupNames;
 
-    query.prepare("SELECT * FROM groups WHERE type = false");
+    query.prepare("SELECT * FROM groups WHERE isteachergroup = false");
     if (!query.exec()) {
-        qDebug() << "Error executing query" << query.lastError().text();
+        qDebug() << "Error executing getAllStudentGroupname query" << query.lastError().text();
         return studentGroupNames;
     }
 
@@ -350,7 +350,7 @@ QList<QString> DatabaseManager::GetEveryTeacherGroupName() {
                   "FROM groups"
                   "WHERE type = 1");
     if (!query.exec()) {
-        qDebug() << "Error executing query" << query.lastError().text();
+        qDebug() << "Error executing getEveryTeacherGroupName query" << query.lastError().text();
         return teacherGroupNames;
     }
 
