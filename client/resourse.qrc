@@ -3,7 +3,6 @@
         <file>resources/kap.jpg</file>
         <file>resources/profile.png</file>
         <file>resources/exit.png</file>
-        <file>resources/addButton.png</file>
     </qresource>
     <qresource prefix="/font">
         <file>resources/Comfortaa-Bold.ttf</file>
