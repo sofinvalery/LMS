@@ -12,6 +12,8 @@ SocketParser::SocketParser(QObject *parent)
 
 void SocketParser::socketparse(QJsonObject json)
 {
+    if(json.find("Data")==json.end())
+        return;
     QJsonObject data=json["Data"].toObject();
     TransferEnum e = (TransferEnum)json["Action"].toInt();
     switch(e){
