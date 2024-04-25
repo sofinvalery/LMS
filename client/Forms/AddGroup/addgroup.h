@@ -1,10 +1,8 @@
 #ifndef ADDGROUP_H
 #define ADDGROUP_H
-#include <QWidget>
-#include <QLineEdit>
-#include <QScreen>
+
+#include "StyleManager/stylemanager.h"
 #include <QFileDialog>
-#include <QLabel>
 
 namespace Ui {
 class AddGroup;

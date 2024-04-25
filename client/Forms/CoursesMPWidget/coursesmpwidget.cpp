@@ -13,9 +13,8 @@ CoursesMPWidget::CoursesMPWidget(QWidget *parent) :
     ui->groupBox->setStyleSheet("background-color: white;");
     ui->scrollAreaWidgetContents->setStyleSheet("background-color: white;");
     this->move(0, 90);
-    QScreen* scr = QGuiApplication::primaryScreen();
 
-    this->resize( scr->availableGeometry().width(), scr->availableGeometry().height());
+    this->resize( StyleManager::GetInstance()->getScreenWidth(), StyleManager::GetInstance()->getScreenHeight());
     ui->scrollArea->setWidgetResizable(true);
 
     ui->groupBox->setMinimumSize(this->frameGeometry().width(),this->frameGeometry().height());
@@ -33,10 +32,10 @@ CoursesMPWidget::CoursesMPWidget(QWidget *parent) :
 
     int widgetwidth = MyWidget().width();
     int widgetheight = MyWidget().height();
-    int vertspace = scr->availableGeometry().height()/ 17;
-    int horizspace = scr->availableGeometry().width()/ 30;
+    int vertspace = StyleManager::GetInstance()->getScreenHeight()/ 17;
+    int horizspace = StyleManager::GetInstance()->getScreenWidth()/ 30;
 
-    int columncnt = scr->availableGeometry().width()/ (widgetwidth + 2 * horizspace);
+    int columncnt = StyleManager::GetInstance()->getScreenWidth()/ (widgetwidth + 2 * horizspace);
 
     //ui->scrollArea->resize(this->frameGeometry().width()-20,this->frameGeometry().height()-100);
     //ui->scrollAreaWidgetContents->setMinimumWidth(this->frameGeometry().width()-20); - ширина области в которой работает скролл

@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include "Forms/MyWidget/mywidget.h"
+#include "StyleManager/stylemanager.h"
 
 namespace Ui {
 class CourseAdder;
