@@ -559,6 +559,7 @@ Group* DatabaseManager::GetGroupByName(QString groupName) {
     query.bindValue(":classname", groupName);
     query.exec();
     if (!query.next()) {
+        qDebug() << "Error executing GetGroupByName query1:" << query.lastError().text();
         return nullptr;
     }
     int groupId = query.value(0).toInt();
@@ -570,7 +571,9 @@ Group* DatabaseManager::GetGroupByName(QString groupName) {
                   "JOIN zachisleniya z ON u.id = z.users_id "
                   "WHERE z.groups_id = :groupId");
     query.bindValue(":groupId", groupId);
-    query.exec();
+    if (!query.exec()) {
+        qDebug() << "Error executing GetGroupByName query2:" << query.lastError().text();
+    }
     while (query.next()) {
         int userId = query.value(0).toInt();
         QString fio = query.value(1).toString();
