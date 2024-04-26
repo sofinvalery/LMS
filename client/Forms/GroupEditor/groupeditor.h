@@ -31,6 +31,9 @@ private slots:
 private:
     int heightLine = 0;
     QList<QLineEdit*> nameList; //список фио
+    QList<QPushButton *> deleteButtons;
+    QList<QPushButton *> generatePasswordButtons;
+    QList<QLabel*> logins;
     Ui::groupEditor *ui;
 };
 
