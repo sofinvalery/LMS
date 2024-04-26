@@ -15,6 +15,7 @@ int main(int argc, char *argv[])
     ClientManager::GetInstance()->moveToThread(thread);
     SocketParser::GetInstance()->moveToThread(thread);
     thread->start();
+    qInfo()<< QDir::currentPath();
     Auth auth;
     //штука гледа для лога
     a.setStyle("Fusion");

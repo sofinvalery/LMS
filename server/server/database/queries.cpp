@@ -454,6 +454,153 @@ bool DatabaseManager::AddNewCourse(QString teachersGroupName, QString unionName,
 
 
 
+bool DatabaseManager::UpdateGroup(Group* group) {
+    QSqlQuery query(m_db);
+
+    query.prepare("SELECT users_id FROM zachisleniya WHERE groups_id = :groups_id");
+    query.bindValue(":groups_id", group->getId());
+
+    QList<int> participantsIDs;
+
+    if (!query.exec()) {
+        qDebug() << "Error getting participantsIDs from UpdateGroup func:" << query.lastError().text();
+        return false;
+    }
+
+    while (query.next()) {
+        int participantID = query.value("users_id").toInt();
+        participantsIDs.append(participantID);
+    }
+
+    QList<Authentication*> participants = group->getParticipants();
+
+    for (int participantID : participantsIDs) {
+        bool found = false;
+        for (Authentication* participant : participants) {
+            if (participant->getId() == participantID) {
+                found = true;
+                query.prepare("SELECT fio FROM users WHERE id = :id");
+                query.bindValue(":id", participantID);
+                if (!query.exec()) {
+                    qDebug() << "Error getting fio from users table:" << query.lastError().text();
+                    return false;
+                }
+                if (query.next()) {
+                    QString dbFio = query.value("fio").toString();
+                    if (dbFio != participant->GetFIO()) {
+                        query.prepare("UPDATE users SET fio = :fio WHERE id = :id");
+                        query.bindValue(":fio", participant->GetFIO());
+                        query.bindValue(":id", participantID);
+                        if (!query.exec()) {
+                            qDebug() << "Error updating fio in users table:" << query.lastError().text();
+                            return false;
+                        }
+                    }
+                }
+                break;
+            }
+        }
+        if (!found) {
+            query.prepare("DELETE FROM zachisleniya WHERE users_id = :users_id AND groups_id = :groups_id");
+            query.bindValue(":users_id", participantID);
+            query.bindValue(":groups_id", group->getId());
+            if (!query.exec()) {
+                qDebug() << "Error deleting user from zachisleniya table:" << query.lastError().text();
+                return false;
+            }
+
+            query.prepare("DELETE FROM users WHERE id = :id");
+            query.bindValue(":id", participantID);
+            if (!query.exec()) {
+                qDebug() << "Error deleting user from users table:" << query.lastError().text();
+                return false;
+            }
+        }
+    }
+
+    for (Authentication* participant : participants) {
+        if (participant->getId() < 0) {
+            query.prepare("INSERT INTO users (login, password, fio, avatar_url, role) VALUES (:login, :password, :fio, :avatar_url, :role) RETURNING id");
+            query.bindValue(":login", participant->GetLogin());
+            query.bindValue(":password", participant->GetPassword());
+            query.bindValue(":fio", participant->GetFIO());
+            query.bindValue(":avatar_url", participant->GetUrlAvatar());
+            query.bindValue(":role", (int)(participant->GetCurrentRole()));
+            if (!query.exec()) {
+                qDebug() << "Error inserting user into users table:" << query.lastError().text();
+                return false;
+            }
+
+            if (query.next()) {
+                int newUserId = query.value(0).toInt();
+
+                query.prepare("INSERT INTO zachisleniya (users_id, groups_id) VALUES (:users_id, :groups_id)");
+                query.bindValue(":users_id", newUserId);
+                query.bindValue(":groups_id", group->getId());
+                if (!query.exec()) {
+                    qDebug() << "Error inserting user into zachisleniya table:" << query.lastError().text();
+                    return false;
+                }
+            } else {
+                qDebug() << "Error getting new user ID";
+                return false;
+            }
+        }
+    }
+
+    return true;
+}
+
+
+
+Group* DatabaseManager::GetGroupByName(QString groupName) {
+    QSqlQuery query;
+    query.prepare("SELECT id, isteachergroup FROM groups WHERE classname = :classname");
+    query.bindValue(":classname", groupName);
+    query.exec();
+    if (!query.next()) {
+        return nullptr;
+    }
+    int groupId = query.value(0).toInt();
+    bool isTeacherGroup = query.value(1).toBool();
+
+    QList<Authentication*> participants;
+    query.prepare("SELECT u.id, u.fio, u.login, u.password, u.avatar_url, u.role "
+                  "FROM users u "
+                  "JOIN zachisleniya z ON u.id = z.users_id "
+                  "WHERE z.groups_id = :groupId");
+    query.bindValue(":groupId", groupId);
+    query.exec();
+    while (query.next()) {
+        int userId = query.value(0).toInt();
+        QString fio = query.value(1).toString();
+        QString login = query.value(2).toString();
+        QString password = query.value(3).toString();
+        QString avatarUrl = query.value(4).toString();
+        int role = query.value(5).toInt();
+        Authentication* participant = new Authentication(login, password, userId, fio, avatarUrl, EnumRoles(role), QList<QString>(), false, nullptr);
+        participants.append(participant);
+    }
+
+    Group* group = new Group(groupId, groupName, isTeacherGroup, participants);
+    return group;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

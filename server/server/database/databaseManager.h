@@ -34,6 +34,7 @@ public:
     bool UpdateGroup(Group* group);
     QList<QString> GetAllStudentGroupName();
     QList<QString> GetEveryTeacherGroupName();
+    Group* GetGroupByName(QString groupName);
     ~DatabaseManager();
 
 private:
