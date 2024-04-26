@@ -25,6 +25,8 @@ void SocketParser::socketparse(QJsonObject json)
         break;
     case GETINFOFORADDINGGROUP: getAddGroup(data);
         break;
+    case GETINFOFORAADDINGCOURSE: getAddCourse(data);
+        break;
     }
 }
 
@@ -77,6 +79,24 @@ void SocketParser::getAddGroup(QJsonObject json)
     ClientState::GetInstance()->setGroupsName(GroupName);
 
     emit getAddGroup();
+}
+
+void SocketParser::getAddCourse(QJsonObject json)
+{
+    QJsonArray groupsComponents=json.value("TeacherGroupNames").toArray();
+    QList<QString> TeacherGroupNames;
+    for(qsizetype i=0;i<groupsComponents.size();i++)
+        TeacherGroupNames.append(groupsComponents[i].toString());
+    ClientState::GetInstance()->setGroupsName(TeacherGroupNames);
+
+    QJsonArray potoksComponents=json.value("PotokNames").toArray();
+    QList<QString> PotokNames;
+    for(qsizetype i=0;i<potoksComponents.size();i++)
+        PotokNames.append(potoksComponents[i].toString());
+    ClientState::GetInstance()->setPotoksName(PotokNames);
+
+
+    emit getAddCourse();
 }
 
 

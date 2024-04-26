@@ -20,6 +20,7 @@ private:
     void getMainPage(QJsonObject json);
     void getAddPotok(QJsonObject json);
     void getAddGroup(QJsonObject json);
+    void getAddCourse(QJsonObject json);
     static SocketParser* s_Instance;
 public:
     static SocketParser* GetInstance() { return s_Instance = (s_Instance != nullptr ? s_Instance : new SocketParser()); }
@@ -28,6 +29,7 @@ signals:
     void getMainPage();
     void getAddPotok();
     void getAddGroup();
+    void getAddCourse();
 };
 
 #endif // SOCKETPARSER_H

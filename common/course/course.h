@@ -18,7 +18,7 @@ class Course : public QObject
     Q_OBJECT
 public:
     explicit Course(int32_t id, QString title, QString avaUrl, QDate start, QDate end,
-                    int32_t sumpoints,int32_t maxSumpoints,QObject *parent = nullptr);
+                    int32_t sumpoints=0,int32_t maxSumpoints=0,QObject *parent = nullptr);
 private:
     int32_t id;
     QString title;
@@ -38,7 +38,7 @@ public:
 
     void DeserializeListComponents(QJsonObject jsonObj);
 
-    static Course* Deserialize(QJsonObject jsonObj);
+    static Course* Deserialize(QJsonObject jsonObj, bool IsNewCourse=false);
 
     QJsonObject Serialize();
 
@@ -59,6 +59,8 @@ public:
     int32_t getSumpoints() const;
 
     int32_t getMaxSumpoints() const;
+
+    QString moveImageNewCourseToStandartName(int32_t id);
 
 public slots:
     void ClickIcon();

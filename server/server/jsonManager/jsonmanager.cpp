@@ -13,7 +13,8 @@ static Action Actions[] ={
     [RECONECT] = reconect,
     [GETINFOFORADDINGPOTOK] = getInfoForAddPotok,
     [SETNEWPOTOK] = setNewPotok,
-    [GETINFOFORADDINGGROUP] = getInfoForAddGroup
+    [GETINFOFORADDINGGROUP] = getInfoForAddGroup,
+    [GETINFOFORAADDINGCOURSE]= getInfoForAddCourse
 };
 
 QJsonObject jsonManager(QJsonObject json,Authentication **auth)
@@ -95,6 +96,7 @@ QJsonObject setNewGroup(QJsonObject json,Authentication **auth)
     DatabaseManager db;
     db.AddNewGroup(group);
     QJsonObject sendjson;
+    delete group;
     return sendjson;
 }
 
@@ -105,6 +107,14 @@ QJsonObject setNewTest(QJsonObject json,Authentication **auth)
 
 QJsonObject setNewCourse(QJsonObject json,Authentication **auth)
 {
+    QString teachersGroupName = json["teachersGroupName"].toString();
+    QString unionName = json["unionName"].toString();
+    Course * course = Course::Deserialize(json["Course"].toObject(),true);
+    DatabaseManager db;
+    db.AddNewCourse(teachersGroupName,unionName,course);
+    QJsonObject sendjson;
+    delete course;
+    return sendjson;
 
 }
 
@@ -155,6 +165,26 @@ QJsonObject getInfoForAddGroup(QJsonObject json, Authentication **auth)
     sendjson["Action"]=GETINFOFORADDINGGROUP;
     QJsonObject temp;
     temp["GroupName"]=groupsComponents;
+    sendjson["Data"]=temp;
+    return sendjson;
+}
+
+QJsonObject getInfoForAddCourse(QJsonObject json, Authentication **auth)
+{
+    DatabaseManager db;
+    QList<QString> TeacherGroupNames = db.GetEveryTeacherGroupName();
+    QList<QString> PotokNames = db.GetEveryUnionName();
+    QJsonObject sendjson;
+    QJsonArray groupsComponents;
+    for (auto & user : TeacherGroupNames)
+        groupsComponents.append(user);
+    QJsonArray potoksComponents;
+    for (auto & user : PotokNames)
+        potoksComponents.append(user);
+    sendjson["Action"]=GETINFOFORAADDINGCOURSE;
+    QJsonObject temp;
+    temp["TeacherGroupNames"]=groupsComponents;
+    temp["PotokNames"]=potoksComponents;
     sendjson["Data"]=temp;
     return sendjson;
 }

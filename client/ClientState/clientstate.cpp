@@ -65,8 +65,6 @@ MainWindow* ClientState::getMainwindow() const
 
 void ClientState::setListCourses(const QList<Course *> &newListCourses)
 {
-    for(auto temp:currentListCourses)
-        delete temp;
     currentListCourses.clear();
     currentListCourses = newListCourses;
 }

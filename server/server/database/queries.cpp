@@ -289,7 +289,7 @@ QList<QString> DatabaseManager::GetEveryUnionName() {
 bool DatabaseManager::AddNewGroup(Group* group) {
     QSqlQuery query(m_db);
 
-    query.prepare("INSERT INTO groups (classname, isTeacherGroup) VALUES (:classname, :isTeacherGroup)");
+    query.prepare("INSERT INTO groups (classname, isteachergroup) VALUES (:classname, :isTeacherGroup)");
     query.bindValue(":classname", group->getClassname());
     query.bindValue(":isTeacherGroup", group->getIsTeacherGroup());
     if (!query.exec()) {
@@ -346,9 +346,7 @@ QList<QString> DatabaseManager::GetEveryTeacherGroupName() {
     QSqlQuery query(m_db);
     QList<QString> teacherGroupNames;
 
-    query.prepare("SELECT *"
-                  "FROM groups"
-                  "WHERE type = 1");
+    query.prepare("SELECT * FROM groups WHERE isteachergroup = true");
     if (!query.exec()) {
         qDebug() << "Error executing getEveryTeacherGroupName query" << query.lastError().text();
         return teacherGroupNames;
@@ -400,7 +398,7 @@ bool DatabaseManager::AddGroupsToUnion(QList<QString> groupsList, QString unionN
 bool DatabaseManager::AddNewCourse(QString teachersGroupName, QString unionName, Course* course) {
 
     QSqlQuery groupQuery(m_db);
-    groupQuery.prepare("SELECT id FROM groups WHERE classname = :classname AND type = 1");
+    groupQuery.prepare("SELECT id FROM groups WHERE classname = :classname AND isteachergroup = true");
     groupQuery.bindValue(":classname", teachersGroupName);
     if (!groupQuery.exec()) {
         qDebug() << "Error getting teachers group ID" << groupQuery.lastError().text();
@@ -439,6 +437,17 @@ bool DatabaseManager::AddNewCourse(QString teachersGroupName, QString unionName,
     if (!query.exec()) {
         qDebug() << "Error inserting new course" << query.lastError().text();
         return false;
+    }
+    int courseId = query.lastInsertId().toInt();
+    QString newAvaTitleUrl= course->moveImageNewCourseToStandartName(courseId);
+    if(newAvaTitleUrl!=""){
+        query.prepare("UPDATE courses SET ava_title_url = :new_ava_title_url WHERE id = :id");
+        query.bindValue(":new_ava_title_url", newAvaTitleUrl);
+        query.bindValue(":id", courseId);
+
+        if (!query.exec()) {
+            qDebug() << "Error updating Course with standart ava_title_url:" << query.lastError().text();
+        }
     }
     return true;
 }

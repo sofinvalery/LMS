@@ -13,6 +13,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(SocketParser::GetInstance(),SIGNAL(getMainPage()),this,SLOT(ShowManePage()),Qt::QueuedConnection);
     connect(SocketParser::GetInstance(),SIGNAL(getAddPotok()),this,SLOT(ShowAddingPotok()),Qt::QueuedConnection);
     connect(SocketParser::GetInstance(),SIGNAL(getAddGroup()),this,SLOT(ShowAddingGroup()),Qt::QueuedConnection);
+    connect(SocketParser::GetInstance(),SIGNAL(getAddCourse()),this,SLOT(ShowAddingCourse()),Qt::QueuedConnection);
     ui->setupUi(this);
     this->setStyleSheet("background-color: white;");
     ui->addCourseButton->hide();
@@ -132,6 +133,14 @@ void MainWindow::ShowAddingGroup()
 
 }
 
+void MainWindow::ShowAddingCourse()
+{
+    download->close();
+    widget = new CourseAdder();
+    widget->setParent(this);
+    widget->show();
+}
+
 void MainWindow::on_profileButton_clicked()
 {
     widget->close();
@@ -168,10 +177,9 @@ void MainWindow::on_addCourseButton_clicked()
     on_button_clicked(ui->addCourseButton);
 
     widget->close();
+    download->show();
     delete widget;
-    widget = new CourseAdder();
-    widget->setParent(this);
-    widget->show();
+    ClientManager::GetInstance()->SendJsonToServer(GETINFOFORAADDINGCOURSE,ClientState::GetInstance()->getAuth()->Serialize());
 }
 
 void MainWindow::on_addPotokButton_clicked()

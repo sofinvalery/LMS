@@ -26,7 +26,6 @@ public:
     void GetCourseComponents(Course* course);
     QString GetTestQuestion(int32_t testId);
     bool SetNewTest(CourseTest* test);
-    bool SetNewCourse(Course* course);
     QList<QString> GetEveryGroupName();
     QList<QString> GetEveryUnionName();
     bool AddNewGroup(Group*);

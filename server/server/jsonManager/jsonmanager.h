@@ -33,6 +33,8 @@ static QJsonObject setNewPotok(QJsonObject json,Authentication **auth);
 
 static QJsonObject getInfoForAddGroup(QJsonObject json,Authentication **auth);
 
+static QJsonObject getInfoForAddCourse(QJsonObject json,Authentication **auth);
+
 
 
 

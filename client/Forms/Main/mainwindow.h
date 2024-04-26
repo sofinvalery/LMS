@@ -32,6 +32,7 @@ public slots:
     void ShowManePage();
     void ShowAddingPotok();
     void ShowAddingGroup();
+    void ShowAddingCourse();
     void on_mainButton_clicked();
 
 

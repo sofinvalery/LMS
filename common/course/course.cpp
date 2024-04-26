@@ -18,6 +18,18 @@ int32_t Course::getMaxSumpoints() const
     return maxSumpoints;
 }
 
+QString Course::moveImageNewCourseToStandartName(int32_t id)
+{
+    QString path="";
+    if(avaTitleUrl!=":/img/resources/kap.jpg")
+    {
+        path="./data/Courses/"+QString::number(id)+".jpg";
+        QFile file (avaTitleUrl);
+        file.rename(path);
+    }
+    return path;
+}
+
 int32_t Course::getSumpoints() const
 {
     return sumpoints;
@@ -63,13 +75,19 @@ void Course::DeserializeListComponents(QJsonObject jsonObj)
     }
 }
 
-Course* Course::Deserialize(QJsonObject jsonObj)
+Course* Course::Deserialize(QJsonObject jsonObj, bool IsNewCourse)
 {
     QString latin = jsonObj["avaTitleUrl"].toString();
     QString url;
     if(!latin.isEmpty())
     {
-        url="./data/Courses/"+QString::number(jsonObj["id"].toInt())+".jpg";
+        if(IsNewCourse)
+        {
+            url="./data/Courses/"+QString::number(QDateTime::currentMSecsSinceEpoch())+".jpg";
+        }
+        else{
+            url="./data/Courses/"+QString::number(jsonObj["id"].toInt())+".jpg";
+        }
         QFile file (url);
     if (file.open(QIODevice::WriteOnly))
         file.write(QByteArray::fromBase64( latin.toLatin1()));
