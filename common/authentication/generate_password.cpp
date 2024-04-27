@@ -3,7 +3,7 @@
 QList<QString> passwordRand(qint32 quantity,quint32 complexity)
 {
     QRandomGenerator *rand =  QRandomGenerator::system();
-    QString chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789_&?!*^:;#%<>+=";
+    QString chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
     QString password;
     QList<QString> list;
     int num;
