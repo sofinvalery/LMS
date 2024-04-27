@@ -28,11 +28,14 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
+    Download *getDownload() const;
+
 public slots:
     void ShowManePage();
     void ShowAddingPotok();
     void ShowAddingGroup();
     void ShowAddingCourse();
+    void ShowEditGroup();
     void on_mainButton_clicked();
 
 

@@ -31,6 +31,16 @@ int32_t Authentication::getId() const
     return id;
 }
 
+void Authentication::setPassword(const QString &newPassword)
+{
+    password = newPassword;
+}
+
+void Authentication::setFio(const QString &newFio)
+{
+    fio = newFio;
+}
+
 
 void Authentication::HashPassword()
 {

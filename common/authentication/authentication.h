@@ -32,6 +32,10 @@ public:
 
     int32_t getId() const;
 
+    void setPassword(const QString &newPassword);
+
+    void setFio(const QString &newFio);
+
 signals:
 
 private:

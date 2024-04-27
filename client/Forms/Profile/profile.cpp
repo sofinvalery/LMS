@@ -1,6 +1,6 @@
 #include "profile.h"
 #include "ui_profile.h"
-#include <QScreen>
+#include "StyleManager/stylemanager.h"
 
 Profile::Profile(QWidget *parent)
     : QWidget(parent)
@@ -12,9 +12,7 @@ Profile::Profile(QWidget *parent)
         "border-top: 3px solid lightgrey;"
         "}");
 
-    QScreen* scr = QGuiApplication::primaryScreen();
-
-    this->resize( scr->availableGeometry().width(), scr->availableGeometry().height() - 20);
+    this->resize( StyleManager::GetInstance()->getScreenWidth(), StyleManager::GetInstance()->getScreenHeight() - 20);
     ui->groupBox->setMinimumSize(this->frameGeometry().width(),this->frameGeometry().height() - 20);
     this->move(0, 90);
 }

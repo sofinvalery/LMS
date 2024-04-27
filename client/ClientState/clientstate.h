@@ -19,7 +19,7 @@ private:
 
     Authentication* auth=nullptr;
 
-    Group* group;
+    Group* group=nullptr;
 
     QList<QString> groupsName;
 

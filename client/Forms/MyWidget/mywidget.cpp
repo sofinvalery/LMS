@@ -68,6 +68,5 @@ void MyWidget::setIMG(QString path)
 
 MyWidget::~MyWidget()
 {
-    delete course;
     delete ui;
 }

@@ -10,7 +10,9 @@ CONFIG += c++17
 
 SOURCES += \
     ../common/authentication/authentication.cpp \
+    ../common/authentication/generate_password.cpp \
     ../common/authentication/group.cpp \
+    ../common/authentication/translate.cpp \
     ../common/course/course.cpp \
     ../common/course/course_components/coursepdf.cpp \
     ../common/course/course_components/coursetask.cpp \

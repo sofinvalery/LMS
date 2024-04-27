@@ -1,7 +1,6 @@
 #include "addgroup.h"
 #include "ui_addgroup.h"
 #include "ClientState/clientstate.h"
-#include "StyleManager/stylemanager.h"
 #include <QCompleter>
 #include "../../common/authentication/group.h"
 #include "../../common/authentication/generate_password.h"

@@ -16,7 +16,7 @@ public:
 
     bool getIsTeacherGroup() const;
 
-    QList<Authentication *> getParticipants() const;
+    QList<Authentication *>& getParticipants();
 
     QJsonObject Serialize();
 

@@ -14,7 +14,10 @@ static Action Actions[] ={
     [GETINFOFORADDINGPOTOK] = getInfoForAddPotok,
     [SETNEWPOTOK] = setNewPotok,
     [GETINFOFORADDINGGROUP] = getInfoForAddGroup,
-    [GETINFOFORAADDINGCOURSE]= getInfoForAddCourse
+    [GETINFOFORAADDINGCOURSE]= getInfoForAddCourse,
+    [GETINFOFOREDITGROUP] = getInfoForEditGroup,
+    [GETGROUP]= getGroup,
+    [UPDATEGROUP] = updateGroup
 };
 
 QJsonObject jsonManager(QJsonObject json,Authentication **auth)
@@ -156,16 +159,9 @@ QJsonObject getInfoForAddPotok(QJsonObject json, Authentication **auth)
 
 QJsonObject getInfoForAddGroup(QJsonObject json, Authentication **auth)
 {
-    DatabaseManager db;
-    QList<QString> GroupName = db.GetEveryGroupName();
     QJsonObject sendjson;
-    QJsonArray groupsComponents;
-    for (auto & user : GroupName)
-        groupsComponents.append(user);
+    sendjson["Data"]=getInfoAboutAllGroup(json,auth);
     sendjson["Action"]=GETINFOFORADDINGGROUP;
-    QJsonObject temp;
-    temp["GroupName"]=groupsComponents;
-    sendjson["Data"]=temp;
     return sendjson;
 }
 
@@ -186,5 +182,48 @@ QJsonObject getInfoForAddCourse(QJsonObject json, Authentication **auth)
     temp["TeacherGroupNames"]=groupsComponents;
     temp["PotokNames"]=potoksComponents;
     sendjson["Data"]=temp;
+    return sendjson;
+}
+
+QJsonObject getInfoAboutAllGroup(QJsonObject json, Authentication **auth)
+{
+    DatabaseManager db;
+    QList<QString> GroupName = db.GetEveryGroupName();
+    QJsonArray groupsComponents;
+    for (auto & user : GroupName)
+        groupsComponents.append(user);
+    QJsonObject temp;
+    temp["GroupName"]=groupsComponents;
+    return temp;
+}
+
+QJsonObject getInfoForEditGroup(QJsonObject json, Authentication **auth)
+{
+    QJsonObject sendjson;
+    sendjson["Data"]=getInfoAboutAllGroup(json,auth);
+    sendjson["Action"]=GETINFOFOREDITGROUP;
+    return sendjson;
+}
+
+QJsonObject getGroup(QJsonObject json, Authentication **auth)
+{
+    DatabaseManager db;
+    QString groupName = json["groupName"].toString();
+    Group* group = db.GetGroupByName(groupName);
+    QJsonObject sendjson;
+    sendjson["Action"]=GETGROUP;
+    sendjson["Data"]=group->Serialize();
+    return sendjson;
+}
+
+QJsonObject updateGroup(QJsonObject json, Authentication **auth)
+{
+    DatabaseManager db;
+    Group* gr = Group::Deserialize(json);
+    db.UpdateGroup(gr);
+    QJsonObject sendjson;
+    for(auto t:gr->getParticipants())
+        delete t;
+    delete gr;
     return sendjson;
 }

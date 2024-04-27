@@ -27,6 +27,10 @@ void SocketParser::socketparse(QJsonObject json)
         break;
     case GETINFOFORAADDINGCOURSE: getAddCourse(data);
         break;
+    case GETINFOFOREDITGROUP: getEditGroup(data);
+        break;
+    case GETGROUP: getGroup(data);
+        break;
     }
 }
 
@@ -97,6 +101,25 @@ void SocketParser::getAddCourse(QJsonObject json)
 
 
     emit getAddCourse();
+}
+
+void SocketParser::getEditGroup(QJsonObject json)
+{
+    QJsonArray groupsComponents=json.value("GroupName").toArray();
+    QList<QString> GroupName;
+    for(qsizetype i=0;i<groupsComponents.size();i++)
+        GroupName.append(groupsComponents[i].toString());
+    ClientState::GetInstance()->setGroupsName(GroupName);
+
+    emit getEditGroup();
+}
+
+void SocketParser::getGroup(QJsonObject json)
+{
+    Group* gr = Group::Deserialize(json);
+    ClientState::GetInstance()->setGroup(gr);
+
+    emit getShowEditGroup();
 }
 
 

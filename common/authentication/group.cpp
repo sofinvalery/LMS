@@ -26,7 +26,7 @@ bool Group::getIsTeacherGroup() const
     return isTeacherGroup;
 }
 
-QList<Authentication *> Group::getParticipants() const
+QList<Authentication *>& Group::getParticipants()
 {
     return participants;
 }

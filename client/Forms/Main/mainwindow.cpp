@@ -14,6 +14,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(SocketParser::GetInstance(),SIGNAL(getAddPotok()),this,SLOT(ShowAddingPotok()),Qt::QueuedConnection);
     connect(SocketParser::GetInstance(),SIGNAL(getAddGroup()),this,SLOT(ShowAddingGroup()),Qt::QueuedConnection);
     connect(SocketParser::GetInstance(),SIGNAL(getAddCourse()),this,SLOT(ShowAddingCourse()),Qt::QueuedConnection);
+    connect(SocketParser::GetInstance(),SIGNAL(getEditGroup()),this,SLOT(ShowEditGroup()),Qt::QueuedConnection);
     ui->setupUi(this);
     this->setStyleSheet("background-color: white;");
     ui->addCourseButton->hide();
@@ -141,6 +142,14 @@ void MainWindow::ShowAddingCourse()
     widget->show();
 }
 
+void MainWindow::ShowEditGroup()
+{
+    download->close();
+    widget = new groupEditor();
+    widget->setParent(this);
+    widget->show();
+}
+
 void MainWindow::on_profileButton_clicked()
 {
     widget->close();
@@ -194,11 +203,15 @@ void MainWindow::on_addPotokButton_clicked()
 void MainWindow::on_editGroupButton_clicked()
 {
     on_button_clicked(ui->editGroupButton);
-
     widget->close();
-    widget = new groupEditor();
-    widget->setParent(this);
-    widget->show();
+    download->show();
+    delete widget;
+    ClientManager::GetInstance()->SendJsonToServer(GETINFOFOREDITGROUP,ClientState::GetInstance()->getAuth()->Serialize());
+}
+
+Download *MainWindow::getDownload() const
+{
+    return download;
 }
 
 void MainWindow::on_addGroupButton_clicked()

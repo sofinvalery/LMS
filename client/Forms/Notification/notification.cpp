@@ -13,7 +13,6 @@ Notification::Notification(QWidget *parent, QString notification, QString colour
         "QGroupBox {"
         "border: 2px solid lightgrey;"
         "}");
-    QRect screenGeometry = QGuiApplication::primaryScreen()->geometry();
     QPropertyAnimation* animation = new QPropertyAnimation(ui->progressBar, "value");
     animation->setStartValue(100);
     animation->setEndValue(0);
@@ -21,7 +20,7 @@ Notification::Notification(QWidget *parent, QString notification, QString colour
     animation->start();
     connect(animation, &QPropertyAnimation::finished, this, &Notification::closeNotification);
 
-    this->move(screenGeometry.width() - 290, 100);
+    this->move(StyleManager::GetInstance()->getScreenWidth() - 290, 100);
 }
 
 void Notification::closeNotification()

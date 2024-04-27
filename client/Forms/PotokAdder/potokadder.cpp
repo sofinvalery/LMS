@@ -1,9 +1,7 @@
 #include "potokadder.h"
 #include "ui_potokadder.h"
-#include <QScreen>
 #include <QFileDialog>
 #include <QDir>
-#include "StyleManager/stylemanager.h"
 #include "ClientState/clientstate.h"
 
 
@@ -13,8 +11,6 @@ PotokAdder::PotokAdder(QWidget *parent)
 {
     ui->setupUi(this);
     StyleManager::GetInstance()->setWidgetStyle(this, ui->groupBox, 80);
-
-    QScreen* scr = QGuiApplication::primaryScreen();
 
     ui->scrollArea->setWidgetResizable(true);
     ui->scrollArea->resize(this->frameGeometry().width()-25-350,this->frameGeometry().height() - 20);

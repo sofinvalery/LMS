@@ -129,6 +129,27 @@ void StyleManager::setScrollAreaStyle(QScrollArea* scrollAreaName, bool topBorde
         "}");
 }
 
+void StyleManager::setLinkButtonStyle(QPushButton* buttonName, QString buttonText, bool boldStatus, unsigned short int fontSize, unsigned short int fontSizeAnim)
+{
+    buttonName->setFont(boldStatus == true ? StyleManager::GetInstance()->getBold() : StyleManager::GetInstance()->getRegular());
+    buttonName->setCursor(Qt::PointingHandCursor);
+    buttonName->setText(buttonText);
+    buttonName->setStyleSheet(
+        "QPushButton {"
+        "border: none;"
+        "font-size: " + QString::number(fontSize) + "px;"
+        "}");
+    buttonName->setFixedSize(buttonName->sizeHint().width(), buttonName->sizeHint().height());
+    buttonName->setStyleSheet(
+        "QPushButton:hover {"
+        "text-decoration: underline;"
+        "color: purple;"
+        "}"
+        "QPushButton:pressed {"
+        "font-size: " + QString::number(fontSizeAnim) + "px;"
+        "}");
+}
+
 int StyleManager::getScreenWidth()
 {
     return scr->availableGeometry().width();

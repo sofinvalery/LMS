@@ -1,6 +1,7 @@
 #ifndef POTOKADDER_H
 #define POTOKADDER_H
 
+#include "StyleManager/stylemanager.h"
 #include <QWidget>
 #include<QList>
 #include <QLineEdit>

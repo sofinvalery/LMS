@@ -1,6 +1,5 @@
 #include "courseadder.h"
 #include "ui_courseadder.h"
-#include <QScreen>
 #include <QFileDialog>
 #include <QDir>
 #include "ClientState/clientstate.h"

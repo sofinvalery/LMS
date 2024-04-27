@@ -1,7 +1,6 @@
 #include "databaseManager.h"
 #include "../../common/authentication/authentication.h"
 
-#include <QThread>
 bool DatabaseManager::Login(Authentication* auth) {
     QSqlQuery query(m_db);
     query.prepare("SELECT u.fio, u.avatar_url, u.role, u.id "
@@ -479,7 +478,7 @@ bool DatabaseManager::UpdateGroup(Group* group) {
         for (Authentication* participant : participants) {
             if (participant->getId() == participantID) {
                 found = true;
-                query.prepare("SELECT fio FROM users WHERE id = :id");
+                query.prepare("SELECT fio, password FROM users WHERE id = :id");
                 query.bindValue(":id", participantID);
                 if (!query.exec()) {
                     qDebug() << "Error getting fio from users table:" << query.lastError().text();
@@ -487,12 +486,23 @@ bool DatabaseManager::UpdateGroup(Group* group) {
                 }
                 if (query.next()) {
                     QString dbFio = query.value("fio").toString();
+                    QString dbPassword = query.value("password").toString();
                     if (dbFio != participant->GetFIO()) {
                         query.prepare("UPDATE users SET fio = :fio WHERE id = :id");
                         query.bindValue(":fio", participant->GetFIO());
                         query.bindValue(":id", participantID);
                         if (!query.exec()) {
                             qDebug() << "Error updating fio in users table:" << query.lastError().text();
+                            return false;
+                        }
+                    }
+                    if (dbPassword != participant->GetPassword()) {
+                        query.prepare("UPDATE users SET password = :password WHERE id = :id");
+                        participant->HashPassword();
+                        query.bindValue(":password", participant->GetPassword());
+                        query.bindValue(":id", participantID);
+                        if (!query.exec()) {
+                            qDebug() << "Error updating password in users table:" << query.lastError().text();
                             return false;
                         }
                     }
@@ -522,6 +532,7 @@ bool DatabaseManager::UpdateGroup(Group* group) {
         if (participant->getId() < 0) {
             query.prepare("INSERT INTO users (login, password, fio, avatar_url, role) VALUES (:login, :password, :fio, :avatar_url, :role) RETURNING id");
             query.bindValue(":login", participant->GetLogin());
+            participant->HashPassword();
             query.bindValue(":password", participant->GetPassword());
             query.bindValue(":fio", participant->GetFIO());
             query.bindValue(":avatar_url", participant->GetUrlAvatar());
@@ -554,7 +565,7 @@ bool DatabaseManager::UpdateGroup(Group* group) {
 
 
 Group* DatabaseManager::GetGroupByName(QString groupName) {
-    QSqlQuery query;
+    QSqlQuery query(m_db);
     query.prepare("SELECT id, isteachergroup FROM groups WHERE classname = :classname");
     query.bindValue(":classname", groupName);
     query.exec();
