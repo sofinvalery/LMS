@@ -16,8 +16,8 @@ groupEditor::groupEditor(QWidget *parent)
 
     ui->addButton->setFixedSize(145, 45);
     ui->addButton->move(ui->createButton->x() + 165, ui->createButton->y());
-    StyleManager::GetInstance()->setDisableButtonStyle(ui->createButton, "Изменить\nгруппу", true, 16, 13);
-    StyleManager::GetInstance()->setDisableButtonStyle(ui->addButton, "Добавить", true, 16, 13);
+    StyleManager::GetInstance()->setDisableButtonStyle(ui->createButton, "Применить\nизменения", true, 16, 13);
+    StyleManager::GetInstance()->setDisableButtonStyle(ui->addButton, "Добавить\nстудента", true, 16, 13);
     ui->createButton->setEnabled(false);
     ui->addButton->setEnabled(false);
     ui->scrollArea->setWidgetResizable(true);

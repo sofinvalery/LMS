@@ -134,13 +134,12 @@ void StyleManager::setLinkButtonStyle(QPushButton* buttonName, QString buttonTex
     buttonName->setFont(boldStatus == true ? StyleManager::GetInstance()->getBold() : StyleManager::GetInstance()->getRegular());
     buttonName->setCursor(Qt::PointingHandCursor);
     buttonName->setText(buttonText);
+        buttonName->setFixedSize(buttonName->sizeHint().width(), buttonName->sizeHint().height());
     buttonName->setStyleSheet(
         "QPushButton {"
         "border: none;"
         "font-size: " + QString::number(fontSize) + "px;"
-        "}");
-    buttonName->setFixedSize(buttonName->sizeHint().width(), buttonName->sizeHint().height());
-    buttonName->setStyleSheet(
+        "}"
         "QPushButton:hover {"
         "text-decoration: underline;"
         "color: purple;"

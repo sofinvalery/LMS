@@ -16,8 +16,8 @@
   <widget class="QGroupBox" name="groupBox">
    <property name="geometry">
     <rect>
-     <x>9</x>
-     <y>9</y>
+     <x>0</x>
+     <y>0</y>
      <width>921</width>
      <height>621</height>
     </rect>
@@ -28,8 +28,8 @@
    <widget class="QScrollArea" name="scrollArea">
     <property name="geometry">
      <rect>
-      <x>9</x>
-      <y>9</y>
+      <x>0</x>
+      <y>0</y>
       <width>901</width>
       <height>601</height>
      </rect>

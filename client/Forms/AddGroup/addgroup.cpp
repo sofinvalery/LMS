@@ -34,7 +34,7 @@ AddGroup::AddGroup(QWidget *parent)
     nameList.append(ui->studentLineEdit);
     numberList.append(ui->numberLabel);
 
-    StyleManager::GetInstance()->setDisableButtonStyle(ui->deleteButton, "Удалить", true, 16, 13);
+    StyleManager::GetInstance()->setDisableButtonStyle(ui->deleteButton, "Удалить\nстудента", true, 16, 13);
 
     ui->deleteButton->setFixedSize(145, 45);
 
@@ -53,7 +53,7 @@ AddGroup::AddGroup(QWidget *parent)
     ui->FindExcelButton->setFixedSize(145, 45);
 
     //addbutton
-    StyleManager::GetInstance()->setDisableButtonStyle(ui->addButton, "Добавить", true, 16, 13);
+    StyleManager::GetInstance()->setDisableButtonStyle(ui->addButton, "Добавить\nстудента", true, 16, 13);
     ui->addButton->setFixedSize(145, 45);
 }
 
@@ -67,7 +67,7 @@ void AddGroup::on_studentBox_clicked()
     if (!ui->addButton->isEnabled() && count != 50)
     {
         ui->addButton->setEnabled(true);
-        StyleManager::GetInstance()->setBlueButtonStyle(ui->addButton, "Добавить", true, 16, 13);
+        StyleManager::GetInstance()->setBlueButtonStyle(ui->addButton, "Добавить\nстудента", true, 16, 13);
     }
 
     if (!ui->createButton->isEnabled())
@@ -85,7 +85,7 @@ void AddGroup::on_studentBox_clicked()
         ui->addButton->setEnabled(false);
         ui->createButton->setEnabled(false);
         StyleManager::GetInstance()->setDisableButtonStyle(ui->createButton, "Создать группу", true, 16, 13);
-        StyleManager::GetInstance()->setDisableButtonStyle(ui->addButton, "Добавить", true, 16, 13);
+        StyleManager::GetInstance()->setDisableButtonStyle(ui->addButton, "Добавить\nстудента", true, 16, 13);
         ui->teacherBox->setEnabled(true);
     }
 }
@@ -96,7 +96,7 @@ void AddGroup::on_teacherBox_clicked()
     if (!ui->addButton->isEnabled() && count != 50)
     {
         ui->addButton->setEnabled(true);
-        StyleManager::GetInstance()->setBlueButtonStyle(ui->addButton, "Добавить", true, 16, 13);
+        StyleManager::GetInstance()->setBlueButtonStyle(ui->addButton, "Добавить\nстудента", true, 16, 13);
     }
 
     if (!ui->createButton->isEnabled())
@@ -114,7 +114,7 @@ void AddGroup::on_teacherBox_clicked()
         ui->addButton->setEnabled(false);
         ui->createButton->setEnabled(false);
         StyleManager::GetInstance()->setDisableButtonStyle(ui->createButton, "Создать группу", true, 16, 13);
-        StyleManager::GetInstance()->setDisableButtonStyle(ui->addButton, "Добавить", true, 16, 13);
+        StyleManager::GetInstance()->setDisableButtonStyle(ui->addButton, "Добавить\nстудента", true, 16, 13);
         ui->studentBox->setEnabled(true);
     }
 }
@@ -125,7 +125,7 @@ void AddGroup::on_addButton_clicked()
     count++;
     heightLine += 30;
     ui->deleteButton->setEnabled(true);
-    StyleManager::GetInstance()->setCustomButtonStyle(ui->deleteButton, "Удалить", "#E65D4F", true, 16, 13);
+    StyleManager::GetInstance()->setCustomButtonStyle(ui->deleteButton, "Удалить\nстудента", "#E65D4F", true, 16, 13);
     if (count == 49)
     {
         ui->addButton->setEnabled(false);
@@ -160,7 +160,7 @@ void AddGroup::on_deleteButton_clicked()
     }
     if (count == 0)
     {
-        StyleManager::GetInstance()->setDisableButtonStyle(ui->deleteButton, "Удалить", true, 16, 13);
+        StyleManager::GetInstance()->setDisableButtonStyle(ui->deleteButton, "Удалить\nстудента", true, 16, 13);
         ui->deleteButton->setEnabled(false);
     }
 }
