@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "Forms/Notification/notification.h"
+#include "Forms/CoursePage/coursepage.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -110,6 +111,7 @@ void MainWindow::ShowManePage()
 void MainWindow::on_profileButton_clicked()
 {
     widget->close();
+    delete widget;
     widget = new Profile();
     widget->setParent(this);
     widget->show();
@@ -120,6 +122,7 @@ void MainWindow::on_scoreButton_clicked()
     on_button_clicked(ui->scoreButton);
 
     widget->close();
+    delete widget;
     //widget = new Score();
     widget = new Notification();
     widget->setParent(this);
@@ -131,6 +134,7 @@ void MainWindow::on_mainButton_clicked()
     on_button_clicked(ui->mainButton);
 
     widget->close();
+    delete widget;
     widget = new CoursesMPWidget();
     widget->setParent(this);
     widget->show();
@@ -141,6 +145,7 @@ void MainWindow::on_addCourseButton_clicked()
     on_button_clicked(ui->addCourseButton);
 
     widget->close();
+    delete widget;
     widget = new CourseAdder();
     widget->setParent(this);
     widget->show();
@@ -154,6 +159,7 @@ void MainWindow::on_addPotokButton_clicked()
     on_button_clicked(ui->addPotokButton);
 
     widget->close();
+    delete widget;
     widget = new PotokAdder();
     widget->setParent(this);
     widget->show();
@@ -165,6 +171,7 @@ void MainWindow::on_editGroupButton_clicked()
     on_button_clicked(ui->editGroupButton);
 
     widget->close();
+    delete widget;
     widget = new groupEditor();
     widget->setParent(this);
     widget->show();
@@ -175,6 +182,7 @@ void MainWindow::on_addGroupButton_clicked()
     on_button_clicked(ui->addGroupButton);
 
     widget->close();
+    delete widget;
     widget = new AddGroup();
     widget->setParent(this);
     widget->show();
@@ -190,6 +198,15 @@ void MainWindow::on_button_clicked(QPushButton* clickedButton)
             StyleManager::GetInstance()->setSimpleButtonStyle(button, button->text(), true, 20, 18);
         }
     }
+}
+
+void MainWindow::showCoursePage(Course *course)
+{
+    widget->close();
+    delete widget;
+    widget = new CoursePage(course);
+    widget->setParent(this);
+    widget->show();
 }
 
 void MainWindow::on_exitButton_clicked()

@@ -22,6 +22,11 @@ SOURCES += \
     Forms/AddGroup/addgroup.cpp \
     Forms/Auth/auth.cpp \
     Forms/CourseAdder/courseadder.cpp \
+    Forms/CoursePage/coursepage.cpp \
+    Forms/CoursePageComponents/CourseAttestacion/courseattestacion.cpp \
+    Forms/CoursePageComponents/CourseDownload/coursedownload.cpp \
+    Forms/CoursePageComponents/CourseDz/coursedz.cpp \
+    Forms/CoursePageComponents/CourseText/coursetext.cpp \
     Forms/CoursesMPWidget/coursesmpwidget.cpp \
     Forms/Download/download.cpp \
     Forms/GroupEditor/groupeditor.cpp \
@@ -53,6 +58,11 @@ HEADERS += \
     Forms/AddGroup/addgroup.h \
     Forms/Auth/auth.h \
     Forms/CourseAdder/courseadder.h \
+    Forms/CoursePage/coursepage.h \
+    Forms/CoursePageComponents/CourseAttestacion/courseattestacion.h \
+    Forms/CoursePageComponents/CourseDownload/coursedownload.h \
+    Forms/CoursePageComponents/CourseDz/coursedz.h \
+    Forms/CoursePageComponents/CourseText/coursetext.h \
     Forms/CoursesMPWidget/coursesmpwidget.h \
     Forms/Download/download.h \
     Forms/GroupEditor/groupeditor.h \
@@ -71,6 +81,11 @@ FORMS += \
     Forms/AddGroup/addgroup.ui \
     Forms/Auth/auth.ui \
     Forms/CourseAdder/courseadder.ui \
+    Forms/CoursePage/coursepage.ui \
+    Forms/CoursePageComponents/CourseAttestacion/courseattestacion.ui \
+    Forms/CoursePageComponents/CourseDownload/coursedownload.ui \
+    Forms/CoursePageComponents/CourseDz/coursedz.ui \
+    Forms/CoursePageComponents/CourseText/coursetext.ui \
     Forms/CoursesMPWidget/coursesmpwidget.ui \
     Forms/Download/download.ui \
     Forms/GroupEditor/groupeditor.ui \

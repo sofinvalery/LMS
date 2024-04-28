@@ -13,7 +13,7 @@ CourseAdder::CourseAdder(QWidget *parent)
     ui->setupUi(this);
     StyleManager::GetInstance()->setWidgetStyle(this, ui->groupBox, 81);
 
-    course = new MyWidget();
+    course = new MyWidget(new Course(15,"Название предмета",":/img/resources/kap.jpg", QDate(2004,4,4),QDate(2005,1,1),11,80));
     ui->verticalLayout->addWidget(course);
     course->show();
 }

@@ -2,13 +2,15 @@
 #include "ui_mywidget.h"
 #include "StyleManager/stylemanager.h"
 #include <QPixmap>
+#include "ClientState/clientstate.h"
 
-MyWidget::MyWidget(QWidget *parent)
+
+MyWidget::MyWidget(Course* course, QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::MyWidget)
 {
     ui->setupUi(this);
-
+    this->course = course;
     //progressbar
     ui->progressBar->setFont(StyleManager::GetInstance()->getRegular());
     ui->progressBar->setStyleSheet(
@@ -70,3 +72,9 @@ MyWidget::~MyWidget()
 {
     delete ui;
 }
+
+void MyWidget::on_CourseButtonIMG_clicked()
+{
+    ClientState::GetInstance()->getMainwindow()->showCoursePage(course);
+}
+

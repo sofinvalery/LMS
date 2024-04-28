@@ -1,4 +1,5 @@
 #include "coursetest.h"
+#include "../../../client/Forms/CoursePageComponents/CourseAttestacion/courseattestacion.h"
 
 
 
@@ -116,5 +117,5 @@ void CourseTest::ClickIcon()
 
 QWidget *CourseTest::QWidgetShow()
 {
-    return new QTextEdit();
+    return new CourseAttestacion(this);
 }

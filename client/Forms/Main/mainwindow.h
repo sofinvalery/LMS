@@ -46,5 +46,8 @@ private:
     void on_button_clicked(QPushButton* clickedButton);
     //MyWidget * course[25];
 
+public slots:
+    void showCoursePage(Course* course);
+
 };
 #endif // MAINWINDOW_H
