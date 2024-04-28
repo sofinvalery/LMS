@@ -11,6 +11,7 @@ AddGroup::AddGroup(QWidget *parent)
     StyleManager::GetInstance()->setWidgetStyle(this, ui->groupBox, 90);
     ui->addButton->setEnabled(false);
     ui->createButton->setEnabled(false);
+    ui->deleteButton->setEnabled(false);
 
     StyleManager::GetInstance()->setLabelStyle(ui->warningLabel, "Данная группа уже существует", true, "red", false, 16);
     ui->warningLabel->move(250,200);
@@ -33,13 +34,14 @@ AddGroup::AddGroup(QWidget *parent)
     nameList.append(ui->studentLineEdit);
     numberList.append(ui->numberLabel);
 
-    StyleManager::GetInstance()->setBlueButtonStyle(ui->deleteButton, "Удалить", true, 16, 13);
+    StyleManager::GetInstance()->setDisableButtonStyle(ui->deleteButton, "Удалить", true, 16, 13);
+
     ui->deleteButton->setFixedSize(145, 45);
 
     QCompleter* completer = new QCompleter(ClientState::GetInstance()->getGroupsName());
     ui->groupLineEdit->setCompleter(completer);
 
-    StyleManager::GetInstance()->setBlueButtonStyle(ui->exampleExcelButton, "Получить\nпример таблицы", true, 14, 13);
+    StyleManager::GetInstance()->setCustomButtonStyle(ui->exampleExcelButton, "Получить\nпример таблицы", "green", true, 14, 13);
     ui->exampleExcelButton->setFixedSize(145, 45);
 
     //numberlabel
@@ -47,7 +49,7 @@ AddGroup::AddGroup(QWidget *parent)
     ui->numberLabel->setStyleSheet("font-size: 16px;");
 
     //excelfind
-    StyleManager::GetInstance()->setBlueButtonStyle(ui->FindExcelButton, "Выбрать таблицу", true, 14, 13);
+    StyleManager::GetInstance()->setCustomButtonStyle(ui->FindExcelButton, "Выбрать таблицу", "green", true, 14, 13);
     ui->FindExcelButton->setFixedSize(145, 45);
 
     //addbutton
@@ -122,6 +124,8 @@ void AddGroup::on_addButton_clicked()
 {
     count++;
     heightLine += 30;
+    ui->deleteButton->setEnabled(true);
+    StyleManager::GetInstance()->setCustomButtonStyle(ui->deleteButton, "Удалить", "#E65D4F", true, 16, 13);
     if (count == 49)
     {
         ui->addButton->setEnabled(false);
@@ -153,6 +157,11 @@ void AddGroup::on_deleteButton_clicked()
         count--;
         heightLine -= 30;
         ui->scrollAreaWidgetContents->setMinimumHeight(heightLine + ui->studentLineEdit->height() + ui->numberLabel->y() + 10);
+    }
+    if (count == 0)
+    {
+        StyleManager::GetInstance()->setDisableButtonStyle(ui->deleteButton, "Удалить", true, 16, 13);
+        ui->deleteButton->setEnabled(false);
     }
 }
 

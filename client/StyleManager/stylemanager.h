@@ -22,6 +22,7 @@ public:
     int getScreenHeight();
     void setSimpleButtonStyle(QPushButton* buttonName, QString buttonText, bool boldStatus, unsigned short int fontSize, unsigned short int fontSizeAnim);
     void setBlueButtonStyle(QPushButton* buttonName, QString buttonText, bool boldStatus, unsigned short int fontSize, unsigned short int borderRadius);
+    void setCustomButtonStyle(QPushButton* buttonName, QString buttonText, QString buttonColour, bool boldStatus, unsigned short int fontSize, unsigned short int borderRadius);
     void setDisableButtonStyle(QPushButton* buttonName, QString buttonText, bool boldStatus, unsigned short int fontSize, unsigned short int borderRadius);
     void setWidgetStyle(QWidget* widgetName, QGroupBox* groupboxName, unsigned short int moveY = 90);
     void setGroupBoxStyle();
@@ -35,6 +36,7 @@ private:
     static StyleManager* s_Instance;
     QFont regularFont;
     QFont boldFont;
+    QString adjustColour(const QString& colour, int delta);
 };
 
 #endif // STYLEMANAGER_H

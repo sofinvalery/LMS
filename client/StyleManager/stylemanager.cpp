@@ -150,6 +150,35 @@ void StyleManager::setLinkButtonStyle(QPushButton* buttonName, QString buttonTex
         "}");
 }
 
+void StyleManager::setCustomButtonStyle(QPushButton* buttonName, QString buttonText, QString buttonColour, bool boldStatus, unsigned short int fontSize, unsigned short int borderRadius)
+{
+    buttonName->setFont(boldStatus == true ? StyleManager::GetInstance()->getBold() : StyleManager::GetInstance()->getRegular());
+    buttonName->setCursor(Qt::PointingHandCursor);
+    buttonName->setText(buttonText);
+    buttonName->setStyleSheet(
+        "QPushButton {"
+        "background-color: " + buttonColour + ";"
+        "border-radius: " + QString::number(borderRadius) + "px;"
+        "font-size: " + QString::number(fontSize) + "px;"
+        "border: none;"
+        "color: white;"
+        "}"
+        "QPushButton:hover {"
+        "background-color: " + adjustColour(buttonColour, -50) + ";"
+        "}"
+        "QPushButton:pressed {"
+        "background-color: " + adjustColour(buttonColour, -80) + ";"
+        "}");
+}
+
+QString StyleManager::adjustColour(const QString& colour, int delta) {
+    QColor originalColour(colour);
+    int h, s, v;
+    originalColour.getHsv(&h, &s, &v);
+    v = qBound(0, v + delta, 255);
+    return QColor::fromHsv(h, s, v).name();
+}
+
 int StyleManager::getScreenWidth()
 {
     return scr->availableGeometry().width();

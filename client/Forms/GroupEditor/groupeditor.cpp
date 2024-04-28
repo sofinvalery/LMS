@@ -11,7 +11,6 @@ groupEditor::groupEditor(QWidget *parent)
     StyleManager::GetInstance()->setWidgetStyle(this, ui->groupBox, 90);
 
     StyleManager::GetInstance()->setLabelStyle(ui->warningLabel, "Данной группы не существует", true, "red", false, 16);
-    ui->warningLabel->move(250,200);
 
     ui->createButton->setFixedSize(145, 45);
 
@@ -88,7 +87,7 @@ void groupEditor::on_showGroupButton_clicked()
             //deletebutton
             deleteButton->move(310, heightLine);
             deleteButton->setFixedSize(25, 25);
-            StyleManager::GetInstance()->setBlueButtonStyle(deleteButton, "Х", true, 16, 4);
+            StyleManager::GetInstance()->setCustomButtonStyle(deleteButton, "Х", "#E65D4F", true, 16, 4);
             deleteButton->show();
 
             StyleManager::GetInstance()->setLabelStyle(login, student->GetLogin(), true, "black", false, 12);
@@ -146,6 +145,7 @@ void groupEditor::generateButton_clicked()
 {
     QPushButton *button = qobject_cast<QPushButton*>(sender());
     StyleManager::GetInstance()->setDisableButtonStyle(button, "Новый пароль", true, 16, 4);
+    button->setEnabled(false);
 }
 
 //кнопка добавить чела
@@ -161,7 +161,7 @@ void groupEditor::on_addButton_clicked()
     StyleManager::GetInstance()->setLineEditStyle(newLine, "ФИО", true, 16, 150, 30);
     StyleManager::GetInstance()->setLabelStyle(login, "unknown", true, "black", false, 12);
     StyleManager::GetInstance()->setBlueButtonStyle(generateButton, "Новый пароль", true, 16, 4);
-    StyleManager::GetInstance()->setBlueButtonStyle(deleteButton, "Х", true, 16, 4);
+    StyleManager::GetInstance()->setCustomButtonStyle(deleteButton, "Х", "#E65D4F", true, 16, 4);
     deleteButton->move(310, heightLine);
     deleteButton->setFixedSize(25, 25);
     generateButton->move(345, heightLine);
