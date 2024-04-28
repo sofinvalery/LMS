@@ -59,6 +59,8 @@ public:
 
     int32_t getMaxSumpoints() const;
 
+    void setListComponents(const QList<CourseComponent *> &newListComponents);
+
 public slots:
     void ClickIcon();
     QWidget* QWidgetShow();

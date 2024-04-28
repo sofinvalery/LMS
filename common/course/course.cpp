@@ -14,6 +14,11 @@ Course::Course(int32_t id, QString title, QString avaUrl, QDate start, QDate end
     this->maxSumpoints=maxSumpoints;
 }
 
+void Course::setListComponents(const QList<CourseComponent *> &newListComponents)
+{
+    listComponents = newListComponents;
+}
+
 int32_t Course::getMaxSumpoints() const
 {
     return maxSumpoints;

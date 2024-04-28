@@ -1,4 +1,5 @@
 #include "coursetask.h"
+#include "../../../client/Forms/CoursePageComponents/CourseDz/coursedz.h"
 
 CourseTask::CourseTask(int32_t id,int32_t order, QString content, int32_t maxMark,
                        int32_t memoryLimit,
@@ -24,7 +25,7 @@ void CourseTask::ClickIcon()
 
 QWidget *CourseTask::QWidgetShow()
 {
- return new QTextEdit();
+ return new CourseDz(this);
 }
 
 QJsonObject CourseTask::Serialize()

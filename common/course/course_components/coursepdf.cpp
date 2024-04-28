@@ -1,4 +1,5 @@
 #include "coursepdf.h"
+#include "../../../client/Forms/CoursePageComponents/CourseDownload/coursedownload.h"
 
 
 CoursePdf::CoursePdf(int32_t id, int32_t order, QString title, QString url, QObject *parent)
@@ -16,7 +17,7 @@ void CoursePdf::ClickIcon()
 
 QWidget *CoursePdf::QWidgetShow()
 {
-    return new QTextEdit();
+    return new CourseDownload(this);
 }
 
 QString CoursePdf::getTitle() const
