@@ -2,7 +2,7 @@
 #define COURSEDZ_H
 
 #include <QWidget>
-#include "../../../common/course/course_components/coursetask.h"
+#include "../../common/course/course_components/coursetask.h"
 
 namespace Ui {
 class CourseDz;

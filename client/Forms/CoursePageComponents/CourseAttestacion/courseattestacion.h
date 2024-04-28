@@ -2,7 +2,7 @@
 #define COURSEATTESTACION_H
 
 #include <QWidget>
-#include "../../../common/course/course_components/coursetest.h"
+#include "../../common/course/course_components/coursetest.h"
 
 namespace Ui {
 class CourseAttestacion;

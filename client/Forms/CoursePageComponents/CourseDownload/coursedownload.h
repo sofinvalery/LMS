@@ -2,7 +2,7 @@
 #define COURSEDOWNLOAD_H
 
 
-#include "../../../common/course/course_components/coursepdf.h"
+#include "../../common/course/course_components/coursepdf.h"
 #include <QWidget>
 #include <QPixmap>
 
