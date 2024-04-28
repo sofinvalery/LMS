@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>300</width>
+    <width>400</width>
     <height>83</height>
    </rect>
   </property>
@@ -18,7 +18,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>300</width>
+     <width>400</width>
      <height>83</height>
     </rect>
    </property>
@@ -36,22 +36,6 @@
     </property>
     <property name="text">
      <string>TextLabel</string>
-    </property>
-   </widget>
-   <widget class="QProgressBar" name="progressBar">
-    <property name="geometry">
-     <rect>
-      <x>0</x>
-      <y>76</y>
-      <width>300</width>
-      <height>6</height>
-     </rect>
-    </property>
-    <property name="value">
-     <number>24</number>
-    </property>
-    <property name="textVisible">
-     <bool>false</bool>
     </property>
    </widget>
   </widget>
