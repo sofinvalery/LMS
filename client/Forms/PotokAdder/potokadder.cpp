@@ -17,7 +17,7 @@ PotokAdder::PotokAdder(QWidget *parent)
     StyleManager::GetInstance()->setLabelStyle(ui->label_4, "Внимание, при загрузке таблицы приоритет\nзаполнения данных отдается ей", false, "black", true, 14);
     StyleManager::GetInstance()->setLineEditStyle(ui->Group_name, "Название группы", true, 16, 170, 30);
     StyleManager::GetInstance()->setLineEditStyle(ui->Potok_name, "Название потока", true, 16, 170, 30);
-    StyleManager::GetInstance()->setCustomButtonStyle(ui->FoundExcel, "Добавить таблицу", "green", true, 16, 13);
+    StyleManager::GetInstance()->setCustomButtonStyle(ui->FoundExcel, "Добавить таблицу", "#4DBF43", true, 16, 13);
     StyleManager::GetInstance()->setBlueButtonStyle(ui->Add_line, "Добавить\nновую строку", true, 16, 13);
     StyleManager::GetInstance()->setCustomButtonStyle(ui->Add_line_2, "Удалить строку", "#E65D4F", true, 16, 13);
     StyleManager::GetInstance()->setBlueButtonStyle(ui->Create_potok, "Создать поток", true, 16, 13);

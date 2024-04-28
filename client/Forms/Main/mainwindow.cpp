@@ -1,6 +1,5 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include "Forms/Notification/notification.h"
 #include "Forms/CoursePage/coursepage.h"
 
 MainWindow::MainWindow(QWidget *parent)
@@ -69,18 +68,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->profileButton->setIcon(QIcon(":/img/resources/profile.png"));
     ui->profileButton->setFixedSize(64, 64);
     ui->profileButton->move(20, 13);
-    ui->profileButton->setStyleSheet(
-        "QPushButton {"
-        "border-radius: 32px;"
-        "padding: 6px;"
-        "}"
-        "QPushButton:hover {"
-        "background-color: #4EB5FF;"
-        "}"
-        "QPushButton:pressed {"
-        "background-color: #2194DE;"
-        "}");
-    ui->profileButton->setCursor(Qt::PointingHandCursor);
+    StyleManager::GetInstance()->setSimpleButtonStyle(ui->profileButton, "", true, 20, 18);
 
     if (auth->GetCurrentRole() == ADMIN)
     {
@@ -110,6 +98,7 @@ void MainWindow::ShowManePage()
 
 void MainWindow::on_profileButton_clicked()
 {
+    on_button_clicked(ui->profileButton);
     widget->close();
     delete widget;
     widget = new Profile();
@@ -123,8 +112,7 @@ void MainWindow::on_scoreButton_clicked()
 
     widget->close();
     delete widget;
-    //widget = new Score();
-    widget = new Notification();
+    widget = new Score();
     widget->setParent(this);
     widget->show();
 }
@@ -149,9 +137,6 @@ void MainWindow::on_addCourseButton_clicked()
     widget = new CourseAdder();
     widget->setParent(this);
     widget->show();
-    // Reconnect* reconnect = new Reconnect(this);
-    // reconnect->raise();
-    // reconnect->show();
 }
 
 void MainWindow::on_addPotokButton_clicked()
@@ -190,9 +175,15 @@ void MainWindow::on_addGroupButton_clicked()
 
 void MainWindow::on_button_clicked(QPushButton* clickedButton)
 {
-    StyleManager::GetInstance()->setBlueButtonStyle(clickedButton, clickedButton->text(), true, 20, 13);
-
-    QList<QPushButton*> buttons = {ui->scoreButton, ui->mainButton, ui->addGroupButton, ui->editGroupButton, ui->addCourseButton, ui->addPotokButton};
+    if (clickedButton == ui->profileButton)
+    {
+        StyleManager::GetInstance()->setBlueButtonStyle(clickedButton, clickedButton->text(), true, 20, 32);
+    }
+    else
+    {
+        StyleManager::GetInstance()->setBlueButtonStyle(clickedButton, clickedButton->text(), true, 20, 13);
+    }
+    QList<QPushButton*> buttons = {ui->scoreButton, ui->mainButton, ui->addGroupButton, ui->editGroupButton, ui->addCourseButton, ui->addPotokButton, ui->profileButton};
     for(QPushButton* button : buttons) {
         if(button != clickedButton) {
             StyleManager::GetInstance()->setSimpleButtonStyle(button, button->text(), true, 20, 18);

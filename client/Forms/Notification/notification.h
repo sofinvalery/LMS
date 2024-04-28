@@ -19,6 +19,7 @@ private:
     Ui::Notification *ui;
     void startExitAnimation();
     void startEnterAnimation();
+    QTimer* timer = new QTimer(this);
 };
 
 #endif // NOTIFICATION_H

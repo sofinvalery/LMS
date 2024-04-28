@@ -41,7 +41,7 @@ AddGroup::AddGroup(QWidget *parent)
     QCompleter* completer = new QCompleter(ClientState::GetInstance()->getGroupsName());
     ui->groupLineEdit->setCompleter(completer);
 
-    StyleManager::GetInstance()->setCustomButtonStyle(ui->exampleExcelButton, "Получить\nпример таблицы", "green", true, 14, 13);
+    StyleManager::GetInstance()->setCustomButtonStyle(ui->exampleExcelButton, "Получить\nпример таблицы", "#4DBF43", true, 14, 13);
     ui->exampleExcelButton->setFixedSize(145, 45);
 
     //numberlabel
@@ -49,7 +49,7 @@ AddGroup::AddGroup(QWidget *parent)
     ui->numberLabel->setStyleSheet("font-size: 16px;");
 
     //excelfind
-    StyleManager::GetInstance()->setCustomButtonStyle(ui->FindExcelButton, "Выбрать таблицу", "green", true, 14, 13);
+    StyleManager::GetInstance()->setCustomButtonStyle(ui->FindExcelButton, "Выбрать таблицу", "#4DBF43", true, 14, 13);
     ui->FindExcelButton->setFixedSize(145, 45);
 
     //addbutton
@@ -129,6 +129,7 @@ void AddGroup::on_addButton_clicked()
     if (count == 49)
     {
         ui->addButton->setEnabled(false);
+        StyleManager::GetInstance()->setDisableButtonStyle(ui->addButton, "Добавить\nстудента", true, 16, 13);
     }
     QLineEdit* newLine = new QLineEdit(ui->scrollAreaWidgetContents);
     QLabel* newLabel = new QLabel(ui->scrollAreaWidgetContents);
