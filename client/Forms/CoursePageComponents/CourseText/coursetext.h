@@ -4,6 +4,7 @@
 #include <QWidget>
 #include "../../../../common/course/course_components/coursetutorials.h"
 
+
 namespace Ui {
 class CourseText;
 }

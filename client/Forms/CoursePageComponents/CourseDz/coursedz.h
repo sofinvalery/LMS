@@ -3,6 +3,8 @@
 
 #include <QWidget>
 #include "../../../../common/course/course_components/coursetask.h"
+#include "QPixmap"
+
 
 namespace Ui {
 class CourseDz;
@@ -19,6 +21,7 @@ public:
 private:
     Ui::CourseDz *ui;
     CourseTask * dz;
+    QPixmap * icon;
 };
 
 #endif // COURSEDZ_H

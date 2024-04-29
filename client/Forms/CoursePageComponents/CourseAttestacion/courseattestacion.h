@@ -2,7 +2,10 @@
 #define COURSEATTESTACION_H
 
 #include <QWidget>
+
 #include "../../../../common/course/course_components/coursetest.h"
+#include "QPixmap"
+
 
 namespace Ui {
 class CourseAttestacion;
@@ -19,6 +22,7 @@ public:
 private:
     Ui::CourseAttestacion *ui;
     CourseTest * test;
+    QPixmap * icon;
 };
 
 #endif // COURSEATTESTACION_H
