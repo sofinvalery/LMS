@@ -103,126 +103,135 @@ QList<Course*> DatabaseManager::GetMainPage(Authentication* auth) {
     return courses;
 }
 
-void DatabaseManager::GetCourseComponents(Course* course) {
-    QSqlQuery pdfQuery(m_db);
-    pdfQuery.prepare("SELECT id, `order`, title, url "
-                     "FROM path_course_pdfs "
-                     "WHERE courses_id1 = :courseId "
-                     "ORDER BY `order`");
-    pdfQuery.bindValue(":courseId", course->GetCourseId());
-    if (!pdfQuery.exec()) {
-        qDebug() << "Error executing PDF query:" << pdfQuery.lastError().text();
+void DatabaseManager::AddCourseComponents(Course* course) {
+    QSqlQuery query(m_db);
+
+    query.prepare("SELECT id, title, url, order, type "
+                  "FROM path_course_media_files "
+                  "WHERE courses_id1 = :courseId");
+    query.bindValue(":courseId", course->GetCourseId());
+    if (!query.exec()) {
+        qDebug() << "Error executing course media files query:" << query.lastError().text();
         return;
     }
 
-    while (pdfQuery.next()) {
-        int32_t id = pdfQuery.value("id").toInt();
-        int32_t order = pdfQuery.value("order").toInt();
-        QString title = pdfQuery.value("title").toString();
-        QString url = pdfQuery.value("url").toString();
-        //CoursePdf* pdf = new CoursePdf(id, order, title, url);
-        //course->AddCourseComponent(pdf);
+    while (query.next()) {
+        int32_t id = query.value("id").toInt();
+        int32_t order = query.value("order").toInt();
+        QString title = query.value("title").toString();
+        QString url = query.value("url").toString();
+        TypeFile typeFile = (TypeFile)(query.value("type").toInt());
+        course->AddCourseComponent(new CourseMediaFiles(id, order, title, url, typeFile));
     }
 
-    QSqlQuery taskQuery(m_db);
-    taskQuery.prepare("SELECT pct.id, pct.`order`, pct.content, pct.max_mark, pct.memory_limit, "
-                      "GROUP_CONCAT(tf.name SEPARATOR ',') AS allowed_types, "
-                      "pcts.answer_url, pcts.time, pcts.verdict, pcts.notes "
-                      "FROM path_course_tasks AS pct "
-                      "LEFT JOIN type_file_has_lesson_problem AS tfhlp ON pct.id = tfhlp.path_course_tasks_id1 "
-                      "LEFT JOIN type_files AS tf ON tfhlp.type_files_id1 = tf.id "
-                      "LEFT JOIN path_course_tasks_submits AS pcts ON pct.id = pcts.path_course_tasks_id1 "
-                      "WHERE pct.courses_id1 = :courseId "
-                      "GROUP BY pct.id "
-                      "ORDER BY pct.`order`");
-    taskQuery.bindValue(":courseId", course->GetCourseId());
-    if (!taskQuery.exec()) {
-        qDebug() << "Error executing task query:" << taskQuery.lastError().text();
+    query.prepare("SELECT id, content, max_mark, memory_limit, order "
+                  "FROM path_course_tasks "
+                  "WHERE courses_id1 = :courseId");
+    query.bindValue(":courseId", course->GetCourseId());
+    if (!query.exec()) {
+        qDebug() << "Error executing course tasks query:" << query.lastError().text();
         return;
     }
 
-    while (taskQuery.next()) {
-        int32_t id = taskQuery.value("id").toInt();
-        int32_t order = taskQuery.value("order").toInt();
-        QString content = taskQuery.value("content").toString();
-        int32_t maxMark = taskQuery.value("max_mark").toInt();
-        int32_t memoryLimit = taskQuery.value("memory_limit").toInt();
-        QString allowedTypes = taskQuery.value("allowed_types").toString();
-        QString answerUrl = taskQuery.value("answer_url").toString();
-        QDate solutionTime = taskQuery.value("time").toDate();
-        int32_t verdict = taskQuery.value("verdict").toInt();
-        QString notes = taskQuery.value("notes").toString();
-        CourseTask* task = new CourseTask(id, order, content, maxMark, memoryLimit,
-                                          allowedTypes, answerUrl, solutionTime,
-                                          verdict, notes);
-        course->AddCourseComponent(task);
+    while (query.next()) {
+        int32_t id = query.value("id").toInt();
+        int32_t order = query.value("order").toInt();
+        QString content = query.value("content").toString();
+        int32_t maxMark = query.value("max_mark").toInt();
+        int32_t memoryLimit = query.value("memory_limit").toInt();
+
+        QStringList allowedTypes;
+        query.prepare("SELECT type_files.name "
+                      "FROM type_file_has_lesson_problem "
+                      "JOIN type_files ON type_file_has_lesson_problem.type_files_id1 = type_files.id "
+                      "WHERE type_file_has_lesson_problem.path_course_tasks_id1 = :taskId");
+        query.bindValue(":taskId", id);
+        if (!query.exec()) {
+            qDebug() << "Error executing allowed file types query:" << query.lastError().text();
+            return;
+        }
+
+        while (query.next()) {
+            allowedTypes.append(query.value("name").toString());
+        }
+
+        QString allowedTypeOfFiles = allowedTypes.join(",");
+        query.prepare("SELECT answer_url, \"time\", verdict, notes "
+                      "FROM path_course_tasks_submits "
+                      "WHERE path_course_tasks_id1 = :taskId");
+        query.bindValue(":taskId", id);
+        if (!query.exec()) {
+            qDebug() << "Error executing task submissions query:" << query.lastError().text();
+            return;
+        }
+
+        QString answerUrl;
+        QDate solutionTime;
+        int32_t verdict = 0;
+        QString notes;
+        if (query.first()) {
+            answerUrl = query.value("answer_url").toString();
+            solutionTime = QDate::fromString(query.value("time").toString(), "yyyy-MM-dd");
+            verdict = query.value("verdict").toInt();
+            notes = query.value("notes").toString();
+        }
+
+        course->AddCourseComponent(new CourseTask(id, order, content, maxMark, memoryLimit,
+                                                  allowedTypeOfFiles, answerUrl, solutionTime,
+                                                  verdict, notes));
     }
 
-    QSqlQuery testQuery(m_db);
-    testQuery.prepare("SELECT pct.id, pct.`order`, pct.title, pct.max_mark, pct.url_json, "
-                      "pct.time_in_seconds, pcts.verdict, pcts.notes, pcts.time "
-                      "FROM path_course_tests AS pct "
-                      "LEFT JOIN path_course_test_submits pcts ON pct.id = pcts.path_course_tests_id "
-                      "WHERE pct.courses_id1 = :courseId "
-                      "ORDER BY pct.`order`");
-    testQuery.bindValue(":courseId", course->GetCourseId());
-    if (!testQuery.exec()) {
-        qDebug() << "Error executing test query:" << testQuery.lastError().text();
+    query.prepare("SELECT id, title, max_mark, url_json, order "
+                  "FROM path_course_tests "
+                  "WHERE courses_id1 = :courseId");
+    query.bindValue(":courseId", course->GetCourseId());
+    if (!query.exec()) {
+        qDebug() << "Error executing course tests query:" << query.lastError().text();
         return;
     }
 
-    while (testQuery.next()) {
-        int32_t id = testQuery.value("id").toInt();
-        int32_t order = testQuery.value("order").toInt();
-        QString title = testQuery.value("title").toString();
-        int32_t maxMark = testQuery.value("max_mark").toInt();
-        QString urlJson = testQuery.value("url_json").toString();
-        int32_t timeInSeconds = testQuery.value("time_in_seconds").toInt();
-        int32_t verdict = testQuery.value("verdict").toInt();
-        QString notes = testQuery.value("notes").toString();
-        QDate time = testQuery.value("time").toDate();
-        CourseTest* test = new CourseTest(id, order, title, maxMark, urlJson,
-                                          timeInSeconds, verdict, notes, time);
-        course->AddCourseComponent(test);
+    while (query.next()) {
+        int32_t id = query.value("id").toInt();
+        int32_t order = query.value("order").toInt();
+        QString title = query.value("title").toString();
+        int32_t maxMark = query.value("max_mark").toInt();
+        QString urlJson = query.value("url_json").toString();
+
+        query.prepare("SELECT \"time\", verdict, notes "
+                      "FROM path_course_test_submits "
+                      "WHERE path_course_tests_id = :testId");
+        query.bindValue(":testId", id);
+        if (!query.exec()) {
+            qDebug() << "Error executing test submissions query:" << query.lastError().text();
+            return;
+        }
+
+        QDate time;
+        int32_t verdict = 0;
+        QString notes;
+        if (query.first()) {
+            time = QDate::fromString(query.value("time").toString(), "yyyy-MM-dd");
+            verdict = query.value("verdict").toInt();
+            notes = query.value("notes").toString();
+        }
+
+        course->AddCourseComponent(new CourseTest(id, order, title, maxMark, urlJson, 0, verdict, notes, time, QList<Question*>()));
     }
 
-    QSqlQuery tutorialQuery(m_db);
-    tutorialQuery.prepare("SELECT id, `order`, content "
-                          "FROM path_course_tutorials "
-                          "WHERE courses_id1 = :courseId "
-                          "ORDER BY `order`");
-    tutorialQuery.bindValue(":courseId", course->GetCourseId());
-    if (!tutorialQuery.exec()) {
-        qDebug() << "Error executing tutorial query:" << tutorialQuery.lastError().text();
+    query.prepare("SELECT id, content, order "
+                  "FROM path_course_tutorials "
+                  "WHERE courses_id1 = :courseId");
+    query.bindValue(":courseId", course->GetCourseId());
+    if (!query.exec()) {
+        qDebug() << "Error executing course tutorials query:" << query.lastError().text();
         return;
     }
 
-    while (tutorialQuery.next()) {
-        int32_t id = tutorialQuery.value("id").toInt();
-        int32_t order = tutorialQuery.value("order").toInt();
-        QString content = tutorialQuery.value("content").toString();
-        CourseTutorials* tutorial = new CourseTutorials(id, order, content);
-        course->AddCourseComponent(tutorial);
-    }
-
-    QSqlQuery videoQuery(m_db);
-    videoQuery.prepare("SELECT id, `order`, title, url "
-                       "FROM path_course_videos "
-                       "WHERE courses_id1 = :courseId "
-                       "ORDER BY `order`");
-    videoQuery.bindValue(":courseId", course->GetCourseId());
-    if (!videoQuery.exec()) {
-        qDebug() << "Error executing video query:" << videoQuery.lastError().text();
-        return;
-    }
-
-    while (videoQuery.next()) {
-        int32_t id = videoQuery.value("id").toInt();
-        int32_t order = videoQuery.value("order").toInt();
-        QString title = videoQuery.value("title").toString();
-        QString url = videoQuery.value("url").toString();
-        //CourseVideos* video = new CourseVideos(id, order, title, url);
-        //course->AddCourseComponent(video);
+    while (query.next()) {
+        int32_t id = query.value("id").toInt();
+        int32_t order = query.value("order").toInt();
+        QString content = query.value("content").toString();
+        course->AddCourseComponent(new CourseTutorials(id, order, content));
     }
 }
 
