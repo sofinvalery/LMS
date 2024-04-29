@@ -156,7 +156,7 @@ void DatabaseManager::AddCourseComponents(Course* course) {
         }
 
         QString allowedTypeOfFiles = allowedTypes.join(",");
-        query.prepare("SELECT answer_url, \"time\", verdict, notes "
+        query.prepare("SELECT answer_url, time, verdict, notes "
                       "FROM path_course_tasks_submits "
                       "WHERE path_course_tasks_id1 = :taskId");
         query.bindValue(":taskId", id);
@@ -171,7 +171,7 @@ void DatabaseManager::AddCourseComponents(Course* course) {
         QString notes;
         if (query.first()) {
             answerUrl = query.value("answer_url").toString();
-            solutionTime = QDate::fromString(query.value("time").toString(), "yyyy-MM-dd");
+            solutionTime = query.value("time").toDate();
             verdict = query.value("verdict").toInt();
             notes = query.value("notes").toString();
         }
@@ -197,7 +197,7 @@ void DatabaseManager::AddCourseComponents(Course* course) {
         int32_t maxMark = query.value("max_mark").toInt();
         QString urlJson = query.value("url_json").toString();
 
-        query.prepare("SELECT \"time\", verdict, notes "
+        query.prepare("SELECT time, verdict, notes "
                       "FROM path_course_test_submits "
                       "WHERE path_course_tests_id = :testId");
         query.bindValue(":testId", id);
@@ -210,7 +210,7 @@ void DatabaseManager::AddCourseComponents(Course* course) {
         int32_t verdict = 0;
         QString notes;
         if (query.first()) {
-            time = QDate::fromString(query.value("time").toString(), "yyyy-MM-dd");
+            time = query.value("time").toDate();
             verdict = query.value("verdict").toInt();
             notes = query.value("notes").toString();
         }
