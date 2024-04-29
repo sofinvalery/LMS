@@ -11,6 +11,8 @@
 #include <QLineEdit>
 #include <QScrollArea>
 #include <QScrollBar>
+#include <QCompleter>
+#include <QAbstractItemView>
 
 class StyleManager
 {
@@ -30,6 +32,7 @@ public:
     void setLineEditStyle(QLineEdit* lineEditName, QString placeHolderText, bool boldStatus, unsigned short int fontSize, unsigned short int W, unsigned short int H);
     void setScrollAreaStyle(QScrollArea* scrollAreaName, bool topBorderStatus);
     void setLinkButtonStyle(QPushButton* buttonName, QString buttonText, bool boldStatus, unsigned short int fontSize, unsigned short int fontSizeAnim);
+    void setCompleterStyle(QCompleter* completerName, QString fontFamily = "Comfortaa");
 private:
     QScreen* scr = QGuiApplication::primaryScreen();
     StyleManager();

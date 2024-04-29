@@ -10,7 +10,7 @@ CourseDownload::CourseDownload(CourseComponent * pdf, QWidget *parent)
     this->pdf =  qobject_cast<CoursePdf*>(pdf);
     icon = new QPixmap(":/img/resources/dowloadicon.png");
     ui->LabelIMG->setPixmap(icon->scaled(31, 21, Qt::KeepAspectRatio));
-    StyleManager::GetInstance()->setLinkButtonStyle(ui->DownloadButton, "Лекция 1.111111111111111.pdf", false, 16, 14);
+    StyleManager::GetInstance()->setLinkButtonStyle(ui->DownloadButton, "Лекция 1.111111111111111.pdf", false, 16, 15);
 }
 
 CourseDownload::~CourseDownload()

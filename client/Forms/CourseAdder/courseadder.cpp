@@ -11,7 +11,7 @@ CourseAdder::CourseAdder(QWidget *parent)
     , ui(new Ui::CourseAdder)
 {
     ui->setupUi(this);
-    StyleManager::GetInstance()->setWidgetStyle(this, ui->groupBox, 81);
+    StyleManager::GetInstance()->setWidgetStyle(this, ui->groupBox, 90);
 
     StyleManager::GetInstance()->setBlueButtonStyle(ui->Apply, "Применить\nизменения", true, 16, 13);
     StyleManager::GetInstance()->setBlueButtonStyle(ui->CreateCourse, "Создать курс", true, 16, 13);

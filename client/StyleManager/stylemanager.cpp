@@ -170,6 +170,31 @@ void StyleManager::setCustomButtonStyle(QPushButton* buttonName, QString buttonT
         "}");
 }
 
+void StyleManager::setCompleterStyle(QCompleter* completerName, QString fontFamily)
+{
+    completerName->popup()->setStyleSheet(
+        "QListView {"
+        "border: 2px solid lightgrey;"
+        "font-family: " + fontFamily + ";"
+        "}"
+        "QScrollBar:vertical {"
+        "    border: none;"
+        "    background: #F0F0F0;"
+        "    width: 10px;"
+        "    margin: 0px 0px 0px 0px;"
+        "}"
+        "QScrollBar::handle:vertical {"
+        "    background: #C0C0C0;"
+        "    min-height: 20px;"
+        "}"
+        "QScrollBar::add-line:vertical, QScrollBar::sub-line:vertical {"
+        "    height: 0px;"
+        "}"
+        "QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {"
+        "    background: none;"
+        "}");
+}
+
 QString StyleManager::adjustColour(const QString& colour, int delta) {
     QColor originalColour(colour);
     int h, s, v;

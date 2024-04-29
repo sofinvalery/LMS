@@ -1,7 +1,6 @@
 #include "addgroup.h"
 #include "ui_addgroup.h"
 #include "ClientState/clientstate.h"
-#include <QCompleter>
 
 AddGroup::AddGroup(QWidget *parent)
     : QWidget(parent)
@@ -37,9 +36,6 @@ AddGroup::AddGroup(QWidget *parent)
     StyleManager::GetInstance()->setDisableButtonStyle(ui->deleteButton, "Удалить\nстудента", true, 16, 13);
 
     ui->deleteButton->setFixedSize(145, 45);
-
-    QCompleter* completer = new QCompleter(ClientState::GetInstance()->getGroupsName());
-    ui->groupLineEdit->setCompleter(completer);
 
     StyleManager::GetInstance()->setCustomButtonStyle(ui->exampleExcelButton, "Получить\nпример таблицы", "#4DBF43", true, 14, 13);
     ui->exampleExcelButton->setFixedSize(145, 45);

@@ -1,7 +1,6 @@
 #include "groupeditor.h"
 #include "ui_groupeditor.h"
 #include "ClientState/clientstate.h"
-#include <QCompleter>
 
 groupEditor::groupEditor(QWidget *parent)
     : QWidget(parent)
@@ -29,6 +28,7 @@ groupEditor::groupEditor(QWidget *parent)
     //searchLineEdit
     ui->searchLineEdit->setPlaceholderText("Название группы");
     QCompleter* completer = new QCompleter(ClientState::GetInstance()->getGroupsName());
+    StyleManager::GetInstance()->setCompleterStyle(completer);
     ui->searchLineEdit->setCompleter(completer);
 
     //showGroupButton
