@@ -108,14 +108,3 @@ QDate CourseTest::getTime() const
 {
     return time;
 }
-
-//по нажатию тут передадим данные в новую форму запрос к серверу и т.д
-void CourseTest::ClickIcon()
-{
-
-}
-
-QWidget *CourseTest::QWidgetShow()
-{
-    return new CourseAttestacion(this);
-}

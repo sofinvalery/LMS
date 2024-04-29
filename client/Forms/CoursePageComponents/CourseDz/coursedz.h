@@ -2,7 +2,7 @@
 #define COURSEDZ_H
 
 #include <QWidget>
-#include "../../common/course/course_components/coursetask.h"
+#include "../../../../common/course/course_components/coursetask.h"
 
 namespace Ui {
 class CourseDz;
@@ -13,7 +13,7 @@ class CourseDz : public QWidget
     Q_OBJECT
 
 public:
-    explicit CourseDz(CourseTask * dz, QWidget *parent = nullptr);
+    explicit CourseDz(CourseComponent * dz, QWidget *parent = nullptr);
     ~CourseDz();
 
 private:

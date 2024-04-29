@@ -6,6 +6,7 @@
 #include <QJsonDocument>
 class CourseTask : public CourseComponent
 {
+    Q_OBJECT
 public:
     explicit CourseTask(int32_t id,int32_t order, QString content, int32_t maxMark,
                         int32_t memoryLimit,
@@ -32,6 +33,10 @@ public:
 
     QString getContent() const;
 
+    QString getType() override{
+        return "CourseTask";
+    }
+
 private:
     QString content;
     int32_t maxMark;
@@ -42,9 +47,6 @@ private:
     QDate solutionTime;
     int32_t verdict;
     QString notes;
-public slots:
-    void ClickIcon() override;
-    QWidget* QWidgetShow() override;
 };
 
 #endif // COURSETASK_H

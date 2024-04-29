@@ -20,7 +20,7 @@ int main(int argc, char *argv[])
                              new Course(15,"phisyc","bbbbb", QDate(2004,4,4),QDate(2005,1,1),11,80),
                              new Course(15,"phisyc","bbbbb", QDate(2004,4,4),QDate(2005,1,1),11,80),
                              new Course(15,"phisyc","bbbbb", QDate(2004,4,4),QDate(2005,1,1),11,80)};
-    QList<CourseComponent*> sad = {new CoursePdf(21313, 1, "testpdf", ""), new CoursePdf(21313, 1, "testpdf", ""), new CoursePdf(21313, 1, "testpdf", ""), new CoursePdf(21313, 1, "testpdf", ""), new CourseVideos(1111, 2, "testvideo", ""),
+    QList<CourseComponent*> sad = {new CoursePdf(21313, 1, "testpdf", ""), new CoursePdf(21313, 1, "testpdf", ""), new CoursePdf(21313, 1, "testpdf", ""), new CoursePdf(21313, 1, "testpdf", ""),
                                     new CourseTest(12123, 3, "testtest", 10, "", 100, 9, "сдал", QDate(2004,4,4)), new CourseTask(1213123, 4, "adsasda", 10, 15, "pdf", "qwe", QDate(2004,4,4), 9, ""),
                                     new CourseTutorials(123123, 5, "tutorial")};
     ClientState::GetInstance()->setAuth(authentication);
@@ -42,6 +42,10 @@ int main(int argc, char *argv[])
                               "О241", "О242", "О243", "О244", "О245", "О246", "О247", "О248", "О249", "О250",
                               "О251", "О252", "О253", "О254", "О255", "О256", "О257", "О258", "О259", "О260"};
     ClientState::GetInstance()->setGroupsName(gtoupsname);
+    for(int i=0;i< ClientState::GetInstance()->getListCourses()[0]->getListComponents().size();i++)
+    {
+        qInfo() << ClientState::GetInstance()->getListCourses()[0]->getListComponents()[i]->getType();
+    }
     auth.setModal(true);
     auth.exec();  //auth.open();
     if (auth.authstatus == 1){

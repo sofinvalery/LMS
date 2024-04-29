@@ -6,6 +6,7 @@
 #include <QJsonDocument>
 class CourseTutorials : public CourseComponent
 {
+    Q_OBJECT
 public:
     explicit CourseTutorials(int32_t id, int32_t order,QString content, QObject *parent = nullptr);
 
@@ -15,12 +16,12 @@ public:
 
     QString getContent() const;
 
+    QString getType() override{
+        return "CourseTutorials";
+    }
+
 private:
     QString content;
-
-public slots:
-    void ClickIcon() override;
-    QWidget* QWidgetShow() override;
 };
 
 #endif // COURSETUTORIALS_H

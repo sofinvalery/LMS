@@ -9,17 +9,6 @@ CoursePdf::CoursePdf(int32_t id, int32_t order, QString title, QString url, QObj
     this->url=url;
 }
 
-//по нажатию тут передадим данные в новую форму or запрос к серверу и т.д
-void CoursePdf::ClickIcon()
-{
-
-}
-
-QWidget *CoursePdf::QWidgetShow()
-{
-    return new CourseDownload(this);
-}
-
 QString CoursePdf::getTitle() const
 {
     return title;

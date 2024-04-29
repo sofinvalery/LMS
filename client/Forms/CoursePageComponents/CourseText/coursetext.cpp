@@ -1,12 +1,12 @@
 #include "coursetext.h"
 #include "ui_coursetext.h"
 
-CourseText::CourseText(CourseTutorials * text, QWidget *parent)
+CourseText::CourseText(CourseComponent * text, QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::CourseText)
 {
     ui->setupUi(this);
-    this->text = text;
+    this->text = qobject_cast<CourseTutorials*>(text);
 }
 
 CourseText::~CourseText()

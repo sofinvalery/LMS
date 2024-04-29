@@ -63,6 +63,7 @@ HEADERS += \
     Forms/CoursePageComponents/CourseDownload/coursedownload.h \
     Forms/CoursePageComponents/CourseDz/coursedz.h \
     Forms/CoursePageComponents/CourseText/coursetext.h \
+    Forms/CoursePageComponents/componentswidgetfactory.h \
     Forms/CoursesMPWidget/coursesmpwidget.h \
     Forms/Download/download.h \
     Forms/GroupEditor/groupeditor.h \

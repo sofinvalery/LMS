@@ -21,12 +21,11 @@ public:
         return id;
     }
     virtual QJsonObject Serialize()=0;
+    virtual QString getType()=0;
+
 protected:
     int32_t id;
     int32_t order;
-public slots:
-    virtual void ClickIcon()=0;
-    virtual QWidget* QWidgetShow()=0;
 signals:
 };
 

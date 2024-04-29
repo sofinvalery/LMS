@@ -2,7 +2,7 @@
 #define COURSEATTESTACION_H
 
 #include <QWidget>
-#include "../../common/course/course_components/coursetest.h"
+#include "../../../../common/course/course_components/coursetest.h"
 
 namespace Ui {
 class CourseAttestacion;
@@ -13,7 +13,7 @@ class CourseAttestacion : public QWidget
     Q_OBJECT
 
 public:
-    explicit CourseAttestacion(CourseTest * test, QWidget *parent = nullptr);
+    explicit CourseAttestacion(CourseComponent * test, QWidget *parent = nullptr);
     ~CourseAttestacion();
 
 private:

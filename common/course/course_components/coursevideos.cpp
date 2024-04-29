@@ -9,17 +9,6 @@ CourseVideos::CourseVideos(int32_t id, int32_t order, QString title, QString url
     this->url=url;
 }
 
-//по нажатию тут передадим данные в новую форму or запрос к серверу и т.д
-void CourseVideos::ClickIcon()
-{
-
-}
-
-QWidget *CourseVideos::QWidgetShow()
-{
-    return new QTextEdit();
-}
-
 
 QString CourseVideos::getTitle() const
 {

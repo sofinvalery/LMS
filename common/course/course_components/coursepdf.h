@@ -7,9 +7,9 @@
 
 class CoursePdf : public CourseComponent
 {
+    Q_OBJECT
 public:
     explicit CoursePdf(int32_t id, int32_t order, QString title, QString url,QObject *parent = nullptr);
-
 
     QString getTitle() const;
 
@@ -19,13 +19,13 @@ public:
 
     static CoursePdf* Deserialize(QJsonObject jsonObj);
 
+    QString getType() override{
+        return "CoursePdf";
+    }
+
 private:
     QString title;
     QString url;
-
-public slots:
-    void ClickIcon() override;
-    QWidget* QWidgetShow() override;
 };
 
 #endif // COURSEPDF_H

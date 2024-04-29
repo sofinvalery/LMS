@@ -17,16 +17,6 @@ CourseTask::CourseTask(int32_t id,int32_t order, QString content, int32_t maxMar
     this->verdict=verdict;
     this->notes=notes;
 }
-//по нажатию тут передадим данные в новую форму запрос к серверу и т.д
-void CourseTask::ClickIcon()
-{
-
-}
-
-QWidget *CourseTask::QWidgetShow()
-{
- return new CourseDz(this);
-}
 
 QJsonObject CourseTask::Serialize()
 {

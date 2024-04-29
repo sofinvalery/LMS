@@ -1,7 +1,7 @@
 #include "coursepage.h"
 #include "ui_coursepage.h"
 #include "StyleManager/stylemanager.h"
-
+#include "Forms/CoursePageComponents/componentswidgetfactory.h"
 
 CoursePage::CoursePage(Course *course, QWidget *parent)
     : QWidget(parent)
@@ -26,11 +26,13 @@ CoursePage::CoursePage(Course *course, QWidget *parent)
         "border: none;"
         "}");
     //scrollarea
+    ComponentsWidgetFactory<QString,QWidget,CourseComponent*> widgetFactory;
     StyleManager::GetInstance()->setScrollAreaStyle(ui->scrollArea, true);
     for (int i = 0; i < course->getListComponents().length(); i ++){
         //height += course->getListComponents()[i]->height
 
-        QWidget * temp = course->getListComponents()[i]->QWidgetShow();
+        QWidget * temp = widgetFactory.get(course->getListComponents()[i]->getType())(course->getListComponents()[i]);
+        widgets.append(temp);
         temp->setParent(ui->scrollAreaWidgetContents);
         temp->move(0, height);
         height += temp->height()+20;

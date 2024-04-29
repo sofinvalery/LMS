@@ -18,6 +18,7 @@ public:
 
 private:
     Ui::CoursePage *ui;
+    QList<QWidget*> widgets;
     int height = 0;
 };
 

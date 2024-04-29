@@ -2,7 +2,7 @@
 #define COURSEDOWNLOAD_H
 
 
-#include "../../common/course/course_components/coursepdf.h"
+#include "../../../../common/course/course_components/coursepdf.h"
 #include <QWidget>
 #include <QPixmap>
 
@@ -16,7 +16,7 @@ class CourseDownload : public QWidget
     Q_OBJECT
 
 public:
-    explicit CourseDownload(CoursePdf * pdf, QWidget *parent = nullptr);
+    explicit CourseDownload(CourseComponent * pdf, QWidget *parent = nullptr);
     ~CourseDownload();
 
 private:
