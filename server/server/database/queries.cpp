@@ -120,8 +120,8 @@ void DatabaseManager::GetCourseComponents(Course* course) {
         int32_t order = pdfQuery.value("order").toInt();
         QString title = pdfQuery.value("title").toString();
         QString url = pdfQuery.value("url").toString();
-        CoursePdf* pdf = new CoursePdf(id, order, title, url);
-        course->AddCourseComponent(pdf);
+        //CoursePdf* pdf = new CoursePdf(id, order, title, url);
+        //course->AddCourseComponent(pdf);
     }
 
     QSqlQuery taskQuery(m_db);
@@ -221,8 +221,8 @@ void DatabaseManager::GetCourseComponents(Course* course) {
         int32_t order = videoQuery.value("order").toInt();
         QString title = videoQuery.value("title").toString();
         QString url = videoQuery.value("url").toString();
-        CourseVideos* video = new CourseVideos(id, order, title, url);
-        course->AddCourseComponent(video);
+        //CourseVideos* video = new CourseVideos(id, order, title, url);
+        //course->AddCourseComponent(video);
     }
 }
 

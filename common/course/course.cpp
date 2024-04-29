@@ -62,16 +62,14 @@ void Course::DeserializeListComponents(QJsonObject jsonObj)
     for(int i=0;i<questions.size();i++)
     {
         QString s=questions[i].toObject().keys()[0];
-        if(s=="CoursePdf")
-            listComponents.append(CoursePdf::Deserialize(questions[i].toObject()));
+        if(s=="CourseMediaFiles")
+            listComponents.append(CourseMediaFiles::Deserialize(questions[i].toObject()));
         if(s=="CourseTask")
             listComponents.append(CourseTask::Deserialize(questions[i].toObject()));
         if(s=="CourseTest")
             listComponents.append(CourseTest::Deserialize(questions[i].toObject()));
         if(s=="CourseTutorials")
             listComponents.append(CourseTutorials::Deserialize(questions[i].toObject()));
-        if(s=="CourseVideos")
-            listComponents.append(CourseVideos::Deserialize(questions[i].toObject()));
     }
 }
 

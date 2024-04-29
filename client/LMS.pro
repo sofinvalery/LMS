@@ -14,7 +14,7 @@ SOURCES += \
     ../common/authentication/group.cpp \
     ../common/authentication/translate.cpp \
     ../common/course/course.cpp \
-    ../common/course/course_components/coursepdf.cpp \
+    ../common/course/course_components/coursemediafiles.cpp \
     ../common/course/course_components/coursetask.cpp \
     ../common/course/course_components/coursetest.cpp \
     ../common/course/course_components/coursetutorials.cpp \
@@ -37,7 +37,6 @@ SOURCES += \
     StyleManager/stylemanager.cpp \
     XlsxUtils/xlsxutils.cpp \
     main.cpp  \
-    ../common/course/course_components/coursevideos.cpp \
     ../common/course/course_components/question.cpp
 
 HEADERS += \
@@ -47,7 +46,7 @@ HEADERS += \
     ../common/authentication/translate.h \
     ../common/course/course.h \
     ../common/course/course_components/coursecomponent.h \
-    ../common/course/course_components/coursepdf.h \
+    ../common/course/course_components/coursemediafiles.h \
     ../common/course/course_components/coursetask.h \
     ../common/course/course_components/coursetest.h \
     ../common/course/course_components/coursetutorials.h \
@@ -62,7 +61,6 @@ HEADERS += \
     Forms/Download/download.h \
     Forms/GroupEditor/groupeditor.h \
     Forms/Main/mainwindow.h  \
-    ../common/course/course_components/coursevideos.h \
     ../common/course/course_components/question.h \
     Forms/MyWidget/mywidget.h \
     Forms/Notification/notification.h \

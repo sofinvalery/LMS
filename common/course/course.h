@@ -8,11 +8,10 @@
 #include <QJsonArray>
 #include <QFile>
 #include "course_components/coursecomponent.h"
-#include "course_components/coursepdf.h"
+#include "course_components/coursemediafiles.h"
 #include "course_components/coursetask.h"
 #include "course_components/coursetest.h"
 #include "course_components/coursetutorials.h"
-#include "course_components/coursevideos.h"
 class Course : public QObject
 {
     Q_OBJECT

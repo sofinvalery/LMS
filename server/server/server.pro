@@ -15,11 +15,10 @@ SOURCES += \
         ../../common/authentication/authentication.cpp \
         ../../common/authentication/group.cpp \
         ../../common/course/course.cpp \
-        ../../common/course/course_components/coursepdf.cpp \
+        ../../common/course/course_components/coursemediafiles.cpp \
         ../../common/course/course_components/coursetask.cpp \
         ../../common/course/course_components/coursetest.cpp \
         ../../common/course/course_components/coursetutorials.cpp \
-        ../../common/course/course_components/coursevideos.cpp \
         ../../common/course/course_components/question.cpp \
         database/databaseManager.cpp \
         database/queries.cpp \
@@ -39,11 +38,10 @@ HEADERS += \
     ../../common/authentication/group.h \
     ../../common/course/course.h \
     ../../common/course/course_components/coursecomponent.h \
-    ../../common/course/course_components/coursepdf.h \
+    ../../common/course/course_components/coursemediafiles.h \
     ../../common/course/course_components/coursetask.h \
     ../../common/course/course_components/coursetest.h \
     ../../common/course/course_components/coursetutorials.h \
-    ../../common/course/course_components/coursevideos.h \
     ../../common/course/course_components/question.h \
     ../../common/transferEnum/transferEnum.h \
     database/databaseManager.h \
