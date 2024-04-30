@@ -59,11 +59,18 @@ QList<Course*> DatabaseManager::GetMainPage(Authentication* auth) {
     QList<Course*> courses;
 
     if (auth->GetCurrentRole() == STUDENT) {
-        query.prepare("SELECT c.id, c.title, c.ava_title_url, c.start_time, c.end_time "
+        query.prepare("SELECT c.id, c.title, c.ava_title_url, c.start_time, c.end_time, "
+                      "SUM(COALESCE(pts.verdict, 0)) AS current_points, "
+                      "SUM(COALESCE(pct.max_mark, 0) + COALESCE(pct2.max_mark, 0)) AS max_points "
                       "FROM courses AS c "
                       "INNER JOIN zachisleniya_in_potok AS zip ON c.students_groups_union_id1 = zip.students_groups_union_id "
                       "INNER JOIN zachisleniya AS z ON zip.groups_id = z.groups_id "
-                      "WHERE z.users_id = :userId");
+                      "LEFT JOIN path_course_tasks_submits AS pts ON z.users_id = pts.users_id1 "
+                      "LEFT JOIN path_course_test_submits AS pcts ON z.users_id = pcts.users_id1 "
+                      "LEFT JOIN path_course_tasks AS pct ON pts.path_course_tasks_id1 = pct.id "
+                      "LEFT JOIN path_course_tests AS pct2 ON pcts.path_course_tests_id = pct2.id "
+                      "WHERE z.users_id = :userId "
+                      "GROUP BY c.id, c.title, c.ava_title_url, c.start_time, c.end_time");
     } else if (auth->GetCurrentRole() == TEACHER) {
         query.prepare("SELECT c.id, c.title, c.ava_title_url, c.start_time, c.end_time "
                       "FROM courses AS c "
@@ -92,10 +99,14 @@ QList<Course*> DatabaseManager::GetMainPage(Authentication* auth) {
             QString avaUrl = query.value("ava_title_url").toString();
             QDate start = query.value("start_time").toDate();
             QDate end = query.value("end_time").toDate();
-            int sumpoints = 0;
-            int maxSumpoints = 0;
+            int currentPoints = 0;
+            int maxPoints = 0;
+            if (auth->GetCurrentRole() == STUDENT) {
+                currentPoints = query.value("current_points").toInt();
+                maxPoints = query.value("max_points").toInt();
+            }
 
-            Course* course = new Course(courseId, title, avaUrl, start, end, sumpoints, maxSumpoints);
+            Course* course = new Course(courseId, title, avaUrl, start, end, currentPoints, maxPoints);
             courses.append(course);
         }
         while (query.next());
