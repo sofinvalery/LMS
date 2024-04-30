@@ -19,7 +19,7 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <widget class="QPushButton" name="DownloadButton">
+  <widget class="QPushButton" name="giveDzButton">
    <property name="geometry">
     <rect>
      <x>30</x>

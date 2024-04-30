@@ -42,10 +42,6 @@ int main(int argc, char *argv[])
                               "О241", "О242", "О243", "О244", "О245", "О246", "О247", "О248", "О249", "О250",
                               "О251", "О252", "О253", "О254", "О255", "О256", "О257", "О258", "О259", "О260"};
     ClientState::GetInstance()->setGroupsName(gtoupsname);
-    for(int i=0;i< ClientState::GetInstance()->getListCourses()[0]->getListComponents().size();i++)
-    {
-        qInfo() << ClientState::GetInstance()->getListCourses()[0]->getListComponents()[i]->getType();
-    }
     auth.setModal(true);
     auth.exec();  //auth.open();
     if (auth.authstatus == 1){

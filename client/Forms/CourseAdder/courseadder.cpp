@@ -16,9 +16,9 @@ CourseAdder::CourseAdder(QWidget *parent)
     StyleManager::GetInstance()->setBlueButtonStyle(ui->Apply, "Применить\nизменения", true, 16, 13);
     StyleManager::GetInstance()->setBlueButtonStyle(ui->CreateCourse, "Создать курс", true, 16, 13);
     StyleManager::GetInstance()->setBlueButtonStyle(ui->FoundIMG, "Добавить\nизображение", true, 16, 13);
-    StyleManager::GetInstance()->setLineEditStyle(ui->CourseName, "Название курса", true, 16, 150, 30);
-    StyleManager::GetInstance()->setLineEditStyle(ui->GroupTeachers, "Группа преподавателей", true, 16, 235, 30);
-    StyleManager::GetInstance()->setLineEditStyle(ui->PotokStudents, "Название потока", true, 16, 180, 30);
+    StyleManager::GetInstance()->setLineEditStyle(ui->CourseName, "Название курса", false, 16, 150, 30);
+    StyleManager::GetInstance()->setLineEditStyle(ui->GroupTeachers, "Группа преподавателей", false, 16, 235, 30);
+    StyleManager::GetInstance()->setLineEditStyle(ui->PotokStudents, "Название потока", false, 16, 180, 30);
     StyleManager::GetInstance()->setLabelStyle(ui->label, "Путь к картинке", false, "black", true, 16);
     StyleManager::GetInstance()->setLabelStyle(ui->StudentsError, "Ошибка, такого потока не существует", false, "red", false, 12);
     StyleManager::GetInstance()->setLabelStyle(ui->TeachersError, "Ошибка, такой группы \nпреподователей не существует", false, "red", false, 12);

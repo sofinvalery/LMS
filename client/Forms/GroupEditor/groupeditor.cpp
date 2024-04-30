@@ -23,8 +23,7 @@ groupEditor::groupEditor(QWidget *parent)
     ui->scrollArea->resize(StyleManager::GetInstance()->getScreenWidth(), StyleManager::GetInstance()->getScreenHeight()-200);
     StyleManager::GetInstance()->setScrollAreaStyle(ui->scrollArea, false);
 
-    StyleManager::GetInstance()->setLineEditStyle(ui->searchLineEdit, "Название группы", true, 16, 200, 30);
-
+    StyleManager::GetInstance()->setLineEditStyle(ui->searchLineEdit, "Название группы", false, 16, 200, 30);
     //searchLineEdit
     ui->searchLineEdit->setPlaceholderText("Название группы");
     QCompleter* completer = new QCompleter(ClientState::GetInstance()->getGroupsName());
@@ -76,7 +75,7 @@ void groupEditor::on_showGroupButton_clicked()
             connect(generateButton, &QPushButton::clicked, this, &groupEditor::generateButton_clicked);
             connect(deleteButton, &QPushButton::clicked, this, &groupEditor::deleteButton_clicked);
 
-            StyleManager::GetInstance()->setLineEditStyle(newLine, "ФИО", true, 16, 150, 30);
+            StyleManager::GetInstance()->setLineEditStyle(newLine, "ФИО", false, 16, 150, 30);
 
             //generatebutton
             generateButton->move(345, heightLine);
@@ -158,7 +157,7 @@ void groupEditor::on_addButton_clicked()
     QLineEdit* newLine = new QLineEdit(ui->scrollAreaWidgetContents);
     connect(generateButton, &QPushButton::clicked, this, &groupEditor::generateButton_clicked);
     connect(deleteButton, &QPushButton::clicked, this, &groupEditor::deleteButton_clicked);
-    StyleManager::GetInstance()->setLineEditStyle(newLine, "ФИО", true, 16, 150, 30);
+    StyleManager::GetInstance()->setLineEditStyle(newLine, "ФИО", false, 16, 150, 30);
     StyleManager::GetInstance()->setLabelStyle(login, "unknown", true, "black", false, 12);
     StyleManager::GetInstance()->setBlueButtonStyle(generateButton, "Новый пароль", true, 16, 4);
     StyleManager::GetInstance()->setCustomButtonStyle(deleteButton, "Х", "#E65D4F", true, 16, 4);

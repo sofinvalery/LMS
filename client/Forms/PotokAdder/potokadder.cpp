@@ -15,8 +15,8 @@ PotokAdder::PotokAdder(QWidget *parent)
     StyleManager::GetInstance()->setLabelStyle(ui->PotoknameError, "Ошибка, это название занято", false, "red", false, 12);
     StyleManager::GetInstance()->setLabelStyle(ui->label, "Путь до таблицы:", false, "black", true, 14);
     StyleManager::GetInstance()->setLabelStyle(ui->label_4, "Внимание, при загрузке таблицы приоритет\nзаполнения данных отдается ей", false, "black", true, 14);
-    StyleManager::GetInstance()->setLineEditStyle(ui->Group_name, "Название группы", true, 16, 170, 30);
-    StyleManager::GetInstance()->setLineEditStyle(ui->Potok_name, "Название потока", true, 16, 170, 30);
+    StyleManager::GetInstance()->setLineEditStyle(ui->Group_name, "Название группы", false, 16, 170, 30);
+    StyleManager::GetInstance()->setLineEditStyle(ui->Potok_name, "Название потока", false, 16, 170, 30);
     StyleManager::GetInstance()->setCustomButtonStyle(ui->FoundExcel, "Добавить таблицу", "#4DBF43", true, 16, 13);
     StyleManager::GetInstance()->setBlueButtonStyle(ui->Add_line, "Добавить\nновую строку", true, 16, 13);
     StyleManager::GetInstance()->setCustomButtonStyle(ui->Add_line_2, "Удалить строку", "#E65D4F", true, 16, 13);
@@ -41,7 +41,7 @@ void PotokAdder::on_Add_line_clicked()
     counter++;
     QLineEdit* newLine = new QLineEdit(ui->scrollAreaWidgetContents);
     QLabel* newLabel = new QLabel(ui->scrollAreaWidgetContents);
-    StyleManager::GetInstance()->setLineEditStyle(newLine, "Название группы", true, 16, 170, 30);
+    StyleManager::GetInstance()->setLineEditStyle(newLine, "Название группы", false, 16, 170, 30);
     StyleManager::GetInstance()->setLabelStyle(newLabel, "Ошибка, такой группы не существует", false, "red", false, 12);
     GroupNames.append(newLine);
     GroupErrors.append(newLabel);
