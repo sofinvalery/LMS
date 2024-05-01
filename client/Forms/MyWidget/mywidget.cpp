@@ -2,6 +2,7 @@
 #include "ui_mywidget.h"
 #include "StyleManager/stylemanager.h"
 #include <QPixmap>
+#include "ClientState/clientstate.h"
 
 MyWidget::MyWidget(Course* course,QWidget *parent)
     : QWidget(parent)
@@ -70,3 +71,9 @@ MyWidget::~MyWidget()
 {
     delete ui;
 }
+
+void MyWidget::on_CourseButtonIMG_clicked()
+{
+    ClientState::GetInstance()->getMainwindow()->showCoursePage(course);
+}
+

@@ -5,6 +5,7 @@
 #include <QWidget>
 #include <../../common/course/course.h>
 
+
 namespace Ui {
 class MyWidget;
 }
@@ -18,9 +19,12 @@ public:
     void setName(QString name);
     void setIMG(QString path);
     ~MyWidget();
+private slots:
+    void on_CourseButtonIMG_clicked();
+
 private:
-    Ui::MyWidget *ui;
     Course * course;
+    Ui::MyWidget *ui;
 };
 
 #endif // MYWIDGET_H

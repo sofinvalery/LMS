@@ -11,6 +11,8 @@
 #include <QLineEdit>
 #include <QScrollArea>
 #include <QScrollBar>
+#include <QCompleter>
+#include <QAbstractItemView>
 
 class StyleManager
 {
@@ -22,6 +24,7 @@ public:
     int getScreenHeight();
     void setSimpleButtonStyle(QPushButton* buttonName, QString buttonText, bool boldStatus, unsigned short int fontSize, unsigned short int fontSizeAnim);
     void setBlueButtonStyle(QPushButton* buttonName, QString buttonText, bool boldStatus, unsigned short int fontSize, unsigned short int borderRadius);
+    void setCustomButtonStyle(QPushButton* buttonName, QString buttonText, QString buttonColour, bool boldStatus, unsigned short int fontSize, unsigned short int borderRadius);
     void setDisableButtonStyle(QPushButton* buttonName, QString buttonText, bool boldStatus, unsigned short int fontSize, unsigned short int borderRadius);
     void setWidgetStyle(QWidget* widgetName, QGroupBox* groupboxName, unsigned short int moveY = 90);
     void setGroupBoxStyle();
@@ -29,12 +32,14 @@ public:
     void setLineEditStyle(QLineEdit* lineEditName, QString placeHolderText, bool boldStatus, unsigned short int fontSize, unsigned short int W, unsigned short int H);
     void setScrollAreaStyle(QScrollArea* scrollAreaName, bool topBorderStatus);
     void setLinkButtonStyle(QPushButton* buttonName, QString buttonText, bool boldStatus, unsigned short int fontSize, unsigned short int fontSizeAnim);
+    void setCompleterStyle(QCompleter* completerName, QString fontFamily = "Comfortaa");
 private:
     QScreen* scr = QGuiApplication::primaryScreen();
     StyleManager();
     static StyleManager* s_Instance;
     QFont regularFont;
     QFont boldFont;
+    QString adjustColour(const QString& colour, int delta);
 };
 
 #endif // STYLEMANAGER_H

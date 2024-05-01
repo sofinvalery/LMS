@@ -16,8 +16,8 @@
   <widget class="QGroupBox" name="groupBox">
    <property name="geometry">
     <rect>
-     <x>9</x>
-     <y>9</y>
+     <x>0</x>
+     <y>0</y>
      <width>1151</width>
      <height>651</height>
     </rect>
@@ -72,8 +72,8 @@
      <rect>
       <x>310</x>
       <y>110</y>
-      <width>201</width>
-      <height>41</height>
+      <width>251</width>
+      <height>61</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -86,10 +86,10 @@
    <widget class="QLabel" name="StudentsError">
     <property name="geometry">
      <rect>
-      <x>580</x>
+      <x>620</x>
       <y>110</y>
-      <width>211</width>
-      <height>21</height>
+      <width>371</width>
+      <height>61</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -136,45 +136,6 @@
      <string>Путь к картинке</string>
     </property>
    </widget>
-   <widget class="QLabel" name="label_3">
-    <property name="geometry">
-     <rect>
-      <x>30</x>
-      <y>20</y>
-      <width>161</width>
-      <height>16</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Название курса</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_4">
-    <property name="geometry">
-     <rect>
-      <x>300</x>
-      <y>20</y>
-      <width>161</width>
-      <height>16</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Группа учителей</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_5">
-    <property name="geometry">
-     <rect>
-      <x>570</x>
-      <y>20</y>
-      <width>161</width>
-      <height>16</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Поток студентов</string>
-    </property>
-   </widget>
    <widget class="QPushButton" name="FoundIMG">
     <property name="geometry">
      <rect>
@@ -193,8 +154,8 @@
      <rect>
       <x>20</x>
       <y>520</y>
-      <width>201</width>
-      <height>71</height>
+      <width>151</width>
+      <height>51</height>
      </rect>
     </property>
     <property name="font">

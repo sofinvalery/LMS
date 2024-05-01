@@ -25,15 +25,16 @@ public:
 
     QJsonObject Serialize() override;
 
+    QString getType() override{
+        return "CourseMediaFiles";
+    }
+
     static CourseMediaFiles* Deserialize(QJsonObject jsonObj);
 
 private:
     QString title;
     QString url;
     TypeFile typeFile;
-public slots:
-    void ClickIcon() override;
-    QWidget* QWidgetShow() override;
 };
 
 #endif // COURSEMEDIAFILES_H

@@ -15,25 +15,24 @@ groupEditor::groupEditor(QWidget *parent)
     StyleManager::GetInstance()->setWidgetStyle(this, ui->groupBox, 90);
 
     StyleManager::GetInstance()->setLabelStyle(ui->warningLabel, "Данной группы не существует", true, "red", false, 16);
-    ui->warningLabel->move(250,200);
 
     ui->createButton->setFixedSize(145, 45);
 
     ui->addButton->setFixedSize(145, 45);
     ui->addButton->move(ui->createButton->x() + 165, ui->createButton->y());
-    StyleManager::GetInstance()->setDisableButtonStyle(ui->createButton, "Изменить\nгруппу", true, 16, 13);
-    StyleManager::GetInstance()->setDisableButtonStyle(ui->addButton, "Добавить", true, 16, 13);
+    StyleManager::GetInstance()->setDisableButtonStyle(ui->createButton, "Применить\nизменения", true, 16, 13);
+    StyleManager::GetInstance()->setDisableButtonStyle(ui->addButton, "Добавить\nстудента", true, 16, 13);
     ui->createButton->setEnabled(false);
     ui->addButton->setEnabled(false);
     ui->scrollArea->setWidgetResizable(true);
     ui->scrollArea->resize(StyleManager::GetInstance()->getScreenWidth(), StyleManager::GetInstance()->getScreenHeight()-200);
     StyleManager::GetInstance()->setScrollAreaStyle(ui->scrollArea, false);
 
-    StyleManager::GetInstance()->setLineEditStyle(ui->searchLineEdit, "Название группы", true, 16, 200, 30);
-
+    StyleManager::GetInstance()->setLineEditStyle(ui->searchLineEdit, "Название группы", false, 16, 200, 30);
     //searchLineEdit
     ui->searchLineEdit->setPlaceholderText("Название группы");
     QCompleter* completer = new QCompleter(ClientState::GetInstance()->getGroupsName());
+    StyleManager::GetInstance()->setCompleterStyle(completer);
     ui->searchLineEdit->setCompleter(completer);
 
     //showGroupButton
@@ -179,7 +178,6 @@ void groupEditor::generateButton_clicked()
             }
         }
     }
-
 }
 
 //кнопка добавить чела
@@ -192,10 +190,10 @@ void groupEditor::on_addButton_clicked()
     QLineEdit* newLine = new QLineEdit(ui->scrollAreaWidgetContents);
     connect(generateButton, &QPushButton::clicked, this, &groupEditor::generateButton_clicked);
     connect(deleteButton, &QPushButton::clicked, this, &groupEditor::deleteButton_clicked);
-    StyleManager::GetInstance()->setLineEditStyle(newLine, "ФИО", true, 16, 150, 30);
+    StyleManager::GetInstance()->setLineEditStyle(newLine, "ФИО", false, 16, 150, 30);
     StyleManager::GetInstance()->setLabelStyle(login, "unknown", true, "black", false, 12);
     StyleManager::GetInstance()->setBlueButtonStyle(generateButton, "Новый пароль", true, 16, 4);
-    StyleManager::GetInstance()->setBlueButtonStyle(deleteButton, "Х", true, 16, 4);
+    StyleManager::GetInstance()->setCustomButtonStyle(deleteButton, "Х", "#E65D4F", true, 16, 4);
     deleteButton->move(310, heightLine);
     deleteButton->setFixedSize(25, 25);
     generateButton->move(345, heightLine);

@@ -13,18 +13,6 @@ TypeFile CourseMediaFiles::getTypeFile() const
     return typeFile;
 }
 
-
-//по нажатию тут передадим данные в новую форму or запрос к серверу и т.д
-void CourseMediaFiles::ClickIcon()
-{
-
-}
-
-QWidget *CourseMediaFiles::QWidgetShow()
-{
-    return new QTextEdit();
-}
-
 QString CourseMediaFiles::getTitle() const
 {
     return title;

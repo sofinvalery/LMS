@@ -1,17 +1,5 @@
 #include "coursetutorials.h"
 
-//по нажатию тут передадим данные в новую форму запрос к серверу и т.д
-void CourseTutorials::ClickIcon()
-{
-
-}
-
-QWidget *CourseTutorials::QWidgetShow()
-{
-    return new QTextEdit();
-}
-
-
 CourseTutorials::CourseTutorials(int32_t id, int32_t order, QString content, QObject *parent)
     :CourseComponent(id,order,parent)
 {

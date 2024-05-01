@@ -30,7 +30,6 @@ Reconnect::Reconnect(QWidget *parent)
     ui->reconnectButton->setEnabled(true);
     ui->reconnectButton->setFixedSize(178, 40);
     ui->reconnectButton->move(40 + 178, 250);
-
 }
 
 void Reconnect::on_exitButton_clicked()

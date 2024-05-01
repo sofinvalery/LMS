@@ -58,8 +58,8 @@ public:
     int32_t getSumpoints() const;
 
     int32_t getMaxSumpoints() const;
-
     QString moveImageNewCourseToStandartName(int32_t id);
+    void setListComponents(const QList<CourseComponent *> &newListComponents);
 
 public slots:
     void ClickIcon();

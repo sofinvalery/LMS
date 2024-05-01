@@ -17,7 +17,7 @@
    <property name="geometry">
     <rect>
      <x>0</x>
-     <y>10</y>
+     <y>0</y>
      <width>1211</width>
      <height>751</height>
     </rect>
@@ -28,9 +28,9 @@
    <widget class="QScrollArea" name="scrollArea">
     <property name="geometry">
      <rect>
-      <x>350</x>
+      <x>360</x>
       <y>10</y>
-      <width>831</width>
+      <width>821</width>
       <height>681</height>
      </rect>
     </property>
@@ -42,28 +42,10 @@
       <rect>
        <x>0</x>
        <y>0</y>
-       <width>829</width>
+       <width>819</width>
        <height>679</height>
       </rect>
      </property>
-     <widget class="QLabel" name="label_3">
-      <property name="geometry">
-       <rect>
-        <x>410</x>
-        <y>20</y>
-        <width>201</width>
-        <height>21</height>
-       </rect>
-      </property>
-      <property name="font">
-       <font>
-        <pointsize>12</pointsize>
-       </font>
-      </property>
-      <property name="text">
-       <string>Введите название групп/ы</string>
-      </property>
-     </widget>
      <widget class="QLineEdit" name="Group_name">
       <property name="geometry">
        <rect>
@@ -97,24 +79,6 @@
      </widget>
     </widget>
    </widget>
-   <widget class="QLabel" name="label_2">
-    <property name="geometry">
-     <rect>
-      <x>40</x>
-      <y>40</y>
-      <width>191</width>
-      <height>31</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <pointsize>12</pointsize>
-     </font>
-    </property>
-    <property name="text">
-     <string>Введите название потока</string>
-    </property>
-   </widget>
    <widget class="QLineEdit" name="Potok_name">
     <property name="geometry">
      <rect>
@@ -129,9 +93,9 @@
     <property name="geometry">
      <rect>
       <x>50</x>
-      <y>210</y>
+      <y>170</y>
       <width>161</width>
-      <height>31</height>
+      <height>41</height>
      </rect>
     </property>
     <property name="text">
@@ -142,9 +106,9 @@
     <property name="geometry">
      <rect>
       <x>50</x>
-      <y>250</y>
+      <y>230</y>
       <width>161</width>
-      <height>31</height>
+      <height>41</height>
      </rect>
     </property>
     <property name="text">
@@ -167,9 +131,9 @@
    <widget class="QLabel" name="label_4">
     <property name="geometry">
      <rect>
-      <x>10</x>
+      <x>0</x>
       <y>350</y>
-      <width>321</width>
+      <width>351</width>
       <height>51</height>
      </rect>
     </property>
@@ -177,6 +141,9 @@
      <font>
       <pointsize>12</pointsize>
      </font>
+    </property>
+    <property name="toolTipDuration">
+     <number>-9</number>
     </property>
     <property name="text">
      <string>Внимание, при загрузке таблицы приоретет 
@@ -200,9 +167,9 @@
     <property name="geometry">
      <rect>
       <x>30</x>
-      <y>510</y>
-      <width>161</width>
-      <height>31</height>
+      <y>500</y>
+      <width>191</width>
+      <height>41</height>
      </rect>
     </property>
     <property name="text">

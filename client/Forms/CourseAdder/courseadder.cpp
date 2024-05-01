@@ -21,6 +21,18 @@ CourseAdder::CourseAdder(QWidget *parent)
     ui->dateEdit->setDate(QDate::currentDate());
     ui->dateEdit_2->setCalendarPopup(true);
     ui->dateEdit_2->setDate((QDate::currentDate()).addYears(1));
+    StyleManager::GetInstance()->setWidgetStyle(this, ui->groupBox, 90);
+
+    StyleManager::GetInstance()->setBlueButtonStyle(ui->Apply, "Применить\nизменения", true, 16, 13);
+    StyleManager::GetInstance()->setBlueButtonStyle(ui->CreateCourse, "Создать курс", true, 16, 13);
+    StyleManager::GetInstance()->setBlueButtonStyle(ui->FoundIMG, "Добавить\nизображение", true, 16, 13);
+    StyleManager::GetInstance()->setLineEditStyle(ui->CourseName, "Название курса", false, 16, 150, 30);
+    StyleManager::GetInstance()->setLineEditStyle(ui->GroupTeachers, "Группа преподавателей", false, 16, 235, 30);
+    StyleManager::GetInstance()->setLineEditStyle(ui->PotokStudents, "Название потока", false, 16, 180, 30);
+    StyleManager::GetInstance()->setLabelStyle(ui->label, "Путь к картинке", false, "black", true, 16);
+    StyleManager::GetInstance()->setLabelStyle(ui->StudentsError, "Ошибка, такого потока не существует", false, "red", false, 12);
+    StyleManager::GetInstance()->setLabelStyle(ui->TeachersError, "Ошибка, такой группы \nпреподователей не существует", false, "red", false, 12);
+    StyleManager::GetInstance()->setLabelStyle(ui->ImgPath, "", false, "black", true, 16);
     course = new MyWidget(new Course(15,"Название предмета",":/img/resources/kap.jpg", QDate(2004,4,4),QDate(2005,1,1),11,80));
     ui->verticalLayout->addWidget(course);
     course->show();

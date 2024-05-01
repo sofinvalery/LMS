@@ -7,25 +7,45 @@ Notification::Notification(QWidget *parent, QString notification, QString colour
     , ui(new Ui::Notification)
 {
     ui->setupUi(this);
+    startEnterAnimation();
     StyleManager::GetInstance()->setLabelStyle(ui->notificationLabel, notification, true, colour, true, 16);
 
     ui->groupBox->setStyleSheet(
         "QGroupBox {"
         "border: 2px solid lightgrey;"
         "}");
-    QPropertyAnimation* animation = new QPropertyAnimation(ui->progressBar, "value");
-    animation->setStartValue(100);
-    animation->setEndValue(0);
-    animation->setDuration(5000);
-    animation->start();
-    connect(animation, &QPropertyAnimation::finished, this, &Notification::closeNotification);
-
-    this->move(StyleManager::GetInstance()->getScreenWidth() - 290, 100);
+    timer->setInterval(4600);
+    timer->start();
+    connect(timer, &QTimer::timeout, this, &Notification::startExitAnimation);
 }
 
-void Notification::closeNotification()
+void Notification::startExitAnimation()
 {
-    this->close();
+    QPropertyAnimation* moveLeftAnimation = new QPropertyAnimation(this, "geometry");
+    moveLeftAnimation->setStartValue(geometry());
+    moveLeftAnimation->setEndValue(QRect(x() - 30, y(), width(), height()));
+    moveLeftAnimation->setDuration(200);
+
+    QPropertyAnimation* moveOutAnimation = new QPropertyAnimation(this, "geometry");
+    moveOutAnimation->setStartValue(geometry());
+    moveOutAnimation->setEndValue(QRect(StyleManager::GetInstance()->getScreenWidth(), y(), width(), height()));
+    moveOutAnimation->setDuration(200);
+
+    connect(moveLeftAnimation, &QPropertyAnimation::finished, [moveOutAnimation]() {
+        moveOutAnimation->start();
+    });
+    connect(moveOutAnimation, &QPropertyAnimation::finished, this, &QWidget::close);
+    moveLeftAnimation->start();
+}
+
+void Notification::startEnterAnimation()
+{
+    this->move(StyleManager::GetInstance()->getScreenWidth(), 100);
+    QPropertyAnimation* moveLeftAnimation = new QPropertyAnimation(this, "geometry");
+    moveLeftAnimation->setStartValue(geometry());
+    moveLeftAnimation->setEndValue(QRect(x() - 320, y(), width(), height()));
+    moveLeftAnimation->setDuration(200);
+    moveLeftAnimation->start();
 }
 
 Notification::~Notification()

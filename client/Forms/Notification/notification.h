@@ -3,7 +3,7 @@
 
 #include <QWidget>
 #include <QPropertyAnimation>
-
+#include <QTimer>
 namespace Ui {
 class Notification;
 }
@@ -15,10 +15,11 @@ class Notification : public QWidget
 public:
     explicit Notification(QWidget *parent = nullptr, QString notification = "Vam ban", QString colour = "red");
     ~Notification();
-private slots:
-    void closeNotification();
 private:
     Ui::Notification *ui;
+    void startExitAnimation();
+    void startEnterAnimation();
+    QTimer* timer = new QTimer(this);
 };
 
 #endif // NOTIFICATION_H

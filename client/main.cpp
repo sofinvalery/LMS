@@ -15,9 +15,7 @@ int main(int argc, char *argv[])
     ClientManager::GetInstance()->moveToThread(thread);
     SocketParser::GetInstance()->moveToThread(thread);
     thread->start();
-    qInfo()<< QDir::currentPath();
-    Auth auth;
-    //штука гледа для лога
+
     a.setStyle("Fusion");
     QPalette palette;
     palette.setColor(QPalette::Window, QColor(245, 245, 245));
@@ -34,6 +32,9 @@ int main(int argc, char *argv[])
     palette.setColor(QPalette::Highlight, QColor(0, 120, 215));
     palette.setColor(QPalette::HighlightedText, Qt::white);
     a.setPalette(palette);
+
+    Auth auth;
     auth.open();
+
     return a.exec();
 }

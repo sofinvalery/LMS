@@ -4,6 +4,8 @@
 #include <QScrollBar>
 #include "../../ClientState/clientstate.h"
 #include "StyleManager/stylemanager.h"
+#include "ClientState/clientstate.h"
+#include "../common/course/course.h"
 
 
 CoursesMPWidget::CoursesMPWidget(QWidget *parent) :

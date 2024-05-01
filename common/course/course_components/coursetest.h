@@ -7,6 +7,7 @@
 #include <QDate>
 class CourseTest : public CourseComponent
 {
+    Q_OBJECT
 public:
     explicit CourseTest(int32_t id, int32_t order, QString title,
                         int32_t maxMark, QString urlJson, int32_t timeInSeconds,
@@ -41,6 +42,9 @@ public:
 
     void DeserializeQuestionList(QJsonObject jsonObj);
 
+    QString getType() override{
+        return "CourseTest";
+    }
 
     QDate getTime() const;
 
@@ -54,9 +58,6 @@ private:
     QDate time;
     QList<Question*> listQuestions;
 
-public slots:
-    void ClickIcon() override;
-    QWidget* QWidgetShow() override;
 };
 
 #endif // COURSETEST_H
