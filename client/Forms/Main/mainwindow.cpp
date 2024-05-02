@@ -93,6 +93,7 @@ MainWindow::~MainWindow()
 void MainWindow::ShowManePage()
 {
     download->close();
+    doAllButtonClicked();
     if ( ClientState::GetInstance()->getAuth()->GetCurrentRole() == ADMIN)
     {
         ui->addCourseButton->show();
@@ -110,6 +111,7 @@ void MainWindow::ShowManePage()
 void MainWindow::ShowAddingPotok()
 {
     download->close();
+    doAllButtonClicked();
     widget = new PotokAdder();
     widget->setParent(this);
     widget->show();
@@ -118,6 +120,7 @@ void MainWindow::ShowAddingPotok()
 void MainWindow::ShowAddingGroup()
 {
     download->close();
+    doAllButtonClicked();
     widget = new AddGroup();
     widget->setParent(this);
     widget->show();
@@ -127,6 +130,7 @@ void MainWindow::ShowAddingGroup()
 void MainWindow::ShowAddingCourse()
 {
     download->close();
+    doAllButtonClicked();
     widget = new CourseAdder();
     widget->setParent(this);
     widget->show();
@@ -135,6 +139,7 @@ void MainWindow::ShowAddingCourse()
 void MainWindow::ShowEditGroup()
 {
     download->close();
+    doAllButtonClicked();
     widget = new groupEditor();
     widget->setParent(this);
     widget->show();
@@ -143,8 +148,12 @@ void MainWindow::ShowEditGroup()
 void MainWindow::on_profileButton_clicked()
 {
     on_button_clicked(ui->profileButton);
-    widget->close();
-    delete widget;
+    if (widget != nullptr)
+    {
+        widget->close();
+        delete widget;
+        widget = nullptr;
+    }
     widget = new Profile();
     widget->setParent(this);
     widget->show();
@@ -155,8 +164,12 @@ void MainWindow::on_scoreButton_clicked()
 {
     on_button_clicked(ui->scoreButton);
 
-    widget->close();
-    delete widget;
+    if (widget != nullptr)
+    {
+        widget->close();
+        delete widget;
+        widget = nullptr;
+    }
     Notification* notification = new Notification();
     notification->setParent(this);
     notification->show();
@@ -168,10 +181,13 @@ void MainWindow::on_scoreButton_clicked()
 void MainWindow::on_mainButton_clicked()
 {
     on_button_clicked(ui->mainButton);
-
-    widget->close();
     download->show();
-    delete widget;
+    if (widget != nullptr)
+    {
+        widget->close();
+        delete widget;
+        widget = nullptr;
+    }
     ClientManager::GetInstance()->SendJsonToServer(GETMAINPAGE,ClientState::GetInstance()->getAuth()->Serialize());
 }
 
@@ -179,28 +195,49 @@ void MainWindow::on_addCourseButton_clicked()
 {
     on_button_clicked(ui->addCourseButton);
 
-    widget->close();
     download->show();
-    delete widget;
+    if (widget != nullptr)
+    {
+        widget->close();
+        delete widget;
+        widget = nullptr;
+    }
     ClientManager::GetInstance()->SendJsonToServer(GETINFOFORAADDINGCOURSE,ClientState::GetInstance()->getAuth()->Serialize());
 }
 
 void MainWindow::on_addPotokButton_clicked()
 {
     on_button_clicked(ui->addPotokButton);
-    widget->close();
     download->show();
-    delete widget;
+    if (widget != nullptr)
+    {
+        widget->close();
+        delete widget;
+        widget = nullptr;
+    }
     ClientManager::GetInstance()->SendJsonToServer(GETINFOFORADDINGPOTOK,ClientState::GetInstance()->getAuth()->Serialize());
 }
 
 void MainWindow::on_editGroupButton_clicked()
 {
     on_button_clicked(ui->editGroupButton);
-    widget->close();
     download->show();
-    delete widget;
+    if (widget != nullptr)
+    {
+        widget->close();
+        delete widget;
+        widget = nullptr;
+    }
     ClientManager::GetInstance()->SendJsonToServer(GETINFOFOREDITGROUP,ClientState::GetInstance()->getAuth()->Serialize());
+}
+
+void MainWindow::doAllButtonClicked()
+{
+    QList<QPushButton*> buttons = {ui->scoreButton, ui->mainButton, ui->addGroupButton, ui->editGroupButton, ui->addCourseButton, ui->addPotokButton, ui->profileButton};
+    for (auto temp : buttons)
+    {
+        temp->setEnabled(true);
+    }
 }
 
 Download *MainWindow::getDownload() const
@@ -211,9 +248,13 @@ Download *MainWindow::getDownload() const
 void MainWindow::on_addGroupButton_clicked()
 {
     on_button_clicked(ui->addGroupButton);
-    widget->close();
     download->show();
-    delete widget;
+    if (widget != nullptr)
+    {
+        widget->close();
+        delete widget;
+        widget = nullptr;
+    }
     ClientManager::GetInstance()->SendJsonToServer(GETINFOFORADDINGGROUP,ClientState::GetInstance()->getAuth()->Serialize());
 }
 
@@ -231,14 +272,19 @@ void MainWindow::on_button_clicked(QPushButton* clickedButton)
     for(QPushButton* button : buttons) {
         if(button != clickedButton) {
             StyleManager::GetInstance()->setSimpleButtonStyle(button, button->text(), true, 20, 18);
+            button->setEnabled(false);
         }
     }
 }
 
 void MainWindow::showCoursePage(Course *course)
 {
-    widget->close();
-    delete widget;
+    if (widget != nullptr)
+    {
+        widget->close();
+        delete widget;
+        widget = nullptr;
+    }
     widget = new CoursePage(course);
     widget->setParent(this);
     widget->show();

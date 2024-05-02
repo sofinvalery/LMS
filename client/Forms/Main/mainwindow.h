@@ -47,6 +47,7 @@ private slots:
     void on_addPotokButton_clicked();
     void on_addGroupButton_clicked();
     void on_editGroupButton_clicked();
+    void doAllButtonClicked();
 
 private:
     Ui::MainWindow *ui;
