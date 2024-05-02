@@ -81,7 +81,7 @@ void groupEditor::ShowGroup()
         //deletebutton
         deleteButton->move(310, heightLine);
         deleteButton->setFixedSize(25, 25);
-        StyleManager::GetInstance()->setBlueButtonStyle(deleteButton, "Х", true, 16, 4);
+        StyleManager::GetInstance()->setCustomButtonStyle(deleteButton, "Х", "#E65D4F", true, 16, 4);
         deleteButton->show();
 
         StyleManager::GetInstance()->setLabelStyle(login, student->GetLogin(), true, "black", false, 12);

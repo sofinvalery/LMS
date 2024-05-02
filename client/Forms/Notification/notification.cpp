@@ -34,7 +34,7 @@ void Notification::startExitAnimation()
     connect(moveLeftAnimation, &QPropertyAnimation::finished, [moveOutAnimation]() {
         moveOutAnimation->start();
     });
-    connect(moveOutAnimation, &QPropertyAnimation::finished, this, &QWidget::close);
+    connect(moveOutAnimation, &QPropertyAnimation::finished, this, [this]() {this->close(); this->deleteLater();});
     moveLeftAnimation->start();
 }
 

@@ -4,6 +4,7 @@
 #include "../../ClientManager/clientmanager.h"
 #include "../../ClientManager/socketparser.h"
 #include "Forms/CoursePage/coursepage.h"
+#include "Forms/Notification/notification.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -156,6 +157,9 @@ void MainWindow::on_scoreButton_clicked()
 
     widget->close();
     delete widget;
+    Notification* notification = new Notification();
+    notification->setParent(this);
+    notification->show();
     widget = new Score();
     widget->setParent(this);
     widget->show();
