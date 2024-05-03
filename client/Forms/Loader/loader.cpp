@@ -9,11 +9,12 @@ Loader::Loader(QWidget *parent)
 {
     ui->setupUi(this);
     this->setFixedSize(this->size());
-    this->setWindowFlags(Qt::FramelessWindowHint);
+    this->setWindowFlags(Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint);
     this->move(StyleManager::GetInstance()->getScreenWidth() - this->width() - 104, 55);
-    StyleManager::GetInstance()->setLabelStyle(ui->loaderLabel, "Загрузки", true, "black", true, 20);
-    ui->loaderLabel->setFixedSize(ui->loaderLabel->sizeHint().width(), ui->loaderLabel->sizeHint().height());
-    ui->loaderLabel->move(this->size().width() / 2 - ui->loaderLabel->size().width() / 2, ui->loaderLabel->size().height() - 5);
+    StyleManager::GetInstance()->setLabelStyle(ui->loaderLabel, "Загрузки", true, "white", true, 20, true);
+    ui->loaderLabel->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
+    ui->loaderLabel->setFixedSize(this->width(), 59);
+    ui->loaderLabel->move(this->size().width() / 2 - ui->loaderLabel->size().width() / 2, 0);
 
     StyleManager::GetInstance()->setScrollAreaStyle(ui->scrollArea, true);
 }

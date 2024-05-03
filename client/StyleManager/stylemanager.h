@@ -29,7 +29,7 @@ public:
     void setDisableButtonStyle(QPushButton* buttonName, QString buttonText, bool boldStatus, unsigned short int fontSize, unsigned short int borderRadius);
     void setWidgetStyle(QWidget* widgetName, QGroupBox* groupboxName, unsigned short int moveY = 90);
     void setGroupBoxStyle();
-    void setLabelStyle(QLabel* labelName, QString labelText, bool boldStatus, QString textColour, bool showStatus, unsigned short int fontSize);
+    void setLabelStyle(QLabel* labelName, QString labelText, bool boldStatus, QString textColour, bool showStatus, unsigned short int fontSize, bool backgroundColour = false);
     void setLineEditStyle(QLineEdit* lineEditName, QString placeHolderText, bool boldStatus, unsigned short int fontSize, unsigned short int W, unsigned short int H);
     void setScrollAreaStyle(QScrollArea* scrollAreaName, bool topBorderStatus);
     void setLinkButtonStyle(QPushButton* buttonName, QString buttonText, bool boldStatus, unsigned short int fontSize, unsigned short int fontSizeAnim);
