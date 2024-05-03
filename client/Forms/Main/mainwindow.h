@@ -46,7 +46,7 @@ private slots:
 private:
     Ui::MainWindow *ui;
     QWidget * widget;
-    QDialog* dialog;
+    QDialog* dialog = nullptr;
     void on_button_clicked(QPushButton* clickedButton);
     //MyWidget * course[25];
 

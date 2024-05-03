@@ -42,9 +42,9 @@
     <property name="geometry">
      <rect>
       <x>1</x>
-      <y>60</y>
-      <width>449</width>
-      <height>300</height>
+      <y>59</y>
+      <width>448</width>
+      <height>299</height>
      </rect>
     </property>
     <property name="widgetResizable">
@@ -55,8 +55,8 @@
       <rect>
        <x>0</x>
        <y>0</y>
-       <width>447</width>
-       <height>298</height>
+       <width>446</width>
+       <height>297</height>
       </rect>
      </property>
     </widget>
