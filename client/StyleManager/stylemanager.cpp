@@ -192,6 +192,21 @@ void StyleManager::setCompleterStyle(QCompleter* completerName, QString fontFami
         "}"
         "QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {"
         "    background: none;"
+                       "}");
+}
+
+void StyleManager::setProgressBarStyle(QProgressBar *progressBarName, bool boldStatus, unsigned short int borderRadius)
+{
+    progressBarName->setFont(boldStatus == true ? StyleManager::GetInstance()->getBold() : StyleManager::GetInstance()->getRegular());
+    progressBarName->setStyleSheet(
+        "QProgressBar {"
+        "border: none;"
+        "border-radius: " + QString::number(borderRadius) + ";"
+        "background-color: lightgrey;"
+        "}"
+        "QProgressBar::chunk {"
+        "border-radius: " + QString::number(borderRadius) + ";"
+        "background: #4EB5FF;"
         "}");
 }
 

@@ -13,6 +13,7 @@
 #include <QScrollBar>
 #include <QCompleter>
 #include <QAbstractItemView>
+#include <QProgressBar>
 
 class StyleManager
 {
@@ -33,6 +34,7 @@ public:
     void setScrollAreaStyle(QScrollArea* scrollAreaName, bool topBorderStatus);
     void setLinkButtonStyle(QPushButton* buttonName, QString buttonText, bool boldStatus, unsigned short int fontSize, unsigned short int fontSizeAnim);
     void setCompleterStyle(QCompleter* completerName, QString fontFamily = "Comfortaa");
+    void setProgressBarStyle(QProgressBar* progressBarName, bool boldStatus, unsigned short int borderRadius = 10);
 private:
     QScreen* scr = QGuiApplication::primaryScreen();
     StyleManager();

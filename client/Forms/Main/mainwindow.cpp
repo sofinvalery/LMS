@@ -26,6 +26,12 @@ MainWindow::MainWindow(QWidget *parent)
 
     QRect screenGeometry = QGuiApplication::primaryScreen()->geometry();
 
+    StyleManager::GetInstance()->setSimpleButtonStyle(ui->loaderButton, "", false, 1, 1);
+    ui->loaderButton->setIconSize(QSize(48, 48));
+    ui->loaderButton->setIcon(QIcon(":/img/resources/dowloadicon.png"));
+    ui->loaderButton->setFixedSize(ui->loaderButton->sizeHint().width(), ui->loaderButton->sizeHint().height());
+    ui->loaderButton->move(StyleManager::GetInstance()->getScreenWidth() - ui->loaderButton->size().width() - 104, 13);
+
     //mainbutton
     StyleManager::GetInstance()->setBlueButtonStyle(ui->mainButton, "Курсы", true, 20, 13);
     ui->mainButton->setFixedSize(96, 45);
@@ -310,4 +316,20 @@ void MainWindow::on_exitButton_clicked()
 }
 
 
+
+
+void MainWindow::on_loaderButton_clicked()
+{
+    if (dialog != nullptr)
+    {
+        dialog->close();
+        delete dialog;
+        dialog = nullptr;
+    }
+    else
+    {
+        dialog = new Loader(this);
+        dialog->show();
+    }
+}
 

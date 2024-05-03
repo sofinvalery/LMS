@@ -14,6 +14,7 @@
 #include "Forms/GroupEditor/groupeditor.h"
 #include "Forms/PotokAdder/potokadder.h"
 #include "Forms/CourseAdder/courseadder.h"
+#include "Forms/Loader/loader.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -52,10 +53,17 @@ private slots:
     void on_editGroupButton_clicked();
     void doAllButtonClicked();
 
+    void on_loaderButton_clicked();
+
 private:
     Ui::MainWindow *ui;
+<<<<<<< HEAD
     QWidget * widget=nullptr;
     Download * download = new Download();
+=======
+    QWidget * widget;
+    QDialog* dialog;
+>>>>>>> a0257c7 (added loader window)
     void on_button_clicked(QPushButton* clickedButton);
     //MyWidget * course[25];
 

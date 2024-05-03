@@ -11,17 +11,7 @@ MyWidget::MyWidget(Course* course,QWidget *parent)
     ui->setupUi(this);
     this->course=course;
     //progressbar
-    ui->progressBar->setFont(StyleManager::GetInstance()->getRegular());
-    ui->progressBar->setStyleSheet(
-        "QProgressBar {"
-        "border: none;"
-        "border-radius: 10px;"
-        "background-color: lightgrey;"
-        "}"
-        "QProgressBar::chunk {"
-        "border-radius: 10px;"
-        "background: #4EB5FF;"
-        "}");
+    StyleManager::GetInstance()->setProgressBarStyle(ui->progressBar, false);
     //progressbarbutton
     ui->ProgressbarButton->raise();
     ui->ProgressbarButton->setCursor(Qt::PointingHandCursor);
