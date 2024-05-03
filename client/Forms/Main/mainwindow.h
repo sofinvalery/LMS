@@ -13,6 +13,7 @@
 #include "Forms/GroupEditor/groupeditor.h"
 #include "Forms/PotokAdder/potokadder.h"
 #include "Forms/CourseAdder/courseadder.h"
+#include "Forms/Loader/loader.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -40,9 +41,12 @@ private slots:
     void on_addGroupButton_clicked();
     void on_editGroupButton_clicked();
 
+    void on_loaderButton_clicked();
+
 private:
     Ui::MainWindow *ui;
     QWidget * widget;
+    QDialog* dialog;
     void on_button_clicked(QPushButton* clickedButton);
     //MyWidget * course[25];
 

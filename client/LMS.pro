@@ -30,6 +30,8 @@ SOURCES += \
     Forms/CoursesMPWidget/coursesmpwidget.cpp \
     Forms/Download/download.cpp \
     Forms/GroupEditor/groupeditor.cpp \
+    Forms/Loader/LoaderComponent/loadercomponent.cpp \
+    Forms/Loader/loader.cpp \
     Forms/Main/mainwindow.cpp \
     Forms/MyWidget/mywidget.cpp \
     Forms/Notification/notification.cpp \
@@ -67,6 +69,8 @@ HEADERS += \
     Forms/CoursesMPWidget/coursesmpwidget.h \
     Forms/Download/download.h \
     Forms/GroupEditor/groupeditor.h \
+    Forms/Loader/LoaderComponent/loadercomponent.h \
+    Forms/Loader/loader.h \
     Forms/Main/mainwindow.h  \
     ../common/course/course_components/coursevideos.h \
     ../common/course/course_components/question.h \
@@ -90,6 +94,8 @@ FORMS += \
     Forms/CoursesMPWidget/coursesmpwidget.ui \
     Forms/Download/download.ui \
     Forms/GroupEditor/groupeditor.ui \
+    Forms/Loader/LoaderComponent/loadercomponent.ui \
+    Forms/Loader/loader.ui \
     Forms/Main/mainwindow.ui \
     Forms/MyWidget/mywidget.ui \
     Forms/Notification/notification.ui \
