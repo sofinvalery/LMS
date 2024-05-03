@@ -76,16 +76,22 @@ void StyleManager::setWidgetStyle(QWidget* widgetName, QGroupBox* groupboxName, 
     widgetName->move(0, moveY);
 }
 
-void StyleManager::setLabelStyle(QLabel* labelName, QString labelText, bool boldStatus, QString textColour, bool showStatus, unsigned short int fontSize)
+void StyleManager::setLabelStyle(QLabel* labelName, QString labelText, bool boldStatus, QString textColour, bool showStatus, unsigned short int fontSize, bool backgroundColour)
 {
     labelName->setFont(boldStatus == true ? StyleManager::GetInstance()->getBold() : StyleManager::GetInstance()->getRegular());
     labelName->setVisible(showStatus);
     labelName->setText(labelText);
-    labelName->setStyleSheet(
-        "QLabel {"
-        "font-size: " + QString::number(fontSize) + "px;"
-        "color: " + textColour + ";"
-        "}");
+    labelName->setStyleSheet(backgroundColour == true ?
+                                 "QLabel {"
+                                 "font-size: " + QString::number(fontSize) + "px;"
+                                 "color: " + textColour + ";"
+                                 "background-color: #82c7ff;"
+                                 "}"
+                                                      :
+                                 "QLabel {"
+                                 "font-size: " + QString::number(fontSize) + "px;"
+                                 "color: " + textColour + ";"
+                                 "}");
 }
 
 void StyleManager::setLineEditStyle(QLineEdit* lineEditName, QString placeHolderText, bool boldStatus, unsigned short int fontSize, unsigned short int W = 100, unsigned short int H = 50)
