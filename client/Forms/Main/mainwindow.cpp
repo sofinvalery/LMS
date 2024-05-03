@@ -332,4 +332,3 @@ void MainWindow::on_loaderButton_clicked()
         dialog->show();
     }
 }
-

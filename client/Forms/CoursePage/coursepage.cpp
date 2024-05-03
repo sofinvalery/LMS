@@ -34,11 +34,17 @@ CoursePage::CoursePage(Course *course, QWidget *parent)
         QWidget * temp = widgetFactory.get(course->getListComponents()[i]->getType())(course->getListComponents()[i]);
         widgets.append(temp);
         temp->setParent(ui->scrollAreaWidgetContents);
-        temp->move(0, height);
+        temp->move(0, height+81);
         height += temp->height()+20;
         temp->show();
     }
     ui->scrollAreaWidgetContents->setMinimumHeight(height);
+    iconIMG = new QPixmap(course->GetAvaTitleUrl());
+    qDebug() << course->GetAvaTitleUrl();
+    ui->IconLabel->setPixmap(iconIMG->scaled(111, 81, Qt::KeepAspectRatio));
+
+    StyleManager::GetInstance()->setLabelStyle(ui->CourseNameLabel, course->GetTitle(), true, "black", true, 20);
+    ui->CourseNameLabel->setFixedSize(ui->CourseNameLabel->sizeHint().width(), ui->CourseNameLabel->sizeHint().height());
 }
 
 CoursePage::~CoursePage()
