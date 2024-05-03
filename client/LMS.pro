@@ -38,6 +38,8 @@ SOURCES += \
     Forms/PotokAdder/potokadder.cpp \
     Forms/Profile/profile.cpp \
     Forms/Reconnect/reconnect.cpp \
+    Forms/Score/ScoreComponents/scorecomponents.cpp \
+    Forms/Score/TestTaskComponents/testtaskcomponents.cpp \
     Forms/Score/score.cpp \
     StyleManager/stylemanager.cpp \
     main.cpp  \
@@ -79,6 +81,8 @@ HEADERS += \
     Forms/PotokAdder/potokadder.h \
     Forms/Profile/profile.h \
     Forms/Reconnect/reconnect.h \
+    Forms/Score/ScoreComponents/scorecomponents.h \
+    Forms/Score/TestTaskComponents/testtaskcomponents.h \
     Forms/Score/score.h \
     StyleManager/stylemanager.h
 
@@ -102,6 +106,8 @@ FORMS += \
     Forms/PotokAdder/potokadder.ui \
     Forms/Profile/profile.ui \
     Forms/Reconnect/reconnect.ui \
+    Forms/Score/ScoreComponents/scorecomponents.ui \
+    Forms/Score/TestTaskComponents/testtaskcomponents.ui \
     Forms/Score/score.ui
 
 

@@ -76,7 +76,7 @@ void StyleManager::setWidgetStyle(QWidget* widgetName, QGroupBox* groupboxName, 
     widgetName->move(0, moveY);
 }
 
-void StyleManager::setLabelStyle(QLabel* labelName, QString labelText, bool boldStatus, QString textColour, bool showStatus, unsigned short int fontSize, bool backgroundColour)
+void StyleManager::setLabelStyle(QLabel* labelName, QString labelText, bool boldStatus, QString textColour, bool showStatus, unsigned short int fontSize, bool backgroundColour, QString setBackgroundColour)
 {
     labelName->setFont(boldStatus == true ? StyleManager::GetInstance()->getBold() : StyleManager::GetInstance()->getRegular());
     labelName->setVisible(showStatus);
@@ -85,7 +85,7 @@ void StyleManager::setLabelStyle(QLabel* labelName, QString labelText, bool bold
                                  "QLabel {"
                                  "font-size: " + QString::number(fontSize) + "px;"
                                  "color: " + textColour + ";"
-                                 "background-color: #82c7ff;"
+                                 "background-color: " + setBackgroundColour + ";"
                                  "}"
                                                       :
                                  "QLabel {"
@@ -201,18 +201,18 @@ void StyleManager::setCompleterStyle(QCompleter* completerName, QString fontFami
                        "}");
 }
 
-void StyleManager::setProgressBarStyle(QProgressBar *progressBarName, bool boldStatus, unsigned short int borderRadius)
+void StyleManager::setProgressBarStyle(QProgressBar *progressBarName, bool boldStatus, unsigned short int borderRadius, QString backgroundColour, QString downloadColour)
 {
     progressBarName->setFont(boldStatus == true ? StyleManager::GetInstance()->getBold() : StyleManager::GetInstance()->getRegular());
     progressBarName->setStyleSheet(
         "QProgressBar {"
         "border: none;"
         "border-radius: " + QString::number(borderRadius) + ";"
-        "background-color: lightgrey;"
+        "background-color: " + backgroundColour + ";"
         "}"
         "QProgressBar::chunk {"
         "border-radius: " + QString::number(borderRadius) + ";"
-        "background: #4EB5FF;"
+        "background: " + downloadColour + ";"
         "}");
 }
 

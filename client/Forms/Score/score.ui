@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>404</width>
-    <height>295</height>
+    <width>953</width>
+    <height>566</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -18,13 +18,36 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>401</width>
-     <height>291</height>
+     <width>951</width>
+     <height>561</height>
     </rect>
    </property>
    <property name="title">
     <string/>
    </property>
+   <widget class="QScrollArea" name="scrollArea">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>90</y>
+      <width>120</width>
+      <height>80</height>
+     </rect>
+    </property>
+    <property name="widgetResizable">
+     <bool>true</bool>
+    </property>
+    <widget class="QWidget" name="scrollAreaWidgetContents">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>0</y>
+       <width>118</width>
+       <height>78</height>
+      </rect>
+     </property>
+    </widget>
+   </widget>
   </widget>
  </widget>
  <resources/>

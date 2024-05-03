@@ -104,12 +104,14 @@ void MainWindow::ShowManePage()
 
 void MainWindow::on_profileButton_clicked()
 {
-    on_button_clicked(ui->profileButton);
-    widget->close();
-    delete widget;
-    widget = new Profile();
-    widget->setParent(this);
-    widget->show();
+    if (dialogProfile->isVisible())
+    {
+        dialogProfile->close();
+    }
+    else
+    {
+        dialogProfile->show();
+    }
 }
 
 void MainWindow::on_scoreButton_clicked()
@@ -211,20 +213,14 @@ void MainWindow::on_exitButton_clicked()
     QApplication::quit();
 }
 
-
-
-
 void MainWindow::on_loaderButton_clicked()
 {
-    if (dialog != nullptr)
+    if (dialogLoader->isVisible())
     {
-        dialog->close();
-        delete dialog;
-        dialog = nullptr;
+        dialogLoader->close();
     }
     else
     {
-        dialog = new Loader(this);
-        dialog->show();
+        dialogLoader->show();
     }
 }

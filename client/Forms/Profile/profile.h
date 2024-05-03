@@ -2,12 +2,13 @@
 #define PROFILE_H
 
 #include <QWidget>
+#include <QDialog>
 
 namespace Ui {
 class Profile;
 }
 
-class Profile : public QWidget
+class Profile : public QDialog
 {
     Q_OBJECT
 

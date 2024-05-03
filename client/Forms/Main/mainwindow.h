@@ -46,7 +46,8 @@ private slots:
 private:
     Ui::MainWindow *ui;
     QWidget * widget;
-    QDialog* dialog = nullptr;
+    Loader* dialogLoader = new Loader();
+    Profile* dialogProfile = new Profile();
     void on_button_clicked(QPushButton* clickedButton);
     //MyWidget * course[25];
 

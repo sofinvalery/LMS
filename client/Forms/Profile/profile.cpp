@@ -4,13 +4,15 @@
 #include "../common/authentication/authentication.h"
 
 Profile::Profile(QWidget *parent)
-    : QWidget(parent)
+    : QDialog(parent)
     , ui(new Ui::Profile)
 {
     ui->setupUi(this);
     this->setFixedSize(this->size());
-    this->setWindowFlags(Qt::FramelessWindowHint);
+    this->setWindowFlag(Qt::WindowCloseButtonHint, false);
+    this->setWindowFlags(Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint);
     this->move(15, 80);
+    this->setStyleSheet("background-color: white;");
 
     Authentication* auth = new Authentication("kopibara", "123", 1, "Игорь Авраалович Гофман", "", STUDENT, QList<QString>{"7856"});
     QString role;
