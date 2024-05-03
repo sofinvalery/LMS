@@ -116,11 +116,22 @@ void MainWindow::ShowManePage()
 
 void MainWindow::ShowAddingPotok()
 {
+<<<<<<< HEAD
     download->close();
     doAllButtonClicked();
     widget = new PotokAdder();
     widget->setParent(this);
     widget->show();
+=======
+    if (dialogProfile->isVisible())
+    {
+        dialogProfile->close();
+    }
+    else
+    {
+        dialogProfile->show();
+    }
+>>>>>>> 53383b2 (updated score window, style manager)
 }
 
 void MainWindow::ShowAddingGroup()
@@ -315,20 +326,14 @@ void MainWindow::on_exitButton_clicked()
     QApplication::quit();
 }
 
-
-
-
 void MainWindow::on_loaderButton_clicked()
 {
-    if (dialog != nullptr)
+    if (dialogLoader->isVisible())
     {
-        dialog->close();
-        delete dialog;
-        dialog = nullptr;
+        dialogLoader->close();
     }
     else
     {
-        dialog = new Loader(this);
-        dialog->show();
+        dialogLoader->show();
     }
 }
