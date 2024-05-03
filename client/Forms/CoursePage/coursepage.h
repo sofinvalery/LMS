@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include "../common/course/course.h"
+#include <QPixmap>
 
 namespace Ui {
 class CoursePage;
@@ -20,6 +21,7 @@ private:
     Ui::CoursePage *ui;
     QList<QWidget*> widgets;
     int height = 0;
+    QPixmap * iconIMG;
 };
 
 #endif // COURSEPAGE_H
