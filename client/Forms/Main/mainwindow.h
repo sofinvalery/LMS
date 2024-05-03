@@ -62,8 +62,12 @@ private:
     Download * download = new Download();
 =======
     QWidget * widget;
+<<<<<<< HEAD
     QDialog* dialog;
 >>>>>>> a0257c7 (added loader window)
+=======
+    QDialog* dialog = nullptr;
+>>>>>>> 881c80d (fixed main window, loader updated)
     void on_button_clicked(QPushButton* clickedButton);
     //MyWidget * course[25];
 
