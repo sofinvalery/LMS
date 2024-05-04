@@ -57,22 +57,11 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
-<<<<<<< HEAD
     QWidget * widget=nullptr;
     Download * download = new Download();
-=======
-    QWidget * widget;
-<<<<<<< HEAD
-<<<<<<< HEAD
-    QDialog* dialog;
->>>>>>> a0257c7 (added loader window)
-=======
     QDialog* dialog = nullptr;
->>>>>>> 881c80d (fixed main window, loader updated)
-=======
     Loader* dialogLoader = new Loader();
     Profile* dialogProfile = new Profile();
->>>>>>> 53383b2 (updated score window, style manager)
     void on_button_clicked(QPushButton* clickedButton);
     //MyWidget * course[25];
 

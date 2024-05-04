@@ -116,22 +116,11 @@ void MainWindow::ShowManePage()
 
 void MainWindow::ShowAddingPotok()
 {
-<<<<<<< HEAD
     download->close();
     doAllButtonClicked();
     widget = new PotokAdder();
     widget->setParent(this);
     widget->show();
-=======
-    if (dialogProfile->isVisible())
-    {
-        dialogProfile->close();
-    }
-    else
-    {
-        dialogProfile->show();
-    }
->>>>>>> 53383b2 (updated score window, style manager)
 }
 
 void MainWindow::ShowAddingGroup()
@@ -179,16 +168,18 @@ void MainWindow::ShowCoursePage(Course *course)
 
 void MainWindow::on_profileButton_clicked()
 {
+    if(dialogProfile==nullptr)
+        dialogProfile = new Profile();
     on_button_clicked(ui->profileButton);
-    if (widget != nullptr)
+    if (dialogProfile->isVisible())
     {
-        widget->close();
-        delete widget;
-        widget = nullptr;
+        dialogProfile->close();
     }
-    widget = new Profile();
-    widget->setParent(this);
-    widget->show();
+    else
+    {
+        dialogProfile->show();
+    }
+    doAllButtonClicked();
 
 }
 
