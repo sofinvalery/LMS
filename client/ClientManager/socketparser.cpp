@@ -31,6 +31,8 @@ void SocketParser::socketparse(QJsonObject json)
         break;
     case GETGROUP: getGroup(data);
         break;
+    case GETCOURSECOMPONENTS: getCourseComponents(data);
+        break;
     }
 }
 
@@ -120,6 +122,14 @@ void SocketParser::getGroup(QJsonObject json)
     ClientState::GetInstance()->setGroup(gr);
 
     emit getShowEditGroup();
+}
+
+void SocketParser::getCourseComponents(QJsonObject json)
+{
+    Course* course = Course::Deserialize(json["Course"].toObject());
+    course->DeserializeListComponents(json["CourseComponents"].toObject());
+
+    emit getCourseComponents(course);
 }
 
 

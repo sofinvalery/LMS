@@ -85,7 +85,18 @@ QJsonObject getMainPage(QJsonObject json,Authentication **auth)
 
 QJsonObject getCourseComponents(QJsonObject json,Authentication **auth)
 {
-
+    Course* course = Course::Deserialize(json);
+    DatabaseManager db;
+    db.GetCourseComponents(course);
+    std::sort(course->getListComponents().begin(),course->getListComponents().end(),[](CourseComponent* a,CourseComponent* b){return a->getOrder()<b->getOrder();});
+    QJsonObject sendjson;
+    sendjson["Action"]=GETCOURSECOMPONENTS;
+    QJsonObject temp;
+    temp["Course"]=course->Serialize();
+    temp["CourseComponents"]=course->SerializeListComponents();
+    sendjson["Data"]=temp;
+    delete course;
+    return sendjson;
 }
 
 QJsonObject getTestQuestions(QJsonObject json,Authentication **auth)

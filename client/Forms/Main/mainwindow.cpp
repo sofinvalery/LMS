@@ -4,7 +4,6 @@
 #include "../../ClientManager/clientmanager.h"
 #include "../../ClientManager/socketparser.h"
 #include "Forms/CoursePage/coursepage.h"
-#include "Forms/Notification/notification.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -14,6 +13,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(SocketParser::GetInstance(),SIGNAL(getMainPage()),this,SLOT(ShowManePage()),Qt::QueuedConnection);
     connect(SocketParser::GetInstance(),SIGNAL(getAddPotok()),this,SLOT(ShowAddingPotok()),Qt::QueuedConnection);
     connect(SocketParser::GetInstance(),SIGNAL(getAddGroup()),this,SLOT(ShowAddingGroup()),Qt::QueuedConnection);
+    connect(SocketParser::GetInstance(),SIGNAL(getCourseComponents(Course*)),this,SLOT(ShowCoursePage(Course*)),Qt::QueuedConnection);
     connect(SocketParser::GetInstance(),SIGNAL(getAddCourse()),this,SLOT(ShowAddingCourse()),Qt::QueuedConnection);
     connect(SocketParser::GetInstance(),SIGNAL(getEditGroup()),this,SLOT(ShowEditGroup()),Qt::QueuedConnection);
     ui->setupUi(this);
@@ -145,6 +145,21 @@ void MainWindow::ShowEditGroup()
     widget->show();
 }
 
+void MainWindow::ShowCoursePage(Course *course)
+{
+    download->close();
+    doAllButtonClicked();
+    if (widget != nullptr)
+    {
+        widget->close();
+        delete widget;
+        widget = nullptr;
+    }
+    widget = new CoursePage(course);
+    widget->setParent(this);
+    widget->show();
+}
+
 void MainWindow::on_profileButton_clicked()
 {
     on_button_clicked(ui->profileButton);
@@ -162,7 +177,7 @@ void MainWindow::on_profileButton_clicked()
 
 void MainWindow::on_scoreButton_clicked()
 {
-    on_button_clicked(ui->scoreButton);
+    //on_button_clicked(ui->scoreButton);
 
     if (widget != nullptr)
     {
@@ -170,9 +185,6 @@ void MainWindow::on_scoreButton_clicked()
         delete widget;
         widget = nullptr;
     }
-    Notification* notification = new Notification();
-    notification->setParent(this);
-    notification->show();
     widget = new Score();
     widget->setParent(this);
     widget->show();
@@ -181,6 +193,7 @@ void MainWindow::on_scoreButton_clicked()
 void MainWindow::on_mainButton_clicked()
 {
     on_button_clicked(ui->mainButton);
+    download->raise();
     download->show();
     if (widget != nullptr)
     {
@@ -248,6 +261,7 @@ Download *MainWindow::getDownload() const
 void MainWindow::on_addGroupButton_clicked()
 {
     on_button_clicked(ui->addGroupButton);
+    download->raise();
     download->show();
     if (widget != nullptr)
     {
@@ -277,17 +291,17 @@ void MainWindow::on_button_clicked(QPushButton* clickedButton)
     }
 }
 
-void MainWindow::showCoursePage(Course *course)
+void MainWindow::clickCoursePage(Course *course)
 {
-    if (widget != nullptr)
-    {
-        widget->close();
-        delete widget;
-        widget = nullptr;
+    download->raise();
+    QList<QPushButton*> buttons = {ui->scoreButton, ui->mainButton, ui->addGroupButton, ui->editGroupButton, ui->addCourseButton, ui->addPotokButton, ui->profileButton};
+    for(QPushButton* button : buttons) {
+            StyleManager::GetInstance()->setSimpleButtonStyle(button, button->text(), true, 20, 18);
+            button->setEnabled(false);
     }
-    widget = new CoursePage(course);
-    widget->setParent(this);
-    widget->show();
+    download->show();
+    ClientManager::GetInstance()->SendJsonToServer(GETCOURSECOMPONENTS,course->Serialize());
+
 }
 
 void MainWindow::on_exitButton_clicked()

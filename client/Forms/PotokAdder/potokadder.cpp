@@ -3,6 +3,7 @@
 #include <QFileDialog>
 #include <QDir>
 #include "ClientState/clientstate.h"
+#include "Forms/Notification/notification.h"
 
 
 PotokAdder::PotokAdder(QWidget *parent)
@@ -182,6 +183,8 @@ void PotokAdder::on_Create_potok_clicked()
         for (auto & user : GroupNames)
             path.append(user->text());
         data->pathName=path;
+        Notification* notification = new Notification(nullptr,"Файл нового потока,\nдобавлен в загрузки.\nИмя файла: "+data->titleName+".xlsx","black");
+        notification->show();
         XlsxUtils::GetInstance()->getAddedPotok(data);
         ClientManager::GetInstance()->SendJsonToServer(SETNEWPOTOK,json);
         ClientState::GetInstance()->getMainwindow()->on_mainButton_clicked();

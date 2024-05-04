@@ -1,14 +1,14 @@
 #ifndef NOTIFICATION_H
 #define NOTIFICATION_H
 
-#include <QWidget>
+#include <QDialog>
 #include <QPropertyAnimation>
 #include <QTimer>
 namespace Ui {
 class Notification;
 }
 
-class Notification : public QWidget
+class Notification : public QDialog
 {
     Q_OBJECT
 

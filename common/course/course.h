@@ -18,6 +18,7 @@ class Course : public QObject
 public:
     explicit Course(int32_t id, QString title, QString avaUrl, QDate start, QDate end,
                     int32_t sumpoints=0,int32_t maxSumpoints=0,QObject *parent = nullptr);
+    ~Course();
 private:
     int32_t id;
     QString title;
@@ -53,7 +54,7 @@ public:
 
     int32_t GetPoints() { return sumpoints; }
 
-    QList<CourseComponent *> getListComponents() const;
+    QList<CourseComponent *>& getListComponents();
 
     int32_t getSumpoints() const;
 

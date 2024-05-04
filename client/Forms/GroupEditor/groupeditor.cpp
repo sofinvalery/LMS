@@ -4,6 +4,7 @@
 #include <QCompleter>
 #include "ClientManager/socketparser.h"
 #include "XlsxUtils/xlsxutils.h"
+#include "Forms/Notification/notification.h"
 
 
 groupEditor::groupEditor(QWidget *parent)
@@ -247,6 +248,8 @@ void groupEditor::on_createButton_clicked()
         }
     XlsxUtils::GetInstance()->getAddedGroup(gr);
     ClientManager::GetInstance()->SendJsonToServer(UPDATEGROUP,gr->Serialize());
+    Notification* notification = new Notification(nullptr,"Файл отредактированной группы,\nдобавлен в загрузки.\nИмя файла: "+gr->getClassname()+".xlsx","black");
+    notification->show();
     ClientState::GetInstance()->getMainwindow()->on_mainButton_clicked();
 }
 

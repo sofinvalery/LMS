@@ -13,6 +13,14 @@ Course::Course(int32_t id, QString title, QString avaUrl, QDate start, QDate end
     this->maxSumpoints=maxSumpoints;
 }
 
+Course::~Course()
+{
+    for(CourseComponent* temp:listComponents)
+    {
+        delete temp;
+    }
+}
+
 void Course::setListComponents(const QList<CourseComponent *> &newListComponents)
 {
     listComponents = newListComponents;
@@ -40,7 +48,7 @@ int32_t Course::getSumpoints() const
     return sumpoints;
 }
 
-QList<CourseComponent *> Course::getListComponents() const
+QList<CourseComponent *>& Course::getListComponents()
 {
     return listComponents;
 }

@@ -32,9 +32,10 @@ CoursesMPWidget::CoursesMPWidget(QWidget *parent) :
         "}");
     //scrollarea
     StyleManager::GetInstance()->setScrollAreaStyle(ui->scrollArea, true);
-
-    int widgetwidth = MyWidget(new Course(15,"phisyc","bbbbb", QDate(2004,4,4),QDate(2005,1,1))).width();
-    int widgetheight = MyWidget(new Course(15,"phisyc","bbbbb", QDate(2004,4,4),QDate(2005,1,1))).height();
+    Course* temp =new Course(15,"phisyc","bbbbb", QDate(2004,4,4),QDate(2005,1,1));
+    int widgetwidth = MyWidget(temp).width();
+    int widgetheight = MyWidget(temp).height();
+    delete temp;
     int vertspace = StyleManager::GetInstance()->getScreenHeight()/ 17;
     int horizspace = StyleManager::GetInstance()->getScreenWidth()/ 30;
 

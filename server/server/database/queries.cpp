@@ -114,10 +114,10 @@ QList<Course*> DatabaseManager::GetMainPage(Authentication* auth) {
     return courses;
 }
 
-void DatabaseManager::AddCourseComponents(Course* course) {
+void DatabaseManager::GetCourseComponents(Course* course) {
     QSqlQuery query(m_db);
 
-    query.prepare("SELECT id, title, url, order, type "
+    query.prepare("SELECT id, title, url, \"order\", \"type\" "
                   "FROM path_course_media_files "
                   "WHERE courses_id1 = :courseId");
     query.bindValue(":courseId", course->GetCourseId());
@@ -135,7 +135,7 @@ void DatabaseManager::AddCourseComponents(Course* course) {
         course->AddCourseComponent(new CourseMediaFiles(id, order, title, url, typeFile));
     }
 
-    query.prepare("SELECT id, content, max_mark, memory_limit, order "
+    query.prepare("SELECT id, content, max_mark, memory_limit, \"order\" "
                   "FROM path_course_tasks "
                   "WHERE courses_id1 = :courseId");
     query.bindValue(":courseId", course->GetCourseId());
@@ -192,7 +192,7 @@ void DatabaseManager::AddCourseComponents(Course* course) {
                                                   verdict, notes));
     }
 
-    query.prepare("SELECT id, title, max_mark, url_json, order "
+    query.prepare("SELECT id, title, max_mark, url_json, \"order\" "
                   "FROM path_course_tests "
                   "WHERE courses_id1 = :courseId");
     query.bindValue(":courseId", course->GetCourseId());
@@ -229,7 +229,7 @@ void DatabaseManager::AddCourseComponents(Course* course) {
         course->AddCourseComponent(new CourseTest(id, order, title, maxMark, urlJson, 0, verdict, notes, time, QList<Question*>()));
     }
 
-    query.prepare("SELECT id, content, order "
+    query.prepare("SELECT id, content, \"order\" "
                   "FROM path_course_tutorials "
                   "WHERE courses_id1 = :courseId");
     query.bindValue(":courseId", course->GetCourseId());

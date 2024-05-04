@@ -79,11 +79,36 @@ void XlsxUtils::getAddedGroup(Group* group)
         i++;
     }
     xlsxW.autosizeColumnWidth();
+
+
+    QString path;
     if(downloadPath.size()>0&&downloadPath[0]!="")
-        xlsxW.saveAs(downloadPath[0]+"/"+group->getClassname()+".xlsx");
+        path=downloadPath[0]+"/"+group->getClassname()+".xlsx";
     else{
-        xlsxW.saveAs(QDir::homePath()+"/"+group->getClassname()+".xlsx");
+        path=QDir::homePath()+"/"+group->getClassname()+".xlsx";
     }
+    int p=1;
+    do
+    {
+        QFileInfo check_file(path);
+        if (!check_file.exists()) {
+            break;
+        } else {
+            if(downloadPath.size()>0&&downloadPath[0]!="")
+                path=downloadPath[0]+"/"+group->getClassname()+".xlsx";
+            else{
+                path=QDir::homePath()+"/"+group->getClassname()+".xlsx";
+            }
+            for(int j=path.size()-1; j>=0; j--)
+                if(path[j]=='.')
+                {
+                    path.insert(j,"("+QString::number(p++)+")");
+                    break;
+                }
+        }
+    }
+    while(true);
+    xlsxW.saveAs(path);
 }
 
 void XlsxUtils::getAddedPotok(AddingData* data)

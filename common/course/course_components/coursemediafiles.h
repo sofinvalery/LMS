@@ -30,7 +30,7 @@ public:
     }
 
     static CourseMediaFiles* Deserialize(QJsonObject jsonObj);
-
+    ~CourseMediaFiles(){};
 private:
     QString title;
     QString url;

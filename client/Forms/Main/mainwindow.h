@@ -32,14 +32,17 @@ public:
 
 public slots:
     void ShowManePage();
-    void ShowAddingPotok();
-    void ShowAddingGroup();
-    void ShowAddingCourse();
-    void ShowEditGroup();
+    void clickCoursePage(Course* course);
     void on_mainButton_clicked();
 
 
 private slots:
+    void ShowAddingPotok();
+    void ShowAddingGroup();
+    void ShowAddingCourse();
+    void ShowEditGroup();
+    void ShowCoursePage(Course* course);
+
     void on_exitButton_clicked();
     void on_profileButton_clicked();
     void on_scoreButton_clicked();
@@ -56,8 +59,6 @@ private:
     void on_button_clicked(QPushButton* clickedButton);
     //MyWidget * course[25];
 
-public slots:
-    void showCoursePage(Course* course);
 
 };
 #endif // MAINWINDOW_H

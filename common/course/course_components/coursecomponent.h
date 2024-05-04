@@ -22,7 +22,7 @@ public:
     }
     virtual QJsonObject Serialize()=0;
     virtual QString getType()=0;
-
+    virtual ~CourseComponent(){};
 protected:
     int32_t id;
     int32_t order;

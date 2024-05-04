@@ -5,6 +5,7 @@
 #include "../../common/authentication/group.h"
 #include "../../common/authentication/generate_password.h"
 #include "../../common/authentication/translate.h"
+#include "Forms/Notification/notification.h"
 
 AddGroup::AddGroup(QWidget *parent)
     : QWidget(parent)
@@ -208,6 +209,8 @@ void AddGroup::on_createButton_clicked()
             }
             XlsxUtils::GetInstance()->getAddedGroup(group);
             QJsonObject json;
+            Notification* notification = new Notification(nullptr,"Файл новой группы,\nдобавлен в загрузки.\nИмя файла: "+group->getClassname()+".xlsx","black");
+            notification->show();
             json=group->Serialize();
             for(auto temp:group->getParticipants())
                 delete temp;

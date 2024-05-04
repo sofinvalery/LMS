@@ -66,11 +66,6 @@ void ClientManager::slotReadyReadJson()
     {
         ServerOrClientError();
     }
-
-
-
-    qInfo()<<socket->bytesAvailable();
-
 }
 
 void ClientManager::slotReadyReadFile()
@@ -172,10 +167,6 @@ void ClientManager::slotReadyReadFile()
     {
         ServerOrClientError();
     }
-
-
-
-    qInfo()<<temp->socket->bytesAvailable();
 }
 //вывести как нибудь что все пошло не туда...
 void ClientManager::ServerOrClientError()

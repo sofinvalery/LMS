@@ -36,7 +36,7 @@ public:
     QString getType() override{
         return "CourseTask";
     }
-
+    ~CourseTask(){};
 private:
     QString content;
     int32_t maxMark;

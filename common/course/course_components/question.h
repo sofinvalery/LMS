@@ -32,7 +32,7 @@ public:
     QJsonObject Serialize();
 
     static Question* Deserialize(QJsonObject json);
-
+    ~Question(){answers.clear();studentAnswer.clear();}
 private:
     QString question;
     QList<QString> answers;

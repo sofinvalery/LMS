@@ -47,7 +47,10 @@ public:
     }
 
     QDate getTime() const;
-
+    ~CourseTest(){
+        for(auto temp:listQuestions)
+            delete temp;
+    }
 private:
     QString title;
     int32_t maxMark;

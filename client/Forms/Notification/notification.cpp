@@ -3,12 +3,14 @@
 #include "StyleManager/stylemanager.h"
 
 Notification::Notification(QWidget *parent, QString notification, QString colour)
-    : QWidget(parent)
+    : QDialog(parent)
     , ui(new Ui::Notification)
 {
     ui->setupUi(this);
     startEnterAnimation();
-    StyleManager::GetInstance()->setLabelStyle(ui->notificationLabel, notification, true, colour, true, 16);
+    this->setWindowFlag(Qt::WindowCloseButtonHint, false);
+    this->setWindowFlags(Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint);
+    StyleManager::GetInstance()->setLabelStyle(ui->notificationLabel, notification, true, colour, true, 14);
 
     ui->groupBox->setStyleSheet(
         "QGroupBox {"

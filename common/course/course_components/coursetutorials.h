@@ -19,7 +19,7 @@ public:
     QString getType() override{
         return "CourseTutorials";
     }
-
+    ~CourseTutorials(){}
 private:
     QString content;
 };

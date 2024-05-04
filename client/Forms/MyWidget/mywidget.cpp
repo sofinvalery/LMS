@@ -74,6 +74,6 @@ MyWidget::~MyWidget()
 
 void MyWidget::on_CourseButtonIMG_clicked()
 {
-    ClientState::GetInstance()->getMainwindow()->showCoursePage(course);
+    ClientState::GetInstance()->getMainwindow()->clickCoursePage(course);
 }
 
