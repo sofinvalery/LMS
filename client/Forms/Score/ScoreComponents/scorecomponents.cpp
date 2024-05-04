@@ -16,12 +16,12 @@ ScoreComponents::ScoreComponents(QString courseName, int currentScore, int maxSc
 
     StyleManager::GetInstance()->setLabelStyle(ui->currentScoreLabel, QString::number(currentScore), false, "black", true, 18, true, "rgba(0, 0, 0, 0)");
     ui->currentScoreLabel->setFixedSize(ui->currentScoreLabel->sizeHint().width(), ui->currentScoreLabel->sizeHint().height());
-    ui->currentScoreLabel->move(300, 40);
+    ui->currentScoreLabel->move(300, 30);
     ui->currentScoreLabel->raise();
 
     StyleManager::GetInstance()->setLabelStyle(ui->maxScoreLabel, QString::number(maxScore), false, "black", true, 18, true, "rgba(0, 0, 0, 0)");
     ui->maxScoreLabel->setFixedSize(ui->maxScoreLabel->sizeHint().width(), ui->maxScoreLabel->sizeHint().height());
-    ui->maxScoreLabel->move(450, 40);
+    ui->maxScoreLabel->move(450, 30);
     ui->maxScoreLabel->raise();
 
     StyleManager::GetInstance()->setSimpleButtonStyle(ui->pushButton, "", false, 1, 1);

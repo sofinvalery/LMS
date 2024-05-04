@@ -19,7 +19,13 @@ testTaskComponents::testTaskComponents(QString courseName, int currentScore, int
     ui->maxScoreLabel->setFixedSize(ui->maxScoreLabel->sizeHint().width(), ui->maxScoreLabel->sizeHint().height());
     ui->maxScoreLabel->move(300, 15);
 
-    StyleManager::GetInstance()->setProgressBarStyle(ui->progressBar, false);
+    ui->groupBox->setStyleSheet(
+        "QGroupBox {"
+        "border-radius: 5px;"
+        "border: 1px solid lightgrey;"
+        "}");
+
+    StyleManager::GetInstance()->setProgressBarStyle(ui->progressBar, false, 5, "lightgrey", "#7ECFFF");
     ui->progressBar->lower();
     ui->progressBar->setRange(0, maxScore);
     ui->progressBar->setValue(currentScore);

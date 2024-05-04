@@ -21,7 +21,7 @@ private slots:
 private:
     QList<ScoreComponents*> scoreList;
     QList<testTaskComponents*> PathCourseScoreList;
-    int heightLine = 100;
+    int heightLine = 80;
     Ui::Score *ui;
 };
 
