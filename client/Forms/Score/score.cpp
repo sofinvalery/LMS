@@ -21,7 +21,7 @@ Score::Score(QWidget *parent)
         scoreList.append(score);
         connect(score, SIGNAL(showPathCourseScore(Course*)), this, SLOT(showPathCourseScore(Course*)));
         score->move(20, heightLine);
-        heightLine += 120;
+        heightLine += 90;
     }
     ui->scrollAreaWidgetContents->setMinimumHeight(heightLine);
 }
@@ -48,14 +48,14 @@ void Score::showPathCourseScore(Course *course)
             delete temp;
         }
         PathCourseScoreList.clear();
-        heightLine = 100;
+        heightLine = 80;
         for (auto temp : scoreList)
         {
             temp->move(20, heightLine);
-            heightLine += 120;
+            heightLine += 90;
         }
     }
-    heightLine = 100 + 120 * index + 120;
+    heightLine = 80 + 90 * index + 90;
     for (CourseComponent* temp : course->getListComponents())
     {
         CourseTest* courseTest;
@@ -86,7 +86,7 @@ void Score::showPathCourseScore(Course *course)
     for (index++;index < scoreList.size(); index++)
     {
         scoreList[index]->move(20, heightLine);
-        heightLine += 120;
+        heightLine += 90;
     }
     ui->scrollAreaWidgetContents->setMinimumHeight(heightLine);
 }
