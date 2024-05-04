@@ -19,6 +19,9 @@ public:
     explicit CourseDownload(CourseComponent * pdf, QWidget *parent = nullptr);
     ~CourseDownload();
 
+private slots:
+    void on_DownloadButton_clicked();
+
 private:
     Ui::CourseDownload *ui;
     CourseMediaFiles * pdf;

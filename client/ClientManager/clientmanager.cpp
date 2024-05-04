@@ -134,9 +134,16 @@ void ClientManager::slotReadyReadFile()
                     }
                 }
                 while(true);
+                for(int j=path.size()-1; j>=0; j--)
+                    if(path[j]=='/')
+                    {
+                        temp->fileName=path.mid(j+1);
+                        break;
+                    }
+
                 temp->file = new QFile(path);
                 temp->file->open(QIODevice::Append);
-
+                emit temp->newFile(temp->fileName,temp->fileSize);
 
 
                 break;
@@ -146,6 +153,7 @@ void ClientManager::slotReadyReadFile()
                 int read=in.readRawData(ch,sizeof(char)*2048);
                 temp->file->write(ch,read);
                 temp->alreadyRead+=read;
+                emit temp->addRead(read);
                 if(temp->alreadyRead==temp->fileSize)
                 {
                     temp->alreadyRead=0;
@@ -157,6 +165,7 @@ void ClientManager::slotReadyReadFile()
                     temp->titleSize=0;
                     temp->fileSize=0;
                     qInfo()<<"прочитал";
+                    emit temp->downloadFinish(temp->fileName);
                 }
                 break;
             }
@@ -243,6 +252,10 @@ fileSocket* ClientManager::GetFileSocket()
     temp->socket = new QSslSocket(this);
     const QString serverKeyPath(":/sll/ClientManager/certificate/client.key");
     temp->socket->setPrivateKey(serverKeyPath,QSsl::Rsa);
+
+    connect(temp,SIGNAL(newFile(QString,qint64)),ClientState::GetInstance()->getMainwindow()->getDialogLoader(),SLOT(createWidget(QString,qint64)));
+    connect(temp,SIGNAL(downloadFinish(QString)),ClientState::GetInstance()->getMainwindow()->getDialogLoader(),SLOT(deleteWidget(QString)));
+
     connect(temp->socket, SIGNAL(sslErrors(QList<QSslError>)), this, SLOT(sslErrorOccured(QList<QSslError> )));
     connect(temp->socket,&QTcpSocket::readyRead, this,&ClientManager::slotReadyReadFile);
     temp->socket->connectToHostEncrypted(hostName,port);

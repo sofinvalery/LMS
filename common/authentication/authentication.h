@@ -36,6 +36,8 @@ public:
 
     void setFio(const QString &newFio);
 
+    QList<QString> getGroups() const;
+
 signals:
 
 private:

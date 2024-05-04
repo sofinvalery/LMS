@@ -459,6 +459,7 @@ bool DatabaseManager::AddNewCourse(QString teachersGroupName, QString unionName,
     }
     int courseId = query.lastInsertId().toInt();
     QString newAvaTitleUrl= course->moveImageNewCourseToStandartName(courseId);
+    course->CreateDir(courseId);
     if(newAvaTitleUrl!=""){
         query.prepare("UPDATE courses SET ava_title_url = :new_ava_title_url WHERE id = :id");
         query.bindValue(":new_ava_title_url", newAvaTitleUrl);

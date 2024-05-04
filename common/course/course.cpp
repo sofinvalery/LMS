@@ -1,5 +1,5 @@
 #include "course.h"
-
+#include"QDir"
 
 Course::Course(int32_t id, QString title, QString avaUrl, QDate start, QDate end,
                int32_t sumpoints,int32_t maxSumpoints, QObject *parent): QObject{parent}
@@ -19,6 +19,13 @@ Course::~Course()
     {
         delete temp;
     }
+}
+
+void Course::CreateDir(int32_t id)
+{
+    QDir dir("./data/Courses/media_files/"+QString::number(id));
+    if (!dir.exists())
+        dir.mkpath(".");
 }
 
 void Course::setListComponents(const QList<CourseComponent *> &newListComponents)

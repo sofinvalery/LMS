@@ -30,6 +30,8 @@ private:
     QList<CourseComponent*> listComponents = QList<CourseComponent*>();
 public:
 
+    void CreateDir(int32_t id);
+
     void AddCourseComponent(CourseComponent* component){
         listComponents.append(component);
     }

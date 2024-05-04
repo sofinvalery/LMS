@@ -41,6 +41,11 @@ void Authentication::setFio(const QString &newFio)
     fio = newFio;
 }
 
+QList<QString> Authentication::getGroups() const
+{
+    return groups;
+}
+
 
 void Authentication::HashPassword()
 {

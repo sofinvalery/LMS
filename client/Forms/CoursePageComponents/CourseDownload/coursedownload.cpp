@@ -1,6 +1,7 @@
  #include "coursedownload.h"
 #include "ui_coursedownload.h"
 #include "StyleManager/stylemanager.h"
+#include "ClientManager/clientmanager.h"
 
 CourseDownload::CourseDownload(CourseComponent * pdf, QWidget *parent)
     : QWidget(parent)
@@ -17,3 +18,9 @@ CourseDownload::~CourseDownload()
 {
     delete ui;
 }
+
+void CourseDownload::on_DownloadButton_clicked()
+{
+    ClientManager::GetInstance()->SendRequestFileToServer(pdf->getUrl());
+}
+

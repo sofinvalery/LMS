@@ -2,6 +2,7 @@
 #include "ui_profile.h"
 #include "StyleManager/stylemanager.h"
 #include "../common/authentication/authentication.h"
+#include "ClientState/clientstate.h"
 
 Profile::Profile(QWidget *parent)
     : QDialog(parent)
@@ -14,7 +15,7 @@ Profile::Profile(QWidget *parent)
     this->move(15, 80);
     this->setStyleSheet("background-color: white;");
 
-    Authentication* auth = new Authentication("kopibara", "123", 1, "Игорь Авраалович Гофман", "", STUDENT, QList<QString>{"7856"});
+    Authentication* auth = ClientState::GetInstance()->getAuth();
     QString role;
     EnumRoles roles = auth->GetCurrentRole();
     switch(roles) {
@@ -48,7 +49,10 @@ Profile::Profile(QWidget *parent)
     ui->groupNameLbl->setFixedSize(ui->groupNameLbl->sizeHint().width(), ui->groupNameLbl->sizeHint().height());
     ui->groupNameLbl->move(20, 140);
 
-    StyleManager::GetInstance()->setLabelStyle(ui->groupName, "7856", false, "black", true, 16);
+    QString group;
+    for(QString temp:auth->getGroups())
+        group+=" "+temp;
+    StyleManager::GetInstance()->setLabelStyle(ui->groupName, group, false, "black", true, 16);
     ui->groupName->setFixedSize(ui->groupName->sizeHint().width(), ui->groupName->sizeHint().height());
     ui->groupName->move(100, 140);
 

@@ -328,3 +328,8 @@ void MainWindow::on_loaderButton_clicked()
         dialogLoader->show();
     }
 }
+
+Loader *MainWindow::getDialogLoader() const
+{
+    return dialogLoader;
+}

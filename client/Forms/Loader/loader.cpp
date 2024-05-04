@@ -2,6 +2,7 @@
 #include "ui_loader.h"
 #include "StyleManager/stylemanager.h"
 #include "LoaderComponent/loadercomponent.h"
+#include "ClientManager/clientmanager.h"
 
 Loader::Loader(QWidget *parent)
     : QDialog(parent)
@@ -29,15 +30,11 @@ void Loader::createWidget(QString fileName, qint64 totalSize)
 {
     LoaderComponent* loaderComponent = new LoaderComponent(ui->scrollAreaWidgetContents, fileName, totalSize);
     widgetHash.insert(fileName, loaderComponent);
-
-    for (QWidget* item : widgetHash)
-    {
-        QWidget* widget = item;
-        widget->move(0, heightLine);
-        heightLine += 100;
-        widget->show();
-        ui->scrollAreaWidgetContents->setMinimumHeight(heightLine);
-    }
+    connect(qobject_cast<fileSocket *>(sender()),SIGNAL(addRead(qint64)),loaderComponent,SLOT(increaseDownload(qint64)));
+    loaderComponent->move(0, heightLine);
+    heightLine += 100;
+    loaderComponent->show();
+    ui->scrollAreaWidgetContents->setMinimumHeight(heightLine);
 }
 
 void Loader::deleteWidget(QString fileName)
@@ -48,5 +45,14 @@ void Loader::deleteWidget(QString fileName)
         widget->close();
         delete widget;
         widgetHash.remove(fileName);
+    }
+    heightLine=20;
+    for (QWidget* item : widgetHash)
+    {
+        QWidget* widget = item;
+        widget->move(0, heightLine);
+        heightLine += 100;
+        widget->show();
+        ui->scrollAreaWidgetContents->setMinimumHeight(heightLine);
     }
 }

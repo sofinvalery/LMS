@@ -31,6 +31,8 @@ public:
     ~MainWindow();
     Download *getDownload() const;
 
+    Loader *getDialogLoader() const;
+
 public slots:
     void ShowManePage();
     void clickCoursePage(Course* course);
@@ -59,9 +61,8 @@ private:
     Ui::MainWindow *ui;
     QWidget * widget=nullptr;
     Download * download = new Download();
-    QDialog* dialog = nullptr;
     Loader* dialogLoader = new Loader();
-    Profile* dialogProfile = new Profile();
+    Profile* dialogProfile = nullptr;
     void on_button_clicked(QPushButton* clickedButton);
     //MyWidget * course[25];
 

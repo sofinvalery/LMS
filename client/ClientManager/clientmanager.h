@@ -17,7 +17,11 @@ struct FileParams{
     int SendFileSize=0;
 };
 
-struct fileSocket{
+class fileSocket: public QObject
+{
+    Q_OBJECT
+public:
+    explicit fileSocket(QObject *parent = nullptr){};
     bool isReady;
     QSslSocket *socket;
     QByteArray Data;
@@ -26,6 +30,11 @@ struct fileSocket{
     qint64 alreadyRead=0;
     QFile* file=nullptr;
     FileParams fileParams;
+    QString fileName;
+signals:
+    void newFile(QString,qint64);
+    void downloadFinish(QString);
+    void addRead(qint64);
 };
 
 class ClientManager : public QObject

@@ -19,7 +19,7 @@ private slots:
     void deleteWidget(QString fileName);
 private:
     QHash<QString, QWidget*> widgetHash;
-    int heightLine = 0;
+    int heightLine = 20;
     Ui::Loader *ui;
 };
 
