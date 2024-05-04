@@ -21,7 +21,7 @@ int main(int argc, char *argv[])
                              new Course(15,"phisyc","bbbbb", QDate(2004,4,4),QDate(2005,1,1),11,80),
                              new Course(15,"phisyc","bbbbb", QDate(2004,4,4),QDate(2005,1,1),11,80)};
     QList<CourseComponent*> sad = {new CoursePdf(21313, 1, "testpdf", ""), new CoursePdf(21313, 1, "testpdf", ""), new CoursePdf(21313, 1, "testpdf", ""), new CoursePdf(21313, 1, "testpdf", ""),
-                                    new CourseTest(12123, 3, "testtest", 10, "", 100, 9, "сдал", QDate(2004,4,4)), new CourseTask(1213123, 4, "adsasda", 30, 15, "pdf", "qwe", QDate(2004,4,4), 15, ""),
+                                    new CourseTest(12123, 3, "testtest", 10, "", 100, 9, "сдал", QDate(2004,4,4)), new CourseTask(1213123, 4, "adsasda", 10, 15, "pdf", "qwe", QDate(2004,4,4), 9, ""), new CourseTutorials(123, 123, "Примечание: \nСочная беброчка"),
                                     new CourseTutorials(123123, 5, "tutorial")};
     ClientState::GetInstance()->setAuth(authentication);
     ClientState::GetInstance()->setListCourses(list);

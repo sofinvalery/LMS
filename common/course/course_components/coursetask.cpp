@@ -1,13 +1,14 @@
 #include "coursetask.h"
 #include "../../../client/Forms/CoursePageComponents/CourseDz/coursedz.h"
 
-CourseTask::CourseTask(int32_t id,int32_t order, QString content, int32_t maxMark,
+CourseTask::CourseTask(int32_t id,int32_t order,QString content, int32_t maxMark,
                        int32_t memoryLimit,
                        QString allowedTypeOfFiles, QString answerUrl,
                        QDate solutionTime, int32_t verdict,
-                       QString notes, QObject *parent)
+                       QString notes, QString title, QObject *parent)
     : CourseComponent(id,order, parent)
 {
+    this->title = title;
     this->content=content;
     this->maxMark=maxMark;
     this->memoryLimit=memoryLimit;
@@ -25,6 +26,7 @@ QJsonObject CourseTask::Serialize()
     json["content"]=content;
     json["maxMark"]=maxMark;
     json["order"]=order;
+    json["title"]=title;
     json["memoryLimit"]= memoryLimit;
     json["allowedTypeOfFiles"]= allowedTypeOfFiles;
     json["answerUrl"]= answerUrl;
@@ -45,7 +47,7 @@ CourseTask* CourseTask::Deserialize(QJsonObject json)
     return new CourseTask(jsonObj["id"].toInt(),jsonObj["order"].toInt(),jsonObj["content"].toString(),
                       jsonObj["maxMark"].toInt(),jsonObj["memoryLimit"].toInt(),
                       jsonObj["allowedTypeOfFiles"].toString(),jsonObj["answerUrl"].toString(),
-                      solutionTime,jsonObj["verdict"].toInt(),jsonObj["notes"].toString());
+                      solutionTime,jsonObj["verdict"].toInt(),jsonObj["notes"].toString(),jsonObj["title"].toString());
 }
 
 

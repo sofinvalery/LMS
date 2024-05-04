@@ -17,6 +17,7 @@ class CourseDz : public QWidget
 public:
     explicit CourseDz(CourseComponent * dz, QWidget *parent = nullptr);
     ~CourseDz();
+    void SetTextOnButton(QString buttontext);
 
 private:
     Ui::CourseDz *ui;

@@ -2,12 +2,14 @@
 #include "ui_coursepage.h"
 #include "StyleManager/stylemanager.h"
 #include "Forms/CoursePageComponents/componentswidgetfactory.h"
+#include "Forms/CoursePage/CoursePageEditor/coursepageeditor.h"
 
 CoursePage::CoursePage(Course *course, QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::CoursePage)
 {
     ui->setupUi(this);
+    this->course = course;
     ui->groupBox->setStyleSheet("background-color: white;");
     ui->scrollAreaWidgetContents->setStyleSheet("background-color: white;");
     this->move(0, 90);
@@ -26,11 +28,20 @@ CoursePage::CoursePage(Course *course, QWidget *parent)
         "border: none;"
         "}");
     //scrollarea
-    ComponentsWidgetFactory<QString,QWidget,CourseComponent*> widgetFactory;
     StyleManager::GetInstance()->setScrollAreaStyle(ui->scrollArea, true);
-    for (int i = 0; i < course->getListComponents().length(); i ++){
-        //height += course->getListComponents()[i]->height
+    ShowComponents();
+    iconIMG = new QPixmap(course->GetAvaTitleUrl());
+    ui->IconLabel->setPixmap(iconIMG->scaled(111, 81, Qt::KeepAspectRatio));
 
+    StyleManager::GetInstance()->setLabelStyle(ui->CourseNameLabel, course->GetTitle(), true, "black", true, 20);
+    ui->CourseNameLabel->setFixedSize(ui->CourseNameLabel->sizeHint().width(), ui->CourseNameLabel->sizeHint().height());
+}
+
+void CoursePage::ShowComponents()
+{
+    height = 0;
+    ComponentsWidgetFactory<QString,QWidget,CourseComponent*> widgetFactory;
+    for (int i = 0; i < course->getListComponents().size(); i ++){
         QWidget * temp = widgetFactory.get(course->getListComponents()[i]->getType())(course->getListComponents()[i]);
         widgets.append(temp);
         temp->setParent(ui->scrollAreaWidgetContents);
@@ -39,15 +50,27 @@ CoursePage::CoursePage(Course *course, QWidget *parent)
         temp->show();
     }
     ui->scrollAreaWidgetContents->setMinimumHeight(height);
-    iconIMG = new QPixmap(course->GetAvaTitleUrl());
-    qDebug() << course->GetAvaTitleUrl();
-    ui->IconLabel->setPixmap(iconIMG->scaled(111, 81, Qt::KeepAspectRatio));
+}
 
-    StyleManager::GetInstance()->setLabelStyle(ui->CourseNameLabel, course->GetTitle(), true, "black", true, 20);
-    ui->CourseNameLabel->setFixedSize(ui->CourseNameLabel->sizeHint().width(), ui->CourseNameLabel->sizeHint().height());
+void CoursePage::CleanComponents()
+{
+    //qDeleteAll(widgets);
+    for (int i = 0; i < widgets.size(); i++){
+        widgets[i]->close();
+    }
+    widgets.clear();
 }
 
 CoursePage::~CoursePage()
 {
     delete ui;
 }
+
+void CoursePage::on_EditCourseButton_clicked()
+{
+    CoursePageEditor * editor = new CoursePageEditor(this);
+    editor->setParent(this);
+    editor->show();
+    editor->move(400, 400);
+}
+

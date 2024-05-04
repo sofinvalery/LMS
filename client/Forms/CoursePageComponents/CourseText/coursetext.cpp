@@ -7,6 +7,8 @@ CourseText::CourseText(CourseComponent * text, QWidget *parent)
 {
     ui->setupUi(this);
     this->text = qobject_cast<CourseTutorials*>(text);
+    ui->label->setText(this->text->getContent());
+    ui->label->setFixedSize(ui->label->sizeHint().width(), ui->label->sizeHint().height());
 }
 
 CourseText::~CourseText()

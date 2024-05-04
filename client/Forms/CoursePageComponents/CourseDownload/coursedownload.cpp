@@ -10,10 +10,15 @@ CourseDownload::CourseDownload(CourseComponent * pdf, QWidget *parent)
     this->pdf =  qobject_cast<CoursePdf*>(pdf);
     icon = new QPixmap(":/img/resources/dowloadicon.png");
     ui->LabelIMG->setPixmap(icon->scaled(31, 21, Qt::KeepAspectRatio));
-    StyleManager::GetInstance()->setLinkButtonStyle(ui->DownloadButton, "Лекция 1.111111111111111.pdf", true, 16, 15);
+    StyleManager::GetInstance()->setLinkButtonStyle(ui->DownloadButton, this->pdf->getTitle(), true, 16, 15);
 }
 
 CourseDownload::~CourseDownload()
 {
     delete ui;
+}
+
+void CourseDownload::SetTextOnButton(QString buttontext)
+{
+    StyleManager::GetInstance()->setLinkButtonStyle(ui->DownloadButton, buttontext, true, 16, 15);
 }

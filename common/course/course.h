@@ -29,8 +29,8 @@ private:
     QList<CourseComponent*> listComponents = QList<CourseComponent*>();
 public:
 
-    void AddCourseComponent(CourseComponent* component){
-        listComponents.append(component);
+    void AddCourseComponent(CourseComponent* component, int position){
+        listComponents.insert(position, component);
     }
 
     QJsonObject SerializeListComponents();

@@ -78,6 +78,19 @@
        <string/>
       </property>
      </widget>
+     <widget class="QPushButton" name="EditCourseButton">
+      <property name="geometry">
+       <rect>
+        <x>610</x>
+        <y>10</y>
+        <width>151</width>
+        <height>51</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Редактирование курса</string>
+      </property>
+     </widget>
     </widget>
    </widget>
   </widget>

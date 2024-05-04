@@ -18,6 +18,7 @@ class CourseAttestacion : public QWidget
 public:
     explicit CourseAttestacion(CourseComponent * test, QWidget *parent = nullptr);
     ~CourseAttestacion();
+    void SetTextOnButton(QString buttontext);
 
 private:
     Ui::CourseAttestacion *ui;

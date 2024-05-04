@@ -15,13 +15,20 @@ class CoursePage : public QWidget
 
 public:
     explicit CoursePage(Course *course, QWidget *parent = nullptr);
+    void ShowComponents();
+    void CleanComponents();
+    Course * GetCourse(){return course;}
     ~CoursePage();
+
+private slots:
+    void on_EditCourseButton_clicked();
 
 private:
     Ui::CoursePage *ui;
     QList<QWidget*> widgets;
     int height = 0;
     QPixmap * iconIMG;
+    Course * course;
 };
 
 #endif // COURSEPAGE_H
