@@ -35,6 +35,10 @@ public:
     QList<QString> GetAllStudentGroupName();
     QList<QString> GetEveryTeacherGroupName();
     Group* GetGroupByName(QString groupName);
+    bool SetCourseTutorial(CourseTutorials* tutorial, int32_t courseId);
+    bool SetCourseMediaFiles(CourseMediaFiles* mediaFiles, int32_t courseId);
+    bool SetCourseTasks(CourseTask* tasks, int32_t courseId);
+    bool SetCourseTests(CourseTest* tests, int32_t courseId);
     ~DatabaseManager();
 
 private:

@@ -28,9 +28,7 @@ public:
 
     QString getNotes() const;
 
-    void AddQuestionToList(Question* question){
-        listQuestions.append(question);
-    }
+    void AddQuestionToList(Question* question) { listQuestions.append(question); }
 
     QList<Question*> getListQuestions() const;
 
@@ -42,12 +40,13 @@ public:
 
     void DeserializeQuestionList(QJsonObject jsonObj);
 
-    QString getType() override{
-        return "CourseTest";
-    }
+    QString getType() override { return "CourseTest"; }
 
     QDate getTime() const;
-    ~CourseTest(){
+
+    int32_t getOrder() { return order; }
+
+    ~CourseTest() {
         for(auto temp:listQuestions)
             delete temp;
     }

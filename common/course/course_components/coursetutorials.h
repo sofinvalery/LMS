@@ -16,10 +16,12 @@ public:
 
     QString getContent() const;
 
-    QString getType() override{
-        return "CourseTutorials";
-    }
+    QString getType() override { return "CourseTutorials"; }
+
+    int32_t getOrder() { return order; }
+
     ~CourseTutorials(){}
+
 private:
     QString content;
 };

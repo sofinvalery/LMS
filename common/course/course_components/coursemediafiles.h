@@ -25,9 +25,9 @@ public:
 
     QJsonObject Serialize() override;
 
-    QString getType() override{
-        return "CourseMediaFiles";
-    }
+    QString getType() override { return "CourseMediaFiles"; }
+
+    int32_t getOrder() { return order; }
 
     static CourseMediaFiles* Deserialize(QJsonObject jsonObj);
     ~CourseMediaFiles(){};

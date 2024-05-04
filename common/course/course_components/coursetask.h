@@ -33,9 +33,10 @@ public:
 
     QString getContent() const;
 
-    QString getType() override{
-        return "CourseTask";
-    }
+    QString getType() override { return "CourseTask"; }
+
+    int32_t getOrder() { return order; }
+
     ~CourseTask(){};
 private:
     QString content;

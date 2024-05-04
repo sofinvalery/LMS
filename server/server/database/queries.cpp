@@ -620,13 +620,79 @@ Group* DatabaseManager::GetGroupByName(QString groupName) {
     return group;
 }
 
+bool DatabaseManager::SetCourseTutorial(CourseTutorials* tutorial, int32_t courseId) {
+    QSqlQuery query(m_db);
 
+    query.prepare("INSERT INTO path_course_tutorials (content, \"order\", courses_id1) "
+                  "VALUES (:content, :order, :courseId1)");
+    query.bindValue(":content", tutorial->getContent());
+    query.bindValue(":order", tutorial->getOrder());
+    query.bindValue(":courseId1", courseId);
 
+    if (!query.exec()) {
+        qDebug() << "Error inserting course tutorial into 'path_course_tutorials' table:" << query.lastError().text();
+        return false;
+    }
 
+    return true;
+}
 
+bool DatabaseManager::SetCourseMediaFiles(CourseMediaFiles* mediaFiles, int32_t courseId) {
+    QSqlQuery query(m_db);
 
+    query.prepare("INSERT INTO path_course_media_files (title, url, \"order\", type, courses_id1) "
+                  "VALUES (:title, :url, :order, :type, :courseId1)");
+    query.bindValue(":title", mediaFiles->getTitle());
+    query.bindValue(":url", mediaFiles->getUrl());
+    query.bindValue(":order", mediaFiles->getOrder());
+    query.bindValue(":type", (int)mediaFiles->getTypeFile());
+    query.bindValue(":courseId1", courseId);
 
+    if (!query.exec()) {
+        qDebug() << "Error inserting course media file into 'path_course_media_files' table:" << query.lastError().text();
+        return false;
+    }
 
+    return true;
+}
+
+bool DatabaseManager::SetCourseTasks(CourseTask* tasks, int32_t courseId) {
+    QSqlQuery query(m_db);
+
+    query.prepare("INSERT INTO path_course_tasks (content, max_mark, memory_limit, \"order\", courses_id1) "
+                  "VALUES (:content, :maxMark, :memoryLimit, :order, :courseId1)");
+    query.bindValue(":content", tasks->getContent());
+    query.bindValue(":maxMark", tasks->getMaxMark());
+    query.bindValue(":memoryLimit", tasks->getMemoryLimit());
+    query.bindValue(":order", tasks->getOrder());
+    query.bindValue(":courseId1", courseId);
+
+    if (!query.exec()) {
+        qDebug() << "Error inserting course task into 'path_course_tasks' table:" << query.lastError().text();
+        return false;
+    }
+
+    return true;
+}
+
+bool DatabaseManager::SetCourseTests(CourseTest* tests, int32_t courseId) {
+    QSqlQuery query(m_db);
+
+    query.prepare("INSERT INTO path_course_tests (title, max_mark, url_json, \"order\", courses_id1) "
+                  "VALUES (:title, :maxMark, :urlJson, :order, :courseId1)");
+    query.bindValue(":title", tests->getTitle());
+    query.bindValue(":maxMark", tests->getMaxMark());
+    query.bindValue(":urlJson", tests->getUrlJson());
+    query.bindValue(":order", tests->getOrder());
+    query.bindValue(":courseId1", courseId);
+
+    if (!query.exec()) {
+        qDebug() << "Error inserting course test into 'path_course_tests' table:" << query.lastError().text();
+        return false;
+    }
+
+    return true;
+}
 
 
 
