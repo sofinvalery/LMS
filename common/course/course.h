@@ -33,6 +33,10 @@ public:
         listComponents.insert(position, component);
     }
 
+    void DeleteCourseComponent(int position){
+        listComponents.removeAt(position);
+    }
+
     QJsonObject SerializeListComponents();
 
     void DeserializeListComponents(QJsonObject jsonObj);

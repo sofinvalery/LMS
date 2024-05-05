@@ -40,6 +40,7 @@ private:
     Ui::CoursePageEditor *ui;
     CoursePage * coursepage;
     int AddingStatus = 0; // 1 - тест, 2 - файл, 3 - дз, 4 - пояснение
+    int DeletingStatus = 0;
 };
 
 #endif // COURSEPAGEEDITOR_H

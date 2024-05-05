@@ -10,7 +10,6 @@ CoursePageEditor::CoursePageEditor(CoursePage * coursepage, QWidget *parent)
     ui->setupUi(this);
     this->coursepage = coursepage;
     //StyleManager::GetInstance()->setLineEditStyle(ui->ComponentOrderLineEdit, "Порядок компонента", false, 16, 300, 30);
-    ui->ComponentOrderSpinBox->setMaximum(coursepage->GetCourse()->getListComponents().size() + 1);
     StyleManager::GetInstance()->setLabelStyle(ui->ComponentOrderLabel, "Номер компонента по порядку:", false, "black", true, 16);
     ui->ComponentOrderLabel->setFixedSize(ui->ComponentOrderLabel->sizeHint().width(), ui->ComponentOrderLabel->sizeHint().height());
     StyleManager::GetInstance()->setLineEditStyle(ui->NameOnComponentLineEdit, "Название компонента", false, 16, 300, 30);
@@ -42,6 +41,8 @@ void CoursePageEditor::on_LoadFileButton_clicked()
 void CoursePageEditor::on_AddWidgetButton_clicked()
 {
     if(ui->DeleteWidgetButton->isEnabled()){
+        ui->ComponentOrderSpinBox->setMaximum(coursepage->GetCourse()->getListComponents().size() + 1);
+        ui->ComponentOrderSpinBox->setValue(1);
         ui->DeleteWidgetButton->setEnabled(false);
         ui->EditWidgetButton->setEnabled(false);
         ui->AddDzButton->show();
@@ -76,6 +77,8 @@ void CoursePageEditor::on_AddWidgetButton_clicked()
 void CoursePageEditor::on_EditWidgetButton_clicked()
 {
     if(ui->AddWidgetButton->isEnabled()){
+        ui->ComponentOrderSpinBox->setMaximum(coursepage->GetCourse()->getListComponents().size());
+        ui->ComponentOrderSpinBox->setValue(1);
         ui->AddWidgetButton->setEnabled(false);
         ui->DeleteWidgetButton->setEnabled(false);
         ui->ComponentOrderSpinBox->show();
@@ -95,12 +98,16 @@ void CoursePageEditor::on_EditWidgetButton_clicked()
 void CoursePageEditor::on_DeleteWidgetButton_clicked()
 {
     if(ui->AddWidgetButton->isEnabled()){
+        ui->ComponentOrderSpinBox->setMaximum(coursepage->GetCourse()->getListComponents().size());
+        ui->ComponentOrderSpinBox->setValue(1);
+        DeletingStatus = 1;
         ui->AddWidgetButton->setEnabled(false);
         ui->EditWidgetButton->setEnabled(false);
         ui->ComponentOrderSpinBox->show();
         ui->ComponentOrderLabel->show();
     }
     else{
+        DeletingStatus = 0;
         ui->AddWidgetButton->setEnabled(true);
         ui->EditWidgetButton->setEnabled(true);
         ui->ComponentOrderSpinBox->hide();
@@ -111,24 +118,29 @@ void CoursePageEditor::on_DeleteWidgetButton_clicked()
 
 void CoursePageEditor::on_DoneButton_clicked()
 {
-    if(AddingStatus == 1){
+    if(AddingStatus == 1){                                  // добавить на сервер тест (не доделано)
         coursepage->CleanComponents();
         coursepage->GetCourse()->AddCourseComponent(new CourseTest(12312312, ui->ComponentOrderSpinBox->value(), ui->NameOnComponentLineEdit->text(), 10, "", 1000, 9, "сдал", QDate(2004,4,4)), ui->ComponentOrderSpinBox->value()-1);
         coursepage->ShowComponents();
     }
-    if(AddingStatus == 2){
+    if(AddingStatus == 2){                                  // добавить на сервер загрузочный файл
         coursepage->CleanComponents();
         coursepage->GetCourse()->AddCourseComponent(new CoursePdf(22222, ui->ComponentOrderSpinBox->value(), ui->NameOnComponentLineEdit->text(),  ui->PathLabel2->text()), ui->ComponentOrderSpinBox->value()-1);
         coursepage->ShowComponents();
     }
-    if (AddingStatus == 3){
+    if (AddingStatus == 3){                                  // добавить на сервер дз (не доделано)
         coursepage->CleanComponents();
         coursepage->GetCourse()->AddCourseComponent(new CourseTask(123123, ui->ComponentOrderSpinBox->value(), "", 100, 123, "", "", QDate(2004,4,4), 9, "", ui->NameOnComponentLineEdit->text()), ui->ComponentOrderSpinBox->value()-1);
         coursepage->ShowComponents();
     }
-    if(AddingStatus == 4){
+    if(AddingStatus == 4){                                  // добавить на сервер туториал
         coursepage->CleanComponents();
         coursepage->GetCourse()->AddCourseComponent(new CourseTutorials(44444, ui->ComponentOrderSpinBox->value(), ui->TutorialTextEdit->toPlainText()), ui->ComponentOrderSpinBox->value()-1);
+        coursepage->ShowComponents();
+    }
+    if (DeletingStatus == 1){                               // удалить из сервера элемент  ui->ComponentOrderSpinBox->value()-1
+        coursepage->CleanComponents();
+        coursepage->GetCourse()->DeleteCourseComponent(ui->ComponentOrderSpinBox->value()-1);
         coursepage->ShowComponents();
     }
     this->close();
