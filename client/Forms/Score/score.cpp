@@ -48,14 +48,14 @@ void Score::showPathCourseScore(Course *course)
             delete temp;
         }
         PathCourseScoreList.clear();
-        heightLine = 80;
+        heightLine = 20;
         for (auto temp : scoreList)
         {
             temp->move(20, heightLine);
             heightLine += 90;
         }
     }
-    heightLine = 80 + 90 * index + 90;
+    heightLine = 20 + 90 * index + 90;
     for (CourseComponent* temp : course->getListComponents())
     {
         CourseTest* courseTest;
