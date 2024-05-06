@@ -10,20 +10,20 @@ Score::Score(QWidget *parent)
     ui->setupUi(this);
     StyleManager::GetInstance()->setWidgetStyle(this, ui->groupBox, 90);
 
-    StyleManager::GetInstance()->setScrollAreaStyle(ui->scrollArea, false);
-    ui->scrollArea->setFixedSize(StyleManager::GetInstance()->getScreenWidth(), StyleManager::GetInstance()->getScreenHeight() - 90);
+    StyleManager::GetInstance()->setScrollAreaStyle(ui->scrollArea, true);
+    ui->scrollArea->setFixedSize(StyleManager::GetInstance()->getScreenWidth(), StyleManager::GetInstance()->getScreenHeight());
     for (int i = 0; i < ClientState::GetInstance()->getListCourses().size(); i++)
     {
         ScoreComponents* score = new ScoreComponents(ClientState::GetInstance()->getListCourses()[i]->GetTitle(),
                                                      ClientState::GetInstance()->getListCourses()[i]->GetPoints(),
-                                                     ClientState::GetInstance()->getListCourses()[i]->getMaxSumpoints(), this,
+                                                     ClientState::GetInstance()->getListCourses()[i]->getMaxSumpoints(), ui->scrollAreaWidgetContents,
                                                      ClientState::GetInstance()->getListCourses()[i]);
         scoreList.append(score);
         connect(score, SIGNAL(showPathCourseScore(Course*)), this, SLOT(showPathCourseScore(Course*)));
         score->move(20, heightLine);
         heightLine += 90;
     }
-    ui->scrollAreaWidgetContents->setMinimumHeight(heightLine);
+    ui->scrollAreaWidgetContents->setMinimumHeight(heightLine + 60);
 }
 
 Score::~Score()
@@ -64,7 +64,7 @@ void Score::showPathCourseScore(Course *course)
         {
             testTaskComponents* task = new testTaskComponents(courseTask->getContent(),
                                                          courseTask->getVerdict(),
-                                                         courseTask->getMaxMark(), this); //nazvanie sdelayte
+                                                              courseTask->getMaxMark(), ui->scrollAreaWidgetContents); //nazvanie sdelayte
             PathCourseScoreList.append(task);
             edit = true;
             task->move(50, heightLine);
@@ -75,7 +75,7 @@ void Score::showPathCourseScore(Course *course)
         {
             testTaskComponents* test = new testTaskComponents(courseTest->getTitle(),
                                                          courseTest->getVerdict(),
-                                                         courseTest->getMaxMark(), this);
+                                                         courseTest->getMaxMark(), ui->scrollAreaWidgetContents);
             PathCourseScoreList.append(test);
             edit = true;
             test->move(50, heightLine);
@@ -88,5 +88,5 @@ void Score::showPathCourseScore(Course *course)
         scoreList[index]->move(20, heightLine);
         heightLine += 90;
     }
-    ui->scrollAreaWidgetContents->setMinimumHeight(heightLine);
+    ui->scrollAreaWidgetContents->setMinimumHeight(heightLine + 60);
 }
