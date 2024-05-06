@@ -5,7 +5,7 @@
 #include "ClientState/clientstate.h"
 
 Profile::Profile(QWidget *parent)
-    : QDialog(parent)
+    : QWidget(parent)
     , ui(new Ui::Profile)
 {
     ui->setupUi(this);

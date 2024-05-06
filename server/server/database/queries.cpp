@@ -60,15 +60,15 @@ QList<Course*> DatabaseManager::GetMainPage(Authentication* auth) {
 
     if (auth->GetCurrentRole() == STUDENT) {
         query.prepare("SELECT c.id, c.title, c.ava_title_url, c.start_time, c.end_time, "
-                      "SUM(COALESCE(pts.verdict, 0)) AS current_points, "
+                      "SUM(COALESCE(pts.verdict, 0)) + SUM(COALESCE(pcts.verdict, 0)) AS current_points, "
                       "SUM(COALESCE(pct.max_mark, 0) + COALESCE(pct2.max_mark, 0)) AS max_points "
                       "FROM courses AS c "
                       "INNER JOIN zachisleniya_in_potok AS zip ON c.students_groups_union_id1 = zip.students_groups_union_id "
                       "INNER JOIN zachisleniya AS z ON zip.groups_id = z.groups_id "
-                      "LEFT JOIN path_course_tasks_submits AS pts ON z.users_id = pts.users_id1 "
-                      "LEFT JOIN path_course_test_submits AS pcts ON z.users_id = pcts.users_id1 "
-                      "LEFT JOIN path_course_tasks AS pct ON pts.path_course_tasks_id1 = pct.id "
-                      "LEFT JOIN path_course_tests AS pct2 ON pcts.path_course_tests_id = pct2.id "
+                      "LEFT JOIN path_course_tasks AS pct ON pct.courses_id1 = c.id "
+                      "LEFT JOIN path_course_tests AS pct2 ON pct2.courses_id1 = c.id "
+                      "LEFT JOIN path_course_tasks_submits AS pts ON pct.id = pts.path_course_tasks_id1 "
+                      "LEFT JOIN path_course_test_submits AS pcts ON pct2.id = pcts.path_course_tests_id "
                       "WHERE z.users_id = :userId "
                       "GROUP BY c.id, c.title, c.ava_title_url, c.start_time, c.end_time");
     } else if (auth->GetCurrentRole() == TEACHER) {
@@ -114,16 +114,16 @@ QList<Course*> DatabaseManager::GetMainPage(Authentication* auth) {
     return courses;
 }
 
-void DatabaseManager::GetCourseComponents(Course* course) {
+QList<CourseComponent*>* DatabaseManager::GetCourseComponents(int32_t courseId) {
     QSqlQuery query(m_db);
-
+    QList<CourseComponent*>* listComponents = new QList<CourseComponent*>();
     query.prepare("SELECT id, title, url, \"order\", \"type\" "
                   "FROM path_course_media_files "
                   "WHERE courses_id1 = :courseId");
-    query.bindValue(":courseId", course->GetCourseId());
+    query.bindValue(":courseId", courseId);
     if (!query.exec()) {
         qDebug() << "Error executing course media files query:" << query.lastError().text();
-        return;
+        return listComponents;
     }
 
     while (query.next()) {
@@ -132,16 +132,16 @@ void DatabaseManager::GetCourseComponents(Course* course) {
         QString title = query.value("title").toString();
         QString url = query.value("url").toString();
         TypeFile typeFile = (TypeFile)(query.value("type").toInt());
-        course->AddCourseComponent(new CourseMediaFiles(id, order, title, url, typeFile));
+        listComponents->append(new CourseMediaFiles(id, order, title, url, typeFile));
     }
 
     query.prepare("SELECT id, content, max_mark, memory_limit, \"order\" "
                   "FROM path_course_tasks "
                   "WHERE courses_id1 = :courseId");
-    query.bindValue(":courseId", course->GetCourseId());
+    query.bindValue(":courseId", courseId);
     if (!query.exec()) {
         qDebug() << "Error executing course tasks query:" << query.lastError().text();
-        return;
+        return listComponents;
     }
 
     while (query.next()) {
@@ -159,7 +159,7 @@ void DatabaseManager::GetCourseComponents(Course* course) {
         query.bindValue(":taskId", id);
         if (!query.exec()) {
             qDebug() << "Error executing allowed file types query:" << query.lastError().text();
-            return;
+            return listComponents;
         }
 
         while (query.next()) {
@@ -173,7 +173,7 @@ void DatabaseManager::GetCourseComponents(Course* course) {
         query.bindValue(":taskId", id);
         if (!query.exec()) {
             qDebug() << "Error executing task submissions query:" << query.lastError().text();
-            return;
+            return listComponents;
         }
 
         QString answerUrl;
@@ -187,7 +187,7 @@ void DatabaseManager::GetCourseComponents(Course* course) {
             notes = query.value("notes").toString();
         }
 
-        course->AddCourseComponent(new CourseTask(id, order, content, maxMark, memoryLimit,
+        listComponents->append(new CourseTask(id, order, content, maxMark, memoryLimit,
                                                   allowedTypeOfFiles, answerUrl, solutionTime,
                                                   verdict, notes));
     }
@@ -195,10 +195,10 @@ void DatabaseManager::GetCourseComponents(Course* course) {
     query.prepare("SELECT id, title, max_mark, url_json, \"order\" "
                   "FROM path_course_tests "
                   "WHERE courses_id1 = :courseId");
-    query.bindValue(":courseId", course->GetCourseId());
+    query.bindValue(":courseId", courseId);
     if (!query.exec()) {
         qDebug() << "Error executing course tests query:" << query.lastError().text();
-        return;
+        return listComponents;
     }
 
     while (query.next()) {
@@ -214,7 +214,7 @@ void DatabaseManager::GetCourseComponents(Course* course) {
         query.bindValue(":testId", id);
         if (!query.exec()) {
             qDebug() << "Error executing test submissions query:" << query.lastError().text();
-            return;
+            return listComponents;
         }
 
         QDate time;
@@ -226,24 +226,25 @@ void DatabaseManager::GetCourseComponents(Course* course) {
             notes = query.value("notes").toString();
         }
 
-        course->AddCourseComponent(new CourseTest(id, order, title, maxMark, urlJson, 0, verdict, notes, time, QList<Question*>()));
+        listComponents->append(new CourseTest(id, order, title, maxMark, urlJson, 0, verdict, notes, time, QList<Question*>()));
     }
 
     query.prepare("SELECT id, content, \"order\" "
                   "FROM path_course_tutorials "
                   "WHERE courses_id1 = :courseId");
-    query.bindValue(":courseId", course->GetCourseId());
+    query.bindValue(":courseId", courseId);
     if (!query.exec()) {
         qDebug() << "Error executing course tutorials query:" << query.lastError().text();
-        return;
+        return listComponents;
     }
 
     while (query.next()) {
         int32_t id = query.value("id").toInt();
         int32_t order = query.value("order").toInt();
         QString content = query.value("content").toString();
-        course->AddCourseComponent(new CourseTutorials(id, order, content));
+        listComponents->append(new CourseTutorials(id, order, content));
     }
+    return listComponents;
 }
 
 QString DatabaseManager::GetTestQuestion(int32_t testId) {

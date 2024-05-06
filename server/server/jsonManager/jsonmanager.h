@@ -43,6 +43,8 @@ static QJsonObject getGroup(QJsonObject json,Authentication **auth);
 
 static QJsonObject updateGroup(QJsonObject json,Authentication **auth);
 
+static QJsonObject getAllCourseComponents(QJsonObject json,Authentication **auth);
+
 
 
 #endif // JSONMANAGER_H

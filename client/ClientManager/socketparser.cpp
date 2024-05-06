@@ -33,6 +33,8 @@ void SocketParser::socketparse(QJsonObject json)
         break;
     case GETCOURSECOMPONENTS: getCourseComponents(data);
         break;
+    case GETALLCOURSECOMPONENTS: getScore(data);
+        break;
     }
 }
 
@@ -126,10 +128,32 @@ void SocketParser::getGroup(QJsonObject json)
 
 void SocketParser::getCourseComponents(QJsonObject json)
 {
-    Course* course = Course::Deserialize(json["Course"].toObject());
-    course->DeserializeListComponents(json["CourseComponents"].toObject());
+    int id = json["CourseId"].toInt();
+    QList<CourseComponent*> ls = Course::DeserializeListComponentsCourse(json);
+    for(auto temp : ClientState::GetInstance()->getListCourses())
+        if(temp->GetCourseId()==id)
+        {
+            temp->setListComponents(ls);
+            emit getCourseComponents(temp);
+            break;
+        }
+}
 
-    emit getCourseComponents(course);
+void SocketParser::getScore(QJsonObject json)
+{
+    QJsonArray groupsComponents=json.value("ComponentsList").toArray();
+    for(auto component:groupsComponents){
+        int id = component.toObject()["CourseId"].toInt();
+        QList<CourseComponent*> ls = Course::DeserializeListComponentsCourse(component.toObject());
+        for(auto temp : ClientState::GetInstance()->getListCourses())
+            if(temp->GetCourseId()==id)
+            {
+                temp->setListComponents(ls);
+                break;
+            }
+    }
+
+    emit getScore();
 }
 
 

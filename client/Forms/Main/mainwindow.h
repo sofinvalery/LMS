@@ -32,6 +32,7 @@ public:
     Download *getDownload() const;
 
     Loader *getDialogLoader() const;
+    void raiseDownloadAndLoader();
 
 public slots:
     void ShowManePage();
@@ -45,6 +46,7 @@ private slots:
     void ShowAddingCourse();
     void ShowEditGroup();
     void ShowCoursePage(Course* course);
+    void ShowScore();
 
     void on_exitButton_clicked();
     void on_profileButton_clicked();

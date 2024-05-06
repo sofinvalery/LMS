@@ -30,6 +30,9 @@ void Course::CreateDir(int32_t id)
 
 void Course::setListComponents(const QList<CourseComponent *> &newListComponents)
 {
+    for(auto temp: listComponents)
+        delete temp;
+    listComponents.clear();
     listComponents = newListComponents;
 }
 
@@ -72,6 +75,19 @@ QJsonObject Course::SerializeListComponents()
     //QString jsonString = doc.toJson();
     return json;
 }
+
+QJsonObject Course::SerializeListComponents(int32_t courseId, QList<CourseComponent *> listComponents)
+{
+    QJsonObject json;
+    QJsonArray components;
+    for (auto & user : listComponents)
+        components.append(user->Serialize());
+    json["listComponents"]=components;
+    json["CourseId"]=courseId;
+    //QJsonDocument doc(json);
+    //QString jsonString = doc.toJson();
+    return json;
+}
 //тут надо прям потестить будет хорошо
 void Course::DeserializeListComponents(QJsonObject jsonObj)
 {
@@ -91,6 +107,28 @@ void Course::DeserializeListComponents(QJsonObject jsonObj)
         if(s=="CourseTutorials")
             listComponents.append(CourseTutorials::Deserialize(questions[i].toObject()));
     }
+}
+
+QList<CourseComponent *> Course::DeserializeListComponentsCourse(QJsonObject jsonObj)
+{
+    QList<CourseComponent *> listComponents;
+    for(auto temp:listComponents)
+        delete temp;
+    listComponents.clear();
+    QJsonArray questions=jsonObj["listComponents"].toArray();
+    for(int i=0;i<questions.size();i++)
+    {
+        QString s=questions[i].toObject().keys()[0];
+        if(s=="CourseMediaFiles")
+            listComponents.append(CourseMediaFiles::Deserialize(questions[i].toObject()));
+        if(s=="CourseTask")
+            listComponents.append(CourseTask::Deserialize(questions[i].toObject()));
+        if(s=="CourseTest")
+            listComponents.append(CourseTest::Deserialize(questions[i].toObject()));
+        if(s=="CourseTutorials")
+            listComponents.append(CourseTutorials::Deserialize(questions[i].toObject()));
+    }
+    return listComponents;
 }
 
 Course* Course::Deserialize(QJsonObject jsonObj, bool IsNewCourse)

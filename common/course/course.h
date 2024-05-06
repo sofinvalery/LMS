@@ -38,7 +38,11 @@ public:
 
     QJsonObject SerializeListComponents();
 
+    static QJsonObject SerializeListComponents(int32_t courseId, QList<CourseComponent*> listComponents);
+
     void DeserializeListComponents(QJsonObject jsonObj);
+
+    static QList<CourseComponent*> DeserializeListComponentsCourse(QJsonObject jsonObj);
 
     static Course* Deserialize(QJsonObject jsonObj, bool IsNewCourse=false);
 

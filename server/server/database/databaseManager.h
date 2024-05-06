@@ -23,7 +23,9 @@ public:
     //функции выполняющие запросы
     bool Login(Authentication* auth);
     QList<Course*> GetMainPage(Authentication* auth);
-    void GetCourseComponents(Course* course);
+
+    QList<CourseComponent*>* GetCourseComponents(int32_t courseId);
+
     QString GetTestQuestion(int32_t testId);
     bool SetNewTest(CourseTest* test);
     QList<QString> GetEveryGroupName();

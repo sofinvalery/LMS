@@ -29,7 +29,7 @@ ScoreComponents::ScoreComponents(QString courseName, int currentScore, int maxSc
     ui->pushButton->setStyleSheet("background-color: rgba(0, 0, 0, 0);");
 
     StyleManager::GetInstance()->setProgressBarStyle(ui->progressBar, false, 5, "white", "#7ECFFF");
-    ui->progressBar->setRange(0, maxScore);
+    ui->progressBar->setRange(0, maxScore!=0?maxScore:1);
     ui->progressBar->setValue(currentScore);
 
     ui->groupBox->setStyleSheet(

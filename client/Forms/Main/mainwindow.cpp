@@ -10,6 +10,7 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
 
+    connect(SocketParser::GetInstance(),SIGNAL(getScore()),this,SLOT(ShowScore()),Qt::QueuedConnection);
     connect(SocketParser::GetInstance(),SIGNAL(getMainPage()),this,SLOT(ShowManePage()),Qt::QueuedConnection);
     connect(SocketParser::GetInstance(),SIGNAL(getAddPotok()),this,SLOT(ShowAddingPotok()),Qt::QueuedConnection);
     connect(SocketParser::GetInstance(),SIGNAL(getAddGroup()),this,SLOT(ShowAddingGroup()),Qt::QueuedConnection);
@@ -88,6 +89,8 @@ MainWindow::MainWindow(QWidget *parent)
 
     this->resize( scr->availableGeometry().width(), scr->availableGeometry().height());
     download->setParent(this);
+    dialogLoader->setParent(this);
+    dialogLoader->close();
 }
 
 MainWindow::~MainWindow()
@@ -111,6 +114,7 @@ void MainWindow::ShowManePage()
     widget = new CoursesMPWidget();
     widget->setParent(this);
     widget->show();
+    raiseDownloadAndLoader();
 
 }
 
@@ -121,6 +125,7 @@ void MainWindow::ShowAddingPotok()
     widget = new PotokAdder();
     widget->setParent(this);
     widget->show();
+    raiseDownloadAndLoader();
 }
 
 void MainWindow::ShowAddingGroup()
@@ -130,7 +135,7 @@ void MainWindow::ShowAddingGroup()
     widget = new AddGroup();
     widget->setParent(this);
     widget->show();
-
+    raiseDownloadAndLoader();
 }
 
 void MainWindow::ShowAddingCourse()
@@ -140,6 +145,7 @@ void MainWindow::ShowAddingCourse()
     widget = new CourseAdder();
     widget->setParent(this);
     widget->show();
+    raiseDownloadAndLoader();
 }
 
 void MainWindow::ShowEditGroup()
@@ -149,6 +155,7 @@ void MainWindow::ShowEditGroup()
     widget = new groupEditor();
     widget->setParent(this);
     widget->show();
+    raiseDownloadAndLoader();
 }
 
 void MainWindow::ShowCoursePage(Course *course)
@@ -164,29 +171,13 @@ void MainWindow::ShowCoursePage(Course *course)
     widget = new CoursePage(course);
     widget->setParent(this);
     widget->show();
+    raiseDownloadAndLoader();
 }
 
-void MainWindow::on_profileButton_clicked()
+void MainWindow::ShowScore()
 {
-    if(dialogProfile==nullptr)
-        dialogProfile = new Profile();
-    on_button_clicked(ui->profileButton);
-    if (dialogProfile->isVisible())
-    {
-        dialogProfile->close();
-    }
-    else
-    {
-        dialogProfile->show();
-    }
+    download->close();
     doAllButtonClicked();
-
-}
-
-void MainWindow::on_scoreButton_clicked()
-{
-    //on_button_clicked(ui->scoreButton);
-
     if (widget != nullptr)
     {
         widget->close();
@@ -196,6 +187,47 @@ void MainWindow::on_scoreButton_clicked()
     widget = new Score();
     widget->setParent(this);
     widget->show();
+    raiseDownloadAndLoader();
+}
+
+void MainWindow::on_profileButton_clicked()
+{
+    if(dialogProfile==nullptr)
+    {
+        dialogProfile = new Profile();
+        dialogProfile->setParent(this);
+    }
+    if (dialogProfile->isVisible())
+    {
+        StyleManager::GetInstance()->setSimpleButtonStyle(ui->profileButton, ui->profileButton->text(), true, 20, 18);
+        dialogProfile->close();
+    }
+    else
+    {
+        StyleManager::GetInstance()->setBlueButtonStyle(ui->profileButton, ui->profileButton->text(), true, 20, 32);
+        dialogProfile->show();
+    }
+    raiseDownloadAndLoader();
+}
+
+void MainWindow::on_scoreButton_clicked()
+{
+    on_button_clicked(ui->scoreButton);
+    download->raise();
+    download->show();
+    if (widget != nullptr)
+    {
+        widget->close();
+        delete widget;
+        widget = nullptr;
+    }
+    QJsonObject json;
+    QJsonArray components;
+    for (auto & user : ClientState::GetInstance()->getListCourses())
+        components.append((int)user->GetCourseId());
+    json["ids"]=components;
+    ClientManager::GetInstance()->SendJsonToServer(GETALLCOURSECOMPONENTS,json);
+    raiseDownloadAndLoader();
 }
 
 void MainWindow::on_mainButton_clicked()
@@ -210,6 +242,7 @@ void MainWindow::on_mainButton_clicked()
         widget = nullptr;
     }
     ClientManager::GetInstance()->SendJsonToServer(GETMAINPAGE,ClientState::GetInstance()->getAuth()->Serialize());
+    raiseDownloadAndLoader();
 }
 
 void MainWindow::on_addCourseButton_clicked()
@@ -224,6 +257,7 @@ void MainWindow::on_addCourseButton_clicked()
         widget = nullptr;
     }
     ClientManager::GetInstance()->SendJsonToServer(GETINFOFORAADDINGCOURSE,ClientState::GetInstance()->getAuth()->Serialize());
+    raiseDownloadAndLoader();
 }
 
 void MainWindow::on_addPotokButton_clicked()
@@ -237,6 +271,7 @@ void MainWindow::on_addPotokButton_clicked()
         widget = nullptr;
     }
     ClientManager::GetInstance()->SendJsonToServer(GETINFOFORADDINGPOTOK,ClientState::GetInstance()->getAuth()->Serialize());
+    raiseDownloadAndLoader();
 }
 
 void MainWindow::on_editGroupButton_clicked()
@@ -250,6 +285,7 @@ void MainWindow::on_editGroupButton_clicked()
         widget = nullptr;
     }
     ClientManager::GetInstance()->SendJsonToServer(GETINFOFOREDITGROUP,ClientState::GetInstance()->getAuth()->Serialize());
+    raiseDownloadAndLoader();
 }
 
 void MainWindow::doAllButtonClicked()
@@ -278,15 +314,12 @@ void MainWindow::on_addGroupButton_clicked()
         widget = nullptr;
     }
     ClientManager::GetInstance()->SendJsonToServer(GETINFOFORADDINGGROUP,ClientState::GetInstance()->getAuth()->Serialize());
+    raiseDownloadAndLoader();
 }
 
 void MainWindow::on_button_clicked(QPushButton* clickedButton)
 {
-    if (clickedButton == ui->profileButton)
-    {
-        StyleManager::GetInstance()->setBlueButtonStyle(clickedButton, clickedButton->text(), true, 20, 32);
-    }
-    else
+    if (clickedButton != ui->profileButton)
     {
         StyleManager::GetInstance()->setBlueButtonStyle(clickedButton, clickedButton->text(), true, 20, 13);
     }
@@ -308,7 +341,10 @@ void MainWindow::clickCoursePage(Course *course)
             button->setEnabled(false);
     }
     download->show();
-    ClientManager::GetInstance()->SendJsonToServer(GETCOURSECOMPONENTS,course->Serialize());
+    QJsonObject json;
+    json["id"]=(int)course->GetCourseId();
+    ClientManager::GetInstance()->SendJsonToServer(GETCOURSECOMPONENTS,json);
+    raiseDownloadAndLoader();
 
 }
 
@@ -327,9 +363,24 @@ void MainWindow::on_loaderButton_clicked()
     {
         dialogLoader->show();
     }
+    raiseDownloadAndLoader();
 }
 
 Loader *MainWindow::getDialogLoader() const
 {
     return dialogLoader;
+}
+
+void MainWindow::raiseDownloadAndLoader()
+{
+    if(dialogProfile!=nullptr)
+    {
+    if (dialogProfile->isVisible())
+        {
+            dialogProfile->raise();
+            StyleManager::GetInstance()->setBlueButtonStyle(ui->profileButton, ui->profileButton->text(), true, 20, 32);
+        }
+    }
+    if(dialogLoader->isVisible())
+        dialogLoader->raise();
 }

@@ -24,6 +24,7 @@ private:
     void getEditGroup(QJsonObject json);
     void getGroup(QJsonObject json);
     void getCourseComponents(QJsonObject json);
+    void getScore(QJsonObject json);
     static SocketParser* s_Instance;
 public:
     static SocketParser* GetInstance() { return s_Instance = (s_Instance != nullptr ? s_Instance : new SocketParser()); }
@@ -36,6 +37,7 @@ signals:
     void getEditGroup();
     void getShowEditGroup();
     void getCourseComponents(Course*);
+    void getScore();
 };
 
 #endif // SOCKETPARSER_H

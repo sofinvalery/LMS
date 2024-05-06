@@ -8,7 +8,7 @@ namespace Ui {
 class Profile;
 }
 
-class Profile : public QDialog
+class Profile : public QWidget
 {
     Q_OBJECT
 

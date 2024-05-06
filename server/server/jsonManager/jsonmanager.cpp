@@ -17,7 +17,8 @@ static Action Actions[] ={
     [GETINFOFORAADDINGCOURSE]= getInfoForAddCourse,
     [GETINFOFOREDITGROUP] = getInfoForEditGroup,
     [GETGROUP]= getGroup,
-    [UPDATEGROUP] = updateGroup
+    [UPDATEGROUP] = updateGroup,
+    [GETALLCOURSECOMPONENTS] = getAllCourseComponents
 };
 
 QJsonObject jsonManager(QJsonObject json,Authentication **auth)
@@ -85,17 +86,18 @@ QJsonObject getMainPage(QJsonObject json,Authentication **auth)
 
 QJsonObject getCourseComponents(QJsonObject json,Authentication **auth)
 {
-    Course* course = Course::Deserialize(json);
+    int course = json["id"].toInt();
     DatabaseManager db;
-    db.GetCourseComponents(course);
-    std::sort(course->getListComponents().begin(),course->getListComponents().end(),[](CourseComponent* a,CourseComponent* b){return a->getOrder()<b->getOrder();});
+    QList<CourseComponent*>* ls;
+    ls=db.GetCourseComponents(course);
+    std::sort(ls->begin(),ls->end(),[](CourseComponent* a,CourseComponent* b){return a->getOrder()<b->getOrder();});
     QJsonObject sendjson;
     sendjson["Action"]=GETCOURSECOMPONENTS;
-    QJsonObject temp;
-    temp["Course"]=course->Serialize();
-    temp["CourseComponents"]=course->SerializeListComponents();
-    sendjson["Data"]=temp;
-    delete course;
+    sendjson["Data"]=Course::SerializeListComponents(course,*ls);
+    for(auto temp : *ls)
+        delete temp;
+    ls->clear();
+    delete ls;
     return sendjson;
 }
 
@@ -237,4 +239,33 @@ QJsonObject updateGroup(QJsonObject json, Authentication **auth)
         delete t;
     delete gr;
     return sendjson;
+}
+
+QJsonObject getAllCourseComponents(QJsonObject json, Authentication **auth)
+{
+    QList<int> ids;
+    QJsonArray components=json["ids"].toArray();
+    for(int i=0;i<components.size();i++)
+    {
+        ids.append(components[i].toInt());
+    }
+    QJsonArray ar;
+    DatabaseManager db;
+    QList<CourseComponent*>* ls;
+    for(int id: ids)
+    {
+        ls=db.GetCourseComponents(id);
+        std::sort(ls->begin(),ls->end(),[](CourseComponent* a,CourseComponent* b){return a->getOrder()<b->getOrder();});
+        ar.append(Course::SerializeListComponents(id,*ls));
+        for(auto temp : *ls)
+            delete temp;
+        ls->clear();
+        delete ls;
+    }
+    QJsonObject send;
+    QJsonObject temp;
+    temp["ComponentsList"]=ar;
+    send["Action"]=GETALLCOURSECOMPONENTS;
+    send["Data"]=temp;
+    return send;
 }

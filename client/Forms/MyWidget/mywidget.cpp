@@ -16,6 +16,8 @@ MyWidget::MyWidget(Course* course,QWidget *parent)
     ui->ProgressbarButton->raise();
     ui->ProgressbarButton->setCursor(Qt::PointingHandCursor);
     ui->ProgressbarButton->setFixedSize(341, 25);
+    ui->progressBar->setRange(0, course->getMaxSumpoints()!=0?course->getMaxSumpoints():1);
+    ui->progressBar->setValue(course->getSumpoints());
     //groupbox
     ui->groupBox->setStyleSheet(
         "QGroupBox {"

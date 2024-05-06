@@ -10,8 +10,6 @@ Loader::Loader(QWidget *parent)
 {
     ui->setupUi(this);
     this->setFixedSize(this->size());
-    this->setWindowFlag(Qt::WindowCloseButtonHint, false);
-    this->setWindowFlags(Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint);
     this->move(StyleManager::GetInstance()->getScreenWidth() - this->width() - 104, 55);
     this->setStyleSheet("background-color: white;");
     StyleManager::GetInstance()->setLabelStyle(ui->loaderLabel, "Загрузки", true, "white", true, 20, true);
