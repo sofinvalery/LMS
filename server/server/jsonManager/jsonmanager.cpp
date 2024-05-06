@@ -89,7 +89,7 @@ QJsonObject getCourseComponents(QJsonObject json,Authentication **auth)
     int course = json["id"].toInt();
     DatabaseManager db;
     QList<CourseComponent*>* ls;
-    ls=db.GetCourseComponents(course);
+    ls=db.GetCourseComponents(course,*auth);
     std::sort(ls->begin(),ls->end(),[](CourseComponent* a,CourseComponent* b){return a->getOrder()<b->getOrder();});
     QJsonObject sendjson;
     sendjson["Action"]=GETCOURSECOMPONENTS;
@@ -254,7 +254,7 @@ QJsonObject getAllCourseComponents(QJsonObject json, Authentication **auth)
     QList<CourseComponent*>* ls;
     for(int id: ids)
     {
-        ls=db.GetCourseComponents(id);
+        ls=db.GetCourseComponents(id,*auth);
         std::sort(ls->begin(),ls->end(),[](CourseComponent* a,CourseComponent* b){return a->getOrder()<b->getOrder();});
         ar.append(Course::SerializeListComponents(id,*ls));
         for(auto temp : *ls)

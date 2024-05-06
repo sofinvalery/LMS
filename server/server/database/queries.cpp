@@ -67,8 +67,8 @@ QList<Course*> DatabaseManager::GetMainPage(Authentication* auth) {
                       "INNER JOIN zachisleniya AS z ON zip.groups_id = z.groups_id "
                       "LEFT JOIN path_course_tasks AS pct ON pct.courses_id1 = c.id "
                       "LEFT JOIN path_course_tests AS pct2 ON pct2.courses_id1 = c.id "
-                      "LEFT JOIN path_course_tasks_submits AS pts ON pct.id = pts.path_course_tasks_id1 "
-                      "LEFT JOIN path_course_test_submits AS pcts ON pct2.id = pcts.path_course_tests_id "
+                      "LEFT JOIN path_course_tasks_submits AS pts ON pct.id = pts.path_course_tasks_id1 AND pts.users_id1 = z.users_id "
+                      "LEFT JOIN path_course_test_submits AS pcts ON pct2.id = pcts.path_course_tests_id AND pcts.users_id1 = z.users_id "
                       "WHERE z.users_id = :userId "
                       "GROUP BY c.id, c.title, c.ava_title_url, c.start_time, c.end_time");
     } else if (auth->GetCurrentRole() == TEACHER) {
@@ -114,7 +114,7 @@ QList<Course*> DatabaseManager::GetMainPage(Authentication* auth) {
     return courses;
 }
 
-QList<CourseComponent*>* DatabaseManager::GetCourseComponents(int32_t courseId) {
+QList<CourseComponent*>* DatabaseManager::GetCourseComponents(int32_t courseId,Authentication* auth) {
     QSqlQuery query(m_db);
     QList<CourseComponent*>* listComponents = new QList<CourseComponent*>();
     query.prepare("SELECT id, title, url, \"order\", \"type\" "
@@ -169,8 +169,9 @@ QList<CourseComponent*>* DatabaseManager::GetCourseComponents(int32_t courseId) 
         QString allowedTypeOfFiles = allowedTypes.join(",");
         query.prepare("SELECT answer_url, time, verdict, notes "
                       "FROM path_course_tasks_submits "
-                      "WHERE path_course_tasks_id1 = :taskId");
+                      "WHERE path_course_tasks_id1 = :taskId AND users_id1 = :id");
         query.bindValue(":taskId", id);
+        query.bindValue(":id", auth->getId());
         if (!query.exec()) {
             qDebug() << "Error executing task submissions query:" << query.lastError().text();
             return listComponents;
@@ -210,8 +211,9 @@ QList<CourseComponent*>* DatabaseManager::GetCourseComponents(int32_t courseId) 
 
         query.prepare("SELECT time, verdict, notes "
                       "FROM path_course_test_submits "
-                      "WHERE path_course_tests_id = :testId");
+                      "WHERE path_course_tests_id = :testId AND users_id1 = :id");
         query.bindValue(":testId", id);
+        query.bindValue(":id", auth->getId());
         if (!query.exec()) {
             qDebug() << "Error executing test submissions query:" << query.lastError().text();
             return listComponents;
