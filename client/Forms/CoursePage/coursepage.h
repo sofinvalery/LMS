@@ -19,7 +19,6 @@ public:
     void CleanComponents();
     Course * GetCourse(){return course;}
     ~CoursePage();
-
 private slots:
     void on_EditCourseButton_clicked();
 

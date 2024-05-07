@@ -18,6 +18,21 @@ CoursePageEditor::CoursePageEditor(CoursePage * coursepage, QWidget *parent)
     ui->ComponentOrderLabel->setFixedSize(ui->MaxMarkLabel->sizeHint().width(), ui->TaskContentLabel->sizeHint().height());
     StyleManager::GetInstance()->setLineEditStyle(ui->NameOnComponentLineEdit, "Название компонента", false, 16, 300, 30);
     StyleManager::GetInstance()->setLineEditStyle(ui->AllowedTypeOfFilesLineEdit, "Разрешенные типы файлов", false, 16, 300, 30);
+
+    StyleManager::GetInstance()->setBlueButtonStyle(ui->AddWidgetButton, ui->AddWidgetButton->text(), true, 14, 13);
+    StyleManager::GetInstance()->setBlueButtonStyle(ui->EditWidgetButton, ui->EditWidgetButton->text(), true, 14, 13);
+    StyleManager::GetInstance()->setBlueButtonStyle(ui->DeleteWidgetButton, ui->DeleteWidgetButton->text(), true, 14, 13);
+
+    StyleManager::GetInstance()->setBlueButtonStyle(ui->DoneButton, ui->DoneButton->text(), true, 14, 13);
+    StyleManager::GetInstance()->setBlueButtonStyle(ui->LoadFileButton, ui->LoadFileButton->text(), true, 14, 13);
+
+    StyleManager::GetInstance()->setCustomButtonStyle(ui->exitButton, ui->exitButton->text(), "#E65D4F", true, 16, 4);
+
+    QList<QPushButton*> buttons = {ui->AddTextButton, ui->AddDzButton, ui->AddFileButton, ui->AddTestButton};
+    for(QPushButton* button : buttons) {
+        StyleManager::GetInstance()->setBlueButtonStyle(button, button->text(), true, 14, 13);
+    }
+
     ui->ContentTextEdit->hide();
     ui->NameOnComponentLineEdit->hide();
     ui->ComponentOrderSpinBox->hide();
@@ -33,6 +48,7 @@ CoursePageEditor::CoursePageEditor(CoursePage * coursepage, QWidget *parent)
     ui->MaxMarkLabel->hide();
     ui->MaxMarkSpinBox->hide();
     ui->TaskContentLabel->hide();
+
 }
 
 CoursePageEditor::~CoursePageEditor()
@@ -50,6 +66,7 @@ void CoursePageEditor::on_LoadFileButton_clicked()
 void CoursePageEditor::on_AddWidgetButton_clicked()
 {
     if(ui->DeleteWidgetButton->isEnabled()){
+        on_mainButton_clicked(ui->AddWidgetButton);
         ui->ComponentOrderSpinBox->setMaximum(coursepage->GetCourse()->getListComponents().size() + 1);
         ui->ComponentOrderSpinBox->setValue(1);
         ui->DeleteWidgetButton->setEnabled(false);
@@ -66,6 +83,7 @@ void CoursePageEditor::on_AddWidgetButton_clicked()
     else{
         ui->DeleteWidgetButton->setEnabled(true);
         ui->EditWidgetButton->setEnabled(true);
+        on_mainButton_clickedAgain();
         ui->AddDzButton->hide();
         ui->AddFileButton->hide();
         ui->AddTestButton->hide();
@@ -86,6 +104,7 @@ void CoursePageEditor::on_AddWidgetButton_clicked()
 void CoursePageEditor::on_EditWidgetButton_clicked()
 {
     if(ui->AddWidgetButton->isEnabled()){
+        on_mainButton_clicked(ui->EditWidgetButton);
         ui->ComponentOrderSpinBox->setMaximum(coursepage->GetCourse()->getListComponents().size());
         ui->ComponentOrderSpinBox->setValue(1);
         ui->AddWidgetButton->setEnabled(false);
@@ -95,6 +114,7 @@ void CoursePageEditor::on_EditWidgetButton_clicked()
         //ui->NameOnComponent->show();
     }
     else{
+        on_mainButton_clickedAgain();
         ui->AddWidgetButton->setEnabled(true);
         ui->DeleteWidgetButton->setEnabled(true);
         ui->ComponentOrderSpinBox->hide();
@@ -107,6 +127,7 @@ void CoursePageEditor::on_EditWidgetButton_clicked()
 void CoursePageEditor::on_DeleteWidgetButton_clicked()
 {
     if(ui->AddWidgetButton->isEnabled()){
+        on_mainButton_clicked(ui->DeleteWidgetButton);
         ui->ComponentOrderSpinBox->setMaximum(coursepage->GetCourse()->getListComponents().size());
         ui->ComponentOrderSpinBox->setValue(1);
         DeletingStatus = 1;
@@ -116,6 +137,7 @@ void CoursePageEditor::on_DeleteWidgetButton_clicked()
         ui->ComponentOrderLabel->show();
     }
     else{
+        on_mainButton_clickedAgain();
         DeletingStatus = 0;
         ui->AddWidgetButton->setEnabled(true);
         ui->EditWidgetButton->setEnabled(true);
@@ -159,6 +181,7 @@ void CoursePageEditor::on_DoneButton_clicked()
 void CoursePageEditor::on_AddFileButton_clicked()
 {
     if(ui->LoadFileButton->isHidden()){
+        on_AddButton_clicked(ui->AddFileButton);
         AddingStatus = 2;
         ui->LoadFileButton->show();
         ui->PathLabel1->show();
@@ -171,6 +194,7 @@ void CoursePageEditor::on_AddFileButton_clicked()
         ui->AddTextButton->setEnabled(false);
     }
     else{
+        on_AddButton_clickedAgain();
         AddingStatus = 0;
         ui->LoadFileButton->hide();
         ui->PathLabel1->hide();
@@ -188,6 +212,7 @@ void CoursePageEditor::on_AddFileButton_clicked()
 void CoursePageEditor::on_AddTextButton_clicked()
 {
     if (ui->ContentTextEdit->isHidden()){
+        on_AddButton_clicked(ui->AddTextButton);
         AddingStatus = 4;
         ui->ContentTextEdit->show();
         ui->ComponentOrderLabel->show();
@@ -197,6 +222,7 @@ void CoursePageEditor::on_AddTextButton_clicked()
         ui->AddFileButton->setEnabled(false);
     }
     else{
+        on_AddButton_clickedAgain();
         AddingStatus = 0;
         ui->ContentTextEdit->clear();
         ui->ContentTextEdit->hide();
@@ -212,6 +238,7 @@ void CoursePageEditor::on_AddTextButton_clicked()
 void CoursePageEditor::on_AddTestButton_clicked()
 {
     if (ui->ComponentOrderLabel->isHidden()){
+        on_AddButton_clicked(ui->AddTestButton);
         AddingStatus = 1;
         ui->ComponentOrderLabel->show();
         ui->ComponentOrderSpinBox->show();
@@ -222,6 +249,7 @@ void CoursePageEditor::on_AddTestButton_clicked()
     }
     else
     {
+        on_AddButton_clickedAgain();
         AddingStatus = 0;
         ui->ComponentOrderLabel->hide();
         ui->ComponentOrderSpinBox->hide();
@@ -236,6 +264,7 @@ void CoursePageEditor::on_AddTestButton_clicked()
 void CoursePageEditor::on_AddDzButton_clicked()
 {
     if (ui->ComponentOrderLabel->isHidden()){
+        on_AddButton_clicked(ui->AddDzButton);
         AddingStatus = 3;
         ui->ComponentOrderLabel->show();
         ui->ComponentOrderSpinBox->show();
@@ -251,6 +280,7 @@ void CoursePageEditor::on_AddDzButton_clicked()
     }
     else
     {
+        on_AddButton_clickedAgain();
         AddingStatus = 0;
         ui->ContentTextEdit->clear();
         ui->ComponentOrderLabel->hide();
@@ -265,5 +295,49 @@ void CoursePageEditor::on_AddDzButton_clicked()
         ui->AddTestButton->setEnabled(true);
         ui->AddFileButton->setEnabled(true);
     }
+}
+
+void CoursePageEditor::on_mainButton_clicked(QPushButton *clickedButton)
+{
+    StyleManager::GetInstance()->setBlueButtonStyle(clickedButton, clickedButton->text(), true, 14, 13);
+    QList<QPushButton*> buttons = {ui->AddWidgetButton, ui->EditWidgetButton, ui->DeleteWidgetButton};
+    for(QPushButton* button : buttons) {
+        if(button != clickedButton) {
+            StyleManager::GetInstance()->setDisableButtonStyle(button, button->text(), true, 14, 13);
+        }
+    }
+}
+
+void CoursePageEditor::on_mainButton_clickedAgain()
+{
+    QList<QPushButton*> buttons = {ui->AddWidgetButton, ui->EditWidgetButton, ui->DeleteWidgetButton};
+    for(QPushButton* button : buttons) {
+        StyleManager::GetInstance()->setBlueButtonStyle(button, button->text(), true, 14, 13);
+    }
+}
+
+void CoursePageEditor::on_AddButton_clicked(QPushButton *clickedButton)
+{
+    StyleManager::GetInstance()->setBlueButtonStyle(clickedButton, clickedButton->text(), true, 14, 13);
+    QList<QPushButton*> buttons = {ui->AddTextButton, ui->AddDzButton, ui->AddFileButton, ui->AddTestButton};
+    for(QPushButton* button : buttons) {
+        if(button != clickedButton) {
+            StyleManager::GetInstance()->setDisableButtonStyle(button, button->text(), true, 14, 13);
+        }
+    }
+}
+
+void CoursePageEditor::on_AddButton_clickedAgain()
+{
+    QList<QPushButton*> buttons = {ui->AddTextButton, ui->AddDzButton, ui->AddFileButton, ui->AddTestButton};
+    for(QPushButton* button : buttons) {
+        StyleManager::GetInstance()->setBlueButtonStyle(button, button->text(), true, 14, 13);
+    }
+}
+
+void CoursePageEditor::on_exitButton_clicked()
+{
+    this->close();
+    delete this;
 }
 

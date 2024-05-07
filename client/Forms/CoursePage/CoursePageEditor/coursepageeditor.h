@@ -3,7 +3,7 @@
 
 #include <QWidget>
 #include "Forms/CoursePage/coursepage.h"
-
+#include <QPushButton>
 
 namespace Ui {
 class CoursePageEditor;
@@ -16,7 +16,6 @@ class CoursePageEditor : public QWidget
 public:
     explicit CoursePageEditor(CoursePage * coursepage, QWidget *parent = nullptr);
     ~CoursePageEditor();
-
 private slots:
     void on_LoadFileButton_clicked();
 
@@ -36,11 +35,18 @@ private slots:
 
     void on_AddDzButton_clicked();
 
+    void on_exitButton_clicked();
+
 private:
     Ui::CoursePageEditor *ui;
     CoursePage * coursepage;
     int AddingStatus = 0; // 1 - тест, 2 - файл, 3 - дз, 4 - пояснение
     int DeletingStatus = 0;
+
+    void on_mainButton_clicked(QPushButton* clickedButton);
+    void on_mainButton_clickedAgain();
+    void on_AddButton_clicked(QPushButton* clickedButton);
+    void on_AddButton_clickedAgain();
 };
 
 #endif // COURSEPAGEEDITOR_H

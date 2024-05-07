@@ -1,5 +1,6 @@
 #include "coursetext.h"
 #include "ui_coursetext.h"
+#include "StyleManager/stylemanager.h"
 
 CourseText::CourseText(CourseComponent * text, QWidget *parent)
     : QWidget(parent)
@@ -7,7 +8,7 @@ CourseText::CourseText(CourseComponent * text, QWidget *parent)
 {
     ui->setupUi(this);
     this->text = qobject_cast<CourseTutorials*>(text);
-    ui->label->setText(this->text->getContent());
+    StyleManager::GetInstance()->setLabelStyle(ui->label, this->text->getContent(), false, "black", true, 16);
     ui->label->setFixedSize(ui->label->sizeHint().width(), ui->label->sizeHint().height());
 }
 

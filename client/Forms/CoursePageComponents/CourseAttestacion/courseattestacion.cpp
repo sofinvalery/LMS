@@ -11,6 +11,7 @@ CourseAttestacion::CourseAttestacion(CourseComponent * test, QWidget *parent)
     icon = new QPixmap(":/img/resources/test.png");
     ui->LabelIMG->setPixmap(icon->scaled(31, 21, Qt::KeepAspectRatio));
     StyleManager::GetInstance()->setSimpleButtonStyle(ui->DownloadButton, this->test->getTitle(), true, 16, 15);
+    ui->DownloadButton->setFixedSize(ui->DownloadButton->sizeHint().width(), ui->DownloadButton->sizeHint().height());
 }
 
 CourseAttestacion::~CourseAttestacion()
@@ -21,4 +22,5 @@ CourseAttestacion::~CourseAttestacion()
 void CourseAttestacion::SetTextOnButton(QString buttontext)
 {
     StyleManager::GetInstance()->setSimpleButtonStyle(ui->DownloadButton, buttontext, true, 16, 15);
+    ui->DownloadButton->setFixedSize(ui->DownloadButton->sizeHint().width(), ui->DownloadButton->sizeHint().height());
 }

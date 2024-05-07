@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>586</width>
-    <height>510</height>
+    <width>580</width>
+    <height>500</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -18,12 +18,12 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>581</width>
-     <height>501</height>
+     <width>580</width>
+     <height>500</height>
     </rect>
    </property>
    <property name="title">
-    <string>GroupBox</string>
+    <string/>
    </property>
    <widget class="QPushButton" name="LoadFileButton">
     <property name="geometry">
@@ -113,7 +113,8 @@
      </rect>
     </property>
     <property name="text">
-     <string>Добавить примечание</string>
+     <string>Добавить
+примечание</string>
     </property>
    </widget>
    <widget class="QPushButton" name="AddWidgetButton">
@@ -126,7 +127,8 @@
      </rect>
     </property>
     <property name="text">
-     <string>Добавить компонент</string>
+     <string>Добавить
+компонент</string>
     </property>
    </widget>
    <widget class="QPushButton" name="EditWidgetButton">
@@ -139,7 +141,8 @@
      </rect>
     </property>
     <property name="text">
-     <string>Изменить компонент</string>
+     <string>Изменить
+компонент</string>
     </property>
    </widget>
    <widget class="QPushButton" name="DeleteWidgetButton">
@@ -152,7 +155,8 @@
      </rect>
     </property>
     <property name="text">
-     <string>Удалить компонент</string>
+     <string>Удалить
+компонент</string>
     </property>
    </widget>
    <widget class="QPushButton" name="DoneButton">
@@ -165,7 +169,8 @@
      </rect>
     </property>
     <property name="text">
-     <string>Применить изменения</string>
+     <string>Применить
+изменения</string>
     </property>
    </widget>
    <widget class="QLineEdit" name="NameOnComponentLineEdit">
@@ -267,6 +272,19 @@
     </property>
     <property name="text">
      <string>описание задания</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="exitButton">
+    <property name="geometry">
+     <rect>
+      <x>540</x>
+      <y>30</y>
+      <width>25</width>
+      <height>25</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>X</string>
     </property>
    </widget>
   </widget>
