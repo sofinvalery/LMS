@@ -46,6 +46,8 @@ public:
 
     int32_t getOrder() { return order; }
 
+    int32_t getTestSize() { return testSize; }
+
     ~CourseTest() {
         for(auto temp:listQuestions)
             delete temp;

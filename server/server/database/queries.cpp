@@ -135,7 +135,7 @@ QList<CourseComponent*>* DatabaseManager::GetCourseComponents(int32_t courseId,A
         listComponents->append(new CourseMediaFiles(id, order, title, url, typeFile));
     }
 
-    query.prepare("SELECT id, content, max_mark, memory_limit, \"order\" "
+    query.prepare("SELECT id, content, max_mark, memory_limit, \"order\", title "
                   "FROM path_course_tasks "
                   "WHERE courses_id1 = :courseId");
     query.bindValue(":courseId", courseId);
@@ -150,6 +150,7 @@ QList<CourseComponent*>* DatabaseManager::GetCourseComponents(int32_t courseId,A
         QString content = query.value("content").toString();
         int32_t maxMark = query.value("max_mark").toInt();
         int32_t memoryLimit = query.value("memory_limit").toInt();
+        QString title = query.value("title").toString();
 
         QStringList allowedTypes;
         query.prepare("SELECT type_files.name "
@@ -190,10 +191,10 @@ QList<CourseComponent*>* DatabaseManager::GetCourseComponents(int32_t courseId,A
 
         listComponents->append(new CourseTask(id, order, content, maxMark, memoryLimit,
                                                   allowedTypeOfFiles, answerUrl, solutionTime,
-                                                  verdict, notes));
+                                                  verdict, notes, title));
     }
 
-    query.prepare("SELECT id, title, max_mark, url_json, \"order\" "
+    query.prepare("SELECT id, title, max_mark, url_json, \"order\", test_size "
                   "FROM path_course_tests "
                   "WHERE courses_id1 = :courseId");
     query.bindValue(":courseId", courseId);
@@ -208,6 +209,7 @@ QList<CourseComponent*>* DatabaseManager::GetCourseComponents(int32_t courseId,A
         QString title = query.value("title").toString();
         int32_t maxMark = query.value("max_mark").toInt();
         QString urlJson = query.value("url_json").toString();
+        int32_t testSize = query.value("test_size").toInt();
 
         query.prepare("SELECT time, verdict, notes "
                       "FROM path_course_test_submits "
@@ -228,7 +230,7 @@ QList<CourseComponent*>* DatabaseManager::GetCourseComponents(int32_t courseId,A
             notes = query.value("notes").toString();
         }
 
-        listComponents->append(new CourseTest(id, order, title, maxMark, urlJson, 0, verdict, notes, time));
+        listComponents->append(new CourseTest(id, order, title, maxMark, urlJson, 0, verdict, notes, time, testSize));
     }
 
     query.prepare("SELECT id, content, \"order\" "
@@ -663,13 +665,14 @@ bool DatabaseManager::SetCourseMediaFiles(CourseMediaFiles* mediaFiles, int32_t 
 bool DatabaseManager::SetCourseTasks(CourseTask* tasks, int32_t courseId) {
     QSqlQuery query(m_db);
 
-    query.prepare("INSERT INTO path_course_tasks (content, max_mark, memory_limit, \"order\", courses_id1) "
-                  "VALUES (:content, :maxMark, :memoryLimit, :order, :courseId1)");
+    query.prepare("INSERT INTO path_course_tasks (content, max_mark, memory_limit, \"order\", courses_id1, title) "
+                  "VALUES (:content, :maxMark, :memoryLimit, :order, :courseId1, title)");
     query.bindValue(":content", tasks->getContent());
     query.bindValue(":maxMark", tasks->getMaxMark());
     query.bindValue(":memoryLimit", tasks->getMemoryLimit());
     query.bindValue(":order", tasks->getOrder());
     query.bindValue(":courseId1", courseId);
+    query.bindValue(":title", tasks->getTitle());
 
     if (!query.exec()) {
         qDebug() << "Error inserting course task into 'path_course_tasks' table:" << query.lastError().text();
@@ -682,13 +685,14 @@ bool DatabaseManager::SetCourseTasks(CourseTask* tasks, int32_t courseId) {
 bool DatabaseManager::SetCourseTests(CourseTest* tests, int32_t courseId) {
     QSqlQuery query(m_db);
 
-    query.prepare("INSERT INTO path_course_tests (title, max_mark, url_json, \"order\", courses_id1) "
-                  "VALUES (:title, :maxMark, :urlJson, :order, :courseId1)");
+    query.prepare("INSERT INTO path_course_tests (title, max_mark, url_json, \"order\", courses_id1, test_size) "
+                  "VALUES (:title, :maxMark, :urlJson, :order, :courseId1, test_size)");
     query.bindValue(":title", tests->getTitle());
     query.bindValue(":maxMark", tests->getMaxMark());
     query.bindValue(":urlJson", tests->getUrlJson());
     query.bindValue(":order", tests->getOrder());
     query.bindValue(":courseId1", courseId);
+    query.bindValue(":test_size", tests->getTestSize());
 
     if (!query.exec()) {
         qDebug() << "Error inserting course test into 'path_course_tests' table:" << query.lastError().text();
@@ -799,13 +803,15 @@ bool DatabaseManager::EditCourseTask(CourseTask* task) {
                   "SET content = :content, "
                   "    max_mark = :maxMark, "
                   "    memory_limit = :memoryLimit, "
-                  "    \"order\" = :order "
+                  "    \"order\" = :order"
+                  "    title = :title "
                   "WHERE id = :id");
     query.bindValue(":content", task->getContent());
     query.bindValue(":maxMark", task->getMaxMark());
     query.bindValue(":memoryLimit", task->getMemoryLimit());
     query.bindValue(":order", task->getOrder());
     query.bindValue(":id", task->getId());
+    query.bindValue(":title", task->getTitle());
 
     if (!query.exec()) {
         qDebug() << "Error updating course task:" << query.lastError().text();
@@ -822,13 +828,15 @@ bool DatabaseManager::EditCourseTest(CourseTest* test) {
                   "SET title = :title, "
                   "    max_mark = :maxMark, "
                   "    url_json = :urlJson, "
-                  "    \"order\" = :order "
+                  "    \"order\" = :order"
+                  "    test_size = :testSize "
                   "WHERE id = :id");
     query.bindValue(":title", test->getTitle());
     query.bindValue(":maxMark", test->getMaxMark());
     query.bindValue(":urlJson", test->getUrlJson());
     query.bindValue(":order", test->getOrder());
     query.bindValue(":id", test->getId());
+    query.bindValue(":test_size", test->getTestSize());
 
     if (!query.exec()) {
         qDebug() << "Error updating course test:" << query.lastError().text();
