@@ -23,9 +23,7 @@ public:
     //функции выполняющие запросы
     bool Login(Authentication* auth);
     QList<Course*> GetMainPage(Authentication* auth);
-
     QList<CourseComponent*>* GetCourseComponents(int32_t courseId,Authentication* auth);
-
     QString GetTestQuestion(int32_t testId);
     bool SetNewTest(CourseTest* test);
     QList<QString> GetEveryGroupName();
@@ -41,6 +39,15 @@ public:
     bool SetCourseMediaFiles(CourseMediaFiles* mediaFiles, int32_t courseId);
     bool SetCourseTasks(CourseTask* tasks, int32_t courseId);
     bool SetCourseTests(CourseTest* tests, int32_t courseId);
+    bool DeleteCourseMedia(int32_t courseMediaId); // удалить все поля с этим id
+    bool DeleteCourseTutorial(int32_t courseTutorialId); // удалить все поля с этим id
+    bool DeleteCourseTask(int32_t courseTaskId); // удалить все поля с этим id
+    bool DeleteCourseTest(int32_t courseTaskId); // удалить все поля с этим id
+    bool EditCourseMediaFiles(CourseMediaFiles* mediaFiles); // меняю все поля кроме айди
+    bool EditCourseTutorial(CourseTutorials* tutorials); // меняю все поля кроме айди
+    bool EditCourseTask(CourseTask* task); // меняю все поля кроме айди
+    bool EditCourseTest(CourseTest* test); // меняю все поля кроме айди
+
     ~DatabaseManager();
 
 private:
