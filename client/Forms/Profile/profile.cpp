@@ -5,7 +5,7 @@
 #include "ClientState/clientstate.h"
 
 Profile::Profile(QWidget *parent)
-    : QWidget(parent)
+    : QDialog(parent)
     , ui(new Ui::Profile)
 {
     ui->setupUi(this);
@@ -14,7 +14,6 @@ Profile::Profile(QWidget *parent)
     this->setWindowFlags(Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint);
     this->move(15, 80);
     this->setStyleSheet("background-color: white;");
-
     Authentication* auth = ClientState::GetInstance()->getAuth();
     QString role;
     EnumRoles roles = auth->GetCurrentRole();

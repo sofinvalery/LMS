@@ -18,6 +18,7 @@ class CourseDownload : public QWidget
 public:
     explicit CourseDownload(CourseComponent * pdf, QWidget *parent = nullptr);
     ~CourseDownload();
+    void SetTextOnButton(QString buttontext);
 
 private slots:
     void on_DownloadButton_clicked();

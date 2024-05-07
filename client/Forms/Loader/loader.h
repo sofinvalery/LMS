@@ -2,7 +2,6 @@
 #define LOADER_H
 
 #include <QDialog>
-#include <QWidget>
 #include <QHash>
 namespace Ui {
 class Loader;

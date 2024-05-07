@@ -29,11 +29,13 @@ private:
     int32_t maxSumpoints;
     QList<CourseComponent*> listComponents = QList<CourseComponent*>();
 public:
-
     void CreateDir(int32_t id);
+    void AddCourseComponent(CourseComponent* component, int position){
+        listComponents.insert(position, component);
+    }
 
-    void AddCourseComponent(CourseComponent* component){
-        listComponents.append(component);
+    void DeleteCourseComponent(int position){
+        listComponents.removeAt(position);
     }
 
     QJsonObject SerializeListComponents();

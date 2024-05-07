@@ -11,11 +11,13 @@ public:
     explicit CourseTask(int32_t id,int32_t order, QString content, int32_t maxMark,
                         int32_t memoryLimit,
                         QString allowedTypeOfFiles, QString answerUrl, QDate solutionTime,
-                        int32_t verdict, QString notes, QObject *parent = nullptr);
+                        int32_t verdict, QString notes, QString title = "", QObject *parent = nullptr);
 
     QJsonObject Serialize() override;
 
     static CourseTask* Deserialize(QJsonObject jsonObj);
+
+    QString getTitle() const {return title;}
 
     QString getNotes() const;
 
@@ -48,6 +50,7 @@ private:
     QDate solutionTime;
     int32_t verdict;
     QString notes;
+    QString title;
 };
 
 #endif // COURSETASK_H

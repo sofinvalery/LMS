@@ -33,6 +33,12 @@ MainWindow::MainWindow(QWidget *parent)
     ui->loaderButton->setFixedSize(ui->loaderButton->sizeHint().width(), ui->loaderButton->sizeHint().height());
     ui->loaderButton->move(StyleManager::GetInstance()->getScreenWidth() - ui->loaderButton->size().width() - 104, 13);
 
+    StyleManager::GetInstance()->setSimpleButtonStyle(ui->loaderButton, "", false, 1, 1);
+    ui->loaderButton->setIconSize(QSize(48, 48));
+    ui->loaderButton->setIcon(QIcon(":/img/resources/dowloadicon.png"));
+    ui->loaderButton->setFixedSize(ui->loaderButton->sizeHint().width(), ui->loaderButton->sizeHint().height());
+    ui->loaderButton->move(StyleManager::GetInstance()->getScreenWidth() - ui->loaderButton->size().width() - 104, 13);
+
     //mainbutton
     StyleManager::GetInstance()->setBlueButtonStyle(ui->mainButton, "Курсы", true, 20, 13);
     ui->mainButton->setFixedSize(96, 45);
