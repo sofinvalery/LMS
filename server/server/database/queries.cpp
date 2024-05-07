@@ -666,7 +666,7 @@ bool DatabaseManager::SetCourseTasks(CourseTask* tasks, int32_t courseId) {
     QSqlQuery query(m_db);
 
     query.prepare("INSERT INTO path_course_tasks (content, max_mark, memory_limit, \"order\", courses_id1, title) "
-                  "VALUES (:content, :maxMark, :memoryLimit, :order, :courseId1, title)");
+                  "VALUES (:content, :maxMark, :memoryLimit, :order, :courseId1, :title)");
     query.bindValue(":content", tasks->getContent());
     query.bindValue(":maxMark", tasks->getMaxMark());
     query.bindValue(":memoryLimit", tasks->getMemoryLimit());
