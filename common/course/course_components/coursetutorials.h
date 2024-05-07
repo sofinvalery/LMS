@@ -20,6 +20,8 @@ public:
         return "CourseTutorials";
     }
 
+    void setContent(const QString &newContent);
+
 private:
     QString content;
 };

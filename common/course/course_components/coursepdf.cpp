@@ -37,3 +37,13 @@ CoursePdf* CoursePdf::Deserialize(QJsonObject jsonObj)
     return new CoursePdf(json["id"].toInt(),json["order"].toInt(),
                      json["title"].toString(),json["url"].toString());
 }
+
+void CoursePdf::setTitle(const QString &newTitle)
+{
+    title = newTitle;
+}
+
+void CoursePdf::setUrl(const QString &newUrl)
+{
+    url = newUrl;
+}

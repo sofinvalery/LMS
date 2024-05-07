@@ -39,6 +39,14 @@ public:
         return "CourseTask";
     }
 
+    void setContent(const QString &newContent);
+
+    void setMaxMark(int32_t newMaxMark);
+
+    void setAllowedTypeOfFiles(const QString &newAllowedTypeOfFiles);
+
+    void setTitle(const QString &newTitle);
+
 private:
     QString content;
     int32_t maxMark;

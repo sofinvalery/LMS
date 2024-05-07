@@ -50,6 +50,14 @@ public:
 
     int32_t getTestSize() const;
 
+    void setTitle(const QString &newTitle);
+
+    void setMaxMark(int32_t newMaxMark);
+
+    void setTimeInSeconds(int32_t newTimeInSeconds);
+
+    void setTestSize(int32_t newTestSize);
+
 private:
     QString title;
     int32_t maxMark;

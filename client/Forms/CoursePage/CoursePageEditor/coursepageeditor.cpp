@@ -27,6 +27,8 @@ CoursePageEditor::CoursePageEditor(CoursePage * coursepage, QWidget *parent)
     StyleManager::GetInstance()->setBlueButtonStyle(ui->EditWidgetButton, ui->EditWidgetButton->text(), true, 14, 13);
     StyleManager::GetInstance()->setBlueButtonStyle(ui->DeleteWidgetButton, ui->DeleteWidgetButton->text(), true, 14, 13);
 
+    StyleManager::GetInstance()->setBlueButtonStyle(ui->ChooseButton, ui->ChooseButton->text(), true, 14, 10);
+
     StyleManager::GetInstance()->setBlueButtonStyle(ui->DoneButton, ui->DoneButton->text(), true, 14, 13);
     StyleManager::GetInstance()->setBlueButtonStyle(ui->LoadFileButton, ui->LoadFileButton->text(), true, 14, 13);
 
@@ -56,6 +58,7 @@ CoursePageEditor::CoursePageEditor(CoursePage * coursepage, QWidget *parent)
     ui->TestTimeEdit->setMaximumTime(QTime(03, 55));
     ui->TestCountLabel->hide();
     ui->TestCountSpinBox->hide();
+    ui->ChooseButton->hide();
 
 }
 
@@ -105,6 +108,16 @@ void CoursePageEditor::on_AddWidgetButton_clicked()
         ui->LoadFileButton->hide();
         ui->PathLabel1->hide();
         ui->PathLabel2->hide();
+
+        ui->TestTimeLabel->hide();
+        ui->TestTimeEdit->hide();
+        ui->TestCountLabel->hide();
+        ui->TestCountSpinBox->hide();
+
+        ui->AllowedTypeOfFilesLineEdit->hide();
+        ui->MaxMarkLabel->hide();
+        ui->MaxMarkSpinBox->hide();
+        ui->TaskContentLabel->hide();
     }
 }
 
@@ -119,6 +132,7 @@ void CoursePageEditor::on_EditWidgetButton_clicked()
         ui->DeleteWidgetButton->setEnabled(false);
         ui->ComponentOrderSpinBox->show();
         ui->ComponentOrderLabel->show();
+        ui->ChooseButton->show();
         //ui->NameOnComponent->show();
     }
     else{
@@ -127,6 +141,7 @@ void CoursePageEditor::on_EditWidgetButton_clicked()
         ui->DeleteWidgetButton->setEnabled(true);
         ui->ComponentOrderSpinBox->hide();
         ui->ComponentOrderLabel->hide();
+        ui->ChooseButton->hide();
         //ui->NameOnComponent->hide();
     }
 }
@@ -357,5 +372,30 @@ void CoursePageEditor::on_exitButton_clicked()
 {
     this->close();
     delete this;
+}
+
+
+void CoursePageEditor::on_ChooseButton_clicked()
+{
+    QString type = coursepage->GetCourse()->getListComponents()[ui->ComponentOrderSpinBox->value()-1]->getType();
+    if (type == "CourseTest" && ui->TestTimeEdit->isHidden()){
+        ui->TestTimeEdit->setTime(QTime(0,0));
+        EditingStatus = 1;
+        ui->NameOnComponentLineEdit->show();
+        ui->TestTimeLabel->show();
+        ui->TestTimeEdit->show();
+        ui->TestCountLabel->show();
+        ui->TestCountSpinBox->show();
+        ui->ComponentOrderSpinBox->setEnabled(false);
+    }
+    if (type == "CourseTest" && !ui->TestTimeEdit->isHidden()){
+        EditingStatus = 0;
+        ui->NameOnComponentLineEdit->hide();
+        ui->TestTimeLabel->hide();
+        ui->TestTimeEdit->hide();
+        ui->TestCountLabel->hide();
+        ui->TestCountSpinBox->hide();
+        ui->ComponentOrderSpinBox->setEnabled(true);
+    }
 }
 

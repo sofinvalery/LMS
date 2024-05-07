@@ -23,6 +23,10 @@ public:
         return "CoursePdf";
     }
 
+    void setTitle(const QString &newTitle);
+
+    void setUrl(const QString &newUrl);
+
 private:
     QString title;
     QString url;

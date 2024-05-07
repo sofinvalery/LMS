@@ -122,3 +122,23 @@ int32_t CourseTest::getTestSize() const
 {
     return testSize;
 }
+
+void CourseTest::setTitle(const QString &newTitle)
+{
+    title = newTitle;
+}
+
+void CourseTest::setMaxMark(int32_t newMaxMark)
+{
+    maxMark = newMaxMark;
+}
+
+void CourseTest::setTimeInSeconds(int32_t newTimeInSeconds)
+{
+    timeInSeconds = newTimeInSeconds;
+}
+
+void CourseTest::setTestSize(int32_t newTestSize)
+{
+    testSize = newTestSize;
+}
