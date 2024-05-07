@@ -698,12 +698,145 @@ bool DatabaseManager::SetCourseTests(CourseTest* tests, int32_t courseId) {
     return true;
 }
 
+bool DatabaseManager::DeleteCourseMedia(int32_t courseMediaId) {
+    QSqlQuery query(m_db);
 
+    query.prepare("DELETE FROM path_course_media_files WHERE id = :courseMediaId");
+    query.bindValue(":courseMediaId", courseMediaId);
+    if (!query.exec()) {
+        qDebug() << "Error deleting course media file:" << query.lastError().text();
+        return false;
+    }
 
+    return true;
+}
 
+bool DatabaseManager::DeleteCourseTutorial(int32_t courseTutorialId) {
+    QSqlQuery query(m_db);
 
+    query.prepare("DELETE FROM path_course_tutorials WHERE id = :courseTutorialId");
+    query.bindValue(":courseTutorialId", courseTutorialId);
+    if (!query.exec()) {
+        qDebug() << "Error deleting course tutorial:" << query.lastError().text();
+        return false;
+    }
 
+    return true;
+}
 
+bool DatabaseManager::DeleteCourseTask(int32_t courseTaskId) {
+    QSqlQuery query(m_db);
+
+    query.prepare("DELETE FROM path_course_tasks WHERE id = :courseTaskId");
+    query.bindValue(":courseTaskId", courseTaskId);
+    if (!query.exec()) {
+        qDebug() << "Error deleting course task:" << query.lastError().text();
+        return false;
+    }
+
+    return true;
+}
+
+bool DatabaseManager::DeleteCourseTest(int32_t courseTestId) {
+    QSqlQuery query(m_db);
+
+    query.prepare("DELETE FROM path_course_tests WHERE id = :courseTestId");
+    query.bindValue(":courseTestId", courseTestId);
+    if (!query.exec()) {
+        qDebug() << "Error deleting course test:" << query.lastError().text();
+        return false;
+    }
+
+    return true;
+}
+
+bool DatabaseManager::EditCourseMediaFiles(CourseMediaFiles* mediaFiles) {
+    QSqlQuery query(m_db);
+
+    query.prepare("UPDATE path_course_media_files "
+                  "SET title = :title, "
+                  "    url = :url, "
+                  "    \"order\" = :order, "
+                  "    type = :type "
+                  "WHERE id = :id");
+    query.bindValue(":title", mediaFiles->getTitle());
+    query.bindValue(":url", mediaFiles->getUrl());
+    query.bindValue(":order", mediaFiles->getOrder());
+    query.bindValue(":type", (int)(mediaFiles->getTypeFile()));
+    query.bindValue(":id", mediaFiles->getId());
+
+    if (!query.exec()) {
+        qDebug() << "Error updating course media file:" << query.lastError().text();
+        return false;
+    }
+
+    return true;
+}
+
+bool DatabaseManager::EditCourseTutorial(CourseTutorials* tutorials) {
+    QSqlQuery query(m_db);
+
+    query.prepare("UPDATE path_course_tutorials "
+                  "SET content = :content, "
+                  "    \"order\" = :order "
+                  "WHERE id = :id");
+    query.bindValue(":content", tutorials->getContent());
+    query.bindValue(":order", tutorials->getOrder());
+    query.bindValue(":id", tutorials->getId());
+
+    if (!query.exec()) {
+        qDebug() << "Error updating course tutorial:" << query.lastError().text();
+        return false;
+    }
+
+    return true;
+}
+
+bool DatabaseManager::EditCourseTask(CourseTask* task) {
+    QSqlQuery query(m_db);
+
+    query.prepare("UPDATE path_course_tasks "
+                  "SET content = :content, "
+                  "    max_mark = :maxMark, "
+                  "    memory_limit = :memoryLimit, "
+                  "    \"order\" = :order "
+                  "WHERE id = :id");
+    query.bindValue(":content", task->getContent());
+    query.bindValue(":maxMark", task->getMaxMark());
+    query.bindValue(":memoryLimit", task->getMemoryLimit());
+    query.bindValue(":order", task->getOrder());
+    query.bindValue(":id", task->getId());
+
+    if (!query.exec()) {
+        qDebug() << "Error updating course task:" << query.lastError().text();
+        return false;
+    }
+
+    return true;
+}
+
+bool DatabaseManager::EditCourseTest(CourseTest* test) {
+    QSqlQuery query(m_db);
+
+    query.prepare("UPDATE path_course_tests "
+                  "SET title = :title, "
+                  "    max_mark = :maxMark, "
+                  "    url_json = :urlJson, "
+                  "    \"order\" = :order "
+                  "WHERE id = :id");
+    query.bindValue(":title", test->getTitle());
+    query.bindValue(":maxMark", test->getMaxMark());
+    query.bindValue(":urlJson", test->getUrlJson());
+    query.bindValue(":order", test->getOrder());
+    query.bindValue(":id", test->getId());
+
+    if (!query.exec()) {
+        qDebug() << "Error updating course test:" << query.lastError().text();
+        return false;
+    }
+
+    return true;
+}
 
 
 
