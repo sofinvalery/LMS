@@ -10,7 +10,22 @@ CourseDz::CourseDz(CourseComponent * dz, QWidget *parent)
     this->dz =  qobject_cast<CourseTask*>(dz);
     icon = new QPixmap(":/img/resources/dzicon3.png");
     ui->LabelIMG->setPixmap(icon->scaled(31, 21, Qt::KeepAspectRatio));
-    StyleManager::GetInstance()->setSimpleButtonStyle(ui->giveDzButton, this->dz->getTitle(), true, 16, 15);
+    StyleManager::GetInstance()->setSimpleButtonStyle(ui->giveDzButton, this->dz->getTitle(), true, 20, 19);
+    ui->giveDzButton->setFixedSize(ui->giveDzButton->sizeHint().width(), ui->giveDzButton->sizeHint().height());
+    ui->groupBox->setStyleSheet(
+        "QGroupBox {"
+        "border-radius: 5px;"
+        "border: 2px solid lightgrey;"
+        "}");
+    if (ui->giveDzButton->width() + ui->LabelIMG->width() + 5 < this->width())
+    {
+        ui->groupBox->setFixedWidth(this->width());
+    }
+    else
+    {
+        ui->groupBox->setFixedWidth(ui->giveDzButton->width() + ui->LabelIMG->width() + 5);
+    }
+    this->setFixedWidth(ui->groupBox->width() + 1);
 }
 
 CourseDz::~CourseDz()
