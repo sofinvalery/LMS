@@ -2,6 +2,7 @@
 #include "ui_coursepageeditor.h"
 #include "StyleManager/stylemanager.h"
 #include <QFileDialog>
+#include "ClientManager/clientmanager.h"
 
 CoursePageEditor::CoursePageEditor(CoursePage * coursepage, QWidget *parent)
     : QWidget(parent)
@@ -149,27 +150,45 @@ void CoursePageEditor::on_DeleteWidgetButton_clicked()
 
 void CoursePageEditor::on_DoneButton_clicked()
 {
+    int32_t courseID= coursepage->GetCourse()->GetCourseId();
+    QJsonObject json;
     if(AddingStatus == 1){                                  // добавить на сервер тест (не доделано)
+        CourseTest* temp=new CourseTest(-100, ui->ComponentOrderSpinBox->value(), ui->NameOnComponentLineEdit->text(), 10, "", 1000, 9, "сдал", QDate(2004,4,4));
+        json["courseID"]=int(courseID);
+        json["type"] = temp->getType();
+        json["Class"]= temp->Serialize();
         coursepage->CleanComponents();
-        coursepage->GetCourse()->AddCourseComponent(new CourseTest(-100, ui->ComponentOrderSpinBox->value(), ui->NameOnComponentLineEdit->text(), 10, "", 1000, 9, "сдал", QDate(2004,4,4)), ui->ComponentOrderSpinBox->value()-1);
+        coursepage->GetCourse()->AddCourseComponent(temp, ui->ComponentOrderSpinBox->value()-1);
         coursepage->ShowComponents();
     }
     if(AddingStatus == 2){                                  // добавить на сервер загрузочный файл
+        CourseMediaFiles* temp=new CourseMediaFiles(-100, ui->ComponentOrderSpinBox->value(), ui->NameOnComponentLineEdit->text(),  ui->PathLabel2->text(),PDF);
+        json["type"] = temp->getType();
+        json["Class"]= temp->Serialize();
         coursepage->CleanComponents();
-        coursepage->GetCourse()->AddCourseComponent(new CourseMediaFiles(-100, ui->ComponentOrderSpinBox->value(), ui->NameOnComponentLineEdit->text(),  ui->PathLabel2->text(),PDF), ui->ComponentOrderSpinBox->value()-1);
+        coursepage->GetCourse()->AddCourseComponent(temp, ui->ComponentOrderSpinBox->value()-1);
         coursepage->ShowComponents();
     }
     if (AddingStatus == 3){                                  // добавить на сервер дз (не доделано)
+        CourseTask* temp = new CourseTask(-100, ui->ComponentOrderSpinBox->value(), ui->ContentTextEdit->toPlainText(), ui->MaxMarkSpinBox->value(), 7000, ui->AllowedTypeOfFilesLineEdit->text(), "", QDate(2004,4,4), 0, "", ui->NameOnComponentLineEdit->text());
+        json["type"] = temp->getType();
+        json["Class"]= temp->Serialize();
         coursepage->CleanComponents();
-        coursepage->GetCourse()->AddCourseComponent(new CourseTask(-100, ui->ComponentOrderSpinBox->value(), ui->ContentTextEdit->toPlainText(), ui->MaxMarkSpinBox->value(), 7000, ui->AllowedTypeOfFilesLineEdit->text(), "", QDate(2004,4,4), 0, "", ui->NameOnComponentLineEdit->text()), ui->ComponentOrderSpinBox->value()-1);
+        coursepage->GetCourse()->AddCourseComponent(temp, ui->ComponentOrderSpinBox->value()-1);
         coursepage->ShowComponents();
     }
     if(AddingStatus == 4){                                  // добавить на сервер туториал
+        CourseTutorials* temp =new CourseTutorials(-100, ui->ComponentOrderSpinBox->value(), ui->ContentTextEdit->toPlainText());
+        json["type"] = temp->getType();
+        json["Class"]= temp->Serialize();
         coursepage->CleanComponents();
-        coursepage->GetCourse()->AddCourseComponent(new CourseTutorials(-100, ui->ComponentOrderSpinBox->value(), ui->ContentTextEdit->toPlainText()), ui->ComponentOrderSpinBox->value()-1);
+        coursepage->GetCourse()->AddCourseComponent(temp, ui->ComponentOrderSpinBox->value()-1);
         coursepage->ShowComponents();
     }
     if (DeletingStatus == 1){                               // удалить из сервера элемент  ui->ComponentOrderSpinBox->value()-1
+        CourseComponent* temp = coursepage->GetCourse()->getListComponents()[ui->ComponentOrderSpinBox->value()-1];
+        json["type"] = temp->getType();
+        json["Class"]= temp->Serialize();
         coursepage->CleanComponents();
         coursepage->GetCourse()->DeleteCourseComponent(ui->ComponentOrderSpinBox->value()-1);
         coursepage->ShowComponents();

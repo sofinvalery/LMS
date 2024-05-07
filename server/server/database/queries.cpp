@@ -228,7 +228,7 @@ QList<CourseComponent*>* DatabaseManager::GetCourseComponents(int32_t courseId,A
             notes = query.value("notes").toString();
         }
 
-        listComponents->append(new CourseTest(id, order, title, maxMark, urlJson, 0, verdict, notes, time, QList<Question*>()));
+        listComponents->append(new CourseTest(id, order, title, maxMark, urlJson, 0, verdict, notes, time));
     }
 
     query.prepare("SELECT id, content, \"order\" "

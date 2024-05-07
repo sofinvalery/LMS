@@ -32,7 +32,7 @@ QJsonObject CourseTask::Serialize()
     json["answerUrl"]= answerUrl;
     json["solutionTime"]= solutionTime.toString("yyyy.MM.dd");
     json["verdict"]= verdict;
-     json["notes"]= notes;
+    json["notes"]= notes;
     QJsonObject main;
      main["CourseTask"]=json;
     return main;
