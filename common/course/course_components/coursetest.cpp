@@ -5,7 +5,7 @@
 
 CourseTest::CourseTest(int32_t id, int32_t order, QString title, int32_t maxMark,
                        QString urlJson, int32_t timeInSeconds, int32_t verdict,
-                       QString notes,QDate time, QList<Question*> listQuestions, QObject *parent)
+                       QString notes,QDate time, int32_t testSize, QList<Question*> listQuestions, QObject *parent)
     :CourseComponent(id,order,parent)
 {
     this->title=title;
@@ -16,6 +16,7 @@ CourseTest::CourseTest(int32_t id, int32_t order, QString title, int32_t maxMark
     this->notes=notes;
     this->listQuestions=listQuestions;
     this->time=time;
+    this->testSize = testSize;
 }
 
 QString CourseTest::getTitle() const
@@ -65,6 +66,7 @@ QJsonObject CourseTest::Serialize()
     json["urlJson"]=urlJson;
     json["time"]=time.toString();
     json["verdict"]= verdict;
+    json["testSize"]= testSize;
     QJsonObject main;
     main["CourseTest"]=json;
     return main;
@@ -78,7 +80,14 @@ CourseTest* CourseTest::Deserialize(QJsonObject json)
     return new CourseTest(jsonObj["id"].toInt(),jsonObj["order"].toInt(),
                      jsonObj["title"].toString(),jsonObj["maxMark"].toInt(),
                      jsonObj["urlJson"].toString(),jsonObj["timeInSeconds"].toInt(),
-                      jsonObj["verdict"].toInt(),jsonObj["notes"].toString(),solutionTime);
+                      jsonObj["verdict"].toInt(),jsonObj["notes"].toString(),solutionTime,
+                          jsonObj["testSize"].toInt());
+
+
+
+    // int32_t id, int32_t order, QString title, int32_t maxMark,
+    //     QString urlJson, int32_t timeInSeconds, int32_t verdict,
+    //     QString notes,QDate time, QList<Question*> listQuestions, int32_t testSize, QObject *parent
 }
 
 QJsonObject CourseTest::SerializeQuestionList()
@@ -107,4 +116,9 @@ void CourseTest::DeserializeQuestionList(QJsonObject jsonObj)
 QDate CourseTest::getTime() const
 {
     return time;
+}
+
+int32_t CourseTest::getTestSize() const
+{
+    return testSize;
 }

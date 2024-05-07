@@ -287,6 +287,55 @@
      <string>X</string>
     </property>
    </widget>
+   <widget class="QTimeEdit" name="TestTimeEdit">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>210</y>
+      <width>118</width>
+      <height>25</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLabel" name="TestTimeLabel">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>180</y>
+      <width>221</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>время на тест</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="TestCountLabel">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>270</y>
+      <width>111</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>кол-во вопросов</string>
+    </property>
+   </widget>
+   <widget class="QSpinBox" name="TestCountSpinBox">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>300</y>
+      <width>42</width>
+      <height>25</height>
+     </rect>
+    </property>
+    <property name="minimum">
+     <number>1</number>
+    </property>
+   </widget>
   </widget>
  </widget>
  <resources/>

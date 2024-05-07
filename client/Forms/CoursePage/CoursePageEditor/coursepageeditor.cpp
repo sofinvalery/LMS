@@ -14,10 +14,14 @@ CoursePageEditor::CoursePageEditor(CoursePage * coursepage, QWidget *parent)
     StyleManager::GetInstance()->setLabelStyle(ui->MaxMarkLabel, "Максимум баллов за задание:", false, "black", true, 16);
     StyleManager::GetInstance()->setLabelStyle(ui->TaskContentLabel, "Описание задания:", false, "black", true, 16);
     ui->ComponentOrderLabel->setFixedSize(ui->ComponentOrderLabel->sizeHint().width(), ui->ComponentOrderLabel->sizeHint().height());
-    ui->ComponentOrderLabel->setFixedSize(ui->MaxMarkLabel->sizeHint().width(), ui->MaxMarkLabel->sizeHint().height());
-    ui->ComponentOrderLabel->setFixedSize(ui->MaxMarkLabel->sizeHint().width(), ui->TaskContentLabel->sizeHint().height());
+    ui->MaxMarkLabel->setFixedSize(ui->MaxMarkLabel->sizeHint().width(), ui->MaxMarkLabel->sizeHint().height());
+    ui->TaskContentLabel->setFixedSize(ui->TaskContentLabel->sizeHint().width(), ui->TaskContentLabel->sizeHint().height());
     StyleManager::GetInstance()->setLineEditStyle(ui->NameOnComponentLineEdit, "Название компонента", false, 16, 300, 30);
     StyleManager::GetInstance()->setLineEditStyle(ui->AllowedTypeOfFilesLineEdit, "Разрешенные типы файлов", false, 16, 300, 30);
+    StyleManager::GetInstance()->setLabelStyle(ui->TestTimeLabel, "Ограничение по времени теста:", false, "black", true, 16);
+    StyleManager::GetInstance()->setLabelStyle(ui->TestCountLabel, "Количество вопросов в тесте:", false, "black", true, 16);
+    ui->TestTimeLabel->setFixedSize(ui->TestTimeLabel->sizeHint().width(), ui->TestTimeLabel->sizeHint().height());
+    ui->TestCountLabel->setFixedSize(ui->TestCountLabel->sizeHint().width(), ui->TestCountLabel->sizeHint().height());
 
     StyleManager::GetInstance()->setBlueButtonStyle(ui->AddWidgetButton, ui->AddWidgetButton->text(), true, 14, 13);
     StyleManager::GetInstance()->setBlueButtonStyle(ui->EditWidgetButton, ui->EditWidgetButton->text(), true, 14, 13);
@@ -32,7 +36,6 @@ CoursePageEditor::CoursePageEditor(CoursePage * coursepage, QWidget *parent)
     for(QPushButton* button : buttons) {
         StyleManager::GetInstance()->setBlueButtonStyle(button, button->text(), true, 14, 13);
     }
-
     ui->ContentTextEdit->hide();
     ui->NameOnComponentLineEdit->hide();
     ui->ComponentOrderSpinBox->hide();
@@ -48,6 +51,11 @@ CoursePageEditor::CoursePageEditor(CoursePage * coursepage, QWidget *parent)
     ui->MaxMarkLabel->hide();
     ui->MaxMarkSpinBox->hide();
     ui->TaskContentLabel->hide();
+    ui->TestTimeLabel->hide();
+    ui->TestTimeEdit->hide();
+    ui->TestTimeEdit->setMaximumTime(QTime(03, 55));
+    ui->TestCountLabel->hide();
+    ui->TestCountSpinBox->hide();
 
 }
 
@@ -149,9 +157,9 @@ void CoursePageEditor::on_DeleteWidgetButton_clicked()
 
 void CoursePageEditor::on_DoneButton_clicked()
 {
-    if(AddingStatus == 1){                                  // добавить на сервер тест (не доделано)
+    if(AddingStatus == 1){                                  // добавить на сервер тест
         coursepage->CleanComponents();
-        coursepage->GetCourse()->AddCourseComponent(new CourseTest(-100, ui->ComponentOrderSpinBox->value(), ui->NameOnComponentLineEdit->text(), 10, "", 1000, 9, "сдал", QDate(2004,4,4)), ui->ComponentOrderSpinBox->value()-1);
+        coursepage->GetCourse()->AddCourseComponent(new CourseTest(-100, ui->ComponentOrderSpinBox->value(), ui->NameOnComponentLineEdit->text(), 10, "", ui->TestTimeEdit->time().hour()*3600+ui->TestTimeEdit->time().minute()*60+ui->TestTimeEdit->time().second(), 1, "", QDate(2004, 03, 02), ui->TestCountSpinBox->value()), ui->ComponentOrderSpinBox->value()-1);
         coursepage->ShowComponents();
     }
     if(AddingStatus == 2){                                  // добавить на сервер загрузочный файл
@@ -159,7 +167,7 @@ void CoursePageEditor::on_DoneButton_clicked()
         coursepage->GetCourse()->AddCourseComponent(new CoursePdf(-100, ui->ComponentOrderSpinBox->value(), ui->NameOnComponentLineEdit->text(),  ui->PathLabel2->text()), ui->ComponentOrderSpinBox->value()-1);
         coursepage->ShowComponents();
     }
-    if (AddingStatus == 3){                                  // добавить на сервер дз (не доделано)
+    if (AddingStatus == 3){                                  // добавить на сервер дз
         coursepage->CleanComponents();
         coursepage->GetCourse()->AddCourseComponent(new CourseTask(-100, ui->ComponentOrderSpinBox->value(), ui->ContentTextEdit->toPlainText(), ui->MaxMarkSpinBox->value(), 7000, ui->AllowedTypeOfFilesLineEdit->text(), "", QDate(2004,4,4), 0, "", ui->NameOnComponentLineEdit->text()), ui->ComponentOrderSpinBox->value()-1);
         coursepage->ShowComponents();
@@ -174,7 +182,7 @@ void CoursePageEditor::on_DoneButton_clicked()
         coursepage->GetCourse()->DeleteCourseComponent(ui->ComponentOrderSpinBox->value()-1);
         coursepage->ShowComponents();
     }
-    this->close();
+    //this->close();
 }
 
 
@@ -239,13 +247,19 @@ void CoursePageEditor::on_AddTestButton_clicked()
 {
     if (ui->ComponentOrderLabel->isHidden()){
         on_AddButton_clicked(ui->AddTestButton);
+        ui->TestTimeEdit->setTime(QTime(0,0));
         AddingStatus = 1;
         ui->ComponentOrderLabel->show();
         ui->ComponentOrderSpinBox->show();
         ui->NameOnComponentLineEdit->show();
+        ui->TestTimeLabel->show();
+        ui->TestTimeEdit->show();
+        ui->TestCountLabel->show();
+        ui->TestCountSpinBox->show();
         ui->AddTextButton->setEnabled(false);
         ui->AddDzButton->setEnabled(false);
         ui->AddFileButton->setEnabled(false);
+
     }
     else
     {
@@ -254,6 +268,10 @@ void CoursePageEditor::on_AddTestButton_clicked()
         ui->ComponentOrderLabel->hide();
         ui->ComponentOrderSpinBox->hide();
         ui->NameOnComponentLineEdit->hide();
+        ui->TestTimeLabel->hide();
+        ui->TestTimeEdit->hide();
+        ui->TestCountLabel->hide();
+        ui->TestCountSpinBox->hide();
         ui->AddTextButton->setEnabled(true);
         ui->AddDzButton->setEnabled(true);
         ui->AddFileButton->setEnabled(true);
