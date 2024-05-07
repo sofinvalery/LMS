@@ -287,6 +287,19 @@
      <string>X</string>
     </property>
    </widget>
+   <widget class="QLabel" name="ErrorLabel">
+    <property name="geometry">
+     <rect>
+      <x>290</x>
+      <y>90</y>
+      <width>271</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
   </widget>
  </widget>
  <resources/>

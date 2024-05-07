@@ -11,6 +11,7 @@
 QJsonObject jsonManager(QJsonObject json,Authentication **auth);
 
 
+
 static QJsonObject logining(QJsonObject json,Authentication **auth);
 
 static QJsonObject reconect(QJsonObject json,Authentication **auth);
@@ -22,8 +23,6 @@ static QJsonObject getCourseComponents(QJsonObject json,Authentication **auth);
 static QJsonObject getTestQuestions(QJsonObject json,Authentication **auth);
 
 static QJsonObject setNewGroup(QJsonObject json,Authentication **auth);
-
-static QJsonObject setNewTest(QJsonObject json,Authentication **auth);
 
 static QJsonObject setNewCourse(QJsonObject json,Authentication **auth);
 
@@ -45,7 +44,11 @@ static QJsonObject updateGroup(QJsonObject json,Authentication **auth);
 
 static QJsonObject getAllCourseComponents(QJsonObject json,Authentication **auth);
 
+static QJsonObject addCourseComponent(QJsonObject json,Authentication **auth);
 
+static QJsonObject editCourseComponent(QJsonObject json,Authentication **auth);
+
+static QJsonObject deleteCourseComponent(QJsonObject json,Authentication **auth);
 
 #endif // JSONMANAGER_H
 

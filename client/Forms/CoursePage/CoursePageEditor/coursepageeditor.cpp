@@ -28,6 +28,7 @@ CoursePageEditor::CoursePageEditor(CoursePage * coursepage, QWidget *parent)
     StyleManager::GetInstance()->setBlueButtonStyle(ui->LoadFileButton, ui->LoadFileButton->text(), true, 14, 13);
 
     StyleManager::GetInstance()->setCustomButtonStyle(ui->exitButton, ui->exitButton->text(), "#E65D4F", true, 16, 4);
+    StyleManager::GetInstance()->setLabelStyle(ui->ErrorLabel,"Праверьте правильность заполнения полей",true,"red",false,14);
 
     QList<QPushButton*> buttons = {ui->AddTextButton, ui->AddDzButton, ui->AddFileButton, ui->AddTestButton};
     for(QPushButton* button : buttons) {
@@ -152,48 +153,80 @@ void CoursePageEditor::on_DoneButton_clicked()
 {
     int32_t courseID= coursepage->GetCourse()->GetCourseId();
     QJsonObject json;
-    if(AddingStatus == 1){                                  // добавить на сервер тест (не доделано)
+    json["courseID"]=int(courseID);
+    if(AddingStatus == 1&&ui->NameOnComponentLineEdit->text()!=""){                                  // добавить на сервер тест (не доделано)
         CourseTest* temp=new CourseTest(-100, ui->ComponentOrderSpinBox->value(), ui->NameOnComponentLineEdit->text(), 10, "", 1000, 9, "сдал", QDate(2004,4,4));
-        json["courseID"]=int(courseID);
         json["type"] = temp->getType();
         json["Class"]= temp->Serialize();
         coursepage->CleanComponents();
         coursepage->GetCourse()->AddCourseComponent(temp, ui->ComponentOrderSpinBox->value()-1);
         coursepage->ShowComponents();
+        ClientManager::GetInstance()->SendJsonToServer(ADDCOURSECOMPONENT,json);
+        ui->ErrorLabel->hide();
+        this->close();
+        return;
     }
-    if(AddingStatus == 2){                                  // добавить на сервер загрузочный файл
-        CourseMediaFiles* temp=new CourseMediaFiles(-100, ui->ComponentOrderSpinBox->value(), ui->NameOnComponentLineEdit->text(),  ui->PathLabel2->text(),PDF);
+    if(AddingStatus == 2&&ui->NameOnComponentLineEdit->text()!=""&& ui->PathLabel2->text()!=""){                                  // добавить на сервер загрузочный файл
+
+
+        QString fileName;
+        for(int j=ui->PathLabel2->text().size()-1; j>=0; j--)
+            if(ui->PathLabel2->text()[j]=='/')
+            {
+                fileName=ui->PathLabel2->text().mid(j+1);
+                break;
+            }
+        QString serverPath = "./data/Courses/media_files/"+QString::number(coursepage->GetCourse()->GetCourseId())+"/";
+        ClientManager::GetInstance()->SendFileToServer(ui->PathLabel2->text(),serverPath);
+        serverPath+=fileName;
+        CourseMediaFiles* temp=new CourseMediaFiles(-100, ui->ComponentOrderSpinBox->value(), ui->NameOnComponentLineEdit->text(),  serverPath,PDF);
         json["type"] = temp->getType();
         json["Class"]= temp->Serialize();
         coursepage->CleanComponents();
         coursepage->GetCourse()->AddCourseComponent(temp, ui->ComponentOrderSpinBox->value()-1);
         coursepage->ShowComponents();
+        ClientManager::GetInstance()->SendJsonToServer(ADDCOURSECOMPONENT,json);
+        ui->ErrorLabel->hide();
+        this->close();
+        return;
     }
-    if (AddingStatus == 3){                                  // добавить на сервер дз (не доделано)
+    if (AddingStatus == 3&&ui->ContentTextEdit->toPlainText()!=""&&ui->NameOnComponentLineEdit->text()!=""){                                  // добавить на сервер дз (не доделано)
         CourseTask* temp = new CourseTask(-100, ui->ComponentOrderSpinBox->value(), ui->ContentTextEdit->toPlainText(), ui->MaxMarkSpinBox->value(), 7000, ui->AllowedTypeOfFilesLineEdit->text(), "", QDate(2004,4,4), 0, "", ui->NameOnComponentLineEdit->text());
         json["type"] = temp->getType();
         json["Class"]= temp->Serialize();
         coursepage->CleanComponents();
         coursepage->GetCourse()->AddCourseComponent(temp, ui->ComponentOrderSpinBox->value()-1);
         coursepage->ShowComponents();
+        ClientManager::GetInstance()->SendJsonToServer(ADDCOURSECOMPONENT,json);
+        ui->ErrorLabel->hide();
+        this->close();
+        return;
     }
-    if(AddingStatus == 4){                                  // добавить на сервер туториал
+    if(AddingStatus == 4 && ui->ContentTextEdit->toPlainText()!=""){                                  // добавить на сервер туториал
         CourseTutorials* temp =new CourseTutorials(-100, ui->ComponentOrderSpinBox->value(), ui->ContentTextEdit->toPlainText());
         json["type"] = temp->getType();
         json["Class"]= temp->Serialize();
         coursepage->CleanComponents();
         coursepage->GetCourse()->AddCourseComponent(temp, ui->ComponentOrderSpinBox->value()-1);
         coursepage->ShowComponents();
+        ClientManager::GetInstance()->SendJsonToServer(ADDCOURSECOMPONENT,json);
+        ui->ErrorLabel->hide();
+        this->close();
+        return;
     }
     if (DeletingStatus == 1){                               // удалить из сервера элемент  ui->ComponentOrderSpinBox->value()-1
         CourseComponent* temp = coursepage->GetCourse()->getListComponents()[ui->ComponentOrderSpinBox->value()-1];
         json["type"] = temp->getType();
-        json["Class"]= temp->Serialize();
+        json["ComponentId"]= temp->getId();
         coursepage->CleanComponents();
         coursepage->GetCourse()->DeleteCourseComponent(ui->ComponentOrderSpinBox->value()-1);
         coursepage->ShowComponents();
+        ClientManager::GetInstance()->SendJsonToServer(DELETECOURSECOMPONENT,json);
+        ui->ErrorLabel->hide();
+        this->close();
+        return;
     }
-    this->close();
+    ui->ErrorLabel->show();
 }
 
 

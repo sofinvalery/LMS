@@ -25,7 +25,6 @@ public:
     QList<Course*> GetMainPage(Authentication* auth);
     QList<CourseComponent*>* GetCourseComponents(int32_t courseId,Authentication* auth);
     QString GetTestQuestion(int32_t testId);
-    bool SetNewTest(CourseTest* test);
     QList<QString> GetEveryGroupName();
     QList<QString> GetEveryUnionName();
     bool AddNewGroup(Group*);

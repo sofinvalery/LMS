@@ -1,5 +1,6 @@
 #include "jsonmanager.h"
 
+
 typedef QJsonObject (*Action)(QJsonObject,Authentication **auth);
 
 static Action Actions[] ={
@@ -8,7 +9,6 @@ static Action Actions[] ={
     [GETCOURSECOMPONENTS] = getCourseComponents,
     [GETTESTQUESTION] = getTestQuestions,
     [SETNEWGROUP] = setNewGroup,
-    [SETNEWTEST] = setNewTest,
     [SETNEWCOURSE] = setNewCourse,
     [RECONECT] = reconect,
     [GETINFOFORADDINGPOTOK] = getInfoForAddPotok,
@@ -18,7 +18,10 @@ static Action Actions[] ={
     [GETINFOFOREDITGROUP] = getInfoForEditGroup,
     [GETGROUP]= getGroup,
     [UPDATEGROUP] = updateGroup,
-    [GETALLCOURSECOMPONENTS] = getAllCourseComponents
+    [GETALLCOURSECOMPONENTS] = getAllCourseComponents,
+    [ADDCOURSECOMPONENT]= addCourseComponent,
+    [EDITCOURSECOMPONENT]=editCourseComponent,
+    [DELETECOURSECOMPONENT]=deleteCourseComponent,
 };
 
 QJsonObject jsonManager(QJsonObject json,Authentication **auth)
@@ -36,7 +39,7 @@ QJsonObject jsonManager(QJsonObject json,Authentication **auth)
     }
 }
 
-QJsonObject logining(QJsonObject json,Authentication **auth)
+static QJsonObject logining(QJsonObject json,Authentication **auth)
 {
     QJsonObject sendjson;
     *auth = Authentication::Deserialize(json);
@@ -58,7 +61,7 @@ QJsonObject logining(QJsonObject json,Authentication **auth)
     sendjson["Data"]=temp;
     return sendjson;
 }
-QJsonObject reconect(QJsonObject json,Authentication **auth){
+static QJsonObject reconect(QJsonObject json,Authentication **auth){
     QJsonObject sendjson;
     delete *auth;
     *auth = Authentication::Deserialize(json);
@@ -84,7 +87,7 @@ QJsonObject getMainPage(QJsonObject json,Authentication **auth)
     return sendjson;
 }
 
-QJsonObject getCourseComponents(QJsonObject json,Authentication **auth)
+static QJsonObject getCourseComponents(QJsonObject json,Authentication **auth)
 {
     int course = json["id"].toInt();
     DatabaseManager db;
@@ -101,12 +104,12 @@ QJsonObject getCourseComponents(QJsonObject json,Authentication **auth)
     return sendjson;
 }
 
-QJsonObject getTestQuestions(QJsonObject json,Authentication **auth)
+static QJsonObject getTestQuestions(QJsonObject json,Authentication **auth)
 {
 
 }
 
-QJsonObject setNewGroup(QJsonObject json,Authentication **auth)
+static QJsonObject setNewGroup(QJsonObject json,Authentication **auth)
 {
     Group* group = Group::Deserialize(json);
     DatabaseManager db;
@@ -116,12 +119,7 @@ QJsonObject setNewGroup(QJsonObject json,Authentication **auth)
     return sendjson;
 }
 
-QJsonObject setNewTest(QJsonObject json,Authentication **auth)
-{
-
-}
-
-QJsonObject setNewCourse(QJsonObject json,Authentication **auth)
+static QJsonObject setNewCourse(QJsonObject json,Authentication **auth)
 {
     QString teachersGroupName = json["teachersGroupName"].toString();
     QString unionName = json["unionName"].toString();
@@ -134,7 +132,7 @@ QJsonObject setNewCourse(QJsonObject json,Authentication **auth)
 
 }
 
-QJsonObject setNewPotok(QJsonObject json, Authentication **auth)
+static QJsonObject setNewPotok(QJsonObject json, Authentication **auth)
 {
 
     QJsonArray groupsComponents=json.value("groupsList").toArray();
@@ -150,7 +148,7 @@ QJsonObject setNewPotok(QJsonObject json, Authentication **auth)
     return send;
 }
 
-QJsonObject getInfoForAddPotok(QJsonObject json, Authentication **auth)
+static QJsonObject getInfoForAddPotok(QJsonObject json, Authentication **auth)
 {
     DatabaseManager db;
     QList<QString> studentGroupName = db.GetAllStudentGroupName();
@@ -170,7 +168,7 @@ QJsonObject getInfoForAddPotok(QJsonObject json, Authentication **auth)
     return sendjson;
 }
 
-QJsonObject getInfoForAddGroup(QJsonObject json, Authentication **auth)
+static QJsonObject getInfoForAddGroup(QJsonObject json, Authentication **auth)
 {
     QJsonObject sendjson;
     sendjson["Data"]=getInfoAboutAllGroup(json,auth);
@@ -178,7 +176,7 @@ QJsonObject getInfoForAddGroup(QJsonObject json, Authentication **auth)
     return sendjson;
 }
 
-QJsonObject getInfoForAddCourse(QJsonObject json, Authentication **auth)
+static QJsonObject getInfoForAddCourse(QJsonObject json, Authentication **auth)
 {
     DatabaseManager db;
     QList<QString> TeacherGroupNames = db.GetEveryTeacherGroupName();
@@ -198,7 +196,7 @@ QJsonObject getInfoForAddCourse(QJsonObject json, Authentication **auth)
     return sendjson;
 }
 
-QJsonObject getInfoAboutAllGroup(QJsonObject json, Authentication **auth)
+static QJsonObject getInfoAboutAllGroup(QJsonObject json, Authentication **auth)
 {
     DatabaseManager db;
     QList<QString> GroupName = db.GetEveryGroupName();
@@ -210,7 +208,7 @@ QJsonObject getInfoAboutAllGroup(QJsonObject json, Authentication **auth)
     return temp;
 }
 
-QJsonObject getInfoForEditGroup(QJsonObject json, Authentication **auth)
+static QJsonObject getInfoForEditGroup(QJsonObject json, Authentication **auth)
 {
     QJsonObject sendjson;
     sendjson["Data"]=getInfoAboutAllGroup(json,auth);
@@ -218,7 +216,7 @@ QJsonObject getInfoForEditGroup(QJsonObject json, Authentication **auth)
     return sendjson;
 }
 
-QJsonObject getGroup(QJsonObject json, Authentication **auth)
+static QJsonObject getGroup(QJsonObject json, Authentication **auth)
 {
     DatabaseManager db;
     QString groupName = json["groupName"].toString();
@@ -229,7 +227,7 @@ QJsonObject getGroup(QJsonObject json, Authentication **auth)
     return sendjson;
 }
 
-QJsonObject updateGroup(QJsonObject json, Authentication **auth)
+static QJsonObject updateGroup(QJsonObject json, Authentication **auth)
 {
     DatabaseManager db;
     Group* gr = Group::Deserialize(json);
@@ -241,7 +239,7 @@ QJsonObject updateGroup(QJsonObject json, Authentication **auth)
     return sendjson;
 }
 
-QJsonObject getAllCourseComponents(QJsonObject json, Authentication **auth)
+static QJsonObject getAllCourseComponents(QJsonObject json, Authentication **auth)
 {
     QList<int> ids;
     QJsonArray components=json["ids"].toArray();
@@ -268,4 +266,74 @@ QJsonObject getAllCourseComponents(QJsonObject json, Authentication **auth)
     send["Action"]=GETALLCOURSECOMPONENTS;
     send["Data"]=temp;
     return send;
+}
+
+QJsonObject addCourseComponent(QJsonObject json, Authentication **auth)
+{
+    DatabaseManager db;
+    int courseId = json["courseID"].toInt();
+    QString type = json["type"].toString();
+    if(type == "CourseMediaFiles")
+    {
+        CourseMediaFiles* media = CourseMediaFiles::Deserialize(json["Class"].toObject());
+        db.SetCourseMediaFiles(media,courseId);
+        delete media;
+    }
+    else if(type=="CourseTask")
+    {
+        CourseTask* task = CourseTask::Deserialize(json["Class"].toObject());
+        db.SetCourseTasks(task,courseId);
+        delete task;
+    }
+    else if(type=="CourseTest")
+    {
+        CourseTest* test = CourseTest::Deserialize(json["Class"].toObject());
+        db.SetCourseTests(test,courseId);
+        delete test;
+    }
+    else{
+        CourseTutorials* tutorial = CourseTutorials::Deserialize(json["Class"].toObject());
+        db.SetCourseTutorial(tutorial,courseId);
+        delete tutorial;
+    }
+
+
+    QJsonObject sendjson;
+    return sendjson;
+}
+
+QJsonObject editCourseComponent(QJsonObject json, Authentication **auth)
+{
+
+
+
+    QJsonObject sendjson;
+    return sendjson;
+}
+
+QJsonObject deleteCourseComponent(QJsonObject json, Authentication **auth)
+{
+    DatabaseManager db;
+    int componentId = json["ComponentId"].toInt();
+    QString type = json["type"].toString();
+    if(type == "CourseMediaFiles")
+    {
+        db.DeleteCourseMedia(componentId);
+    }
+    else if(type=="CourseTask")
+    {
+        db.DeleteCourseTask(componentId);
+    }
+    else if(type=="CourseTest")
+    {
+        db.DeleteCourseTest(componentId);
+    }
+    else{
+        db.DeleteCourseTutorial(componentId);
+    }
+
+
+
+    QJsonObject sendjson;
+    return sendjson;
 }
