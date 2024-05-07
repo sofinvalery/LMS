@@ -3,6 +3,7 @@
 #include "StyleManager/stylemanager.h"
 #include <QFileDialog>
 #include "ClientManager/clientmanager.h"
+#include "ClientState/clientstate.h"
 
 CoursePageEditor::CoursePageEditor(CoursePage * coursepage, QWidget *parent)
     : QWidget(parent)
@@ -179,6 +180,7 @@ void CoursePageEditor::on_DoneButton_clicked()
         QString serverPath = "./data/Courses/media_files/"+QString::number(coursepage->GetCourse()->GetCourseId())+"/";
         ClientManager::GetInstance()->SendFileToServer(ui->PathLabel2->text(),serverPath);
         serverPath+=fileName;
+        ClientState::GetInstance()->ShowNotifacate("Перед выходом дождитесь уведомления\nО выгрузке файла:"+fileName,"black");
         CourseMediaFiles* temp=new CourseMediaFiles(-100, ui->ComponentOrderSpinBox->value(), ui->NameOnComponentLineEdit->text(),  serverPath,PDF);
         json["type"] = temp->getType();
         json["Class"]= temp->Serialize();

@@ -686,7 +686,7 @@ bool DatabaseManager::SetCourseTests(CourseTest* tests, int32_t courseId) {
     QSqlQuery query(m_db);
 
     query.prepare("INSERT INTO path_course_tests (title, max_mark, url_json, \"order\", courses_id1, test_size) "
-                  "VALUES (:title, :maxMark, :urlJson, :order, :courseId1, test_size)");
+                  "VALUES (:title, :maxMark, :urlJson, :order, :courseId1, :test_size)");
     query.bindValue(":title", tests->getTitle());
     query.bindValue(":maxMark", tests->getMaxMark());
     query.bindValue(":urlJson", tests->getUrlJson());

@@ -9,6 +9,7 @@ ClientState::ClientState(QObject *parent)
     : QObject{parent}
 {
     connect(this,SIGNAL(ShowReconection()),this,SLOT(ShowRec()));
+    connect(this,SIGNAL(ShowingNotification(QString,QString)),this,SLOT(Notificate(QString,QString)));
 }
 
 void ClientState::ShowRec()

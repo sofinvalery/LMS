@@ -144,7 +144,7 @@ void ClientManager::slotReadyReadFile()
                 temp->file = new QFile(path);
                 temp->file->open(QIODevice::Append);
                 emit temp->newFile(temp->fileName,temp->fileSize);
-
+                ClientState::GetInstance()->ShowNotifacate("Загрузка файла:\n"+temp->fileName,"black");
 
                 break;
             }
@@ -166,6 +166,7 @@ void ClientManager::slotReadyReadFile()
                     temp->fileSize=0;
                     qInfo()<<"прочитал";
                     emit temp->downloadFinish(temp->fileName);
+                    ClientState::GetInstance()->ShowNotifacate("Загружен файл:\n"+temp->fileName,"black");
                 }
                 break;
             }
@@ -304,6 +305,7 @@ void ClientManager::SendFile(QString clientPath, QString serverPath)
         temp->socket->write(send);
         temp->fileParams.read= new QDataStream(temp->fileParams.sendFile);
         temp->socket->waitForBytesWritten();
+        emit temp->newFile(temp->fileParams.fileInfo->fileName(),temp->fileParams.sendFile->size());
         ReadFileData(temp);
     }
 }
@@ -311,6 +313,7 @@ void ClientManager::SendFile(QString clientPath, QString serverPath)
 void ClientManager::SendFileData(fileSocket *temp)
 {
     temp->fileParams.SendFileSize =temp->socket->write(temp->fileParams.DataFile,temp->fileParams.sizeFile);
+    emit temp->addRead(temp->fileParams.SendFileSize);
     temp->socket->waitForBytesWritten();
     if(temp->fileParams.SendFileSize==-1)
     {
@@ -352,6 +355,8 @@ void ClientManager::SendFileData(fileSocket *temp)
         }
     }
     if(temp->fileParams.read->atEnd()){
+        emit temp->downloadFinish(temp->fileParams.fileInfo->fileName());
+        ClientState::GetInstance()->ShowNotifacate("Выгружен файл:\n"+temp->fileParams.fileInfo->fileName(),"black");
         DeleteFileParams(temp);
     }
     else

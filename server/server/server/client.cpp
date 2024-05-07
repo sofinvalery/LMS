@@ -214,6 +214,7 @@ void Client::SendFileData()
         fileParams.sendFile->close();
         delete fileParams.sendFile;
         fileParams.sendFile=nullptr;
+        qInfo()<<"отправил";
     }
     else
     {

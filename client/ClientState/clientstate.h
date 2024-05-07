@@ -7,7 +7,7 @@
 #include "../Forms/Main/mainwindow.h"
 #include "../../common/authentication/group.h"
 #include "Forms/Reconnect/reconnect.h"
-
+#include"Forms/Notification/notification.h"
 
 class ClientState : public QObject
 {
@@ -35,6 +35,11 @@ private slots:
 
     void ShowRec();
 
+    void Notificate(QString notification, QString colour){
+        Notification* notif = new Notification(nullptr,notification,colour);
+        notif->show();
+    }
+
 public:
     static ClientState* GetInstance() { return s_Instance = (s_Instance != nullptr ? s_Instance : new ClientState()); }
 
@@ -61,9 +66,15 @@ public:
 
     void ShowReconnect();
 
+    void ShowNotifacate(QString notification, QString colour){
+        emit ShowingNotification(notification,colour);
+    }
+
+
 signals:
    void DataReady();
     void ShowReconection();
+   void ShowingNotification(QString notification, QString colour);
 };
 
 #endif // CLIENTSTATE_H
