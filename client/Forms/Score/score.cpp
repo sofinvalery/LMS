@@ -62,7 +62,7 @@ void Score::showPathCourseScore(Course *course)
         CourseTask* courseTask;
         if ((courseTask = qobject_cast<CourseTask*>(temp)) != nullptr)
         {
-            testTaskComponents* task = new testTaskComponents(courseTask->getContent(),
+            testTaskComponents* task = new testTaskComponents(courseTask->getTitle(),
                                                          courseTask->getVerdict(),
                                                               courseTask->getMaxMark(), ui->scrollAreaWidgetContents); //nazvanie sdelayte
             PathCourseScoreList.append(task);
