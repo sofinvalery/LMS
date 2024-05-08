@@ -125,73 +125,84 @@ QList<CourseComponent*>* DatabaseManager::GetCourseComponents(int32_t courseId,A
         qDebug() << "Error executing course media files query:" << query.lastError().text();
         return listComponents;
     }
-
-    while (query.next()) {
-        int32_t id = query.value("id").toInt();
-        int32_t order = query.value("order").toInt();
-        QString title = query.value("title").toString();
-        QString url = query.value("url").toString();
-        TypeFile typeFile = (TypeFile)(query.value("type").toInt());
-        listComponents->append(new CourseMediaFiles(id, order, title, url, typeFile));
+    if (!query.first()) {
+        qDebug() << "ahahah";
+    } else {
+        do {
+            int32_t id = query.value("id").toInt();
+            int32_t order = query.value("order").toInt();
+            QString title = query.value("title").toString();
+            QString url = query.value("url").toString();
+            TypeFile typeFile = (TypeFile)(query.value("type").toInt());
+            listComponents->append(new CourseMediaFiles(id, order, title, url, typeFile));
+        } while (query.next());
     }
 
-    query.prepare("SELECT id, content, max_mark, memory_limit, \"order\", title "
-                  "FROM path_course_tasks "
-                  "WHERE courses_id1 = :courseId");
+    query.prepare("SELECT * FROM path_course_tasks WHERE courses_id1 = :courseId");
     query.bindValue(":courseId", courseId);
     if (!query.exec()) {
         qDebug() << "Error executing course tasks query:" << query.lastError().text();
         return listComponents;
     }
+    // qInfo() << "huy:" << query.text();
+    if (!query.first()) {
+        qDebug() << "ahahah";
+    } else {
+        do {
+            int32_t id = query.value("id").toInt();
+            int32_t order = query.value("order").toInt();
+            QString content = query.value("content").toString();
+            int32_t maxMark = query.value("max_mark").toInt();
+            int32_t memoryLimit = query.value("memory_limit").toInt();
+            QString title = query.value("title").toString();
 
-    while (query.next()) {
-        int32_t id = query.value("id").toInt();
-        int32_t order = query.value("order").toInt();
-        QString content = query.value("content").toString();
-        int32_t maxMark = query.value("max_mark").toInt();
-        int32_t memoryLimit = query.value("memory_limit").toInt();
-        QString title = query.value("title").toString();
+            QStringList allowedTypes;
+            query.prepare("SELECT type_files.name "
+                          "FROM type_file_has_lesson_problem "
+                          "JOIN type_files ON type_file_has_lesson_problem.type_files_id1 = type_files.id "
+                          "WHERE type_file_has_lesson_problem.path_course_tasks_id1 = :taskId");
+            query.bindValue(":taskId", id);
+            if (!query.exec()) {
+                qDebug() << "Error executing allowed file types query:" << query.lastError().text();
+                return listComponents;
+            }
+            if (!query.first()) {
+                qDebug() << "ahahah";
+            } else {
+                do {
+                    allowedTypes.append(query.value("name").toString());
+                } while (query.next());
+            }
 
-        QStringList allowedTypes;
-        query.prepare("SELECT type_files.name "
-                      "FROM type_file_has_lesson_problem "
-                      "JOIN type_files ON type_file_has_lesson_problem.type_files_id1 = type_files.id "
-                      "WHERE type_file_has_lesson_problem.path_course_tasks_id1 = :taskId");
-        query.bindValue(":taskId", id);
-        if (!query.exec()) {
-            qDebug() << "Error executing allowed file types query:" << query.lastError().text();
-            return listComponents;
-        }
+            QString allowedTypeOfFiles = allowedTypes.join(",");
+            query.prepare("SELECT answer_url, time, verdict, notes "
+                          "FROM path_course_tasks_submits "
+                          "WHERE path_course_tasks_id1 = :taskId AND users_id1 = :id");
+            query.bindValue(":taskId", id);
+            query.bindValue(":id", auth->getId());
+            if (!query.exec()) {
+                qDebug() << "Error executing task submissions query:" << query.lastError().text();
+                return listComponents;
+            }
+            if (!query.first()) {
+                qDebug() << "ahahah";
+            }
 
-        while (query.next()) {
-            allowedTypes.append(query.value("name").toString());
-        }
+            QString answerUrl;
+            QDate solutionTime;
+            int32_t verdict = 0;
+            QString notes;
+            if (query.first()) {
+                answerUrl = query.value("answer_url").toString();
+                solutionTime = query.value("time").toDate();
+                verdict = query.value("verdict").toInt();
+                notes = query.value("notes").toString();
+            }
 
-        QString allowedTypeOfFiles = allowedTypes.join(",");
-        query.prepare("SELECT answer_url, time, verdict, notes "
-                      "FROM path_course_tasks_submits "
-                      "WHERE path_course_tasks_id1 = :taskId AND users_id1 = :id");
-        query.bindValue(":taskId", id);
-        query.bindValue(":id", auth->getId());
-        if (!query.exec()) {
-            qDebug() << "Error executing task submissions query:" << query.lastError().text();
-            return listComponents;
-        }
-
-        QString answerUrl;
-        QDate solutionTime;
-        int32_t verdict = 0;
-        QString notes;
-        if (query.first()) {
-            answerUrl = query.value("answer_url").toString();
-            solutionTime = query.value("time").toDate();
-            verdict = query.value("verdict").toInt();
-            notes = query.value("notes").toString();
-        }
-
-        listComponents->append(new CourseTask(id, order, content, maxMark, memoryLimit,
-                                                  allowedTypeOfFiles, answerUrl, solutionTime,
-                                                  verdict, notes, title));
+            listComponents->append(new CourseTask(id, order, content, maxMark, memoryLimit,
+                                                      allowedTypeOfFiles, answerUrl, solutionTime,
+                                                      verdict, notes, title));
+        } while (query.next());
     }
 
     query.prepare("SELECT id, title, max_mark, url_json, \"order\", test_size "
@@ -202,35 +213,42 @@ QList<CourseComponent*>* DatabaseManager::GetCourseComponents(int32_t courseId,A
         qDebug() << "Error executing course tests query:" << query.lastError().text();
         return listComponents;
     }
+    if (!query.first()) {
+        qDebug() << "ahahah";
+    } else {
 
-    while (query.next()) {
-        int32_t id = query.value("id").toInt();
-        int32_t order = query.value("order").toInt();
-        QString title = query.value("title").toString();
-        int32_t maxMark = query.value("max_mark").toInt();
-        QString urlJson = query.value("url_json").toString();
-        int32_t testSize = query.value("test_size").toInt();
+        do {
+            int32_t id = query.value("id").toInt();
+            int32_t order = query.value("order").toInt();
+            QString title = query.value("title").toString();
+            int32_t maxMark = query.value("max_mark").toInt();
+            QString urlJson = query.value("url_json").toString();
+            int32_t testSize = query.value("test_size").toInt();
 
-        query.prepare("SELECT time, verdict, notes "
-                      "FROM path_course_test_submits "
-                      "WHERE path_course_tests_id = :testId AND users_id1 = :id");
-        query.bindValue(":testId", id);
-        query.bindValue(":id", auth->getId());
-        if (!query.exec()) {
-            qDebug() << "Error executing test submissions query:" << query.lastError().text();
-            return listComponents;
-        }
+            query.prepare("SELECT time, verdict, notes "
+                          "FROM path_course_test_submits "
+                          "WHERE path_course_tests_id = :testId AND users_id1 = :id");
+            query.bindValue(":testId", id);
+            query.bindValue(":id", auth->getId());
+            if (!query.exec()) {
+                qDebug() << "Error executing test submissions query:" << query.lastError().text();
+                return listComponents;
+            }
+            if (!query.first()) {
+                qDebug() << "ahahah";
+            }
 
-        QDate time;
-        int32_t verdict = 0;
-        QString notes;
-        if (query.first()) {
-            time = query.value("time").toDate();
-            verdict = query.value("verdict").toInt();
-            notes = query.value("notes").toString();
-        }
+            QDate time;
+            int32_t verdict = 0;
+            QString notes;
+            if (query.first()) {
+                time = query.value("time").toDate();
+                verdict = query.value("verdict").toInt();
+                notes = query.value("notes").toString();
+            }
 
-        listComponents->append(new CourseTest(id, order, title, maxMark, urlJson, 0, verdict, notes, time, testSize));
+            listComponents->append(new CourseTest(id, order, title, maxMark, urlJson, 0, verdict, notes, time, testSize));
+        } while (query.next());
     }
 
     query.prepare("SELECT id, content, \"order\" "
@@ -241,12 +259,16 @@ QList<CourseComponent*>* DatabaseManager::GetCourseComponents(int32_t courseId,A
         qDebug() << "Error executing course tutorials query:" << query.lastError().text();
         return listComponents;
     }
+    if (!query.first()) {
+        qDebug() << "ahahah";
+    } else {
 
-    while (query.next()) {
-        int32_t id = query.value("id").toInt();
-        int32_t order = query.value("order").toInt();
-        QString content = query.value("content").toString();
-        listComponents->append(new CourseTutorials(id, order, content));
+        do {
+            int32_t id = query.value("id").toInt();
+            int32_t order = query.value("order").toInt();
+            QString content = query.value("content").toString();
+            listComponents->append(new CourseTutorials(id, order, content));
+        } while (query.next());
     }
     return listComponents;
 }
