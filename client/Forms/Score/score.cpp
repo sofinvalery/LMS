@@ -23,7 +23,7 @@ Score::Score(QWidget *parent)
         score->move(20, heightLine);
         heightLine += 90;
     }
-    ui->scrollAreaWidgetContents->setMinimumHeight(heightLine + 60);
+    ui->scrollAreaWidgetContents->setMinimumHeight(heightLine + 120);
 }
 
 Score::~Score()
@@ -88,5 +88,5 @@ void Score::showPathCourseScore(Course *course)
         scoreList[index]->move(20, heightLine);
         heightLine += 90;
     }
-    ui->scrollAreaWidgetContents->setMinimumHeight(heightLine + 60);
+    ui->scrollAreaWidgetContents->setMinimumHeight(heightLine + 120);
 }
