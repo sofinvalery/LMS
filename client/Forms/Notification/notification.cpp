@@ -11,7 +11,11 @@ Notification::Notification(QWidget *parent, QString notification, QString colour
     this->setWindowFlag(Qt::WindowCloseButtonHint, false);
     this->setWindowFlags(Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint);
     StyleManager::GetInstance()->setLabelStyle(ui->notificationLabel, notification, true, colour, true, 14);
-
+    ui->notificationLabel->setWordWrap(true);
+    ui->notificationLabel->setAlignment(Qt::AlignTop | Qt::AlignLeft);
+    ui->notificationLabel->setFixedWidth(200);
+    ui->notificationLabel->adjustSize();
+    this->adjustSize();
     ui->groupBox->setStyleSheet(
         "QGroupBox {"
         "border: 2px solid lightgrey;"

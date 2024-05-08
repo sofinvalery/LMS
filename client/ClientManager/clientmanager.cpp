@@ -150,10 +150,14 @@ void ClientManager::slotReadyReadFile()
             }
             else{
                 char ch[2048];
-                int read=in.readRawData(ch,sizeof(char)*2048);
-                temp->file->write(ch,read);
-                temp->alreadyRead+=read;
-                emit temp->addRead(read);
+                int read;
+                do{
+                    read=in.readRawData(ch,sizeof(char)*2048);
+                    temp->file->write(ch,read);
+                    temp->alreadyRead+=read;
+                    emit temp->addRead(read);
+                }
+                while(read!=0);
                 if(temp->alreadyRead==temp->fileSize)
                 {
                     temp->alreadyRead=0;

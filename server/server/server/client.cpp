@@ -90,9 +90,12 @@ Client::Client(qintptr socketDescriptor, QObject* parent) :
                 }
                 else{
                     char ch[2048];
-                    int read=in.readRawData(ch,sizeof(char)*2048);
+                    int read;
+                     do{
+                        read=in.readRawData(ch,sizeof(char)*2048);
                     fileSocket.file->write(ch,read);
                     fileSocket.alreadyRead+=read;
+                    }while(read!=0);
                     if(fileSocket.alreadyRead==fileSocket.fileSize)
                     {
                         nextBlockSize=0;
