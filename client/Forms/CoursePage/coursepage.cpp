@@ -3,6 +3,7 @@
 #include "StyleManager/stylemanager.h"
 #include "Forms/CoursePageComponents/componentswidgetfactory.h"
 #include "Forms/CoursePage/CoursePageEditor/coursepageeditor.h"
+#include "ClientState/clientstate.h"
 
 CoursePage::CoursePage(Course *course, QWidget *parent)
     : QWidget(parent)
@@ -48,6 +49,10 @@ CoursePage::CoursePage(Course *course, QWidget *parent)
     ui->verticalLine->setStyleSheet("border: 3px solid lightgrey;");
     ui->verticalLine->setFixedSize(3, 120);
     ui->verticalLine->move(184, 0);
+
+    if(ClientState::GetInstance()->getAuth()->GetCurrentRole() == STUDENT){
+        ui->EditCourseButton->hide();
+    }
 
 }
 
