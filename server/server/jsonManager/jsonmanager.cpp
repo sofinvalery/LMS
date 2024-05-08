@@ -314,22 +314,23 @@ QJsonObject editCourseComponent(QJsonObject json, Authentication **auth)
 QJsonObject deleteCourseComponent(QJsonObject json, Authentication **auth)
 {
     DatabaseManager db;
+    int courseId = json["courseID"].toInt();
     int componentId = json["ComponentId"].toInt();
     QString type = json["type"].toString();
     if(type == "CourseMediaFiles")
     {
-        db.DeleteCourseMedia(componentId);
+        db.DeleteCourseMedia(componentId, courseId);
     }
     else if(type=="CourseTask")
     {
-        db.DeleteCourseTask(componentId);
+        db.DeleteCourseTask(componentId, courseId);
     }
     else if(type=="CourseTest")
     {
-        db.DeleteCourseTest(componentId);
+        db.DeleteCourseTest(componentId, courseId);
     }
     else{
-        db.DeleteCourseTutorial(componentId);
+        db.DeleteCourseTutorial(componentId, courseId);
     }
 
 
