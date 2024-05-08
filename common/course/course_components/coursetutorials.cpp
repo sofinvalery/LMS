@@ -29,4 +29,9 @@ QString CourseTutorials::getContent() const
     return content;
 }
 
+void CourseTutorials::setContent(const QString &newContent)
+{
+    content = newContent;
+}
+
 

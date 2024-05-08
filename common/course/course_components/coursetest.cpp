@@ -17,6 +17,7 @@ CourseTest::CourseTest(int32_t id, int32_t order, QString title, int32_t maxMark
     this->notes=notes;
     this->listQuestions=listQuestions;
     this->time=time;
+    this->testSize = testSize;
 }
 
 QString CourseTest::getTitle() const
@@ -67,6 +68,7 @@ QJsonObject CourseTest::Serialize()
     json["urlJson"]=urlJson;
     json["time"]=time.toString("yyyy.MM.dd");
     json["verdict"]= verdict;
+    json["testSize"]= testSize;
     QJsonObject main;
     main["CourseTest"]=json;
     return main;
@@ -108,4 +110,29 @@ void CourseTest::DeserializeQuestionList(QJsonObject jsonObj)
 QDate CourseTest::getTime() const
 {
     return time;
+}
+
+int32_t CourseTest::getTestSize() const
+{
+    return testSize;
+}
+
+void CourseTest::setTitle(const QString &newTitle)
+{
+    title = newTitle;
+}
+
+void CourseTest::setMaxMark(int32_t newMaxMark)
+{
+    maxMark = newMaxMark;
+}
+
+void CourseTest::setTimeInSeconds(int32_t newTimeInSeconds)
+{
+    timeInSeconds = newTimeInSeconds;
+}
+
+void CourseTest::setTestSize(int32_t newTestSize)
+{
+    testSize = newTestSize;
 }

@@ -90,5 +90,25 @@ QString CourseTask::getContent() const
     return content;
 }
 
+void CourseTask::setContent(const QString &newContent)
+{
+    content = newContent;
+}
+
+void CourseTask::setMaxMark(int32_t newMaxMark)
+{
+    maxMark = newMaxMark;
+}
+
+void CourseTask::setAllowedTypeOfFiles(const QString &newAllowedTypeOfFiles)
+{
+    allowedTypeOfFiles = newAllowedTypeOfFiles;
+}
+
+void CourseTask::setTitle(const QString &newTitle)
+{
+    title = newTitle;
+}
+
 
 
