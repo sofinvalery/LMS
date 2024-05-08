@@ -50,6 +50,12 @@ private:
     void on_mainButton_clickedAgain();
     void on_AddButton_clicked(QPushButton* clickedButton);
     void on_AddButton_clickedAgain();
+
+    CourseTest * temptest;
+    CoursePdf * tempfile;
+    CourseTask * tempdz;
+    CourseTutorials * temptext;
+
 };
 
 #endif // COURSEPAGEEDITOR_H

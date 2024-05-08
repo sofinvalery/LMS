@@ -87,3 +87,8 @@ void CoursePage::on_EditCourseButton_clicked()
     editor->show();
 }
 
+QList<QWidget *> CoursePage::getWidgets() const
+{
+    return widgets;
+}
+

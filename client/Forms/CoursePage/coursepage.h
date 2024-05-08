@@ -19,6 +19,8 @@ public:
     void CleanComponents();
     Course * GetCourse(){return course;}
     ~CoursePage();
+    QList<QWidget *> getWidgets() const;
+
 private slots:
     void on_EditCourseButton_clicked();
 

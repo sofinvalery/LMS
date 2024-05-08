@@ -16,3 +16,8 @@ CourseText::~CourseText()
 {
     delete ui;
 }
+
+void CourseText::setText(QString text)
+{
+    ui->label->setText(text);
+}

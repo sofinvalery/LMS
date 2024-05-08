@@ -95,6 +95,7 @@ void CoursePageEditor::on_AddWidgetButton_clicked()
         ui->DeleteWidgetButton->setEnabled(true);
         ui->EditWidgetButton->setEnabled(true);
         on_mainButton_clickedAgain();
+        on_AddButton_clickedAgain();
         ui->AddDzButton->hide();
         ui->AddFileButton->hide();
         ui->AddTestButton->hide();
@@ -192,12 +193,21 @@ void CoursePageEditor::on_DoneButton_clicked()
         coursepage->GetCourse()->AddCourseComponent(new CourseTutorials(-100, ui->ComponentOrderSpinBox->value(), ui->ContentTextEdit->toPlainText()), ui->ComponentOrderSpinBox->value()-1);
         coursepage->ShowComponents();
     }
-    if (DeletingStatus == 1){                               // удалить из сервера элемент  ui->ComponentOrderSpinBox->value()-1
+    if (DeletingStatus == 1 && ui->ComponentOrderSpinBox->maximum() > 1){                               // удалить из сервера элемент  ui->ComponentOrderSpinBox->value()-1
         coursepage->CleanComponents();
+        ui->ComponentOrderSpinBox->setMaximum(ui->ComponentOrderSpinBox->maximum()-1);
         coursepage->GetCourse()->DeleteCourseComponent(ui->ComponentOrderSpinBox->value()-1);
         coursepage->ShowComponents();
     }
-    //this->close();
+    if (EditingStatus == 1){                                // поменять на сервере тест !!!
+        temptest = qobject_cast<CourseTest*>(coursepage->GetCourse()->getListComponents()[ui->ComponentOrderSpinBox->value()-1]);
+        coursepage->CleanComponents();
+        temptest->setTitle(ui->NameOnComponentLineEdit->text());
+        temptest->setTimeInSeconds(ui->TestTimeEdit->time().hour()*3600+ui->TestTimeEdit->time().minute()*60+ui->TestTimeEdit->time().second());
+        temptest->setTestSize(ui->TestCountSpinBox->value());
+        coursepage->ShowComponents();
+    }
+    this->close();
 }
 
 
@@ -378,24 +388,51 @@ void CoursePageEditor::on_exitButton_clicked()
 void CoursePageEditor::on_ChooseButton_clicked()
 {
     QString type = coursepage->GetCourse()->getListComponents()[ui->ComponentOrderSpinBox->value()-1]->getType();
-    if (type == "CourseTest" && ui->TestTimeEdit->isHidden()){
-        ui->TestTimeEdit->setTime(QTime(0,0));
+    bool courseEditFlag = true;
+    if (type == "CourseTest" && ui->TestTimeEdit->isHidden() && courseEditFlag){
+        //temp = qobject_cast<CourseTest*>(coursepage->GetCourse()->getListComponents()[ui->ComponentOrderSpinBox->value()-1]);
+        temptest = qobject_cast<CourseTest*>(coursepage->GetCourse()->getListComponents()[ui->ComponentOrderSpinBox->value()-1]);
+        ui->TestTimeEdit->setTime(QTime(temptest->getTimeInSeconds()/3600, temptest->getTimeInSeconds()%3600/60));
+        courseEditFlag = false;
         EditingStatus = 1;
         ui->NameOnComponentLineEdit->show();
+        ui->NameOnComponentLineEdit->setText(temptest->getTitle());
         ui->TestTimeLabel->show();
         ui->TestTimeEdit->show();
         ui->TestCountLabel->show();
+        ui->TestCountSpinBox->setValue(temptest->getTestSize());
         ui->TestCountSpinBox->show();
         ui->ComponentOrderSpinBox->setEnabled(false);
     }
-    if (type == "CourseTest" && !ui->TestTimeEdit->isHidden()){
+    if (type == "CourseTest" && !ui->TestTimeEdit->isHidden() && courseEditFlag){
         EditingStatus = 0;
         ui->NameOnComponentLineEdit->hide();
+        courseEditFlag = false;
         ui->TestTimeLabel->hide();
         ui->TestTimeEdit->hide();
         ui->TestCountLabel->hide();
         ui->TestCountSpinBox->hide();
         ui->ComponentOrderSpinBox->setEnabled(true);
+    }
+    if (type == "CoursePdf" && ui->LoadFileButton->isHidden() && courseEditFlag){
+        tempfile = qobject_cast<CoursePdf*>(coursepage->GetCourse()->getListComponents()[ui->ComponentOrderSpinBox->value()-1]);
+        courseEditFlag = false;
+        EditingStatus = 2;
+        ui->NameOnComponentLineEdit->show();
+        ui->NameOnComponentLineEdit->setText(temptest->getTitle());
+        ui->LoadFileButton->show();
+        ui->PathLabel1->show();
+        ui->PathLabel2->show();
+        ui->PathLabel2->setText(tempfile->getUrl());
+    }
+    if (type == "CoursePdf" && !ui->LoadFileButton->isHidden() && courseEditFlag){
+        courseEditFlag = false;
+        EditingStatus = 0;
+        ui->NameOnComponentLineEdit->hide();
+        ui->LoadFileButton->hide();
+        ui->PathLabel1->hide();
+        ui->PathLabel2->setText("");
+        ui->PathLabel2->hide();
     }
 }
 
