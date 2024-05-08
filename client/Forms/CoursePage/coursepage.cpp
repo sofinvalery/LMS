@@ -53,17 +53,17 @@ CoursePage::CoursePage(Course *course, QWidget *parent)
 
 void CoursePage::ShowComponents()
 {
-    height = 0;
+    height = 140;
     ComponentsWidgetFactory<QString,QWidget,CourseComponent*> widgetFactory;
     for (int i = 0; i < course->getListComponents().size(); i ++){
         QWidget * temp = widgetFactory.get(course->getListComponents()[i]->getType())(course->getListComponents()[i]);
         widgets.append(temp);
         temp->setParent(ui->scrollAreaWidgetContents);
-        temp->move(10, height+140);
-        height += temp->height()+20;
+        temp->move(10, height+30);
+        height += temp->height()+30;
         temp->show();
     }
-    ui->scrollAreaWidgetContents->setMinimumHeight(height);
+    ui->scrollAreaWidgetContents->setMinimumHeight(height+200);
     iconIMG = new QPixmap(course->GetAvaTitleUrl());
     ui->IconLabel->setPixmap(iconIMG->scaled(111, 81, Qt::KeepAspectRatio));
 

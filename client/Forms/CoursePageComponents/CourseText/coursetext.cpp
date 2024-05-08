@@ -14,6 +14,7 @@ CourseText::CourseText(CourseComponent * text, QWidget *parent)
     ui->label->setMaximumWidth(StyleManager::GetInstance()->getScreenWidth()-50);
     ui->label->adjustSize();
     this->adjustSize();
+    this->setMinimumHeight(ui->label->height());
 }
 
 CourseText::~CourseText()
