@@ -37,14 +37,11 @@ public:
 
     QString getType() override { return "CourseTask"; }
 
-    int32_t getOrder() { return order; }
-
     ~CourseTask(){};
 private:
     QString content;
     int32_t maxMark;
     int32_t memoryLimit;
-    int32_t order;
     QString allowedTypeOfFiles;
     QString answerUrl;
     QDate solutionTime;

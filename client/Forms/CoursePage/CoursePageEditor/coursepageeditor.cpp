@@ -155,7 +155,7 @@ void CoursePageEditor::on_DoneButton_clicked()
     int32_t courseID= coursepage->GetCourse()->GetCourseId();
     QJsonObject json;
     json["courseID"]=int(courseID);
-    if(AddingStatus == 1&&ui->NameOnComponentLineEdit->text()!=""){                                  // добавить на сервер тест (не доделано)
+    if(AddingStatus == 1&&ui->NameOnComponentLineEdit->text()!=""){ // добавить на сервер тест (не доделано)
         CourseTest* temp=new CourseTest(-100, ui->ComponentOrderSpinBox->value(), ui->NameOnComponentLineEdit->text(), 10, "", 1000, 9, "сдал", QDate(2004,4,4));
         json["type"] = temp->getType();
         json["Class"]= temp->Serialize();
@@ -167,7 +167,7 @@ void CoursePageEditor::on_DoneButton_clicked()
         this->close();
         return;
     }
-    if(AddingStatus == 2&&ui->NameOnComponentLineEdit->text()!=""&& ui->PathLabel2->text()!=""){                                  // добавить на сервер загрузочный файл
+    if(AddingStatus == 2&&ui->NameOnComponentLineEdit->text()!=""&& ui->PathLabel2->text()!=""){// добавить на сервер загрузочный файл
 
 
         QString fileName;
@@ -193,7 +193,7 @@ void CoursePageEditor::on_DoneButton_clicked()
         return;
     }
     if (AddingStatus == 3&&ui->ContentTextEdit->toPlainText()!=""&&ui->NameOnComponentLineEdit->text()!=""){                                  // добавить на сервер дз (не доделано)
-        CourseTask* temp = new CourseTask(-100, ui->ComponentOrderSpinBox->value(), ui->ContentTextEdit->toPlainText(), ui->MaxMarkSpinBox->value(), 7000, ui->AllowedTypeOfFilesLineEdit->text(), "", QDate(2004,4,4), 0, "", ui->NameOnComponentLineEdit->text());
+        CourseTask* temp = new CourseTask(-100, (int32_t)ui->ComponentOrderSpinBox->value(), ui->ContentTextEdit->toPlainText(), ui->MaxMarkSpinBox->value(), 7000, ui->AllowedTypeOfFilesLineEdit->text(), "", QDate(2004,4,4), 0, "", ui->NameOnComponentLineEdit->text());
         json["type"] = temp->getType();
         json["Class"]= temp->Serialize();
         coursepage->CleanComponents();
