@@ -850,10 +850,12 @@ bool DatabaseManager::DeleteCourseMedia(int32_t courseMediaId, int32_t courseId)
         qDebug() << "Error getting order of course media file:" << query.lastError().text();
         return false;
     }
-    int order = 0;
-    if (query.next()) {
-        order = query.value(0).toInt();
+    if (!query.first()) {
+        qDebug() << "Error:" << query.lastError().text();
+        return false;
     }
+
+    int order = query.value(0).toInt();
 
     query.prepare("DELETE FROM path_course_media_files WHERE id = :courseMediaId");
     query.bindValue(":courseMediaId", courseMediaId);
@@ -862,28 +864,28 @@ bool DatabaseManager::DeleteCourseMedia(int32_t courseMediaId, int32_t courseId)
         return false;
     }
 
-    query.prepare("UPDATE path_course_media_files SET \"order\" = \"order\" - 1 WHERE \"order\" > :order AND courseId = :courseId");
+    query.prepare("UPDATE path_course_media_files SET \"order\" = \"order\" - 1 WHERE \"order\" > :order AND courses_id1 = :courseId");
     query.bindValue(":courseId", courseId);
     query.bindValue(":order", order);
     if (!query.exec()) {
         qDebug() << "Error reordering course MF1:" << query.lastError().text();
         return false;
     }
-    query.prepare("UPDATE path_course_tutorials SET \"order\" = \"order\" - 1 WHERE \"order\" > :order AND courseId = :courseId");
+    query.prepare("UPDATE path_course_tutorials SET \"order\" = \"order\" - 1 WHERE \"order\" > :order AND courses_id1 = :courseId");
     query.bindValue(":courseId", courseId);
     query.bindValue(":order", order);
     if (!query.exec()) {
         qDebug() << "Error reordering course MF2:" << query.lastError().text();
         return false;
     }
-    query.prepare("UPDATE path_course_tasks SET \"order\" = \"order\" - 1 WHERE \"order\" > :order AND courseId = :courseId");
+    query.prepare("UPDATE path_course_tasks SET \"order\" = \"order\" - 1 WHERE \"order\" > :order AND courses_id1 = :courseId");
     query.bindValue(":courseId", courseId);
     query.bindValue(":order", order);
     if (!query.exec()) {
         qDebug() << "Error reordering course MF3:" << query.lastError().text();
         return false;
     }
-    query.prepare("UPDATE path_course_tests SET \"order\" = \"order\" - 1 WHERE \"order\" > :order AND courseId = :courseId");
+    query.prepare("UPDATE path_course_tests SET \"order\" = \"order\" - 1 WHERE \"order\" > :order AND courses_id1 = :courseId");
     query.bindValue(":courseId", courseId);
     query.bindValue(":order", order);
     if (!query.exec()) {
@@ -898,16 +900,17 @@ bool DatabaseManager::DeleteCourseTutorial(int32_t courseTutorialId, int32_t cou
     QSqlQuery query(m_db);
 
     query.prepare("SELECT \"order\" FROM path_course_tutorials WHERE id = :courseTutorialId");
-    query.bindValue(":courseTutorials", courseTutorialId);
+    query.bindValue(":courseTutorialId", courseTutorialId);
     if (!query.exec()) {
         qDebug() << "Error getting order of course tutorial:" << query.lastError().text();
         return false;
     }
-
-    int order = 0;
-    if (query.next()) {
-        order = query.value(0).toInt();
+    if (!query.first()) {
+        qDebug() << "Error:" << query.lastError().text();
+        return false;
     }
+
+    int order = query.value(0).toInt();
 
     query.prepare("DELETE FROM path_course_tutorials WHERE id = :courseTutorialId");
     query.bindValue(":courseTutorialId", courseTutorialId);
@@ -915,29 +918,29 @@ bool DatabaseManager::DeleteCourseTutorial(int32_t courseTutorialId, int32_t cou
         qDebug() << "Error deleting course tutorial:" << query.lastError().text();
         return false;
     }
-
-    query.prepare("UPDATE path_course_media_files SET \"order\" = \"order\" - 1 WHERE \"order\" > :order AND courseId = :courseId");
+    qDebug() << "order:" << order;
+    query.prepare("UPDATE path_course_media_files SET \"order\" = \"order\" - 1 WHERE \"order\" > :order AND courses_id1 = :courseId");
     query.bindValue(":courseId", courseId);
     query.bindValue(":order", order);
     if (!query.exec()) {
         qDebug() << "Error reordering course T1:" << query.lastError().text();
         return false;
     }
-    query.prepare("UPDATE path_course_tutorials SET \"order\" = \"order\" - 1 WHERE \"order\" > :order AND courseId = :courseId");
+    query.prepare("UPDATE path_course_tutorials SET \"order\" = \"order\" - 1 WHERE \"order\" > :order AND courses_id1 = :courseId");
     query.bindValue(":courseId", courseId);
     query.bindValue(":order", order);
     if (!query.exec()) {
         qDebug() << "Error reordering course T2:" << query.lastError().text();
         return false;
     }
-    query.prepare("UPDATE path_course_tasks SET \"order\" = \"order\" - 1 WHERE \"order\" > :order AND courseId = :courseId");
+    query.prepare("UPDATE path_course_tasks SET \"order\" = \"order\" - 1 WHERE \"order\" > :order AND courses_id1 = :courseId");
     query.bindValue(":courseId", courseId);
     query.bindValue(":order", order);
     if (!query.exec()) {
         qDebug() << "Error reordering course T3:" << query.lastError().text();
         return false;
     }
-    query.prepare("UPDATE path_course_tests SET \"order\" = \"order\" - 1 WHERE \"order\" > :order AND courseId = :courseId");
+    query.prepare("UPDATE path_course_tests SET \"order\" = \"order\" - 1 WHERE \"order\" > :order AND courses_id1 = :courseId");
     query.bindValue(":courseId", courseId);
     query.bindValue(":order", order);
     if (!query.exec()) {
@@ -957,11 +960,12 @@ bool DatabaseManager::DeleteCourseTask(int32_t courseTaskId, int32_t courseId) {
         qDebug() << "Error getting order of course task:" << query.lastError().text();
         return false;
     }
-
-    int order = 0;
-    if (query.next()) {
-        order = query.value(0).toInt();
+    if (!query.first()) {
+        qDebug() << "Error:" << query.lastError().text();
+        return false;
     }
+
+    int order = query.value(0).toInt();
 
     query.prepare("DELETE FROM path_course_tasks WHERE id = :courseTaskId");
     query.bindValue(":courseTaskId", courseTaskId);
@@ -970,28 +974,28 @@ bool DatabaseManager::DeleteCourseTask(int32_t courseTaskId, int32_t courseId) {
         return false;
     }
 
-    query.prepare("UPDATE path_course_media_files SET \"order\" = \"order\" - 1 WHERE \"order\" > :order AND courseId = :courseId");
+    query.prepare("UPDATE path_course_media_files SET \"order\" = \"order\" - 1 WHERE \"order\" > :order AND courses_id1 = :courseId");
     query.bindValue(":courseId", courseId);
     query.bindValue(":order", order);
     if (!query.exec()) {
         qDebug() << "Error reordering course task1:" << query.lastError().text();
         return false;
     }
-    query.prepare("UPDATE path_course_tutorials SET \"order\" = \"order\" - 1 WHERE \"order\" > :order AND courseId = :courseId");
+    query.prepare("UPDATE path_course_tutorials SET \"order\" = \"order\" - 1 WHERE \"order\" > :order AND courses_id1 = :courseId");
     query.bindValue(":courseId", courseId);
     query.bindValue(":order", order);
     if (!query.exec()) {
         qDebug() << "Error reordering course task2:" << query.lastError().text();
         return false;
     }
-    query.prepare("UPDATE path_course_tasks SET \"order\" = \"order\" - 1 WHERE \"order\" > :order AND courseId = :courseId");
+    query.prepare("UPDATE path_course_tasks SET \"order\" = \"order\" - 1 WHERE \"order\" > :order AND courses_id1 = :courseId");
     query.bindValue(":courseId", courseId);
     query.bindValue(":order", order);
     if (!query.exec()) {
         qDebug() << "Error reordering course task3:" << query.lastError().text();
         return false;
     }
-    query.prepare("UPDATE path_course_tests SET \"order\" = \"order\" - 1 WHERE \"order\" > :order AND courseId = :courseId");
+    query.prepare("UPDATE path_course_tests SET \"order\" = \"order\" - 1 WHERE \"order\" > :order AND courses_id1 = :courseId");
     query.bindValue(":courseId", courseId);
     query.bindValue(":order", order);
     if (!query.exec()) {
@@ -1011,11 +1015,12 @@ bool DatabaseManager::DeleteCourseTest(int32_t courseTestId, int32_t courseId) {
         qDebug() << "Error getting order of course task:" << query.lastError().text();
         return false;
     }
-
-    int order = 0;
-    if (query.next()) {
-        order = query.value(0).toInt();
+    if (!query.first()) {
+        qDebug() << "Error:" << query.lastError().text();
+        return false;
     }
+
+    int order = query.value(0).toInt();
 
     query.prepare("DELETE FROM path_course_tests WHERE id = :courseTestId");
     query.bindValue(":courseTestId", courseTestId);
@@ -1024,28 +1029,28 @@ bool DatabaseManager::DeleteCourseTest(int32_t courseTestId, int32_t courseId) {
         return false;
     }
 
-    query.prepare("UPDATE path_course_media_files SET \"order\" = \"order\" - 1 WHERE \"order\" > :order AND courseId = :courseId");
+    query.prepare("UPDATE path_course_media_files SET \"order\" = \"order\" - 1 WHERE \"order\" > :order AND courses_id1 = :courseId");
     query.bindValue(":courseId", courseId);
     query.bindValue(":order", order);
     if (!query.exec()) {
         qDebug() << "Error reordering course test1:" << query.lastError().text();
         return false;
     }
-    query.prepare("UPDATE path_course_tutorials SET \"order\" = \"order\" - 1 WHERE \"order\" > :order AND courseId = :courseId");
+    query.prepare("UPDATE path_course_tutorials SET \"order\" = \"order\" - 1 WHERE \"order\" > :order AND courses_id1 = :courseId");
     query.bindValue(":courseId", courseId);
     query.bindValue(":order", order);
     if (!query.exec()) {
         qDebug() << "Error reordering course test2:" << query.lastError().text();
         return false;
     }
-    query.prepare("UPDATE path_course_tasks SET \"order\" = \"order\" - 1 WHERE \"order\" > :order AND courseId = :courseId");
+    query.prepare("UPDATE path_course_tasks SET \"order\" = \"order\" - 1 WHERE \"order\" > :order AND courses_id1 = :courseId");
     query.bindValue(":courseId", courseId);
     query.bindValue(":order", order);
     if (!query.exec()) {
         qDebug() << "Error reordering course test3:" << query.lastError().text();
         return false;
     }
-    query.prepare("UPDATE path_course_tests SET \"order\" = \"order\" - 1 WHERE \"order\" > :order AND courseId = :courseId");
+    query.prepare("UPDATE path_course_tests SET \"order\" = \"order\" - 1 WHERE \"order\" > :order AND courses_id1 = :courseId");
     query.bindValue(":courseId", courseId);
     query.bindValue(":order", order);
     if (!query.exec()) {
