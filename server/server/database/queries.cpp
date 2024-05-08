@@ -157,34 +157,35 @@ QList<CourseComponent*>* DatabaseManager::GetCourseComponents(int32_t courseId,A
             QString title = query.value("title").toString();
 
             QStringList allowedTypes;
-            query.prepare("SELECT type_files.name "
+            QSqlQuery query2(m_db);
+            query2.prepare("SELECT type_files.name "
                           "FROM type_file_has_lesson_problem "
                           "JOIN type_files ON type_file_has_lesson_problem.type_files_id1 = type_files.id "
                           "WHERE type_file_has_lesson_problem.path_course_tasks_id1 = :taskId");
-            query.bindValue(":taskId", id);
-            if (!query.exec()) {
-                qDebug() << "Error executing allowed file types query:" << query.lastError().text();
+            query2.bindValue(":taskId", id);
+            if (!query2.exec()) {
+                qDebug() << "Error executing allowed file types query:" << query2.lastError().text();
                 return listComponents;
             }
-            if (!query.first()) {
+            if (!query2.first()) {
                 qDebug() << "ahahah";
             } else {
                 do {
-                    allowedTypes.append(query.value("name").toString());
-                } while (query.next());
+                    allowedTypes.append(query2.value("name").toString());
+                } while (query2.next());
             }
-
+            QSqlQuery query3(m_db);
             QString allowedTypeOfFiles = allowedTypes.join(",");
-            query.prepare("SELECT answer_url, time, verdict, notes "
+            query3.prepare("SELECT answer_url, time, verdict, notes "
                           "FROM path_course_tasks_submits "
                           "WHERE path_course_tasks_id1 = :taskId AND users_id1 = :id");
-            query.bindValue(":taskId", id);
-            query.bindValue(":id", auth->getId());
-            if (!query.exec()) {
-                qDebug() << "Error executing task submissions query:" << query.lastError().text();
+            query3.bindValue(":taskId", id);
+            query3.bindValue(":id", auth->getId());
+            if (!query3.exec()) {
+                qDebug() << "Error executing task submissions query:" << query3.lastError().text();
                 return listComponents;
             }
-            if (!query.first()) {
+            if (!query3.first()) {
                 qDebug() << "ahahah";
             }
 
@@ -192,11 +193,11 @@ QList<CourseComponent*>* DatabaseManager::GetCourseComponents(int32_t courseId,A
             QDate solutionTime;
             int32_t verdict = 0;
             QString notes;
-            if (query.first()) {
-                answerUrl = query.value("answer_url").toString();
-                solutionTime = query.value("time").toDate();
-                verdict = query.value("verdict").toInt();
-                notes = query.value("notes").toString();
+            if (query3.first()) {
+                answerUrl = query3.value("answer_url").toString();
+                solutionTime = query3.value("time").toDate();
+                verdict = query3.value("verdict").toInt();
+                notes = query3.value("notes").toString();
             }
 
             listComponents->append(new CourseTask(id, order, content, maxMark, memoryLimit,
@@ -224,27 +225,27 @@ QList<CourseComponent*>* DatabaseManager::GetCourseComponents(int32_t courseId,A
             int32_t maxMark = query.value("max_mark").toInt();
             QString urlJson = query.value("url_json").toString();
             int32_t testSize = query.value("test_size").toInt();
-
-            query.prepare("SELECT time, verdict, notes "
+            QSqlQuery query2(m_db);
+            query2.prepare("SELECT time, verdict, notes "
                           "FROM path_course_test_submits "
                           "WHERE path_course_tests_id = :testId AND users_id1 = :id");
-            query.bindValue(":testId", id);
-            query.bindValue(":id", auth->getId());
-            if (!query.exec()) {
-                qDebug() << "Error executing test submissions query:" << query.lastError().text();
+            query2.bindValue(":testId", id);
+            query2.bindValue(":id", auth->getId());
+            if (!query2.exec()) {
+                qDebug() << "Error executing test submissions query:" << query2.lastError().text();
                 return listComponents;
             }
-            if (!query.first()) {
+            if (!query2.first()) {
                 qDebug() << "ahahah";
             }
 
             QDate time;
             int32_t verdict = 0;
             QString notes;
-            if (query.first()) {
-                time = query.value("time").toDate();
-                verdict = query.value("verdict").toInt();
-                notes = query.value("notes").toString();
+            if (query2.first()) {
+                time = query2.value("time").toDate();
+                verdict = query2.value("verdict").toInt();
+                notes = query2.value("notes").toString();
             }
 
             listComponents->append(new CourseTest(id, order, title, maxMark, urlJson, 0, verdict, notes, time, testSize));
