@@ -38,10 +38,10 @@ public:
     bool SetCourseMediaFiles(CourseMediaFiles* mediaFiles, int32_t courseId);
     bool SetCourseTasks(CourseTask* tasks, int32_t courseId);
     bool SetCourseTests(CourseTest* tests, int32_t courseId);
-    bool DeleteCourseMedia(int32_t courseMediaId);
-    bool DeleteCourseTutorial(int32_t courseTutorialId);
-    bool DeleteCourseTask(int32_t courseTaskId);
-    bool DeleteCourseTest(int32_t courseTaskId);
+    bool DeleteCourseMedia(int32_t courseMediaId, int32_t courseId);
+    bool DeleteCourseTutorial(int32_t courseTutorialId, int32_t courseId);
+    bool DeleteCourseTask(int32_t courseTaskId, int32_t courseId);
+    bool DeleteCourseTest(int32_t courseTaskId, int32_t courseId);
     bool EditCourseMediaFiles(CourseMediaFiles* mediaFiles);
     bool EditCourseTutorial(CourseTutorials* tutorials);
     bool EditCourseTask(CourseTask* task);
