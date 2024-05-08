@@ -99,7 +99,19 @@ void groupEditor::ShowGroup()
 
 void groupEditor::on_showGroupButton_clicked()
 {
-    heightLine = 0;
+    heightLine = 50;
+    for(int i=0;i<nameList.size();i++)
+    {
+        nameList[i]->close();
+        deleteButtons[i]->close();
+        generatePasswordButtons[i]->close();
+        logins[i]->close();
+        delete logins[i];
+        delete nameList[i];
+        delete deleteButtons[i];
+        delete generatePasswordButtons[i];
+
+    }
     nameList.clear();
     deleteButtons.clear();
     generatePasswordButtons.clear();
@@ -215,8 +227,24 @@ void groupEditor::on_addButton_clicked()
 //кнопка применить
 void groupEditor::on_createButton_clicked()
 {
-    QString login = ClientState::GetInstance()->getGroup()->getParticipants()[ ClientState::GetInstance()->getGroup()->getParticipants().size()-1]->GetLogin();
-    int lastParticipantId = login.split('_')[1].toInt()+1;
+    int lastParticipantId;
+    try{
+        if(ClientState::GetInstance()->getGroup()->getParticipants().size()>0)
+        {
+            QString login = ClientState::GetInstance()->getGroup()->getParticipants()[ ClientState::GetInstance()->getGroup()->getParticipants().size()-1]->GetLogin();
+            lastParticipantId = login.split('_')[1].toInt()+1;
+        }
+        else{
+            StyleManager::GetInstance()->setLabelStyle(ui->warningLabel, "Группа сломана", true, "red",true, 16);
+            ui->warningLabel->show();
+            return;
+        }
+    }
+    catch(std::exception e){
+        StyleManager::GetInstance()->setLabelStyle(ui->warningLabel, "Группа сломана", true, "red",true, 16);
+        ui->warningLabel->show();
+        return;
+    }
     EnumRoles role;
     Group* gr = ClientState::GetInstance()->getGroup();
     if(gr->getIsTeacherGroup())
@@ -246,6 +274,13 @@ void groupEditor::on_createButton_clicked()
         if(logins[i]->text()=="unknown"){
            gr->getParticipants().append(new Authentication(translate(gr->getClassname())+"_"+QString::number(lastParticipantId++),passwordRand(1,10)[0],-100,nameList[i]->text(),"sadsa",role));
         }
+    if(gr->getParticipants().size()==0)
+    {
+        StyleManager::GetInstance()->setLabelStyle(ui->warningLabel, "Группа не может быть пустой", true, "red",true, 16);
+        ui->warningLabel->show();
+
+        return;
+    }
     XlsxUtils::GetInstance()->getAddedGroup(gr);
     ClientManager::GetInstance()->SendJsonToServer(UPDATEGROUP,gr->Serialize());
     Notification* notification = new Notification(nullptr,"Файл отредактированной группы,\nдобавлен в загрузки.\nИмя файла: "+gr->getClassname()+".xlsx","black");

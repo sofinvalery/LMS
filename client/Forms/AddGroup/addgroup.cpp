@@ -18,7 +18,7 @@ AddGroup::AddGroup(QWidget *parent)
     ui->deleteButton->setEnabled(false);
 
     StyleManager::GetInstance()->setLabelStyle(ui->warningLabel, "Данная группа уже существует", true, "red", false, 16);
-    ui->warningLabel->move(250,200);
+    ui->warningLabel->move(350,230);
 
     StyleManager::GetInstance()->setLabelStyle(ui->infoLabel, "Внимание, при загрузке таблицы приоретет \n заполнения данных отдается ей", false, "black", true, 12);
 
