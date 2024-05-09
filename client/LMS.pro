@@ -22,6 +22,7 @@ SOURCES += \
     Forms/AddGroup/addgroup.cpp \
     Forms/Auth/auth.cpp \
     Forms/CourseAdder/courseadder.cpp \
+    Forms/CoursePage/AdminScore/adminscore.cpp \
     Forms/CoursePage/CoursePageEditor/coursepageeditor.cpp \
     Forms/CoursePage/coursepage.cpp \
     Forms/CoursePageComponents/CourseAttestacion/courseattestacion.cpp \
@@ -63,6 +64,7 @@ HEADERS += \
     Forms/AddGroup/addgroup.h \
     Forms/Auth/auth.h \
     Forms/CourseAdder/courseadder.h \
+    Forms/CoursePage/AdminScore/adminscore.h \
     Forms/CoursePage/CoursePageEditor/coursepageeditor.h \
     Forms/CoursePage/coursepage.h \
     Forms/CoursePageComponents/CourseAttestacion/courseattestacion.h \
@@ -92,6 +94,7 @@ FORMS += \
     Forms/AddGroup/addgroup.ui \
     Forms/Auth/auth.ui \
     Forms/CourseAdder/courseadder.ui \
+    Forms/CoursePage/AdminScore/adminscore.ui \
     Forms/CoursePage/CoursePageEditor/coursepageeditor.ui \
     Forms/CoursePage/coursepage.ui \
     Forms/CoursePageComponents/CourseAttestacion/courseattestacion.ui \

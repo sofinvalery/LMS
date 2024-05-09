@@ -25,6 +25,11 @@ CoursePage::CoursePage(Course *course, QWidget *parent)
     StyleManager::GetInstance()->setBlueButtonStyle(ui->EditCourseButton, ui->EditCourseButton->text(), true, 16, 13);
     ui->EditCourseButton->setFixedSize(ui->EditCourseButton->sizeHint().width() + 10, ui->EditCourseButton->sizeHint().height() + 10);
     ui->EditCourseButton->move(StyleManager::GetInstance()->getScreenWidth() - ui->EditCourseButton->size().width() - 20, 30);
+
+    StyleManager::GetInstance()->setBlueButtonStyle(ui->scoreButton, "Оценки", true, 16, 13);
+    ui->scoreButton->setFixedSize(ui->scoreButton->sizeHint().width() + 10, ui->EditCourseButton->sizeHint().height() + 10);
+    ui->scoreButton->move(StyleManager::GetInstance()->getScreenWidth() - ui->scoreButton->size().width() - 20 - ui->EditCourseButton->size().width() - 20, 30);
+
     //groupbox
     ui->groupBox->setStyleSheet(
         "QGroupBox {"
@@ -90,5 +95,21 @@ void CoursePage::on_EditCourseButton_clicked()
 QList<QWidget *> CoursePage::getWidgets() const
 {
     return widgets;
+}
+
+
+void CoursePage::on_scoreButton_clicked()
+{
+    if (adminScore->isVisible())
+    {
+        adminScore->close();
+    }
+    else
+    {
+        adminScore->setParent(this);
+        adminScore->raise();
+        adminScore->move(StyleManager::GetInstance()->getScreenWidth() / 2 - 290, StyleManager::GetInstance()->getScreenHeight() / 2 - 250);
+        adminScore->show();
+    }
 }
 

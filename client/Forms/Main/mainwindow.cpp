@@ -83,6 +83,13 @@ MainWindow::MainWindow(QWidget *parent)
         ui->addGroupButton->show();
         ui->verticalLine->show();
         ui->editGroupButton->show();
+
+        ui->scoreButton->hide();
+        ui->verticalLine->move(220, 0);
+        ui->addCourseButton->move(240, 23);
+        ui->addPotokButton->move(396, 23);
+        ui->addGroupButton->move(572, 23);
+        ui->editGroupButton->move(752, 23);
     }
 
     this->resize(StyleManager::GetInstance()->getScreenWidth(), StyleManager::GetInstance()->getScreenHeight());
