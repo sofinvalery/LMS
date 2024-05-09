@@ -8,8 +8,13 @@ CourseText::CourseText(CourseComponent * text, QWidget *parent)
 {
     ui->setupUi(this);
     this->text = qobject_cast<CourseTutorials*>(text);
-    StyleManager::GetInstance()->setLabelStyle(ui->label, this->text->getContent(), false, "black", true, 16);
-    ui->label->setFixedSize(ui->label->sizeHint().width(), ui->label->sizeHint().height());
+    StyleManager::GetInstance()->setLabelStyle(ui->label, this->text->getContent(), false, "black", true, 18);
+    ui->label->setWordWrap(true);
+    ui->label->setAlignment(Qt::AlignTop | Qt::AlignLeft);
+    ui->label->setMaximumWidth(StyleManager::GetInstance()->getScreenWidth()-50);
+    ui->label->adjustSize();
+    this->adjustSize();
+    this->setMinimumHeight(ui->label->height());
 }
 
 CourseText::~CourseText()
