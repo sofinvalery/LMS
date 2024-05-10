@@ -91,9 +91,10 @@ MainWindow::MainWindow(QWidget *parent)
     ui->profileButton->move(20, 13);
     StyleManager::GetInstance()->setSimpleButtonStyle(ui->profileButton, "", true, 20, 18);
 
-    QScreen* scr = QGuiApplication::primaryScreen();
+    //QScreen* scr = QGuiApplication::primaryScreen();
 
-    this->resize( scr->availableGeometry().width(), scr->availableGeometry().height());
+    this->resize(StyleManager::GetInstance()->getScreenWidth(), StyleManager::GetInstance()->getScreenHeight());
+
     download->setParent(this);
     dialogLoader->setParent(this);
     dialogLoader->close();
@@ -116,6 +117,13 @@ void MainWindow::ShowManePage()
         ui->addGroupButton->show();
         ui->verticalLine->show();
         ui->editGroupButton->show();
+
+        ui->scoreButton->hide();
+        ui->verticalLine->move(220, 0);
+        ui->addCourseButton->move(240, 23);
+        ui->addPotokButton->move(396, 23);
+        ui->addGroupButton->move(572, 23);
+        ui->editGroupButton->move(752, 23);
     }
     widget = new CoursesMPWidget();
     widget->setParent(this);

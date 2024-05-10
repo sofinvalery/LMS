@@ -42,3 +42,13 @@ CourseMediaFiles* CourseMediaFiles::Deserialize(QJsonObject jsonObj)
     return new CourseMediaFiles(json["id"].toInt(),json["order"].toInt(),
                                 json["title"].toString(),json["url"].toString(),(TypeFile)json["typeFile"].toInt());
 }
+
+void CourseMediaFiles::setUrl(const QString &newUrl)
+{
+    url = newUrl;
+}
+
+void CourseMediaFiles::setTitle(const QString &newTitle)
+{
+    title = newTitle;
+}

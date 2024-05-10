@@ -16,6 +16,7 @@ class CourseText : public QWidget
 public:
     explicit CourseText(CourseComponent * text, QWidget *parent = nullptr);
     ~CourseText();
+    void setText(QString text);
 
 private:
     Ui::CourseText *ui;

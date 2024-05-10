@@ -31,6 +31,10 @@ public:
 
     static CourseMediaFiles* Deserialize(QJsonObject jsonObj);
     ~CourseMediaFiles(){};
+    void setUrl(const QString &newUrl);
+
+    void setTitle(const QString &newTitle);
+
 private:
     QString title;
     QString url;

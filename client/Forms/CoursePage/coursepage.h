@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include "../common/course/course.h"
+#include "AdminScore/adminscore.h"
 #include <QPixmap>
 
 namespace Ui {
@@ -19,10 +20,15 @@ public:
     void CleanComponents();
     Course * GetCourse(){return course;}
     ~CoursePage();
+    QList<QWidget *> getWidgets() const;
+
 private slots:
     void on_EditCourseButton_clicked();
 
+    void on_scoreButton_clicked();
+
 private:
+    AdminScore* adminScore = new AdminScore();
     Ui::CoursePage *ui;
     QList<QWidget*> widgets;
     int height = 0;
