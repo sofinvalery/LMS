@@ -1,3 +1,6 @@
+#include "../../common/authentication/authentication.h"
+#include "../../common/course/course_components/coursetest.h"
+
 #ifndef TRANSFERENUM_H
 #define TRANSFERENUM_H
 
@@ -32,6 +35,11 @@ enum TypeMessage{
     JSONMESSAGE=1,
     REQUESTFILEMESSAGE=2,
     SENDFILEMESSAGE=3
+};
+
+struct Submit {
+    Authentication* student;
+    CourseComponent* work;
 };
 
 #endif // TRANSFERENUM_H

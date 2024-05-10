@@ -14,6 +14,7 @@
 #include "../../common/authentication/group.h"
 #include "../../common/course/course.h"
 #include "../../common/course/course_components/coursetest.h"
+#include "../../common/transferEnum/transferEnum.h"
 #include <QUuid>
 #include <QThreadStorage>
 
@@ -47,6 +48,9 @@ public:
     bool EditCourseTutorial(CourseTutorials* tutorials);
     bool EditCourseTask(CourseTask* task);
     bool EditCourseTest(CourseTest* test);
+    QList<QString>GetGroupsOfStudentByCourseId(int32_t courseId);
+    QList<Submit*> GetTestSubmits(int32_t courseId);
+    QList<Submit*> GetTaskSubmits(int32_t courseId);
 
     ~DatabaseManager();
 

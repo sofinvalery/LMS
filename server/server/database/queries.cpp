@@ -1153,6 +1153,165 @@ bool DatabaseManager::EditCourseTest(CourseTest* test) {
     return true;
 }
 
+QList<QString> DatabaseManager::GetGroupsOfStudentByCourseId(int32_t courseId) {
+    QList<QString> groupNames;
+    QSqlQuery query(m_db);
+    query.prepare("SELECT g.classname "
+                  "FROM groups g "
+                  "JOIN courses c ON c.groups_id = g.id "
+                  "WHERE c.id = :courseId");
+    query.bindValue(":courseId", courseId);
+
+    if (query.exec()) {
+        while (query.next()) {
+            groupNames.append(query.value(0).toString());
+        }
+    }
+    else {
+        qDebug() << "Error executing the query:" << query.lastError().text();
+    }
+
+    return groupNames;
+}
+
+QList<Submit*> DatabaseManager::GetTestSubmits(int32_t courseId) {
+    QList<Submit*> submits;
+
+    QSqlQuery testQuery(m_db);
+    testQuery.prepare("SELECT id, title, max_mark, url_json, \"order\", test_size, time_in_seconds "
+                      "FROM path_course_tests "
+                      "WHERE courses_id1 = :courseId");
+    testQuery.bindValue(":courseId", courseId);
+
+    if (testQuery.exec()) {
+        while (testQuery.next()) {
+            int32_t testId = testQuery.value(0).toInt();
+            QString testTitle = testQuery.value(1).toString();
+            int32_t maxMark = testQuery.value(2).toInt();
+            QString urlJson = testQuery.value(3).toString();
+            int32_t order = testQuery.value(4).toInt();
+            int32_t testSize = testQuery.value(5).toInt();
+            int32_t timeInSeconds = testQuery.value(6).toInt();
+
+            QSqlQuery submitQuery(m_db);
+            submitQuery.prepare("SELECT p.id, p.\"time\", p.verdict, p.notes, p.users_id1 "
+                                "FROM path_course_test_submits p "
+                                "WHERE p.path_course_tests_id = :testId");
+            submitQuery.bindValue(":testId", testId);
+
+            if (submitQuery.exec()) {
+                while (submitQuery.next()) {
+                    int32_t submitId = submitQuery.value(0).toInt();
+                    QDate submitTime = submitQuery.value(1).toDate();
+                    int32_t verdict = submitQuery.value(2).toInt();
+                    QString notes = submitQuery.value(3).toString();
+                    int32_t userId = submitQuery.value(4).toInt();
+
+                    QSqlQuery userQuery(m_db);
+                    userQuery.prepare("SELECT fio, login, avatar_url, role "
+                                      "FROM users "
+                                      "WHERE id = :userId");
+                    userQuery.bindValue(":userId", userId);
+
+                    if (userQuery.exec()) {
+                        if (userQuery.next()) {
+                            QString fio = userQuery.value(0).toString();
+                            QString login = userQuery.value(1).toString();
+                            QString avatarUrl = userQuery.value(2).toString();
+                            int32_t role = userQuery.value(3).toInt();
+
+                            Authentication* student = new Authentication(login, "", userId, fio, avatarUrl, (EnumRoles)(role));
+                            CourseTest* test = new CourseTest(testId, order, testTitle, maxMark, urlJson, timeInSeconds, verdict, notes, submitTime, testSize);
+
+                            // Create the Submit object and add it to the list
+                            Submit* submit = new Submit;
+                            submit->student = student;
+                            submit->work = test;
+                            submits.append(submit);
+                        }
+                    }
+                    else { qDebug() << "Error executing the user query:" << userQuery.lastError().text(); }
+                }
+            }
+            else { qDebug() << "Error executing the submit query:" << submitQuery.lastError().text(); }
+        }
+    }
+    else { qDebug() << "Error executing the test query:" << testQuery.lastError().text(); }
+
+    return submits;
+}
+
+QList<Submit*> DatabaseManager::GetTaskSubmits(int32_t courseId) {
+    QList<Submit*> submits;
+
+    QSqlQuery taskQuery(m_db);
+    taskQuery.prepare("SELECT t.id, t.content, t.max_mark, t.memory_limit, t.\"order\", t.title "
+                      "FROM path_course_tasks t "
+                      "WHERE t.courses_id1 = :courseId");
+    taskQuery.bindValue(":courseId", courseId);
+
+    if (taskQuery.exec()) {
+        while (taskQuery.next()) {
+            int32_t taskId = taskQuery.value(0).toInt();
+            QString taskContent = taskQuery.value(1).toString();
+            int32_t maxMark = taskQuery.value(2).toInt();
+            int32_t memoryLimit = taskQuery.value(3).toInt();
+            int32_t order = taskQuery.value(4).toInt();
+            QString taskTitle = taskQuery.value(5).toString();
+
+            QSqlQuery submitQuery(m_db);
+            submitQuery.prepare("SELECT s.id, s.\"time\", s.verdict, s.notes, s.answer_url, s.users_id1 "
+                                "FROM path_course_tasks_submits s "
+                                "WHERE s.path_course_tasks_id1 = :taskId");
+            submitQuery.bindValue(":taskId", taskId);
+
+            if (submitQuery.exec()) {
+                while (submitQuery.next()) {
+                    int32_t submitId = submitQuery.value(0).toInt();
+                    QDate submitTime = submitQuery.value(1).toDate();
+                    int32_t verdict = submitQuery.value(2).toInt();
+                    QString notes = submitQuery.value(3).toString();
+                    QString answerUrl = submitQuery.value(4).toString();
+                    int32_t userId = submitQuery.value(5).toInt();
+
+                    QSqlQuery userQuery(m_db);
+                    userQuery.prepare("SELECT fio, login, avatar_url, role "
+                                      "FROM users "
+                                      "WHERE id = :userId");
+                    userQuery.bindValue(":userId", userId);
+
+                    if (userQuery.exec()) {
+                        if (userQuery.next()) {
+                            QString fio = userQuery.value(0).toString();
+                            QString login = userQuery.value(1).toString();
+                            QString avatarUrl = userQuery.value(2).toString();
+                            int32_t role = userQuery.value(3).toInt();
+
+                            Authentication* student = new Authentication(login, "", userId, fio, avatarUrl, (EnumRoles)(role));
+                            CourseTask* task = new CourseTask(taskId, order, taskContent, maxMark, memoryLimit, "", answerUrl, submitTime, verdict, notes, taskTitle);
+
+                            Submit* submit = new Submit;
+                            submit->student = student;
+                            submit->work = task;
+                            submits.append(submit);
+                        }
+                    }
+                    else {
+                        qDebug() << "Error executing the user query:" << userQuery.lastError().text();
+                    }
+                }
+            }
+            else { qDebug() << "Error executing the submit query:" << submitQuery.lastError().text(); }
+        }
+    }
+    else { qDebug() << "Error executing the task query:" << taskQuery.lastError().text(); }
+
+    return submits;
+}
+
+
+
+
 
 
 

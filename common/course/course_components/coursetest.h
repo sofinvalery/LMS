@@ -11,10 +11,11 @@ class CourseTest : public CourseComponent
 public:
     explicit CourseTest(int32_t id, int32_t order, QString title,
                         int32_t maxMark, QString urlJson, int32_t timeInSeconds,
-                        int32_t verdict, QString notes,QDate time,int32_t testSize=10, QList<Question*> listQuestions=QList<Question*>(),
+                        int32_t verdict, QString notes,QDate time,int32_t testSize=10,
+                        QList<Question*> listQuestions=QList<Question*>(),
                         QObject *parent = nullptr);
 
-
+    // CourseTest(int32_t id, QString title, int32_t maxMark, QString urlJson, int32_t order, int32_t testSize, QDate timeInSeconds);
 
     QString getTitle() const;
 
