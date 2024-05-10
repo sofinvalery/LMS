@@ -189,6 +189,8 @@ void PotokAdder::on_Create_potok_clicked()
         ClientManager::GetInstance()->SendJsonToServer(SETNEWPOTOK,json);
         ClientState::GetInstance()->getMainwindow()->on_mainButton_clicked();
     }
+    else{
                 ui->PotoknameError->setVisible(true);
+    }
 }
 

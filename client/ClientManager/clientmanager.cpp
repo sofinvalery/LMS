@@ -24,7 +24,8 @@ ClientManager::ClientManager(QObject *parent)
     connect(socket,&QTcpSocket::disconnected, this,&ClientManager::ServerOrClientError);
     connect(socket, SIGNAL(sslErrors(QList<QSslError>)), this, SLOT(sslErrorOccured(QList<QSslError> )));
     port=1234;
-    hostName="188.242.157.174";
+    hostName="127.0.0.1";
+    //hostName="188.242.157.174";
     socket->connectToHostEncrypted(hostName,port);
     if (!socket->waitForEncrypted(10000)) {
         qInfo() << socket->errorString();
@@ -253,25 +254,34 @@ fileSocket* ClientManager::GetFileSocket()
             return temp;
         }
     }
-    fileSocket* temp = new fileSocket();
-    temp->socket = new QSslSocket(this);
-    const QString serverKeyPath(":/sll/ClientManager/certificate/client.key");
-    temp->socket->setPrivateKey(serverKeyPath,QSsl::Rsa);
+    if(fileSockets.size()<4)
+    {
+        fileSocket* temp = new fileSocket();
+        temp->socket = new QSslSocket(this);
+        const QString serverKeyPath(":/sll/ClientManager/certificate/client.key");
+        temp->socket->setPrivateKey(serverKeyPath,QSsl::Rsa);
 
-    connect(temp,SIGNAL(newFile(QString,qint64)),ClientState::GetInstance()->getMainwindow()->getDialogLoader(),SLOT(createWidget(QString,qint64)));
-    connect(temp,SIGNAL(downloadFinish(QString)),ClientState::GetInstance()->getMainwindow()->getDialogLoader(),SLOT(deleteWidget(QString)));
+        connect(temp,SIGNAL(newFile(QString,qint64)),ClientState::GetInstance()->getMainwindow()->getDialogLoader(),SLOT(createWidget(QString,qint64)));
+        connect(temp,SIGNAL(downloadFinish(QString)),ClientState::GetInstance()->getMainwindow()->getDialogLoader(),SLOT(deleteWidget(QString)));
 
-    connect(temp->socket, SIGNAL(sslErrors(QList<QSslError>)), this, SLOT(sslErrorOccured(QList<QSslError> )));
-    connect(temp->socket,&QTcpSocket::readyRead, this,&ClientManager::slotReadyReadFile);
-    temp->socket->connectToHostEncrypted(hostName,port);
-    temp->socket->waitForEncrypted(10000);
-    fileSockets.append(temp);
-    return temp;
+        connect(temp->socket, SIGNAL(sslErrors(QList<QSslError>)), this, SLOT(sslErrorOccured(QList<QSslError> )));
+        connect(temp->socket,&QTcpSocket::readyRead, this,&ClientManager::slotReadyReadFile);
+        temp->socket->connectToHostEncrypted(hostName,port);
+        temp->socket->waitForEncrypted(10000);
+        fileSockets.append(temp);
+        return temp;
+    }
+    else return nullptr;
 }
 
 void ClientManager::SendRequestFile(QString path)
 {
     fileSocket* temp=GetFileSocket();
+    if (temp==nullptr)
+    {
+        ClientState::GetInstance()->ShowNotifacate("Достигнут лимит\nЗагружаемых файлов","red");
+        return;
+    }
     temp->isReady=false;
     temp->Data.clear();
     QDataStream out(&(temp->Data),QIODevice::WriteOnly);
@@ -316,9 +326,9 @@ void ClientManager::SendFile(QString clientPath, QString serverPath)
 
 void ClientManager::SendFileData(fileSocket *temp)
 {
+    temp->socket->waitForBytesWritten();
     temp->fileParams.SendFileSize =temp->socket->write(temp->fileParams.DataFile,temp->fileParams.sizeFile);
     emit temp->addRead(temp->fileParams.SendFileSize);
-    temp->socket->waitForBytesWritten();
     if(temp->fileParams.SendFileSize==-1)
     {
         qInfo()<<"ошибка отправки файла";
@@ -338,8 +348,8 @@ void ClientManager::SendFileData(fileSocket *temp)
     }
     while(temp->fileParams.SendFileSize!=temp->fileParams.sizeFile)
     {
-        temp->fileParams.SendFileSize +=temp->socket->write(temp->fileParams.DataFile+temp->fileParams.SendFileSize,temp->fileParams.sizeFile-temp->fileParams.SendFileSize);
         temp->socket->waitForBytesWritten();
+        temp->fileParams.SendFileSize +=temp->socket->write(temp->fileParams.DataFile+temp->fileParams.SendFileSize,temp->fileParams.sizeFile-temp->fileParams.SendFileSize);
         if(temp->fileParams.SendFileSize==-1)
         {
             qInfo()<<"ошибка отправки файла";

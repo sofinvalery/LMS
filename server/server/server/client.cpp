@@ -170,8 +170,8 @@ void Client::SendFile(QString path)
 
 void Client::SendFileData()
 {
-    fileParams.SendFileSize =m_client->write(fileParams.DataFile,fileParams.sizeFile);
     m_client->waitForBytesWritten();
+    fileParams.SendFileSize =m_client->write(fileParams.DataFile,fileParams.sizeFile);
     if(fileParams.SendFileSize==-1)
     {
         qInfo()<<"ошибка отправки файла";
@@ -189,8 +189,8 @@ void Client::SendFileData()
     }
     while(fileParams.SendFileSize!=fileParams.sizeFile)
     {
-        fileParams.SendFileSize +=m_client->write(fileParams.DataFile+fileParams.SendFileSize,fileParams.sizeFile-fileParams.SendFileSize);
         m_client->waitForBytesWritten();
+        fileParams.SendFileSize +=m_client->write(fileParams.DataFile+fileParams.SendFileSize,fileParams.sizeFile-fileParams.SendFileSize);
         if(fileParams.SendFileSize==-1)
         {
             qInfo()<<"ошибка отправки файла";

@@ -188,6 +188,7 @@ void CoursePageEditor::on_DoneButton_clicked()
         ClientManager::GetInstance()->SendJsonToServer(ADDCOURSECOMPONENT,json);
         ui->ErrorLabel->hide();
         this->close();
+        this->deleteLater();
         return;
     }
     if(AddingStatus == 2&&ui->NameOnComponentLineEdit->text()!=""&& ui->PathLabel2->text()!=""){// добавить на сервер загрузочный файл
@@ -213,6 +214,7 @@ void CoursePageEditor::on_DoneButton_clicked()
         ClientManager::GetInstance()->SendJsonToServer(ADDCOURSECOMPONENT,json);
         ui->ErrorLabel->hide();
         this->close();
+        this->deleteLater();
         return;
     }
     if (AddingStatus == 3&&ui->ContentTextEdit->toPlainText()!=""&&ui->NameOnComponentLineEdit->text()!=""){                                  // добавить на сервер дз (не доделано)
@@ -225,6 +227,7 @@ void CoursePageEditor::on_DoneButton_clicked()
         ClientManager::GetInstance()->SendJsonToServer(ADDCOURSECOMPONENT,json);
         ui->ErrorLabel->hide();
         this->close();
+        this->deleteLater();
         return;
     }
     if(AddingStatus == 4 && ui->ContentTextEdit->toPlainText()!=""){                                  // добавить на сервер туториал
@@ -237,6 +240,7 @@ void CoursePageEditor::on_DoneButton_clicked()
         ClientManager::GetInstance()->SendJsonToServer(ADDCOURSECOMPONENT,json);
         ui->ErrorLabel->hide();
         this->close();
+        this->deleteLater();
         return;
     }
     if (DeletingStatus == 1){                               // удалить из сервера элемент  ui->ComponentOrderSpinBox->value()-1
@@ -249,6 +253,7 @@ void CoursePageEditor::on_DoneButton_clicked()
         ClientManager::GetInstance()->SendJsonToServer(DELETECOURSECOMPONENT,json);
         ui->ErrorLabel->hide();
         this->close();
+        this->deleteLater();
         return;
     }
     ui->ErrorLabel->show();
