@@ -5,6 +5,7 @@
 #include <QSslSocket>
 #include "../../../common/transferEnum/transferEnum.h"
 #include "ClientManager/clientmanager.h"
+#include <QMovie>
 
 namespace Ui {
 class Reconnect;
@@ -24,6 +25,7 @@ private slots:
     void reconnectGood();
     void reconnectEr(QAbstractSocket::SocketError socketError);
 private:
+    QMovie *movie = new QMovie(":/gif/resources/reconnect.gif");
     Ui::Reconnect *ui;
 signals:
     void re();

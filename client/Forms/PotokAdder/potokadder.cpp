@@ -26,6 +26,10 @@ PotokAdder::PotokAdder(QWidget *parent)
     ui->scrollArea->setWidgetResizable(true);
     ui->scrollArea->resize(this->frameGeometry().width()-25-350,this->frameGeometry().height() - 30);
 
+    QCompleter* completer = new QCompleter(ClientState::GetInstance()->getGroupsName());
+    StyleManager::GetInstance()->setCompleterStyle(completer);
+    ui->Group_name->setCompleter(completer);
+
     GroupNames.clear();
     GroupErrors.clear();
     GroupNames.append(ui->Group_name);
@@ -44,6 +48,9 @@ void PotokAdder::on_Add_line_clicked()
     counter++;
     QLineEdit* newLine = new QLineEdit(ui->scrollAreaWidgetContents);
     QLabel* newLabel = new QLabel(ui->scrollAreaWidgetContents);
+    QCompleter* completer = new QCompleter(ClientState::GetInstance()->getGroupsName());
+    StyleManager::GetInstance()->setCompleterStyle(completer);
+    newLine->setCompleter(completer);
     StyleManager::GetInstance()->setLineEditStyle(newLine, "Название группы", false, 16, 170, 30);
     StyleManager::GetInstance()->setLabelStyle(newLabel, "Ошибка, такой группы не существует", false, "red", false, 12);
     GroupNames.append(newLine);
