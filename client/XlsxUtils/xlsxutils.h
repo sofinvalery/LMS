@@ -3,6 +3,9 @@
 
 #include <QObject>
 #include "../../common/authentication/group.h"
+#include "../common/transferEnum/transferEnum.h"
+#include "../common/course/course.h"
+#include "../common/authentication/group.h"
 
 struct AddingData{
     QString titleName;
@@ -24,6 +27,7 @@ public:
     void getAddedGroup(Group* group);
     void getAddedPotok(AddingData* data);
     AddingData* parsAddingXlsx(QString path);
+    void getCourseScoreTable(QList<Submit*>& submits,Course* course, Group* group);
 signals:
     void Readed(QString);
 };

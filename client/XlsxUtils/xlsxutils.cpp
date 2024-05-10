@@ -147,3 +147,117 @@ AddingData *XlsxUtils::parsAddingXlsx(QString path)
         data->pathName.append(temp);
     return data;
 }
+
+void XlsxUtils::getCourseScoreTable(QList<Submit *> &submits,Course* course, Group* group)
+{
+    std::sort(group->getParticipants().begin(),group->getParticipants().end(),[](Authentication * a, Authentication* b){return a->GetFIO()<b->GetFIO();});
+    std::sort(submits.begin(),submits.end(),[](Submit * a, Submit * b){return a->work->getOrder()<b->work->getOrder();});
+    std::sort(submits.begin(),submits.end(),[](Submit * a, Submit * b){return a->student->GetFIO()<b->student->GetFIO();});
+    QXlsx::Document xlsxW;
+    Format format;
+    format.setFontBold(true);
+    xlsxW.write(1, 1, "Группа",format);
+    xlsxW.write(1, 2, group->getClassname());
+    xlsxW.write(3, 1, "логин");
+    xlsxW.write(3, 2, "ФИО");
+    int colums=3;
+    int maxSum=0;
+    double srProcent=0;
+    double porogProcent=50.0;
+    double srProcentInterested=0;
+    int countInterested=0;
+    QList<int32_t> allSubmits;
+    for(auto temp:course->getListComponents())
+    {
+        CourseTest* courseTest;
+        CourseTask* courseTask;
+        if ((courseTask = qobject_cast<CourseTask*>(temp)) != nullptr)
+        {
+            xlsxW.write(3, colums, courseTask->getTitle());
+            xlsxW.write(4+group->getParticipants().size(), colums++, courseTask->getMaxMark());
+            allSubmits.append(courseTask->getId());
+            maxSum+=courseTask->getMaxMark();
+        }
+        else if ((courseTest = qobject_cast<CourseTest*>(temp)) != nullptr)
+        {
+            xlsxW.write(3, colums, courseTest->getTitle());
+            xlsxW.write(4+group->getParticipants().size(), colums++, courseTest->getMaxMark());
+            allSubmits.append(courseTest->getId());
+            maxSum+=courseTest->getMaxMark();
+        }
+    }
+    colums=3+allSubmits.size();
+    xlsxW.write(3, colums, "Итого");
+    xlsxW.write(4+group->getParticipants().size(), 2, "Максимальный бал");
+    xlsxW.write(4+group->getParticipants().size(), allSubmits.size()+3, maxSum);
+    int rows=4;
+    for(Authentication* auth:group->getParticipants())
+    {
+        xlsxW.write(rows++, 1, auth->GetLogin());
+        xlsxW.write(rows++, 2, auth->GetFIO());
+    }
+    //четвертая строка - первый участник
+    // 3 столбец - столбец первого задания
+    if(submits.size()>0)
+    {
+        int i=0;
+        for(rows=4;rows<group->getParticipants().size()-4;rows++)
+        {
+            int sum=0;
+            for(colums=3;colums<allSubmits.size();colums++)
+            {
+                if(submits[i]->student->getId()!=group->getParticipants()[rows-4]->getId())
+                {
+                     xlsxW.write(rows, colums, 0);
+                }
+                else if(allSubmits[colums-3]!=submits[i]->work->getId())
+                {
+                    xlsxW.write(rows, colums, 0);
+                }
+                else{
+                    CourseTest* courseTest;
+                    CourseTask* courseTask;
+                    if ((courseTask = qobject_cast<CourseTask*>(submits[i]->work)) != nullptr)
+                    {
+                        xlsxW.write(rows, colums, courseTask->getVerdict());
+                        sum+=courseTask->getVerdict();
+                    }
+                    else if ((courseTest = qobject_cast<CourseTest*>(submits[i]->work)) != nullptr)
+                    {
+                        xlsxW.write(rows, colums, courseTest->getVerdict());
+                        sum+=courseTask->getVerdict();
+                    }
+                    i++;
+                }
+            }
+            double temp;
+            temp=(double)sum/(double)maxSum*100.0;
+            srProcent+=temp;
+            if(temp>porogProcent)
+            {
+                srProcentInterested+=temp;
+                countInterested++;
+            }
+            xlsxW.write(rows, colums, sum);
+            xlsxW.write(rows,colums,QString::number(temp, 'f', 2)+"%");
+        }
+    }
+
+    rows=8+group->getParticipants().size();
+    xlsxW.write(rows++, 2, "Статистика",format);
+    xlsxW.write(rows, 2, "Средний процент выполнения");
+    xlsxW.write(rows, 3, "Процент вовлечености");
+    xlsxW.write(rows++, 4, "Средний процент выполнения вовлеченных");
+    rows=8+group->getParticipants().size()+1;
+    xlsxW.write(rows, 2, QString::number(srProcent/group->getParticipants().size(), 'f', 2)+"%");
+    xlsxW.write(rows, 3, QString::number(countInterested/group->getParticipants().size(), 'f', 2)+"%");
+    xlsxW.write(rows++, 4, QString::number(srProcentInterested/countInterested, 'f', 2)+"%");
+
+
+    xlsxW.autosizeColumnWidth();
+    if(downloadPath.size()>0&&downloadPath[0]!="")
+        xlsxW.saveAs(downloadPath[0]+"/"+course->GetTitle()+"_"+group->getClassname()+".xlsx");
+    else{
+        xlsxW.saveAs(QDir::homePath()+"/"+course->GetTitle()+"_"+group->getClassname()+".xlsx");
+    }
+}
