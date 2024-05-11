@@ -51,6 +51,8 @@ public:
     QList<QString>GetGroupsOfStudentByCourseId(int32_t courseId);
     QList<Submit*> GetTestSubmits(int32_t courseId);
     QList<Submit*> GetTaskSubmits(int32_t courseId);
+    bool SetTestSubmits(int32_t courseId, QList<Submit*> submits);
+    bool SetTaskSubmits(int32_t courseId,QList<Submit*> submits);
 
     ~DatabaseManager();
 
