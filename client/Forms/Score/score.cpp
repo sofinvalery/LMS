@@ -8,7 +8,7 @@ Score::Score(QWidget *parent)
     , ui(new Ui::Score)
 {
     ui->setupUi(this);
-    StyleManager::GetInstance()->setWidgetStyle(this, ui->groupBox, 90);
+    StyleManager::GetInstance()->setWidgetGroupBoxStyle(this, ui->groupBox, 90);
 
     StyleManager::GetInstance()->setScrollAreaStyle(ui->scrollArea, true);
     ui->scrollArea->setFixedSize(StyleManager::GetInstance()->getScreenWidth(), StyleManager::GetInstance()->getScreenHeight());

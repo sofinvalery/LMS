@@ -25,8 +25,6 @@ MainWindow::MainWindow(QWidget *parent)
     ui->verticalLine->hide();
     ui->editGroupButton->hide();
 
-    QRect screenGeometry = QGuiApplication::primaryScreen()->geometry();
-
     StyleManager::GetInstance()->setSimpleButtonStyle(ui->loaderButton, "", false, 1, 1);
     ui->loaderButton->setIconSize(QSize(48, 48));
     ui->loaderButton->setIcon(QIcon(":/img/resources/dowloadicon.png"));
@@ -378,6 +376,11 @@ void MainWindow::on_loaderButton_clicked()
         dialogLoader->show();
     }
     raiseDownloadAndLoader();
+}
+
+QWidget *MainWindow::getWidget() const
+{
+    return widget;
 }
 
 Loader *MainWindow::getDialogLoader() const

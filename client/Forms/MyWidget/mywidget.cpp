@@ -11,7 +11,8 @@ MyWidget::MyWidget(Course* course,QWidget *parent)
     ui->setupUi(this);
     this->course=course;
     //progressbar
-    StyleManager::GetInstance()->setProgressBarStyle(ui->progressBar, false);
+    StyleManager::GetInstance()->setProgressBarStyle(ui->progressBar, false, 10, "lightgrey",
+                                                     "qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(78, 181, 255, 255), stop:1 rgba(78, 34, 217, 255));");
     //progressbarbutton
     ui->ProgressbarButton->raise();
     ui->ProgressbarButton->setCursor(Qt::PointingHandCursor);

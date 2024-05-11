@@ -13,7 +13,7 @@ groupEditor::groupEditor(QWidget *parent)
 {
     ui->setupUi(this);
     connect(SocketParser::GetInstance(),SIGNAL(getShowEditGroup()),this,SLOT(ShowGroup()),Qt::QueuedConnection);
-    StyleManager::GetInstance()->setWidgetStyle(this, ui->groupBox, 90);
+    StyleManager::GetInstance()->setWidgetGroupBoxStyle(this, ui->groupBox, 90);
 
     StyleManager::GetInstance()->setLabelStyle(ui->warningLabel, "Данной группы не существует", true, "red", false, 16);
 

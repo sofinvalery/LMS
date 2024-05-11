@@ -12,7 +12,6 @@ CourseAdder::CourseAdder(QWidget *parent)
     , ui(new Ui::CourseAdder)
 {
     ui->setupUi(this);
-    StyleManager::GetInstance()->setWidgetStyle(this, ui->groupBox, 81);
     QCompleter* completer1= new QCompleter(ClientState::GetInstance()->getGroupsName());
     ui->GroupTeachers->setCompleter(completer1);
     QCompleter* completer2=new QCompleter(ClientState::GetInstance()->getPotoksName());
@@ -21,7 +20,7 @@ CourseAdder::CourseAdder(QWidget *parent)
     ui->dateEdit->setDate(QDate::currentDate());
     ui->dateEdit_2->setCalendarPopup(true);
     ui->dateEdit_2->setDate((QDate::currentDate()).addYears(1));
-    StyleManager::GetInstance()->setWidgetStyle(this, ui->groupBox, 90);
+    StyleManager::GetInstance()->setWidgetGroupBoxStyle(this, ui->groupBox, 90);
 
     StyleManager::GetInstance()->setBlueButtonStyle(ui->Apply, "Применить\nизменения", true, 16, 13);
     StyleManager::GetInstance()->setBlueButtonStyle(ui->CreateCourse, "Создать курс", true, 16, 13);

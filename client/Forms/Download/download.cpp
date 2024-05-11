@@ -7,7 +7,7 @@ Download::Download(QWidget *parent)
     , ui(new Ui::Download)
 {
     ui->setupUi(this);
-    StyleManager::GetInstance()->setWidgetStyle(this, ui->groupBox, 90);
+    StyleManager::GetInstance()->setWidgetGroupBoxStyle(this, ui->groupBox, 90);
 
     QMovie *movie = new QMovie(":/gif/resources/download.gif");
     ui->processLabel->setMovie(movie);

@@ -16,7 +16,7 @@ Reconnect::Reconnect(QWidget *parent)
     this->setWindowTitle("Reconnect");
     ui->groupBox->setStyleSheet(
         "QGroupBox {"
-        "border: 2px solid grey;"
+        "border: 1px solid grey;"
         "}");
     //statuslabel
     StyleManager::GetInstance()->setLabelStyle(ui->statusLabel, "Потеряно соединение", false, "red", true, 20);

@@ -29,6 +29,7 @@ SOURCES += \
     Forms/CoursePage/coursepage.cpp \
     Forms/CoursePageComponents/CourseAttestacion/courseattestacion.cpp \
     Forms/CoursePageComponents/CourseDownload/coursedownload.cpp \
+    Forms/CoursePageComponents/CourseDz/CourseDzPage/coursedzpage.cpp \
     Forms/CoursePageComponents/CourseDz/coursedz.cpp \
     Forms/CoursePageComponents/CourseText/coursetext.cpp \
     Forms/CoursesMPWidget/coursesmpwidget.cpp \
@@ -73,6 +74,7 @@ HEADERS += \
     Forms/CoursePage/coursepage.h \
     Forms/CoursePageComponents/CourseAttestacion/courseattestacion.h \
     Forms/CoursePageComponents/CourseDownload/coursedownload.h \
+    Forms/CoursePageComponents/CourseDz/CourseDzPage/coursedzpage.h \
     Forms/CoursePageComponents/CourseDz/coursedz.h \
     Forms/CoursePageComponents/CourseText/coursetext.h \
     Forms/CoursePageComponents/componentswidgetfactory.h \
@@ -103,6 +105,7 @@ FORMS += \
     Forms/CoursePage/coursepage.ui \
     Forms/CoursePageComponents/CourseAttestacion/courseattestacion.ui \
     Forms/CoursePageComponents/CourseDownload/coursedownload.ui \
+    Forms/CoursePageComponents/CourseDz/CourseDzPage/coursedzpage.ui \
     Forms/CoursePageComponents/CourseDz/coursedz.ui \
     Forms/CoursePageComponents/CourseText/coursetext.ui \
     Forms/CoursesMPWidget/coursesmpwidget.ui \

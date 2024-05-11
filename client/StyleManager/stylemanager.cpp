@@ -62,10 +62,10 @@ void StyleManager::setDisableButtonStyle(QPushButton* buttonName, QString button
         "font-size: " + QString::number(fontSize) + "px;"
         "border: none;"
         "color: grey;"
-        "}");
+                                      "}");
 }
 
-void StyleManager::setWidgetStyle(QWidget* widgetName, QGroupBox* groupboxName, unsigned short int moveY)
+void StyleManager::setWidgetGroupBoxStyle(QWidget* widgetName, QGroupBox* groupboxName, unsigned short int moveY)
 {
     groupboxName->setStyleSheet(
         "QGroupBox {"
@@ -212,7 +212,7 @@ void StyleManager::setProgressBarStyle(QProgressBar *progressBarName, bool boldS
         "}"
         "QProgressBar::chunk {"
         "border-radius: " + QString::number(borderRadius) + ";"
-        "background: " + downloadColour + ";"
+        "background-color: " + downloadColour + ";"
         "}");
 }
 

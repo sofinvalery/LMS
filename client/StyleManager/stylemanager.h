@@ -27,7 +27,7 @@ public:
     void setBlueButtonStyle(QPushButton* buttonName, QString buttonText, bool boldStatus, unsigned short int fontSize, unsigned short int borderRadius);
     void setCustomButtonStyle(QPushButton* buttonName, QString buttonText, QString buttonColour, bool boldStatus, unsigned short int fontSize, unsigned short int borderRadius);
     void setDisableButtonStyle(QPushButton* buttonName, QString buttonText, bool boldStatus, unsigned short int fontSize, unsigned short int borderRadius);
-    void setWidgetStyle(QWidget* widgetName, QGroupBox* groupboxName, unsigned short int moveY = 90);
+    void setWidgetGroupBoxStyle(QWidget* widgetName, QGroupBox* groupboxName, unsigned short int moveY = 90);
     void setGroupBoxStyle();
     void setLabelStyle(QLabel* labelName, QString labelText, bool boldStatus, QString textColour, bool showStatus, unsigned short int fontSize, bool backgroundColour = false, QString setBackgroundColour = "#82c7ff");
     void setLineEditStyle(QLineEdit* lineEditName, QString placeHolderText, bool boldStatus, unsigned short int fontSize, unsigned short int W, unsigned short int H);

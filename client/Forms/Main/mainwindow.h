@@ -34,6 +34,8 @@ public:
     Loader *getDialogLoader() const;
     void raiseDownloadAndLoader();
 
+    QWidget *getWidget() const;
+
 public slots:
     void ShowManePage();
     void clickCoursePage(Course* course);

@@ -12,7 +12,7 @@ PotokAdder::PotokAdder(QWidget *parent)
 {
     ui->setupUi(this);
     StyleManager::GetInstance()->setScrollAreaStyle(ui->scrollArea, false);
-    StyleManager::GetInstance()->setWidgetStyle(this, ui->groupBox, 90);
+    StyleManager::GetInstance()->setWidgetGroupBoxStyle(this, ui->groupBox, 90);
     StyleManager::GetInstance()->setLabelStyle(ui->Error_Box, "Ошибка, такой группы не существует", false, "red", true, 12);
     StyleManager::GetInstance()->setLabelStyle(ui->PotoknameError, "Ошибка, это название занято", false, "red", false, 12);
     StyleManager::GetInstance()->setLabelStyle(ui->label, "Путь до таблицы:", false, "black", true, 14);

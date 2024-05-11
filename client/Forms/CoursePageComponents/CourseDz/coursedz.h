@@ -19,6 +19,9 @@ public:
     ~CourseDz();
     void SetTextOnButton(QString buttontext);
 
+private slots:
+    void on_giveDzButton_clicked();
+
 private:
     Ui::CourseDz *ui;
     CourseTask * dz;
