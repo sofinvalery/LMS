@@ -24,11 +24,11 @@ public:
 
 private slots:
     void on_EditCourseButton_clicked();
-
+    void showScoreForTeacher();
     void on_scoreButton_clicked();
 
 private:
-    AdminScore* adminScore = new AdminScore();
+    AdminScore* adminScore = nullptr;
     Ui::CoursePage *ui;
     QList<QWidget*> widgets;
     int height = 0;

@@ -2,6 +2,10 @@
 #define ADMINSCORE_H
 
 #include <QWidget>
+#include"../common/transferEnum/transferEnum.h"
+#include "../common/authentication/group.h"
+#include "../common/course/course.h"
+
 
 namespace Ui {
 class AdminScore;
@@ -12,7 +16,7 @@ class AdminScore : public QWidget
     Q_OBJECT
 
 public:
-    explicit AdminScore(QWidget *parent = nullptr);
+    explicit AdminScore(Course* course,QWidget *parent = nullptr);
     ~AdminScore();
 
 private slots:
@@ -30,8 +34,12 @@ private slots:
 
     void on_confirmButton_clicked();
 
+    void getExecel(QList<Submit *> submits, Group* group);
+
 private:
+    Course* course;
     Ui::AdminScore *ui;
+    QList<Submit*> submits;
 };
 
 #endif // ADMINSCORE_H

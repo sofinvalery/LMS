@@ -1156,10 +1156,7 @@ bool DatabaseManager::EditCourseTest(CourseTest* test) {
 QList<QString> DatabaseManager::GetGroupsOfStudentByCourseId(int32_t courseId) {
     QList<QString> groupNames;
     QSqlQuery query(m_db);
-    query.prepare("SELECT g.classname "
-                  "FROM groups g "
-                  "JOIN courses c ON c.groups_id = g.id "
-                  "WHERE c.id = :courseId");
+    query.prepare("select classname from groups where id IN (select groups_id from zachisleniya_in_potok where students_groups_union_id = (SELECT students_groups_union_id1 from courses where id =:courseId))");
     query.bindValue(":courseId", courseId);
 
     if (query.exec()) {

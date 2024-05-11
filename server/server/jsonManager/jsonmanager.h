@@ -50,5 +50,9 @@ static QJsonObject editCourseComponent(QJsonObject json,Authentication **auth);
 
 static QJsonObject deleteCourseComponent(QJsonObject json,Authentication **auth);
 
+static QJsonObject getGroupsByCourseId(QJsonObject json,Authentication **auth);
+
+static QJsonObject getSubmits(QJsonObject json,Authentication **auth);
+
 #endif // JSONMANAGER_H
 

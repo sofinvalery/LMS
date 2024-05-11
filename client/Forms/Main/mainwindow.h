@@ -40,7 +40,8 @@ public slots:
     void ShowManePage();
     void clickCoursePage(Course* course);
     void on_mainButton_clicked();
-
+    void doAllButtonClicked();
+    void doAllButtonDisable();
 
 private slots:
     void ShowAddingPotok();
@@ -57,7 +58,7 @@ private slots:
     void on_addPotokButton_clicked();
     void on_addGroupButton_clicked();
     void on_editGroupButton_clicked();
-    void doAllButtonClicked();
+
 
     void on_loaderButton_clicked();
 

@@ -35,6 +35,10 @@ void SocketParser::socketparse(QJsonObject json)
         break;
     case GETALLCOURSECOMPONENTS: getScore(data);
         break;
+    case GETGROUPSBYCOURSEID: showTeacherScore(data);
+        break;
+    case GETSUBMITS: getSubmit(data);
+        break;
     }
 }
 
@@ -154,6 +158,39 @@ void SocketParser::getScore(QJsonObject json)
     }
 
     emit getScore();
+}
+
+void SocketParser::showTeacherScore(QJsonObject json)
+{
+    QJsonArray groupsComponents=json.value("Groups").toArray();
+    QList<QString> groupsName;
+    for(auto component:groupsComponents){
+        groupsName.append(component.toString());
+    }
+    ClientState::GetInstance()->setGroupsName(groupsName);
+
+    emit showTeacherScore();
+}
+
+void SocketParser::getSubmit(QJsonObject json)
+{
+    Group* gr = Group::Deserialize(json["Group"].toObject());
+    QList<Submit*> submits;
+    QJsonArray components=json.value("Submits").toArray();
+    for(auto temp:components){
+        Submit* submit =new Submit();
+        submit->student= Authentication::Deserialize(temp.toObject()["Authentication"].toObject());
+        if(temp.toObject()["CourseSubmit"].toObject().contains("CourseTask"))
+            submit->work= CourseTask::Deserialize(temp.toObject()["CourseSubmit"].toObject());
+        else if(temp.toObject()["CourseSubmit"].toObject().contains("CourseTest"))
+            submit->work=CourseTest::Deserialize(temp.toObject()["CourseSubmit"].toObject());
+        else{
+            qDebug()<<"ошибка в парсинге сокета getSubmit скорее всего на стороне сервера";
+            return;
+        }
+        submits.append(submit);
+    }
+    emit getSubmit(submits,gr);
 }
 
 

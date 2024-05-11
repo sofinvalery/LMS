@@ -309,6 +309,15 @@ void MainWindow::doAllButtonClicked()
     }
 }
 
+void MainWindow::doAllButtonDisable()
+{
+    QList<QPushButton*> buttons = {ui->scoreButton, ui->mainButton, ui->addGroupButton, ui->editGroupButton, ui->addCourseButton, ui->addPotokButton, ui->profileButton};
+    for (auto temp : buttons)
+    {
+        temp->setEnabled(false);
+    }
+}
+
 Download *MainWindow::getDownload() const
 {
     return download;
