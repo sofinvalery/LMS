@@ -123,6 +123,7 @@ FORMS += \
     Forms/Score/TestTaskComponents/testtaskcomponents.ui \
     Forms/Score/score.ui
 
+win32:RC_FILE = icon.rc
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

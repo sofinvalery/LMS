@@ -37,8 +37,8 @@
     <widget class="QLabel" name="titleLbl">
      <property name="geometry">
       <rect>
-       <x>180</x>
-       <y>110</y>
+       <x>20</x>
+       <y>20</y>
        <width>49</width>
        <height>16</height>
       </rect>
@@ -63,21 +63,8 @@
     <widget class="QLabel" name="timeLbl">
      <property name="geometry">
       <rect>
-       <x>540</x>
-       <y>140</y>
-       <width>49</width>
-       <height>16</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>TextLabel</string>
-     </property>
-    </widget>
-    <widget class="QLabel" name="contentLbl">
-     <property name="geometry">
-      <rect>
-       <x>310</x>
-       <y>240</y>
+       <x>170</x>
+       <y>20</y>
        <width>49</width>
        <height>16</height>
       </rect>
@@ -102,8 +89,8 @@
     <widget class="QLabel" name="verdictLbl">
      <property name="geometry">
       <rect>
-       <x>440</x>
-       <y>350</y>
+       <x>320</x>
+       <y>20</y>
        <width>49</width>
        <height>16</height>
       </rect>
@@ -141,16 +128,55 @@
     <widget class="QPushButton" name="setPathButton">
      <property name="geometry">
       <rect>
-       <x>850</x>
-       <y>570</y>
-       <width>100</width>
-       <height>30</height>
+       <x>410</x>
+       <y>290</y>
+       <width>120</width>
+       <height>40</height>
       </rect>
      </property>
      <property name="text">
       <string>Выбрать
 файл</string>
      </property>
+    </widget>
+    <widget class="Line" name="titleHorLine">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>60</y>
+       <width>118</width>
+       <height>3</height>
+      </rect>
+     </property>
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
+    <widget class="QGroupBox" name="groupBoxContent">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>180</y>
+       <width>400</width>
+       <height>80</height>
+      </rect>
+     </property>
+     <property name="title">
+      <string>GroupBox</string>
+     </property>
+     <widget class="QLabel" name="contentLbl">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>50</y>
+        <width>49</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>TextLabel</string>
+      </property>
+     </widget>
     </widget>
    </widget>
   </widget>
