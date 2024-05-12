@@ -1,8 +1,8 @@
 // xlsxcellrange.cpp
 
-#include "xlsxcellrange.h"
+#include "../header/xlsxcellrange.h"
 
-#include "xlsxcellreference.h"
+#include "../header/xlsxcellreference.h"
 
 #include <QPoint>
 #include <QString>

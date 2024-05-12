@@ -1,9 +1,9 @@
 // xlsxcelllocation.cpp
 
-#include "xlsxcelllocation.h"
+#include "../header/xlsxcelllocation.h"
 
-#include "xlsxcell.h"
-#include "xlsxglobal.h"
+#include "../header/xlsxcell.h"
+#include "../header/xlsxglobal.h"
 
 #include <QList>
 #include <QObject>

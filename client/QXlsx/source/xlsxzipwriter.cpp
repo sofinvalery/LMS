@@ -1,6 +1,6 @@
 // xlsxzipwriter.cpp
 
-#include "xlsxzipwriter_p.h"
+#include "../header/xlsxzipwriter_p.h"
 
 #include <private/qzipwriter_p.h>
 

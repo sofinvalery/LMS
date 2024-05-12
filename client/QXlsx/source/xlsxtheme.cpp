@@ -1,6 +1,6 @@
 // xlsxtheme.cpp
 
-#include "xlsxtheme_p.h"
+#include "../header/xlsxtheme_p.h"
 
 #include <QIODevice>
 

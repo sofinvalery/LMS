@@ -1,13 +1,13 @@
 // xlsxchartsheet.cpp
 
-#include "xlsxchartsheet.h"
+#include "../header/xlsxchartsheet.h"
 
-#include "xlsxchart.h"
-#include "xlsxchartsheet_p.h"
-#include "xlsxdrawing_p.h"
-#include "xlsxdrawinganchor_p.h"
-#include "xlsxutility_p.h"
-#include "xlsxworkbook.h"
+#include "../header/xlsxchart.h"
+#include "../header/xlsxchartsheet_p.h"
+#include "../header/xlsxdrawing_p.h"
+#include "../header/xlsxdrawinganchor_p.h"
+#include "../header/xlsxutility_p.h"
+#include "../header/xlsxworkbook.h"
 
 #include <QDir>
 #include <QXmlStreamReader>

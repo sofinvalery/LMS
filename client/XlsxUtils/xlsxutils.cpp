@@ -1,12 +1,14 @@
 #include "xlsxutils.h"
 #include <QStandardPaths>
 #include <QDir>
-#include "xlsxdocument.h"
-#include "xlsxchartsheet.h"
-#include "xlsxcellrange.h"
-#include "xlsxchart.h"
-#include "xlsxrichstring.h"
-#include "xlsxworkbook.h"
+
+#include "../QXlsx/header/xlsxdocument.h"
+#include "../QXlsx/header/xlsxchartsheet.h"
+#include "../QXlsx/header/xlsxcellrange.h"
+#include "../QXlsx/header/xlsxchart.h"
+#include "../QXlsx/header/xlsxrichstring.h"
+#include "../QXlsx/header/xlsxworkbook.h"
+
 #include "ClientState/clientstate.h"
 using namespace QXlsx;
 

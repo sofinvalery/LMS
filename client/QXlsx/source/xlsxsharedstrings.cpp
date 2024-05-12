@@ -1,10 +1,10 @@
 // xlsxsharedstrings.cpp
 
-#include "xlsxcolor_p.h"
-#include "xlsxformat_p.h"
-#include "xlsxrichstring.h"
-#include "xlsxsharedstrings_p.h"
-#include "xlsxutility_p.h"
+#include "../header/xlsxcolor_p.h"
+#include "../header/xlsxformat_p.h"
+#include "../header/xlsxrichstring.h"
+#include "../header/xlsxsharedstrings_p.h"
+#include "../header/xlsxutility_p.h"
 
 #include <QBuffer>
 #include <QDebug>

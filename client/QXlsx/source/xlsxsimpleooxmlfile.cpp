@@ -1,6 +1,6 @@
 // xlsxsimpleooxmlfile.cpp
 
-#include "xlsxsimpleooxmlfile_p.h"
+#include "../header/xlsxsimpleooxmlfile_p.h"
 
 #include <QIODevice>
 #include <QtGlobal>

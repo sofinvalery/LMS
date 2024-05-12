@@ -1,11 +1,11 @@
 // xlsxconditionalformatting.cpp
 
-#include "xlsxconditionalformatting.h"
+#include "../header/xlsxconditionalformatting.h"
 
-#include "xlsxcellrange.h"
-#include "xlsxconditionalformatting_p.h"
-#include "xlsxstyles_p.h"
-#include "xlsxworksheet.h"
+#include "../header/xlsxcellrange.h"
+#include "../header/xlsxconditionalformatting_p.h"
+#include "../header/xlsxstyles_p.h"
+#include "../header/xlsxworksheet.h"
 
 #include <QDebug>
 #include <QXmlStreamReader>

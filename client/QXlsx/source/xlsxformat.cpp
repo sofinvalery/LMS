@@ -1,10 +1,10 @@
 // xlsxformat.cpp
 
-#include "xlsxformat.h"
+#include "../header/xlsxformat.h"
 
-#include "xlsxcolor_p.h"
-#include "xlsxformat_p.h"
-#include "xlsxnumformatparser_p.h"
+#include "../header/xlsxcolor_p.h"
+#include "../header/xlsxformat_p.h"
+#include "../header/xlsxnumformatparser_p.h"
 
 #include <QDataStream>
 #include <QDebug>

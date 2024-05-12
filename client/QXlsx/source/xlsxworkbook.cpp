@@ -1,18 +1,18 @@
 // xlsxworkbook.cpp
 
-#include "xlsxworkbook.h"
+#include "../header/xlsxworkbook.h"
 
-#include "xlsxchart.h"
-#include "xlsxchartsheet.h"
-#include "xlsxformat.h"
-#include "xlsxformat_p.h"
-#include "xlsxmediafile_p.h"
-#include "xlsxsharedstrings_p.h"
-#include "xlsxstyles_p.h"
-#include "xlsxutility_p.h"
-#include "xlsxworkbook_p.h"
-#include "xlsxworksheet.h"
-#include "xlsxworksheet_p.h"
+#include "../header/xlsxchart.h"
+#include "../header/xlsxchartsheet.h"
+#include "../header/xlsxformat.h"
+#include "../header/xlsxformat_p.h"
+#include "../header/xlsxmediafile_p.h"
+#include "../header/xlsxsharedstrings_p.h"
+#include "../header/xlsxstyles_p.h"
+#include "../header/xlsxutility_p.h"
+#include "../header/xlsxworkbook_p.h"
+#include "../header/xlsxworksheet.h"
+#include "../header/xlsxworksheet_p.h"
 
 #include <QBuffer>
 #include <QDir>

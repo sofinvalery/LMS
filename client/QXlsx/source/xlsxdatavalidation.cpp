@@ -1,10 +1,10 @@
 // xlsxdatavalidation.cpp
 
-#include "xlsxdatavalidation.h"
+#include "../header/xlsxdatavalidation.h"
 
-#include "xlsxcellrange.h"
-#include "xlsxdatavalidation_p.h"
-#include "xlsxworksheet.h"
+#include "../header/xlsxcellrange.h"
+#include "../header/xlsxdatavalidation_p.h"
+#include "../header/xlsxworksheet.h"
 
 #include <QXmlStreamReader>
 #include <QXmlStreamWriter>

@@ -1,9 +1,9 @@
 // xlsxdatetype.cpp
 
-#include "xlsxdatetype.h"
+#include "../header/xlsxdatetype.h"
 
-#include "xlsxglobal.h"
-#include "xlsxutility_p.h"
+#include "../header/xlsxglobal.h"
+#include "../header/xlsxutility_p.h"
 
 #include <QtGlobal>
 

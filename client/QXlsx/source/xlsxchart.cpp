@@ -1,9 +1,9 @@
 // xlsxchart.cpp
 
-#include "xlsxcellrange.h"
-#include "xlsxchart_p.h"
-#include "xlsxutility_p.h"
-#include "xlsxworksheet.h"
+#include "../header/xlsxcellrange.h"
+#include "../header/xlsxchart_p.h"
+#include "../header/xlsxutility_p.h"
+#include "../header/xlsxworksheet.h"
 
 #include <QDebug>
 #include <QIODevice>

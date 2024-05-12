@@ -1,8 +1,8 @@
 // xlsxdrawing.cpp
 
-#include "xlsxabstractsheet.h"
-#include "xlsxdrawing_p.h"
-#include "xlsxdrawinganchor_p.h"
+#include "../header/xlsxabstractsheet.h"
+#include "../header/xlsxdrawing_p.h"
+#include "../header/xlsxdrawinganchor_p.h"
 
 #include <QBuffer>
 #include <QXmlStreamReader>

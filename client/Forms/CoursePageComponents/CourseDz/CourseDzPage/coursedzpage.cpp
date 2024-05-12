@@ -80,9 +80,7 @@ void CourseDzPage::on_exitButton_clicked()
     delete this;
 }
 
-
 void CourseDzPage::on_setPathButton_clicked()
 {
     QString path = QFileDialog::getOpenFileName(this, "Выбор файла", QDir::homePath(), allowedTypeOfFiles);
 }
-

@@ -1,6 +1,6 @@
 // xlsxcontenttypes.cpp
 
-#include "xlsxcontenttypes_p.h"
+#include "../header/xlsxcontenttypes_p.h"
 
 #include <QBuffer>
 #include <QDebug>

@@ -1,9 +1,9 @@
 // xlsxabstractsheet.cpp
 
-#include "xlsxabstractsheet.h"
+#include "../header/xlsxabstractsheet.h"
 
-#include "xlsxabstractsheet_p.h"
-#include "xlsxworkbook.h"
+#include "../header/xlsxabstractsheet_p.h"
+#include "../header/xlsxworkbook.h"
 
 #include <QtGlobal>
 

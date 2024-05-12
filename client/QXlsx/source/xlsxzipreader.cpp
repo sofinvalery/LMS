@@ -1,6 +1,6 @@
 // xlsxzipreader.cpp
 
-#include "xlsxzipreader_p.h"
+#include "../header/xlsxzipreader_p.h"
 
 #include <private/qzipreader_p.h>
 

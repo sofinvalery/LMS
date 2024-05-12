@@ -1,13 +1,13 @@
 // xlsxcell.cpp
 
-#include "xlsxcell.h"
+#include "../header/xlsxcell.h"
 
-#include "xlsxcell_p.h"
-#include "xlsxformat.h"
-#include "xlsxformat_p.h"
-#include "xlsxutility_p.h"
-#include "xlsxworkbook.h"
-#include "xlsxworksheet.h"
+#include "../header/xlsxcell_p.h"
+#include "../header/xlsxformat.h"
+#include "../header/xlsxformat_p.h"
+#include "../header/xlsxutility_p.h"
+#include "../header/xlsxworkbook.h"
+#include "../header/xlsxworksheet.h"
 
 #include <cmath>
 

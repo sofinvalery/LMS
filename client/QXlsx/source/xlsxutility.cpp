@@ -1,7 +1,7 @@
 // xlsxutility.cpp
 
-#include "xlsxcellreference.h"
-#include "xlsxutility_p.h"
+#include "../header/xlsxcellreference.h"
+#include "../header/xlsxutility_p.h"
 
 #include <cmath>
 #include <string>

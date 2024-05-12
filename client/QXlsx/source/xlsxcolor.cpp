@@ -1,8 +1,8 @@
 // xlsxcolor.cpp
 
-#include "xlsxcolor_p.h"
-#include "xlsxstyles_p.h"
-#include "xlsxutility_p.h"
+#include "../header/xlsxcolor_p.h"
+#include "../header/xlsxstyles_p.h"
+#include "../header/xlsxutility_p.h"
 
 #include <QDataStream>
 #include <QDebug>

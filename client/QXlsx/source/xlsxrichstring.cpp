@@ -1,9 +1,9 @@
 // xlsxrichstring.cpp
 
-#include "xlsxrichstring.h"
+#include "../header/xlsxrichstring.h"
 
-#include "xlsxformat_p.h"
-#include "xlsxrichstring_p.h"
+#include "../header/xlsxformat_p.h"
+#include "../header/xlsxrichstring_p.h"
 
 #include <QDebug>
 #include <QTextDocument>

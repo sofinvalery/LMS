@@ -1,6 +1,6 @@
 // xlsxrelationships.cpp
 
-#include "xlsxrelationships_p.h"
+#include "../header/xlsxrelationships_p.h"
 
 #include <QBuffer>
 #include <QDir>

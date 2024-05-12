@@ -1,6 +1,6 @@
 // xlsxmediafile.cpp
 
-#include "xlsxmediafile_p.h"
+#include "../header/xlsxmediafile_p.h"
 
 #include <QCryptographicHash>
 #include <QtGlobal>

@@ -1,9 +1,9 @@
 // xlsxcellformula.cpp
 
-#include "xlsxcellformula.h"
+#include "../header/xlsxcellformula.h"
 
-#include "xlsxcellformula_p.h"
-#include "xlsxutility_p.h"
+#include "../header/xlsxcellformula_p.h"
+#include "../header/xlsxutility_p.h"
 
 #include <QDebug>
 #include <QObject>

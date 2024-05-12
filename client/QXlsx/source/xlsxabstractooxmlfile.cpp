@@ -1,8 +1,8 @@
 // xlsxabstractooxmlfile.cpp
 
-#include "xlsxabstractooxmlfile.h"
+#include "../header/xlsxabstractooxmlfile.h"
 
-#include "xlsxabstractooxmlfile_p.h"
+#include "../header/xlsxabstractooxmlfile_p.h"
 
 #include <QBuffer>
 #include <QByteArray>

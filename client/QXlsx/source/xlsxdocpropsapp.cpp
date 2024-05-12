@@ -1,6 +1,6 @@
 // xlsxdocpropsapp.cpp
 
-#include "xlsxdocpropsapp_p.h"
+#include "../header/xlsxdocpropsapp_p.h"
 
 #include <QBuffer>
 #include <QDateTime>

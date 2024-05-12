@@ -1,6 +1,6 @@
 // xlsxdocpropscore.cpp
 
-#include "xlsxdocpropscore_p.h"
+#include "../header/xlsxdocpropscore_p.h"
 
 #include <QBuffer>
 #include <QDateTime>

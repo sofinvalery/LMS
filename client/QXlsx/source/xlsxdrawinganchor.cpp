@@ -1,11 +1,11 @@
 // xlsxdrawinganchor.cpp
 
-#include "xlsxchart.h"
-#include "xlsxdrawing_p.h"
-#include "xlsxdrawinganchor_p.h"
-#include "xlsxmediafile_p.h"
-#include "xlsxutility_p.h"
-#include "xlsxworkbook.h"
+#include "../header/xlsxchart.h"
+#include "../header/xlsxdrawing_p.h"
+#include "../header/xlsxdrawinganchor_p.h"
+#include "../header/xlsxmediafile_p.h"
+#include "../header/xlsxutility_p.h"
+#include "../header/xlsxworkbook.h"
 
 #include <QBuffer>
 #include <QDebug>

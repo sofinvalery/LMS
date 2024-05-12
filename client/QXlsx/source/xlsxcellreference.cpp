@@ -1,6 +1,6 @@
 // xlsxcellreference.cpp
 
-#include "xlsxcellreference.h"
+#include "../header/xlsxcellreference.h"
 
 #include <QMap>
 #include <QRegularExpression>
