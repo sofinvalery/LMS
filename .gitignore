@@ -36,6 +36,11 @@ Thumbs.db
 /.qmake.stash
 build*/
 .cache/
+server/server/.qt/
+server/server/.rcc/
+server/server/CMakeCache.txt
+server/server/CMakeFiles/
+server/server/cmake_install.cmake
 
 # qtcreator generated files
 *.pro.user*
