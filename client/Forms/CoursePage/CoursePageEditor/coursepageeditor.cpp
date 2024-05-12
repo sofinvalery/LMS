@@ -72,7 +72,7 @@ CoursePageEditor::~CoursePageEditor()
 
 void CoursePageEditor::on_LoadFileButton_clicked()
 {
-    QString path = QFileDialog::getOpenFileName(this, "Выбор картинки", QDir::homePath(), "All Files (*.*);");
+    QString path = QFileDialog::getOpenFileName(this, "Выбор картинки", QDir::homePath(), "All Files (*.*)");
     ui->PathLabel2->setText(path);
 }
 
