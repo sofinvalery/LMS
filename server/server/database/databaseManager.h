@@ -53,6 +53,10 @@ public:
     QList<Submit*> GetTaskSubmits(int32_t courseId);
     bool SetTestSubmits(int32_t courseId, QList<Submit*> submits);
     bool SetTaskSubmits(int32_t courseId,QList<Submit*> submits);
+    bool AddStudentTaskSubmit(Submit* submit);
+    QList<Submit*> GetUncheckedTaskSubmitsFromCourse(int32_t path_course_tasks_id);
+    bool UpdateCheckedTaskSubmit(Submit* task);
+
 
     ~DatabaseManager();
 
