@@ -54,5 +54,9 @@ static QJsonObject getGroupsByCourseId(QJsonObject json,Authentication **auth);
 
 static QJsonObject getSubmits(QJsonObject json,Authentication **auth);
 
+static QJsonObject getInfoForSetSubmits(QJsonObject json,Authentication **auth);
+
+static QJsonObject setSubmits(QJsonObject json,Authentication **auth);
+
 #endif // JSONMANAGER_H
 

@@ -250,7 +250,7 @@ QList<CourseComponent*>* DatabaseManager::GetCourseComponents(int32_t courseId,A
                 notes = query2.value("notes").toString();
             }
 
-            listComponents->append(new CourseTest(id, order, title, maxMark, urlJson, 0, verdict, notes, time, testSize));
+            listComponents->append(new CourseTest(id, order, title, maxMark, urlJson,timeInSeconds, verdict, notes, time, testSize));
         } while (query.next());
     }
 
@@ -1148,6 +1148,7 @@ bool DatabaseManager::EditCourseTest(CourseTest* test) {
     query.bindValue(":order", test->getOrder());
     query.bindValue(":id", test->getId());
     query.bindValue(":test_size", test->getTestSize());
+    query.bindValue(":time_in_seconds",test->getTimeInSeconds());
 
     if (!query.exec()) {
         qDebug() << "Error updating course test:" << query.lastError().text();
@@ -1309,86 +1310,103 @@ QList<Submit*> DatabaseManager::GetTaskSubmits(int32_t courseId) {
     return submits;
 }
 
-bool DatabaseManager::SetTestSubmits(int32_t courseId, QList<Submit*> submits) {
+bool DatabaseManager::SetTestSubmits(QList<Submit*> submits) {
+
+    QSqlQuery checkQuery(m_db);
+    QSqlQuery submitQuery(m_db);
+
     for (Submit* submit : submits) {
+
         if (CourseTest* test = dynamic_cast<CourseTest*>(submit->work)) {
-            QSqlQuery testQuery(m_db);
-            testQuery.prepare("INSERT INTO path_course_tests (courses_id1, title, max_mark, url_json, \"order\", test_size, time_in_seconds) "
-                              "VALUES (:courseId, :title, :maxMark, :urlJson, :order, :testSize, :timeInSeconds)");
-            testQuery.bindValue(":courseId", courseId);
-            testQuery.bindValue(":title", test->getTitle());
-            testQuery.bindValue(":maxMark", test->getMaxMark());
-            testQuery.bindValue(":urlJson", test->getUrlJson());
-            testQuery.bindValue(":order", test->getOrder());
-            testQuery.bindValue(":testSize", test->getTestSize());
-            testQuery.bindValue(":timeInSeconds", test->getTimeInSeconds());
 
-            if (!testQuery.exec()) {
-                qDebug() << "Error executing the test query:" << testQuery.lastError().text();
+            checkQuery.prepare("select id from path_course_test_submits where users_id1 = :user_id AND path_course_tests_id = :test_id");
+
+            checkQuery.bindValue(":user_id", submit->student->getId());
+            checkQuery.bindValue(":test_id", test->getId());
+
+            if (!checkQuery.exec()) {
+                qDebug() << "Error executing the checkQuery path_course_test_submits:" << checkQuery.lastError().text();
                 return false;
             }
 
-            int32_t testId = testQuery.lastInsertId().toInt();
+            if(checkQuery.first()){
 
-            QSqlQuery submitQuery(m_db);
-            submitQuery.prepare("INSERT INTO path_course_test_submits (path_course_tests_id, \"time\", verdict, notes, users_id1) "
-                                "VALUES (:testId, :submitTime, :verdict, :notes, :userId)");
-            submitQuery.bindValue(":testId", testId);
-            submitQuery.bindValue(":submitTime", test->getTime());
-            submitQuery.bindValue(":verdict", test->getVerdict());
-            submitQuery.bindValue(":notes", test->getNotes());
-            submitQuery.bindValue(":userId", submit->student->getId());
+                int32_t testSubmitId = checkQuery.value("id").toInt();
 
-            if (!submitQuery.exec()) {
-                qDebug() << "Error executing the submit query:" << submitQuery.lastError().text();
-                return false;
+                submitQuery.prepare("update path_course_test_submits set verdict = :verdict, time = now() where id = :id AND verdict != :verdict");
+
+                submitQuery.bindValue(":id", testSubmitId);
+                submitQuery.bindValue(":verdict", test->getVerdict());
+
+                if (!submitQuery.exec()) {
+                    qDebug() << "Error executing the submit update query path_course_test_submits:" << submitQuery.lastError().text();
+                    return false;
+                }
             }
-        } else {
-            qDebug() << "Error: submit->work is not an instance of CourseTest";
-            return false;
+            else{
+
+                submitQuery.prepare("INSERT INTO path_course_test_submits (path_course_tests_id, time, verdict, users_id1) "
+                                    "VALUES (:path_course_tests_id, now(), :verdict, :users_id1)");
+
+                submitQuery.bindValue(":path_course_tests_id", test->getId());
+                submitQuery.bindValue(":verdict", test->getVerdict());
+                submitQuery.bindValue(":users_id1", submit->student->getId());
+
+                if (!submitQuery.exec()) {
+                    qDebug() << "Error executing the submit insert query path_course_test_submits:" << submitQuery.lastError().text();
+                    return false;
+                }
+            }
         }
     }
 
     return true;
 }
 
-bool DatabaseManager::SetTaskSubmits(int32_t courseId, QList<Submit*> submits) {
+bool DatabaseManager::SetTaskSubmits(QList<Submit*> submits) {
+
+    QSqlQuery checkQuery(m_db);
+    QSqlQuery submitQuery(m_db);
+
     for (Submit* submit : submits) {
         if (CourseTask* task = dynamic_cast<CourseTask*>(submit->work)) {
-            QSqlQuery taskQuery(m_db);
-            taskQuery.prepare("INSERT INTO path_course_tasks (courses_id1, content, max_mark, memory_limit, \"order\", title) "
-                              "VALUES (:courseId, :content, :maxMark, :memoryLimit, :order, :title)");
-            taskQuery.bindValue(":courseId", courseId);
-            taskQuery.bindValue(":content", task->getContent());
-            taskQuery.bindValue(":maxMark", task->getMaxMark());
-            taskQuery.bindValue(":memoryLimit", task->getMemoryLimit());
-            taskQuery.bindValue(":order", task->getOrder());
-            taskQuery.bindValue(":title", task->getTitle());
 
-            if (!taskQuery.exec()) {
-                qDebug() << "Error executing the task query:" << taskQuery.lastError().text();
+            checkQuery.prepare("select id from path_course_tasks_submits where users_id1 = :user_id AND path_course_tasks_id1 = :task_id");
+
+            checkQuery.bindValue(":user_id", submit->student->getId());
+            checkQuery.bindValue(":task_id", task->getId());
+
+            if (!checkQuery.exec()) {
+                qDebug() << "Error executing the checkQuery path_course_tasks_submits:" << checkQuery.lastError().text();
                 return false;
             }
 
-            int32_t taskId = taskQuery.lastInsertId().toInt();
+            if(checkQuery.first()) {
+                int32_t taskSubmitId = checkQuery.value("id").toInt();
 
-            QSqlQuery submitQuery(m_db);
-            submitQuery.prepare("INSERT INTO path_course_tasks_submits (path_course_tasks_id1, \"time\", verdict, notes, answer_url, users_id1) "
-                                "VALUES (:taskId, :submitTime, :verdict, :notes, :answerUrl, :userId)");
-            submitQuery.bindValue(":taskId", taskId);
-            submitQuery.bindValue(":submitTime", task->getSolutionTime());
-            submitQuery.bindValue(":verdict", task->getVerdict());
-            submitQuery.bindValue(":notes", task->getNotes());
-            submitQuery.bindValue(":answerUrl", task->getAnswerUrl());
-            submitQuery.bindValue(":userId", submit->student->getId());
+                submitQuery.prepare("update path_course_tasks_submits set verdict = :verdict, time = now(), is_checked = true where id = :id AND verdict != :verdict");
 
-            if (!submitQuery.exec()) {
-                qDebug() << "Error executing the submit query:" << submitQuery.lastError().text();
-                return false;
+                submitQuery.bindValue(":id", taskSubmitId);
+                submitQuery.bindValue(":verdict", task->getVerdict());
+
+                if (!submitQuery.exec()) {
+                    qDebug() << "Error executing the submit update query path_course_tasks_submits:" << submitQuery.lastError().text();
+                    return false;
+                }
             }
-        } else {
-            qDebug() << "Error: submit->work is not an instance of CourseTask";
-            return false;
+            else{
+                submitQuery.prepare("INSERT INTO path_course_tasks_submits (path_course_tasks_id1, time, verdict,is_checked, users_id1) "
+                                    "VALUES (:path_course_tasks_id1, now(), :verdict,true, :users_id1)");
+
+                submitQuery.bindValue(":path_course_tasks_id1", task->getId());
+                submitQuery.bindValue(":verdict", task->getVerdict());
+                submitQuery.bindValue(":users_id1", submit->student->getId());
+
+                if (!submitQuery.exec()) {
+                    qDebug() << "Error executing the submit insert query path_course_tasks_submits:" << submitQuery.lastError().text();
+                    return false;
+                }
+            }
         }
     }
 

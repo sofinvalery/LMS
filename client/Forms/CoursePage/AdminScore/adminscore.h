@@ -36,10 +36,13 @@ private slots:
 
     void getExecel(QList<Submit *> submits, Group* group);
 
+    void parseExel();
+
 private:
     Course* course;
     Ui::AdminScore *ui;
     QList<Submit*> submits;
+    QString path;
 };
 
 #endif // ADMINSCORE_H

@@ -47,6 +47,8 @@ public:
 
     void setTitle(const QString &newTitle);
 
+    void setVerdict(int32_t newVerdict);
+
 private:
     QString content;
     int32_t maxMark;

@@ -58,8 +58,6 @@ void ClientState::setGroup(Group *newGroup)
 {
     if(group!=nullptr)
     {
-        for (auto temp:group->getParticipants())
-            delete temp;
         delete group;
     }
     group = newGroup;

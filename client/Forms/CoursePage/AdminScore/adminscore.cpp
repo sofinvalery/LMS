@@ -11,7 +11,10 @@ AdminScore::AdminScore(Course* course,QWidget *parent)
 {
     ui->setupUi(this);
     this->course=course;
+
     connect(SocketParser::GetInstance(),SIGNAL(getSubmit(QList<Submit*>,Group*)),this,SLOT(getExecel(QList<Submit*>,Group*)));
+    connect(SocketParser::GetInstance(),SIGNAL(getInfoForSetSubmits()),this,SLOT(parseExel()));
+
     QList<QPushButton*> buttons = {ui->confirmButton, ui->getDoneButton, ui->getPatternButton, ui->setExcelButton};
     for(QPushButton* button : buttons) {
         button->setEnabled(false);
@@ -136,7 +139,7 @@ void AdminScore::on_getPatternButton_clicked()
 //назначить эксель
 void AdminScore::on_setExcelButton_clicked()
 {
-    QString path = QFileDialog::getOpenFileName(this, "Выбор таблицы", QDir::homePath(), "Excel files (*.xlsx)");
+    path = QFileDialog::getOpenFileName(this, "Выбор таблицы", QDir::homePath(), "Excel files (*.xlsx)");
     ui->pathLabel->setText(path);
     ui->pathLabel->setFixedSize(ui->pathLabel->sizeHint().width(), ui->pathLabel->sizeHint().height());
 }
@@ -144,7 +147,12 @@ void AdminScore::on_setExcelButton_clicked()
 //применить
 void AdminScore::on_confirmButton_clicked()
 {
-
+    ClientState::GetInstance()->getMainwindow()->getDownload()->raise();
+    ClientState::GetInstance()->getMainwindow()->getDownload()->show();
+    ClientState::GetInstance()->getMainwindow()->doAllButtonDisable();
+    QJsonObject json;
+    json["GroupName"]=ui->searchLineEdit->text();
+    ClientManager::GetInstance()->SendJsonToServer(GETINFOFORSETSUBMITS,json);
 }
 
 void AdminScore::getExecel(QList<Submit *> submits, Group *group)
@@ -160,5 +168,39 @@ void AdminScore::getExecel(QList<Submit *> submits, Group *group)
     }
     submits.clear();
     delete group;
+}
+
+void AdminScore::parseExel()
+{
+    QList<Submit*>* submits;
+    submits= XlsxUtils::GetInstance()->parseCourseScoreTable(course,ClientState::GetInstance()->getGroup(),path);
+    if(submits!=nullptr){
+
+        QJsonArray ar;
+        for(Submit* temp:*submits)
+        {
+            QJsonObject sub;
+            sub["Authentication"] = temp->student->Serialize();
+            sub["CourseSubmit"] = temp->work->Serialize();
+            ar.append(sub);
+        }
+        QJsonObject json;
+        json["Submits"] = ar;
+
+        ClientManager::GetInstance()->SendJsonToServer(SETSUBMITS,json);
+        for(auto temp:*submits){
+            delete temp->work;
+            delete temp;
+        }
+        //студенты удаляться в ClientState
+        submits->clear();
+        delete submits;
+    }
+
+    ClientState::GetInstance()->getMainwindow()->getDownload()->close();
+    ClientState::GetInstance()->getMainwindow()->doAllButtonClicked();
+    this->close();
+
+
 }
 

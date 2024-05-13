@@ -136,3 +136,8 @@ void CourseTest::setTestSize(int32_t newTestSize)
 {
     testSize = newTestSize;
 }
+
+void CourseTest::setVerdict(int32_t newVerdict)
+{
+    verdict = newVerdict;
+}

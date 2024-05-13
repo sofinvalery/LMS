@@ -28,6 +28,7 @@ public:
     void getAddedPotok(AddingData* data);
     AddingData* parsAddingXlsx(QString path);
     void getCourseScoreTable(QList<Submit*>& submits,Course* course, Group* group);
+    QList<Submit*>* parseCourseScoreTable(Course* course, Group* group,QString path);
 signals:
     void Readed(QString);
 };

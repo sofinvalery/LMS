@@ -292,3 +292,126 @@ void XlsxUtils::getCourseScoreTable(QList<Submit *> &submits,Course* course, Gro
     ClientState::GetInstance()->ShowNotifacate("Файл оценок добавлен в загрузки\nИмя файла "+course->GetTitle()+"_"+group->getClassname()+"("+QString::number(p-1)+")"+".xlsx","black");
     xlsxW.saveAs(path);
 }
+
+QList<Submit *>* XlsxUtils::parseCourseScoreTable(Course *course, Group *group,QString path)
+{
+    QXlsx::Document xlsxR(path);
+    if(xlsxR.read(1,2).toString()!=group->getClassname())
+    {
+        ClientState::GetInstance()->ShowNotifacate("Это не та группа","red");
+        return nullptr;
+    }
+    std::sort(group->getParticipants().begin(),group->getParticipants().end(),[](Authentication * a, Authentication* b){return a->GetFIO()<b->GetFIO();});
+    const int rowTitle=3;
+    QList<Submit *>* submits = new QList<Submit *>();
+    int rowPoint=4;
+    int colPoint=3;
+
+    int rowLogin = 4;
+    const int colLogin = 1;
+    for(;rowLogin<group->getParticipants().size()+4;rowLogin++)
+    {
+        QString login=xlsxR.read(rowLogin,colLogin).toString();
+        if(login!=group->getParticipants()[rowLogin-4]->GetLogin())
+        {
+            ClientState::GetInstance()->ShowNotifacate("Такого студента нет:\n"+login,"red");
+            delete submits;
+            return nullptr;
+        }
+    }
+
+
+    for(auto temp:course->getListComponents())
+    {
+        CourseTest* courseTest;
+        CourseTask* courseTask;
+        if ((courseTask = qobject_cast<CourseTask*>(temp)) != nullptr)
+        {
+            QString task=xlsxR.read(rowTitle,colPoint).toString();
+            if(task!=courseTask->getTitle())//не совпало имя задания testa
+            {
+                ClientState::GetInstance()->ShowNotifacate("Такого задания нет:\n"+task,"red");
+                for(auto temp:*submits)
+                {
+                    delete temp->student;
+                    delete temp->work;
+                }
+                delete submits;
+                return nullptr;
+            }
+            //перибераем весь столбик вниз
+            for(rowPoint=4;rowPoint<group->getParticipants().size()+4;rowPoint++)
+            {
+                int verdict = xlsxR.read(rowPoint,colPoint).toInt();
+                if(verdict!=0)
+                {
+                    if(verdict<=courseTask->getMaxMark())
+                    {
+                        CourseTask* temp = new CourseTask(courseTask->getId(),12,"",23,12,"","",QDate(),verdict,"","");
+                        Submit* submit = new Submit();
+                        submit->work=temp;
+                        submit->student=group->getParticipants()[rowPoint-4];
+                        submits->append(submit);
+                    }
+                    else
+                    {
+                        ClientState::GetInstance()->ShowNotifacate("В задании"+task+":\nпревышен макс балл","red");
+                        for(auto temp:*submits)
+                        {
+                            delete temp->student;
+                            delete temp->work;
+                        }
+                        delete submits;
+                        return nullptr;
+                    }
+                }
+            }
+            colPoint++;
+        }
+        else if ((courseTest = qobject_cast<CourseTest*>(temp)) != nullptr)
+        {
+            QString test=xlsxR.read(rowTitle,colPoint).toString();
+            if(test!=courseTest->getTitle())//не совпало имя задания testa
+            {
+                ClientState::GetInstance()->ShowNotifacate("Такого теста нет:\n"+test,"red");
+                for(auto temp:*submits)
+                {
+                    delete temp->student;
+                    delete temp->work;
+                }
+                delete submits;
+                return nullptr;
+            }
+
+            for(rowPoint=4;rowPoint<group->getParticipants().size()+4;rowPoint++)
+            {
+                int verdict = xlsxR.read(rowPoint,colPoint).toInt();
+                if(verdict!=0)
+                {
+                    if(verdict<=courseTest->getMaxMark())
+                    {
+                        CourseTest* temp = new CourseTest(courseTest->getId(),12,"",12,"",12,verdict,"",QDate());
+                        Submit* submit = new Submit();
+                        submit->work=temp;
+                        submit->student=group->getParticipants()[rowPoint-4];
+                        submits->append(submit);
+                    }
+                    else
+                    {
+                        ClientState::GetInstance()->ShowNotifacate("В тесте"+test+":\nПревышен макс бал","red");
+                        for(auto temp:*submits)
+                        {
+                            delete temp->student;
+                            delete temp->work;
+                        }
+                        delete submits;
+                        return nullptr;
+                    }
+                }
+            }
+            colPoint++;
+        }
+    }
+    ClientState::GetInstance()->ShowNotifacate("Файл оценок прочитан","green");
+    return submits;
+}

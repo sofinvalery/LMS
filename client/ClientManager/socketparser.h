@@ -27,6 +27,7 @@ private:
     void getScore(QJsonObject json);
     void showTeacherScore(QJsonObject json);
     void getSubmit(QJsonObject json);
+    void getInfoForSetSubmits(QJsonObject json);
     static SocketParser* s_Instance;
 public:
     static SocketParser* GetInstance() { return s_Instance = (s_Instance != nullptr ? s_Instance : new SocketParser()); }
@@ -42,6 +43,7 @@ signals:
     void getScore();
     void showTeacherScore();
     void getSubmit(QList<Submit *>submits, Group* group);
+    void getInfoForSetSubmits();
 };
 
 #endif // SOCKETPARSER_H

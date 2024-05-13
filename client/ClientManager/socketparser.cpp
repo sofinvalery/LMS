@@ -39,6 +39,13 @@ void SocketParser::socketparse(QJsonObject json)
         break;
     case GETSUBMITS: getSubmit(data);
         break;
+    case GETINFOFORSETSUBMITS: getInfoForSetSubmits(data);
+        break;
+
+
+
+    default:
+        qDebug()<<"пришло не то";
     }
 }
 
@@ -191,6 +198,14 @@ void SocketParser::getSubmit(QJsonObject json)
         submits.append(submit);
     }
     emit getSubmit(submits,gr);
+}
+
+void SocketParser::getInfoForSetSubmits(QJsonObject json)
+{
+    Group* gr = Group::Deserialize(json);
+    ClientState::GetInstance()->setGroup(gr);
+
+    emit getInfoForSetSubmits();
 }
 
 

@@ -110,5 +110,10 @@ void CourseTask::setTitle(const QString &newTitle)
     title = newTitle;
 }
 
+void CourseTask::setVerdict(int32_t newVerdict)
+{
+    verdict = newVerdict;
+}
+
 
 

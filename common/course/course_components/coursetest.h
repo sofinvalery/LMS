@@ -60,6 +60,8 @@ public:
 
     void setTestSize(int32_t newTestSize);
 
+    void setVerdict(int32_t newVerdict);
+
 private:
     QString title;
     int32_t maxMark;

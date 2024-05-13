@@ -24,6 +24,8 @@ static Action Actions[] ={
     [DELETECOURSECOMPONENT]=deleteCourseComponent,
     [GETGROUPSBYCOURSEID] = getGroupsByCourseId,
     [GETSUBMITS] = getSubmits,
+    [GETINFOFORSETSUBMITS] = getInfoForSetSubmits,
+    [SETSUBMITS] = setSubmits,
 };
 
 QJsonObject jsonManager(QJsonObject json,Authentication **auth)
@@ -226,6 +228,7 @@ QJsonObject getGroup(QJsonObject json, Authentication **auth)
     QJsonObject sendjson;
     sendjson["Action"]=GETGROUP;
     sendjson["Data"]=group->Serialize();
+    delete group;
     return sendjson;
 }
 
@@ -401,5 +404,45 @@ QJsonObject getSubmits(QJsonObject json, Authentication **auth)
     QJsonObject sendjson;
     sendjson["Action"]=GETSUBMITS;
     sendjson["Data"]= temp;
+    return sendjson;
+}
+
+QJsonObject getInfoForSetSubmits(QJsonObject json, Authentication **auth)
+{
+    DatabaseManager db;
+    QString groupName = json["GroupName"].toString();
+    Group* group = db.GetGroupByName(groupName);
+    QJsonObject sendjson;
+    sendjson["Action"]=GETINFOFORSETSUBMITS;
+    sendjson["Data"]=group->Serialize();
+    delete group;
+    return sendjson;
+}
+
+QJsonObject setSubmits(QJsonObject json, Authentication **auth)
+{
+    QList<Submit*> submits;
+    QJsonArray components=json.value("Submits").toArray();
+    for(auto temp:components){
+        Submit* submit =new Submit();
+        submit->student= Authentication::Deserialize(temp.toObject()["Authentication"].toObject());
+        if(temp.toObject()["CourseSubmit"].toObject().contains("CourseTask"))
+            submit->work= CourseTask::Deserialize(temp.toObject()["CourseSubmit"].toObject());
+        else if(temp.toObject()["CourseSubmit"].toObject().contains("CourseTest"))
+            submit->work=CourseTest::Deserialize(temp.toObject()["CourseSubmit"].toObject());
+        else{
+            qDebug()<<"ошибка в парсинге сокета setSubmit скорее всего на стороне клиента";
+        }
+        submits.append(submit);
+    }
+    DatabaseManager db;
+    db.SetTaskSubmits(submits);
+    db.SetTestSubmits(submits);
+    for(auto temp:submits)
+    {
+        delete temp->student;
+        delete temp->work;
+    }
+    QJsonObject sendjson;
     return sendjson;
 }
