@@ -146,6 +146,22 @@ void CoursePageEditor::on_EditWidgetButton_clicked()
         ui->ComponentOrderSpinBox->hide();
         ui->ComponentOrderLabel->hide();
         ui->ChooseButton->hide();
+        ui->ComponentOrderSpinBox->setEnabled(true);
+        ui->ContentTextEdit->setText("");
+        ui->ComponentOrderLabel->hide();
+        ui->ContentTextEdit->hide();
+        ui->NameOnComponentLineEdit->hide();
+        ui->AllowedTypeOfFilesLineEdit->hide();
+        ui->MaxMarkLabel->hide();
+        ui->MaxMarkSpinBox->hide();
+        ui->TaskContentLabel->hide();
+        ui->TestTimeLabel->hide();
+        ui->TestTimeEdit->hide();
+        ui->TestCountLabel->hide();
+        ui->TestCountSpinBox->hide();
+        ui->LoadFileButton->hide();
+        ui->PathLabel1->hide();
+        ui->PathLabel2->hide();
         //ui->NameOnComponent->hide();
     }
 }
@@ -246,7 +262,7 @@ void CoursePageEditor::on_DoneButton_clicked()
         this->deleteLater();
         return;
     }
-    if (DeletingStatus == 1){                               // удалить из сервера элемент  ui->ComponentOrderSpinBox->value()-1
+    if (DeletingStatus == 1){            // удалить из сервера элемент  ui->ComponentOrderSpinBox->value()-1
         CourseComponent* temp = coursepage->GetCourse()->getListComponents()[ui->ComponentOrderSpinBox->value()-1];
         json["type"] = temp->getType();
         json["ComponentId"]= temp->getId();
@@ -260,39 +276,73 @@ void CoursePageEditor::on_DoneButton_clicked()
         this->deleteLater();
         return;
     }
-    if (EditingStatus == 1){                                // поменять на сервере тест
+    if (EditingStatus == 1&&ui->NameOnComponentLineEdit->text()!=""&& (ui->TestTimeEdit->time().hour()*3600+ui->TestTimeEdit->time().minute()*60+ui->TestTimeEdit->time().second())>60){                                // поменять на сервере тест
         coursepage->CleanComponents();
         temptest->setTitle(ui->NameOnComponentLineEdit->text());
         temptest->setTimeInSeconds(ui->TestTimeEdit->time().hour()*3600+ui->TestTimeEdit->time().minute()*60+ui->TestTimeEdit->time().second());
         temptest->setTestSize(ui->TestCountSpinBox->value());
         coursepage->ShowComponents();
+
+        json["type"] = temptest->getType();
+        json["Class"]= temptest->Serialize();
+        ClientManager::GetInstance()->SendJsonToServer(EDITCOURSECOMPONENT,json);
+
         this->close();
         this->deleteLater();
         return;
     }
-    if (EditingStatus == 2){                                // поменять на сервере файл
+    if (EditingStatus == 2&&ui->NameOnComponentLineEdit->text()!=""&& ui->PathLabel2->text()!=""){        // поменять на сервере файл
+
+        QString fileName;
+        for(int j=ui->PathLabel2->text().size()-1; j>=0; j--)
+            if(ui->PathLabel2->text()[j]=='/')
+            {
+                fileName=ui->PathLabel2->text().mid(j+1);
+                break;
+            }
+        QString serverPath = "./data/Courses/media_files/"+QString::number(coursepage->GetCourse()->GetCourseId())+"/";
+        ClientManager::GetInstance()->SendFileToServer(ui->PathLabel2->text(),serverPath);
+        serverPath+=fileName;
+        ClientState::GetInstance()->ShowNotifacate("Перед выходом дождитесь уведомления\nО выгрузке файла:"+fileName,"black");
+
         coursepage->CleanComponents();
         tempfile->setTitle(ui->NameOnComponentLineEdit->text());
         tempfile->setUrl(ui->PathLabel2->text());
+
+        json["type"] = tempfile->getType();
+        json["Class"]= tempfile->Serialize();
+        ClientManager::GetInstance()->SendJsonToServer(EDITCOURSECOMPONENT,json);
+
         coursepage->ShowComponents();
         this->close();
         this->deleteLater();
         return;
     }
-    if (EditingStatus == 3){                                // поменять на сервере дз
+    if (EditingStatus == 3&&ui->ContentTextEdit->toPlainText()!=""&&ui->NameOnComponentLineEdit->text()!=""){        // поменять на сервере дз
         coursepage->CleanComponents();
         tempdz->setTitle(ui->NameOnComponentLineEdit->text());
         tempdz->setAllowedTypeOfFiles(ui->AllowedTypeOfFilesLineEdit->text());
         tempdz->setContent(ui->ContentTextEdit->toPlainText());
         tempdz->setMaxMark(ui->MaxMarkSpinBox->value());
+
+        json["type"] = tempdz->getType();
+        json["Class"]= tempdz->Serialize();
+        ClientManager::GetInstance()->SendJsonToServer(EDITCOURSECOMPONENT,json);
+
+
         coursepage->ShowComponents();
         this->close();
         this->deleteLater();
         return;
     }
-    if (EditingStatus == 4){                                // поменять на сервере туториал
+    if (EditingStatus == 4 && ui->ContentTextEdit->toPlainText()!=""){    // поменять на сервере туториал
         coursepage->CleanComponents();
         temptext->setContent(ui->ContentTextEdit->toPlainText());
+
+        json["type"] = temptext->getType();
+        json["Class"]= temptext->Serialize();
+        ClientManager::GetInstance()->SendJsonToServer(EDITCOURSECOMPONENT,json);
+
         coursepage->ShowComponents();
         this->close();
         this->deleteLater();
@@ -520,7 +570,7 @@ void CoursePageEditor::on_ChooseButton_clicked()
         ui->PathLabel2->setText(tempfile->getUrl());
         ui->ComponentOrderSpinBox->setEnabled(false);
     }
-    if (type == "CoursePdf" && !ui->LoadFileButton->isHidden() && courseEditFlag){
+    if (type == "CourseMediaFiles" && !ui->LoadFileButton->isHidden() && courseEditFlag){
         courseEditFlag = false;
         EditingStatus = 0;
         ui->NameOnComponentLineEdit->hide();
@@ -566,12 +616,14 @@ void CoursePageEditor::on_ChooseButton_clicked()
         EditingStatus = 4;
         ui->ContentTextEdit->show();
         ui->ContentTextEdit->setText(temptext->getContent());
+        ui->ComponentOrderSpinBox->setEnabled(false);
     }
     if (type == "CourseTutorials" && !ui->ContentTextEdit->isHidden() && courseEditFlag){
         courseEditFlag = false;
         EditingStatus = 0;
         ui->ContentTextEdit->setText("");
         ui->ContentTextEdit->hide();
+        ui->ComponentOrderSpinBox->setEnabled(true);
     }
 }
 

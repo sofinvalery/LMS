@@ -235,8 +235,6 @@ QJsonObject updateGroup(QJsonObject json, Authentication **auth)
     Group* gr = Group::Deserialize(json);
     db.UpdateGroup(gr);
     QJsonObject sendjson;
-    for(auto t:gr->getParticipants())
-        delete t;
     delete gr;
     return sendjson;
 }
@@ -306,8 +304,31 @@ QJsonObject addCourseComponent(QJsonObject json, Authentication **auth)
 
 QJsonObject editCourseComponent(QJsonObject json, Authentication **auth)
 {
-
-
+    DatabaseManager db;
+    QString type = json["type"].toString();
+    if(type == "CourseMediaFiles")
+    {
+        CourseMediaFiles* media = CourseMediaFiles::Deserialize(json["Class"].toObject());
+        db.EditCourseMediaFiles(media);
+        delete media;
+    }
+    else if(type=="CourseTask")
+    {
+        CourseTask* task = CourseTask::Deserialize(json["Class"].toObject());
+        db.EditCourseTask(task);
+        delete task;
+    }
+    else if(type=="CourseTest")
+    {
+        CourseTest* test = CourseTest::Deserialize(json["Class"].toObject());
+        db.EditCourseTest(test);
+        delete test;
+    }
+    else{
+        CourseTutorials* tutorial = CourseTutorials::Deserialize(json["Class"].toObject());
+        db.EditCourseTutorial(tutorial);
+        delete tutorial;
+    }
 
     QJsonObject sendjson;
     return sendjson;

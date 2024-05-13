@@ -31,6 +31,8 @@ AdminScore::AdminScore(Course* course,QWidget *parent)
     ui->updateCheckBox->setFont(StyleManager::GetInstance()->getRegular());
     ui->updateCheckBox->setFixedWidth(ui->updateCheckBox->sizeHint().width());
 
+    StyleManager::GetInstance()->setLabelStyle(ui->pathLabel, "", false, "black", true, 14);
+
     StyleManager::GetInstance()->setLabelStyle(ui->warningLabel, "Данной группы не  существует", true, "red", false, 16);
     ui->warningLabel->setFixedSize(ui->warningLabel->sizeHint().width(), ui->warningLabel->sizeHint().height());
 }
@@ -134,7 +136,9 @@ void AdminScore::on_getPatternButton_clicked()
 //назначить эксель
 void AdminScore::on_setExcelButton_clicked()
 {
-
+    QString path = QFileDialog::getOpenFileName(this, "Выбор таблицы", QDir::homePath(), "Excel files (*.xlsx)");
+    ui->pathLabel->setText(path);
+    ui->pathLabel->setFixedSize(ui->pathLabel->sizeHint().width(), ui->pathLabel->sizeHint().height());
 }
 
 //применить

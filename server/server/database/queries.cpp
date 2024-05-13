@@ -1110,7 +1110,7 @@ bool DatabaseManager::EditCourseTask(CourseTask* task) {
                   "SET content = :content, "
                   "    max_mark = :maxMark, "
                   "    memory_limit = :memoryLimit, "
-                  "    \"order\" = :order"
+                  "    \"order\" = :order,"
                   "    title = :title "
                   "WHERE id = :id");
     query.bindValue(":content", task->getContent());
@@ -1133,14 +1133,14 @@ bool DatabaseManager::EditCourseTest(CourseTest* test) {
 
     query.prepare("UPDATE path_course_tests "
                   "SET title = :title, "
-                  "    max_mark = :maxMark, "
-                  "    url_json = :urlJson, "
-                  "    \"order\" = :order"
-                  "    test_size = :testSize "
+                  "    max_mark = :max_mark, "
+                  "    url_json = :url_json, "
+                  "    \"order\" = :order, "
+                  "    test_size = :test_size "
                   "WHERE id = :id");
     query.bindValue(":title", test->getTitle());
-    query.bindValue(":maxMark", test->getMaxMark());
-    query.bindValue(":urlJson", test->getUrlJson());
+    query.bindValue(":max_mark", test->getMaxMark());
+    query.bindValue(":url_json", test->getUrlJson());
     query.bindValue(":order", test->getOrder());
     query.bindValue(":id", test->getId());
     query.bindValue(":test_size", test->getTestSize());
@@ -1364,8 +1364,7 @@ bool DatabaseManager::SetTaskSubmits(int32_t courseId, QList<Submit*> submits) {
             if (!taskQuery.exec()) {
                 qDebug() << "Error executing the task query:" << taskQuery.lastError().text();
                 return false;
-            }
-
+            }            
             int32_t taskId = taskQuery.lastInsertId().toInt();
 
             QSqlQuery submitQuery(m_db);
