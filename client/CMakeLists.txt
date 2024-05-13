@@ -14,6 +14,10 @@ find_package(QT NAMES Qt5 Qt6 REQUIRED COMPONENTS Core)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Gui Network)
 find_package(Qt${QT_VERSION_MAJOR} OPTIONAL_COMPONENTS Widgets)
 
+set(MACOSX_BUNDLE_ICON_FILE icon.icns)
+set(app_icon_macos "${CMAKE_CURRENT_SOURCE_DIR}/resourses/icon.icns")
+set_source_files_properties(${app_icon_macos} PROPERTIES MACOSX_PACKAGE_LOCATION "resources")
+
 qt_add_executable(LMS WIN32 MACOSX_BUNDLE
     ../common/authentication/authentication.cpp ../common/authentication/authentication.h
     ../common/authentication/generate_password.cpp ../common/authentication/generate_password.h
@@ -107,6 +111,7 @@ target_link_libraries(LMS PRIVATE
     Qt::Gui
     Qt::GuiPrivate
     Qt::Network
+    Qt::Widgets
 )
 
 
