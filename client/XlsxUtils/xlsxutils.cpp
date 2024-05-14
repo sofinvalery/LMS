@@ -153,9 +153,9 @@ AddingData *XlsxUtils::parsAddingXlsx(QString path)
 
 void XlsxUtils::getCourseScoreTable(QList<Submit *> &submits,Course* course, Group* group)
 {
-    std::sort(group->getParticipants().begin(),group->getParticipants().end(),[](Authentication * a, Authentication* b){return a->GetFIO()<b->GetFIO();});
+    std::sort(group->getParticipants().begin(),group->getParticipants().end(),[](Authentication * a, Authentication* b){return a->GetLogin()<b->GetLogin();});
     std::sort(submits.begin(),submits.end(),[](Submit * a, Submit * b){return a->work->getOrder()<b->work->getOrder();});
-    std::sort(submits.begin(),submits.end(),[](Submit * a, Submit * b){return a->student->GetFIO()<b->student->GetFIO();});
+    std::stable_sort(submits.begin(),submits.end(),[](Submit * a, Submit * b){return a->student->GetLogin()<b->student->GetLogin();});
     QXlsx::Document xlsxW;
     Format Boldformat;
     Boldformat.setFontBold(true);
@@ -212,6 +212,7 @@ void XlsxUtils::getCourseScoreTable(QList<Submit *> &submits,Course* course, Gro
             {
                 if(i>=submits.size())
                 {
+                    qDebug()<<"submits ended";
                     xlsxW.write(rows, colums, 0,simpleFormat);
                 }
                 else if(submits[i]->student->getId()!=group->getParticipants()[rows-4]->getId())
@@ -301,7 +302,7 @@ QList<Submit *>* XlsxUtils::parseCourseScoreTable(Course *course, Group *group,Q
         ClientState::GetInstance()->ShowNotifacate("Это не та группа","red");
         return nullptr;
     }
-    std::sort(group->getParticipants().begin(),group->getParticipants().end(),[](Authentication * a, Authentication* b){return a->GetFIO()<b->GetFIO();});
+    std::sort(group->getParticipants().begin(),group->getParticipants().end(),[](Authentication * a, Authentication* b){return a->GetLogin()<b->GetLogin();});
     const int rowTitle=3;
     QList<Submit *>* submits = new QList<Submit *>();
     int rowPoint=4;
