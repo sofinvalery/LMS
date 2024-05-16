@@ -1,4 +1,5 @@
 #include "coursepageeditor.h"
+#include "ui_coursepage.h"
 #include "ui_coursepageeditor.h"
 #include "StyleManager/stylemanager.h"
 #include <QFileDialog>
@@ -64,6 +65,7 @@ CoursePageEditor::CoursePageEditor(CoursePage * coursepage, QWidget *parent)
 
 CoursePageEditor::~CoursePageEditor()
 {
+    coursepage->TurnOnEditButton();
     delete ui;
 }
 

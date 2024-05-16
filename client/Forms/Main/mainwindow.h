@@ -31,6 +31,8 @@ public:
     void ShowManePage();
 
 
+    QWidget *getWidget() const;
+
 private slots:
     void on_exitButton_clicked();
     void on_profileButton_clicked();

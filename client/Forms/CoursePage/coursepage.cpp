@@ -80,6 +80,11 @@ void CoursePage::CleanComponents()
     widgets.clear();
 }
 
+void CoursePage::TurnOnEditButton()
+{
+    ui->EditCourseButton->setEnabled(true);
+}
+
 CoursePage::~CoursePage()
 {
     delete ui;
@@ -90,6 +95,7 @@ void CoursePage::on_EditCourseButton_clicked()
     CoursePageEditor* editor = new CoursePageEditor(this, this);
     editor->move(StyleManager::GetInstance()->getScreenWidth() / 2 - 290, StyleManager::GetInstance()->getScreenHeight() / 2 - 250);
     editor->show();
+    ui->EditCourseButton->setEnabled(false);                             // докинуть стиль неакт кнопки
 }
 
 QList<QWidget *> CoursePage::getWidgets() const
@@ -112,4 +118,6 @@ void CoursePage::on_scoreButton_clicked()
         adminScore->show();
     }
 }
+
+
 

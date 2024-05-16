@@ -18,9 +18,12 @@ public:
     explicit CoursePage(Course *course, QWidget *parent = nullptr);
     void ShowComponents();
     void CleanComponents();
+    void TurnOnEditButton();  // активировать кнопку
     Course * GetCourse(){return course;}
     ~CoursePage();
     QList<QWidget *> getWidgets() const;
+
+    Ui::CoursePage *getUi() const;
 
 private slots:
     void on_EditCourseButton_clicked();

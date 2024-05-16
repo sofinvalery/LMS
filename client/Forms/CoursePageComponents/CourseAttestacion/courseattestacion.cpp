@@ -1,6 +1,7 @@
 #include "courseattestacion.h"
 #include "ui_courseattestacion.h"
 #include "StyleManager/stylemanager.h"
+#include "ClientState/clientstate.h"
 
 CourseAttestacion::CourseAttestacion(CourseComponent * test, QWidget *parent)
     : QWidget(parent)
@@ -24,3 +25,12 @@ void CourseAttestacion::SetTextOnButton(QString buttontext)
     StyleManager::GetInstance()->setSimpleButtonStyle(ui->DownloadButton, buttontext, true, 16, 15);
     ui->DownloadButton->setFixedSize(ui->DownloadButton->sizeHint().width(), ui->DownloadButton->sizeHint().height());
 }
+
+void CourseAttestacion::on_DownloadButton_clicked()
+{
+    testwidget = new TestWidget(test);
+    testwidget->setParent(ClientState::GetInstance()->getMainwindow());
+    testwidget->show();
+    qDebug() << "bebra";
+}
+

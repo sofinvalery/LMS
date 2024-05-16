@@ -135,7 +135,6 @@ void MainWindow::on_scoreButton_clicked()
 void MainWindow::on_mainButton_clicked()
 {
     on_button_clicked(ui->mainButton);
-
     widget->close();
     delete widget;
     widget = new CoursesMPWidget();
@@ -230,4 +229,9 @@ void MainWindow::on_loaderButton_clicked()
     {
         dialogLoader->show();
     }
+}
+
+QWidget *MainWindow::getWidget() const
+{
+    return widget;
 }

@@ -43,6 +43,8 @@ SOURCES += \
     Forms/Score/ScoreComponents/scorecomponents.cpp \
     Forms/Score/TestTaskComponents/testtaskcomponents.cpp \
     Forms/Score/score.cpp \
+    Forms/TestWidget/TestEditor/testeditor.cpp \
+    Forms/TestWidget/testwidget.cpp \
     StyleManager/stylemanager.cpp \
     main.cpp  \
     ../common/course/course_components/coursevideos.cpp \
@@ -88,6 +90,8 @@ HEADERS += \
     Forms/Score/ScoreComponents/scorecomponents.h \
     Forms/Score/TestTaskComponents/testtaskcomponents.h \
     Forms/Score/score.h \
+    Forms/TestWidget/TestEditor/testeditor.h \
+    Forms/TestWidget/testwidget.h \
     StyleManager/stylemanager.h
 
 FORMS += \
@@ -114,7 +118,9 @@ FORMS += \
     Forms/Reconnect/reconnect.ui \
     Forms/Score/ScoreComponents/scorecomponents.ui \
     Forms/Score/TestTaskComponents/testtaskcomponents.ui \
-    Forms/Score/score.ui
+    Forms/Score/score.ui \
+    Forms/TestWidget/TestEditor/testeditor.ui \
+    Forms/TestWidget/testwidget.ui
 
 
 # Default rules for deployment.
