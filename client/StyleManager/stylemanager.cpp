@@ -3,6 +3,18 @@
 StyleManager* StyleManager::s_Instance = nullptr;
 
 StyleManager::StyleManager() {
+#ifdef Q_OS_MACOS
+    QFontDatabase::addApplicationFont(":/font/resources/SF-Pro-Display-Regular.otf");
+    QFontDatabase::addApplicationFont(":/font/resources/SF-Pro-Display-Bold.otf");
+
+    regularFont.setFamily("SF Pro Display");
+    regularFont.setWeight(QFont::Normal);
+    regularFont.setPixelSize(16);
+
+    boldFont.setFamily("SF Pro Display");
+    boldFont.setWeight(QFont::Bold);
+    boldFont.setPixelSize(16);
+#else
     QFontDatabase::addApplicationFont(":/font/resources/Comfortaa-Regular.ttf");
     QFontDatabase::addApplicationFont(":/font/resources/Comfortaa-Bold.ttf");
 
@@ -13,6 +25,7 @@ StyleManager::StyleManager() {
     boldFont.setFamily("Comfortaa");
     boldFont.setWeight(QFont::Bold);
     boldFont.setPixelSize(16);
+#endif
 }
 
 void StyleManager::setSimpleButtonStyle(QPushButton* buttonName, QString buttonText, bool boldStatus, unsigned short int fontSize, unsigned short int fontSizeAnim = 18)
