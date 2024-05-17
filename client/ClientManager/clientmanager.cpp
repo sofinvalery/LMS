@@ -24,8 +24,8 @@ ClientManager::ClientManager(QObject *parent)
     connect(socket,&QTcpSocket::disconnected, this,&ClientManager::ServerOrClientError);
     connect(socket, SIGNAL(sslErrors(QList<QSslError>)), this, SLOT(sslErrorOccured(QList<QSslError> )));
     port=1234;
-    hostName="127.0.0.1";
-    // hostName="188.242.157.174";
+    //hostName="127.0.0.1";
+    hostName="188.242.157.174";
     socket->connectToHostEncrypted(hostName,port);
     if (!socket->waitForEncrypted(10000)) {
         qInfo() << socket->errorString();

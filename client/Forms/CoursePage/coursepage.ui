@@ -131,6 +131,19 @@
        <string>PushButton</string>
       </property>
      </widget>
+     <widget class="QPushButton" name="checkButton">
+      <property name="geometry">
+       <rect>
+        <x>610</x>
+        <y>130</y>
+        <width>80</width>
+        <height>24</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>PushButton</string>
+      </property>
+     </widget>
     </widget>
    </widget>
   </widget>

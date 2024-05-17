@@ -28,14 +28,20 @@ CoursePage::CoursePage(Course *course, QWidget *parent)
     StyleManager::GetInstance()->setBlueButtonStyle(ui->EditCourseButton, ui->EditCourseButton->text(), true, 16, 13);
     ui->EditCourseButton->setFixedSize(ui->EditCourseButton->sizeHint().width() + 10, ui->EditCourseButton->sizeHint().height() + 10);
     ui->EditCourseButton->move(StyleManager::GetInstance()->getScreenWidth() - ui->EditCourseButton->size().width() - 20, 30);
+
     if(ClientState::GetInstance()->getAuth()->GetCurrentRole()!=STUDENT)
     {
         StyleManager::GetInstance()->setBlueButtonStyle(ui->scoreButton, "Оценки", true, 16, 13);
         ui->scoreButton->setFixedSize(ui->scoreButton->sizeHint().width() + 10, ui->EditCourseButton->sizeHint().height() + 10);
         ui->scoreButton->move(StyleManager::GetInstance()->getScreenWidth() - ui->scoreButton->size().width() - 20 - ui->EditCourseButton->size().width() - 20, 30);
+
+        StyleManager::GetInstance()->setBlueButtonStyle(ui->checkButton, "Проверить", true, 16, 13);
+        ui->checkButton->setFixedSize(ui->checkButton->sizeHint().width() + 10, ui->EditCourseButton->sizeHint().height() + 10);
+        ui->checkButton->move(StyleManager::GetInstance()->getScreenWidth() - ui->scoreButton->size().width() - 50 - ui->scoreButton->size().width() - 20 - ui->EditCourseButton->size().width() - 20, 30);
     }
     else{
         ui->scoreButton->close();
+        ui->checkButton->close();
     }
 
     //groupbox
@@ -153,5 +159,14 @@ void CoursePage::on_scoreButton_clicked()
     QJsonObject json;
     json["CourseId"]=int(course->GetCourseId());
     ClientManager::GetInstance()->SendJsonToServer(GETGROUPSBYCOURSEID,json);
+}
+
+
+void CoursePage::on_checkButton_clicked()
+{
+    // CheckDz* checkdz = new CheckDz();
+    // checkdz->setParent(ClientState::GetInstance()->getMainwindow()->getWidget());
+    // checkdz->raise();
+    // checkdz->show();
 }
 

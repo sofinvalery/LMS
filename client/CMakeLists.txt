@@ -97,6 +97,9 @@ qt_add_executable(LMS WIN32 MACOSX_BUNDLE
     QXlsx/source/xlsxworksheet.cpp QXlsx/header/xlsxworksheet.h QXlsx/header/xlsxworksheet_p.h
     QXlsx/source/xlsxzipreader.cpp QXlsx/header/xlsxzipreader_p.h
     QXlsx/source/xlsxzipwriter.cpp QXlsx/header/xlsxzipwriter_p.h
+    Forms/CoursePage/CheckDZ/checkdz.h Forms/CoursePage/CheckDZ/checkdz.cpp Forms/CoursePage/CheckDZ/checkdz.ui
+    Forms/CoursePage/CheckDZ/CheckDzComponents/checkdzcomponents.h Forms/CoursePage/CheckDZ/CheckDzComponents/checkdzcomponents.cpp Forms/CoursePage/CheckDZ/CheckDzComponents/checkdzcomponents.ui
+    Forms/CoursePage/CheckDZ/DzMarkEditer/dzmarkediter.h Forms/CoursePage/CheckDZ/DzMarkEditer/dzmarkediter.cpp Forms/CoursePage/CheckDZ/DzMarkEditer/dzmarkediter.ui
 )
 target_include_directories(LMS PRIVATE
     QXlsx

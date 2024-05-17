@@ -4,6 +4,7 @@
 #include <QWidget>
 #include "../common/course/course.h"
 #include "AdminScore/adminscore.h"
+#include "CheckDZ/checkdz.h"
 #include <QPixmap>
 
 namespace Ui {
@@ -26,6 +27,8 @@ private slots:
     void on_EditCourseButton_clicked();
     void showScoreForTeacher();
     void on_scoreButton_clicked();
+
+    void on_checkButton_clicked();
 
 private:
     AdminScore* adminScore = nullptr;

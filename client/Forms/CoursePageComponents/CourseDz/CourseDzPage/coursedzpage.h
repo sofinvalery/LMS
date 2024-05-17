@@ -21,7 +21,6 @@ private slots:
     void on_setPathButton_clicked();
 
 private:
-    QString allowedTypeOfFiles = "";
     Ui::CourseDzPage *ui;
 };
 

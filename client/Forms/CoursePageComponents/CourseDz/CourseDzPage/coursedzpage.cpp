@@ -13,8 +13,6 @@ CourseDzPage::CourseDzPage(CourseTask* dz, QWidget *parent)
     ui->scrollArea->resize(StyleManager::GetInstance()->getScreenWidth(), StyleManager::GetInstance()->getScreenHeight());
     StyleManager::GetInstance()->setScrollAreaStyle(ui->scrollArea, true);
 
-    allowedTypeOfFiles = dz->getAllowedTypeOfFiles();
-
     StyleManager::GetInstance()->setLabelStyle(ui->pathLbl, "Путь к файлу: " + dz->getAnswerUrl(), false, "black", true, 16);
     ui->pathLbl->move(ui->pathLbl->x(), 200);
     ui->pathLbl->setFixedSize(ui->pathLbl->sizeHint().width(), ui->pathLbl->sizeHint().height());
