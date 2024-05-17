@@ -70,3 +70,18 @@ Question* Question::Deserialize(QJsonObject jsonObj)
                                jsonObj["type"].toInt(),studAns);
     return t;
 }
+
+void Question::setQuestion(const QString &newQuestion)
+{
+    question = newQuestion;
+}
+
+void Question::setAnswers(const QList<QString> &newAnswers)
+{
+    answers = newAnswers;
+}
+
+void Question::setType(int32_t newType)
+{
+    type = newType;
+}

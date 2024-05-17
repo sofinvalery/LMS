@@ -28,7 +28,6 @@ PotokAdder::PotokAdder(QWidget *parent)
     GroupErrors.clear();
     GroupNames.append(ui->Group_name);
     GroupErrors.append(ui->Error_Box);
-    qDebug() << ui->Group_name->geometry();
 }
 
 PotokAdder::~PotokAdder()

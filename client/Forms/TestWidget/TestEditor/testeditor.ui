@@ -306,6 +306,19 @@
      <string>Добавить новый вопрос</string>
     </property>
    </widget>
+   <widget class="QRadioButton" name="KostilRadioButton">
+    <property name="geometry">
+     <rect>
+      <x>310</x>
+      <y>40</y>
+      <width>20</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
   </widget>
  </widget>
  <resources/>

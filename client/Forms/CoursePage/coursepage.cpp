@@ -43,7 +43,6 @@ CoursePage::CoursePage(Course *course, QWidget *parent)
     ui->IconLabel->setFixedSize(ui->IconLabel->sizeHint().width(), ui->IconLabel->sizeHint().height());
     StyleManager::GetInstance()->setLabelStyle(ui->CourseNameLabel, course->GetTitle(), true, "black", true, 36);
     ui->CourseNameLabel->setFixedSize(ui->CourseNameLabel->sizeHint().width(), ui->CourseNameLabel->sizeHint().height());
-    qInfo() << ui->CourseNameLabel->width() << " " << ui->CourseNameLabel->height();
     ui->CourseNameLabel->move(204, 40);
 
     ui->horizontalLine->setStyleSheet("border: 3px solid lightgrey;");

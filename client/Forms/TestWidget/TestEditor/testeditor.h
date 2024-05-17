@@ -3,7 +3,7 @@
 
 #include <QWidget>
 #include "Forms/TestWidget/testwidget.h"
-#include "../../../common/course/course_components/question.h"
+#include "../../../../common/course/course_components/question.h"
 #include <QList>
 
 namespace Ui {
@@ -24,9 +24,24 @@ public:
 private slots:
     void on_exitButton_clicked();
 
+    void on_OneAnswerButton_toggled(bool checked);
+
+    void on_ManyAnswersButton_toggled(bool checked);
+
+    void on_DetailedAnswerButton_toggled(bool checked);
+
+    void on_ApplyChangesButton_clicked();
+
 private:
     Ui::TestEditor *ui;
     QList<Question*> questions;
+    int32_t typeq = 0;
+    bool IsAdding = false;
+
+                                                                                    // QString question;
+                                                                                    // QList<QString> answers;
+                                                                                    // int32_t type;
+                                                                                    // QList<int32_t> studentAnswer;
 };
 
 #endif // TESTEDITOR_H

@@ -33,6 +33,12 @@ public:
 
     static Question* Deserialize(QJsonObject json);
 
+    void setQuestion(const QString &newQuestion);
+
+    void setAnswers(const QList<QString> &newAnswers);
+
+    void setType(int32_t newType);
+
 private:
     QString question;
     QList<QString> answers;

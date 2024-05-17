@@ -31,6 +31,5 @@ void CourseAttestacion::on_DownloadButton_clicked()
     testwidget = new TestWidget(test);
     testwidget->setParent(ClientState::GetInstance()->getMainwindow());
     testwidget->show();
-    qDebug() << "bebra";
 }
 
