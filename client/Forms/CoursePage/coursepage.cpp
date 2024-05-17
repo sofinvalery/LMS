@@ -82,7 +82,7 @@ void CoursePage::ShowComponents()
     }
     ui->scrollAreaWidgetContents->setMinimumHeight(height+200);
     iconIMG = new QPixmap(course->GetAvaTitleUrl());
-    ui->IconLabel->setPixmap(iconIMG->scaled(111, 81, Qt::KeepAspectRatio));
+    ui->IconLabel->setPixmap(iconIMG->scaled(184, 120, Qt::IgnoreAspectRatio));
 
     StyleManager::GetInstance()->setLabelStyle(ui->CourseNameLabel, course->GetTitle(), true, "black", true, 20);
     ui->CourseNameLabel->setFixedSize(ui->CourseNameLabel->sizeHint().width(), ui->CourseNameLabel->sizeHint().height());

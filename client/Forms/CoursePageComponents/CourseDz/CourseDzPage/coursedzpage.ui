@@ -99,37 +99,11 @@
       <string>TextLabel</string>
      </property>
     </widget>
-    <widget class="QLabel" name="noteLbl">
-     <property name="geometry">
-      <rect>
-       <x>160</x>
-       <y>410</y>
-       <width>49</width>
-       <height>16</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>TextLabel</string>
-     </property>
-    </widget>
-    <widget class="QLabel" name="urlLbl">
-     <property name="geometry">
-      <rect>
-       <x>540</x>
-       <y>440</y>
-       <width>49</width>
-       <height>16</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>TextLabel</string>
-     </property>
-    </widget>
     <widget class="QPushButton" name="setPathButton">
      <property name="geometry">
       <rect>
-       <x>410</x>
-       <y>290</y>
+       <x>830</x>
+       <y>560</y>
        <width>120</width>
        <height>40</height>
       </rect>
@@ -157,7 +131,7 @@
       <rect>
        <x>20</x>
        <y>180</y>
-       <width>400</width>
+       <width>420</width>
        <height>80</height>
       </rect>
      </property>
@@ -168,7 +142,7 @@
       <property name="geometry">
        <rect>
         <x>10</x>
-        <y>50</y>
+        <y>40</y>
         <width>49</width>
         <height>16</height>
        </rect>
@@ -177,6 +151,45 @@
        <string>TextLabel</string>
       </property>
      </widget>
+    </widget>
+    <widget class="QGroupBox" name="groupBoxNote">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>290</y>
+       <width>420</width>
+       <height>80</height>
+      </rect>
+     </property>
+     <property name="title">
+      <string>GroupBox</string>
+     </property>
+     <widget class="QLabel" name="noteLbl">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>40</y>
+        <width>49</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>TextLabel</string>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QLabel" name="pathLbl">
+     <property name="geometry">
+      <rect>
+       <x>600</x>
+       <y>170</y>
+       <width>49</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>TextLabel</string>
+     </property>
     </widget>
    </widget>
   </widget>

@@ -102,6 +102,8 @@ target_include_directories(LMS PRIVATE
     QXlsx
 )
 
+target_sources(LMS PRIVATE icon.rc)
+
 target_compile_definitions(LMS PRIVATE
     QT_DEPRECATED_WARNINGS
 )
