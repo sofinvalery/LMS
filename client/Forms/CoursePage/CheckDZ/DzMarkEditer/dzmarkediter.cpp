@@ -43,6 +43,9 @@ DzMarkEditer::DzMarkEditer(Submit* submit, QWidget *parent)
 
     StyleManager::GetInstance()->setBlueButtonStyle(ui->excelButton, "Получить", true, 16, 13);
 
+    StyleManager::GetInstance()->setBlueButtonStyle(ui->confirmButton, "Применить", true, 16, 13);
+
+
     StyleManager::GetInstance()->setCustomButtonStyle(ui->exitButton, "<--", "#E65D4F", true, 16, 4);
     ui->exitButton->move(20, 20);
 }
@@ -56,5 +59,17 @@ void DzMarkEditer::on_exitButton_clicked()
 {
     this->close();
     delete this;
+}
+
+//получить
+void DzMarkEditer::on_excelButton_clicked()
+{
+
+}
+
+//применить
+void DzMarkEditer::on_confirmButton_clicked()
+{
+
 }
 

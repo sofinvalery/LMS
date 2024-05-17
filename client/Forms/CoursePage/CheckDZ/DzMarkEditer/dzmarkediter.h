@@ -20,6 +20,10 @@ public:
 private slots:
     void on_exitButton_clicked();
 
+    void on_excelButton_clicked();
+
+    void on_confirmButton_clicked();
+
 private:
     Ui::DzMarkEditer *ui;
 };
