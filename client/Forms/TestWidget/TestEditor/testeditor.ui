@@ -319,6 +319,19 @@
      <string/>
     </property>
    </widget>
+   <widget class="QRadioButton" name="KostilRadioButton2">
+    <property name="geometry">
+     <rect>
+      <x>340</x>
+      <y>40</y>
+      <width>21</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
   </widget>
  </widget>
  <resources/>

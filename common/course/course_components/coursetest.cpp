@@ -49,7 +49,7 @@ QString CourseTest::getNotes() const
     return notes;
 }
 
-QList<Question*> CourseTest::getListQuestions() const
+QList<Question*>& CourseTest::getListQuestions()
 {
     return listQuestions;
 }

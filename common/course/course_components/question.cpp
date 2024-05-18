@@ -1,22 +1,22 @@
 #include "question.h"
 
 
-inline void Question::setStudentAnswer(const QList<int32_t> &newStudentAnswer)
+void Question::setStudentAnswer(const QList<int32_t> &newStudentAnswer)
 {
     studentAnswer = newStudentAnswer;
 }
 
-inline int32_t Question::getType() const
+int32_t Question::getType() const
 {
     return type;
 }
 
-inline QList<QString> Question::getAnswers() const
+QList<QString> Question::getAnswers() const
 {
     return answers;
 }
 
-inline QString Question::getQuestion() const
+QString Question::getQuestion() const
 {
     return question;
 }
@@ -71,12 +71,12 @@ Question* Question::Deserialize(QJsonObject jsonObj)
     return t;
 }
 
-void Question::setQuestion(const QString &newQuestion)
+void Question::setQuestion(QString &newQuestion)
 {
     question = newQuestion;
 }
 
-void Question::setAnswers(const QList<QString> &newAnswers)
+void Question::setAnswers(QList<QString> &newAnswers)
 {
     answers = newAnswers;
 }
@@ -84,4 +84,9 @@ void Question::setAnswers(const QList<QString> &newAnswers)
 void Question::setType(int32_t newType)
 {
     type = newType;
+}
+
+QList<int32_t> Question::getStudentAnswer() const
+{
+    return studentAnswer;
 }

@@ -32,7 +32,7 @@ public:
         listQuestions.append(question);
     }
 
-    QList<Question*> getListQuestions() const;
+    QList<Question*>& getListQuestions();
 
     QJsonObject Serialize() override;
 

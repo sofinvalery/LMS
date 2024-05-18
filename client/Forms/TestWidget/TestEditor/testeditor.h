@@ -15,11 +15,9 @@ class TestEditor : public QWidget
     Q_OBJECT
 
 public:
-    explicit TestEditor(QList<Question*> questions, QWidget *parent = nullptr);
+    explicit TestEditor(QList<Question*>& questions, QWidget *parent = nullptr);
     ~TestEditor();
-    void OneAnswerToggle(bool status);
-    void ManyAnswersToggle(bool status);
-    void PossibleAnswersToggle(bool status);
+
 
 private slots:
     void on_exitButton_clicked();
@@ -32,10 +30,26 @@ private slots:
 
     void on_ApplyChangesButton_clicked();
 
+    void OneAnswerToggle(bool status);
+
+    void ManyAnswersToggle(bool status);
+
+    void PossibleAnswersToggle(bool status);
+
+    QList<int32_t> WhatRadioButtonIsChecked();
+
+    QList<int32_t> WhatCheckBoxIsChecked();
+
+    void on_CurrentQuestionSpinBox_valueChanged(int arg1);
+
+    void on_AddNewQuestionButton_clicked();
+
+    void CleanAll();
+
 private:
     Ui::TestEditor *ui;
     QList<Question*> questions;
-    int32_t typeq = 0;
+    int32_t typeq = -1;
     bool IsAdding = false;
 
                                                                                     // QString question;
