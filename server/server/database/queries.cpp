@@ -1533,8 +1533,8 @@ bool DatabaseManager::UpdateCheckedTaskSubmit(Submit* submit) {
             QSqlQuery updateQuery(m_db);
             updateQuery.prepare("UPDATE path_course_tasks_submits SET is_checked = TRUE, verdict = :verdict, notes = :notes WHERE id = :submitId");
             updateQuery.bindValue(":submitId", submitId);
-            updateQuery.bindValue(":verdict", verdict);
-            updateQuery.bindValue(":notes", notes);
+            updateQuery.bindValue(":verdict", task->getVerdict());
+            updateQuery.bindValue(":notes", task->getNotes());
 
             if (!updateQuery.exec()) {
                 qDebug() << "Error executing the UPDATE query:" << updateQuery.lastError().text();

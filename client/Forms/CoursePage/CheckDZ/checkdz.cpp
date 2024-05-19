@@ -17,7 +17,7 @@ CheckDz::CheckDz(QList<Submit*> submitList, QWidget *parent)
     HeightLine=80;
     for(auto sub: submitList)
     {
-        CheckDzComponents* check = new CheckDzComponents(sub, ui->scrollAreaWidgetContents);
+        CheckDzComponents* check = new CheckDzComponents(sub,submitList, ui->scrollAreaWidgetContents);
         check->move(20, HeightLine);
         HeightLine+=100;
     }

@@ -3,12 +3,13 @@
 #include "StyleManager/stylemanager.h"
 #include "ClientState/clientstate.h"
 
-CheckDzComponents::CheckDzComponents(Submit* submit, QWidget *parent)
+CheckDzComponents::CheckDzComponents(Submit* submit,QList<Submit*> submitList, QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::CheckDzComponents)
 {
     ui->setupUi(this);
     ui->pushButton->lower();
+    this->submitList=submitList;
     CourseTask* task = qobject_cast<CourseTask*>(submit->work);
     StyleManager::GetInstance()->setLabelStyle(ui->titleLbl, task->getTitle(), true, "black", true, 20);
     ui->titleLbl->setFixedSize(ui->titleLbl->sizeHint().width(), ui->titleLbl->sizeHint().height());
@@ -37,7 +38,7 @@ CheckDzComponents::~CheckDzComponents()
 
 void CheckDzComponents::on_pushButton_clicked()
 {
-    DzMarkEditer* editer = new DzMarkEditer(sub);
+    DzMarkEditer* editer = new DzMarkEditer(sub,submitList);
     editer->setParent(ClientState::GetInstance()->getMainwindow()->getWidget());
     editer->raise();
     editer->show();

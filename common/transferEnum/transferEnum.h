@@ -29,6 +29,7 @@ enum TransferEnum{
     SETSUBMITS=21,
     ADDSTUDENTSUBMIT=22,
     GETUNCHECKEDTASK=23,
+    TEACHERCHECKSUBMIT=24,
 };
 
 enum TypeMessage{

@@ -14,7 +14,7 @@ class DzMarkEditer : public QWidget
     Q_OBJECT
 
 public:
-    explicit DzMarkEditer(Submit* submit, QWidget *parent = nullptr);
+    explicit DzMarkEditer(Submit* submit,QList<Submit*> subs, QWidget *parent = nullptr);
     ~DzMarkEditer();
 
 private slots:
@@ -26,6 +26,9 @@ private slots:
 
 private:
     Ui::DzMarkEditer *ui;
+    Submit* submit;
+    CourseTask* task;
+    QList<Submit*> subs;
 };
 
 #endif // DZMARKEDITER_H

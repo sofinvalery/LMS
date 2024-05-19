@@ -1,13 +1,18 @@
 #include "dzmarkediter.h"
 #include "ui_dzmarkediter.h"
 #include "StyleManager/stylemanager.h"
+#include "ClientManager/clientmanager.h"
+#include "ClientState/clientstate.h"
+#include "Forms/CoursePage/coursepage.h"
 
-DzMarkEditer::DzMarkEditer(Submit* submit, QWidget *parent)
+DzMarkEditer::DzMarkEditer(Submit* submit,QList<Submit*> subs, QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::DzMarkEditer)
 {
     ui->setupUi(this);
-    CourseTask* task = qobject_cast<CourseTask*>(submit->work);
+    task = qobject_cast<CourseTask*>(submit->work);
+    this->subs=subs;
+    this->submit=submit;
     ui->scrollAreaWidgetContents->setStyleSheet("background-color: white;");
     this->resize(StyleManager::GetInstance()->getScreenWidth(), StyleManager::GetInstance()->getScreenHeight());
     ui->scrollArea->resize(StyleManager::GetInstance()->getScreenWidth(), StyleManager::GetInstance()->getScreenHeight());
@@ -64,12 +69,22 @@ void DzMarkEditer::on_exitButton_clicked()
 //получить
 void DzMarkEditer::on_excelButton_clicked()
 {
-
+    ClientManager::GetInstance()->SendRequestFileToServer(task->getAnswerUrl());
 }
 
 //применить
 void DzMarkEditer::on_confirmButton_clicked()
 {
-
+    if(ui->verdictBox->value()>0)
+    {
+        task->setNotes(ui->noteTextEdit->toPlainText());
+        task->setVerdict(ui->verdictBox->value());
+        QJsonObject sub;
+        sub["Authentication"] = submit->student->Serialize();
+        sub["CourseSubmit"] = submit->work->Serialize();
+        ClientManager::GetInstance()->SendJsonToServer(TEACHERCHECKSUBMIT,sub);
+        on_exitButton_clicked();
+        qobject_cast<CoursePage*>(ClientState::GetInstance()->getMainwindow()->getWidget())->on_checkButton_clicked();
+    }
 }
 

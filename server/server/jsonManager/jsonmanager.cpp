@@ -28,6 +28,7 @@ static Action Actions[] ={
     [SETSUBMITS] = setSubmits,
     [ADDSTUDENTSUBMIT] = addStudentSubmit,
     [GETUNCHECKEDTASK] = getUnCheckedTask,
+    [TEACHERCHECKSUBMIT] = addCheckedSubmit,
 };
 
 QJsonObject jsonManager(QJsonObject json,Authentication **auth)
@@ -486,4 +487,21 @@ QJsonObject getUnCheckedTask(QJsonObject json, Authentication **auth)
     sendjson["Action"]=GETUNCHECKEDTASK;
     sendjson["Data"]= temp;
     return sendjson;
+}
+
+QJsonObject addCheckedSubmit(QJsonObject json, Authentication **auth)
+{
+    DatabaseManager db;
+    Submit * sub = new Submit();
+
+    sub->student=Authentication::Deserialize(json["Authentication"].toObject());
+    sub->work=CourseTask::Deserialize(json["CourseSubmit"].toObject());
+
+    db.UpdateCheckedTaskSubmit(sub);
+
+    delete sub->student;
+    delete sub->work;
+    delete sub;
+    QJsonObject send;
+    return send;
 }

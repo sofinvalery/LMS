@@ -122,3 +122,8 @@ void CourseTask::setAnswerUrl(const QString &newAnswerUrl)
 {
     answerUrl = newAnswerUrl;
 }
+
+void CourseTask::setNotes(const QString &newNotes)
+{
+    notes = newNotes;
+}

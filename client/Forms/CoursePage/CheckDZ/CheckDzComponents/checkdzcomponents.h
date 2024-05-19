@@ -16,7 +16,7 @@ class CheckDzComponents : public QWidget
     Q_OBJECT
 
 public:
-    explicit CheckDzComponents(Submit* submit, QWidget *parent = nullptr);
+    explicit CheckDzComponents(Submit* submit,QList<Submit*> submitList, QWidget *parent = nullptr);
     ~CheckDzComponents();
 
 private slots:
@@ -25,6 +25,7 @@ private slots:
 private:
     Submit* sub;
     Ui::CheckDzComponents *ui;
+    QList<Submit*> submitList;
 };
 
 #endif // CHECKDZCOMPONENTS_H

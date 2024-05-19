@@ -22,13 +22,14 @@ public:
     Course * GetCourse(){return course;}
     ~CoursePage();
     QList<QWidget *> getWidgets() const;
+public slots:
+    void on_checkButton_clicked();
 
 private slots:
     void on_EditCourseButton_clicked();
     void showScoreForTeacher();
     void on_scoreButton_clicked();
     void showCheckTask(QList<Submit*>);
-    void on_checkButton_clicked();
 
 private:
     AdminScore* adminScore = nullptr;

@@ -51,6 +51,8 @@ public:
 
     void setAnswerUrl(const QString &newAnswerUrl);
 
+    void setNotes(const QString &newNotes);
+
 private:
     QString content;
     int32_t maxMark;
