@@ -162,6 +162,8 @@ void TestEditor::on_ApplyChangesButton_clicked()
         QList<int32_t> tempnum = WhatRadioButtonIsChecked();
         test->getListQuestions()[ui->CurrentQuestionSpinBox->value()-1]->setAnswers(temp1);
         test->getListQuestions()[ui->CurrentQuestionSpinBox->value()-1]->setStudentAnswer(tempnum);
+        test->getListQuestions()[ui->CurrentQuestionSpinBox->value()-1]->setType(typeq);
+
     }
         break;
     case 2:{
@@ -176,15 +178,17 @@ void TestEditor::on_ApplyChangesButton_clicked()
         QList<int32_t> tempnum = WhatCheckBoxIsChecked();
         test->getListQuestions()[ui->CurrentQuestionSpinBox->value()-1]->setAnswers(temp1);
         test->getListQuestions()[ui->CurrentQuestionSpinBox->value()-1]->setStudentAnswer(tempnum);
+        test->getListQuestions()[ui->CurrentQuestionSpinBox->value()-1]->setType(typeq);
+
     }
         break;
     case 3:{
-
         QString tempst = ui->WordingQuestionTextEdit->toPlainText();
         test->getListQuestions()[ui->CurrentQuestionSpinBox->value()-1]->setQuestion(tempst);
         QList<QString> temp1;
         temp1.append(ui->DetailedAnswerLineEdit->text());
         test->getListQuestions()[ui->CurrentQuestionSpinBox->value()-1]->setAnswers(temp1);
+        test->getListQuestions()[ui->CurrentQuestionSpinBox->value()-1]->setType(typeq);
     }
     break;
     }
@@ -239,6 +243,8 @@ void TestEditor::on_CurrentQuestionSpinBox_valueChanged(int arg1)
         ManyAnswersToggle(false);
         ui->DetailedAnswerLineEdit->setEnabled(true);
         ui->DetailedAnswerLineEdit->setText(tempquestion->getAnswers()[0]);
+        ui->WordingQuestionTextEdit->setText(tempquestion->getQuestion());
+
     }
     break;
     case 4:{
