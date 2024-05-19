@@ -41,7 +41,7 @@ void SocketParser::socketparse(QJsonObject json)
         break;
     case GETINFOFORSETSUBMITS: getInfoForSetSubmits(data);
         break;
-
+    case GETUNCHECKEDTASK: getUnCheckedSubmits(data);
 
 
     default:
@@ -206,6 +206,27 @@ void SocketParser::getInfoForSetSubmits(QJsonObject json)
     ClientState::GetInstance()->setGroup(gr);
 
     emit getInfoForSetSubmits();
+}
+
+void SocketParser::getUnCheckedSubmits(QJsonObject json)
+{
+    QList<Submit*> submits;
+    QJsonArray components=json.value("Submits").toArray();
+    for(auto temp:components){
+        Submit* submit =new Submit();
+        submit->student= Authentication::Deserialize(temp.toObject()["Authentication"].toObject());
+        if(temp.toObject()["CourseSubmit"].toObject().contains("CourseTask"))
+            submit->work= CourseTask::Deserialize(temp.toObject()["CourseSubmit"].toObject());
+        else if(temp.toObject()["CourseSubmit"].toObject().contains("CourseTest"))
+            submit->work=CourseTest::Deserialize(temp.toObject()["CourseSubmit"].toObject());
+        else{
+            qDebug()<<"ошибка в парсинге сокета getSubmit скорее всего на стороне сервера";
+            return;
+        }
+        submits.append(submit);
+    }
+    emit getUnCheckedSubmits(submits);
+
 }
 
 

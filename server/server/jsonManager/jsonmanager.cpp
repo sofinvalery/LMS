@@ -27,6 +27,7 @@ static Action Actions[] ={
     [GETINFOFORSETSUBMITS] = getInfoForSetSubmits,
     [SETSUBMITS] = setSubmits,
     [ADDSTUDENTSUBMIT] = addStudentSubmit,
+    [GETUNCHECKEDTASK] = getUnCheckedTask,
 };
 
 QJsonObject jsonManager(QJsonObject json,Authentication **auth)
@@ -463,4 +464,26 @@ QJsonObject addStudentSubmit(QJsonObject json, Authentication **auth)
 
     QJsonObject send;
     return send;
+}
+
+QJsonObject getUnCheckedTask(QJsonObject json, Authentication **auth)
+{
+    int courseId = json["CourseId"].toInt();
+    DatabaseManager db;
+    QList<Submit*> submits;
+    submits = db.GetUncheckedTaskSubmitsFromCourse(courseId);
+    QJsonArray ar;
+    for(Submit* temp:submits)
+    {
+        QJsonObject sub;
+        sub["Authentication"] = temp->student->Serialize();
+        sub["CourseSubmit"] = temp->work->Serialize();
+        ar.append(sub);
+    }
+    QJsonObject temp;
+    temp["Submits"] = ar;
+    QJsonObject sendjson;
+    sendjson["Action"]=GETUNCHECKEDTASK;
+    sendjson["Data"]= temp;
+    return sendjson;
 }

@@ -60,5 +60,7 @@ static QJsonObject setSubmits(QJsonObject json,Authentication **auth);
 
 static QJsonObject addStudentSubmit(QJsonObject json,Authentication **auth);
 
+static QJsonObject getUnCheckedTask(QJsonObject json,Authentication **auth);
+
 #endif // JSONMANAGER_H
 

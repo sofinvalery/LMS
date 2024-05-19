@@ -28,7 +28,7 @@ enum TransferEnum{
     GETINFOFORSETSUBMITS=20,
     SETSUBMITS=21,
     ADDSTUDENTSUBMIT=22,
-
+    GETUNCHECKEDTASK=23,
 };
 
 enum TypeMessage{

@@ -11,6 +11,8 @@ CoursePage::CoursePage(Course *course, QWidget *parent)
     , ui(new Ui::CoursePage)
 {
     connect(SocketParser::GetInstance(),SIGNAL(showTeacherScore()),this,SLOT(showScoreForTeacher()));
+    connect(SocketParser::GetInstance(),SIGNAL(getUnCheckedSubmits(QList<Submit*>)),this,SLOT(showCheckTask(QList<Submit*>)));
+
     ui->setupUi(this);
     this->course = course;
     ui->groupBox->setStyleSheet("background-color: white;");
@@ -179,6 +181,6 @@ void CoursePage::on_checkButton_clicked()
     ClientState::GetInstance()->getMainwindow()->doAllButtonDisable();
     QJsonObject json;
     json["CourseId"]=int(course->GetCourseId());
-    ClientManager::GetInstance()->SendJsonToServer(GETGROUPSBYCOURSEID,json);
+    ClientManager::GetInstance()->SendJsonToServer(GETUNCHECKEDTASK,json);
 }
 

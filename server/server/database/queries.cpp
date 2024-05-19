@@ -1467,12 +1467,14 @@ QList<Submit*> DatabaseManager::GetUncheckedTaskSubmitsFromCourse(int32_t path_c
 
     QList<Submit*> uncheckedSubmits;
     QSqlQuery taskQuery(m_db);
-    taskQuery.prepare("SELECT * FROM path_course_tasks where id = :id");
+    taskQuery.prepare("SELECT * FROM path_course_tasks where courses_id1 = :id");
     taskQuery.bindValue(":id",path_course_tasks_id);
     if (!taskQuery.exec()) {
         qDebug() << "Error executing the GetUncheckedTaskSubmitsFromCourse query:" << taskQuery.lastError().text();
         return uncheckedSubmits;
     }
+    while (taskQuery.next()) {
+    int id = taskQuery.value("id").toInt();
     QString content = taskQuery.value("content").toString();
     QString title = taskQuery.value("title").toString();
     int max_mark = taskQuery.value("max_mark").toInt();
@@ -1482,7 +1484,7 @@ QList<Submit*> DatabaseManager::GetUncheckedTaskSubmitsFromCourse(int32_t path_c
                   "FROM path_course_tasks_submits AS pcts "
                   "JOIN users u ON pcts.users_id1 = u.id "
                   "WHERE pcts.path_course_tasks_id1 = :path_course_tasks_id AND pcts.is_checked = false");
-    query.bindValue(":path_course_tasks_id", path_course_tasks_id);
+    query.bindValue(":path_course_tasks_id", id);
 
     if (!query.exec()) {
         qDebug() << "Error executing the GetUncheckedTaskSubmitsFromCourse query:" << query.lastError().text();
@@ -1504,11 +1506,11 @@ QList<Submit*> DatabaseManager::GetUncheckedTaskSubmitsFromCourse(int32_t path_c
         int32_t role = query.value(11).toInt();
 
         Authentication* student = new Authentication(login, password, userId, fio, avatarUrl, static_cast<EnumRoles>(role));
-        CourseTask* task = new CourseTask(path_course_tasks_id,0,content,max_mark,0,"", answerUrl, submitTime.date(), verdict, notes,title);
+        CourseTask* task = new CourseTask(id,0,content,max_mark,0,"", answerUrl, submitTime.date(), verdict, notes,title);
         Submit* submit = new Submit{student, task};
         uncheckedSubmits.append(submit);
     }
-
+    }
     return uncheckedSubmits;
 }
 
