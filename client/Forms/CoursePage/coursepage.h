@@ -27,7 +27,7 @@ private slots:
     void on_EditCourseButton_clicked();
     void showScoreForTeacher();
     void on_scoreButton_clicked();
-
+    void showCheckTask(QList<Submit*>);
     void on_checkButton_clicked();
 
 private:

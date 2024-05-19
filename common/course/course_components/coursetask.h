@@ -49,6 +49,8 @@ public:
 
     void setVerdict(int32_t newVerdict);
 
+    void setAnswerUrl(const QString &newAnswerUrl);
+
 private:
     QString content;
     int32_t maxMark;

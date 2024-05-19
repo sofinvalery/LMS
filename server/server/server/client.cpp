@@ -1,4 +1,5 @@
 #include "client.h"
+#include <QDir>
 
 Client::Client(qintptr socketDescriptor, QObject* parent) :
     QObject(parent)
@@ -82,9 +83,15 @@ Client::Client(qintptr socketDescriptor, QObject* parent) :
                     in >> filename;
                     in>>path;
                     fileSocket.file = new QFile(path+filename);
-                    if(!fileSocket.file->open(QIODevice::Append))
+                    if(!fileSocket.file->open(QIODevice::WriteOnly))
                     {
-                        qInfo()<<"все плохо с путем при чтении файла";
+                        QDir dir(path);
+                        if (!dir.exists())
+                            dir.mkpath(".");
+                        if(!fileSocket.file->open(QIODevice::WriteOnly))
+                        {
+                            qInfo()<<"проблема";
+                        }
                     }
                     break;
                 }

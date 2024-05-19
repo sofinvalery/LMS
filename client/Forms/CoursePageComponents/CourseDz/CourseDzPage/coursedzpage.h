@@ -20,8 +20,12 @@ private slots:
     void on_exitButton_clicked();
     void on_setPathButton_clicked();
 
+    void on_submitButton_clicked();
+
 private:
+    CourseTask* dz;
     Ui::CourseDzPage *ui;
+    QString path;
 };
 
 #endif // COURSEDZPAGE_H

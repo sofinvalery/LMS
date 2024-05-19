@@ -2,18 +2,21 @@
 #include "ui_coursedzpage.h"
 #include "StyleManager/stylemanager.h"
 #include <QFileDialog>
+#include "ClientManager/clientmanager.h"
+#include "ClientState/clientstate.h"
 
 CourseDzPage::CourseDzPage(CourseTask* dz, QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::CourseDzPage)
 {
     ui->setupUi(this);
+    this->dz=dz;
     ui->scrollAreaWidgetContents->setStyleSheet("background-color: white;");
     this->resize(StyleManager::GetInstance()->getScreenWidth(), StyleManager::GetInstance()->getScreenHeight());
     ui->scrollArea->resize(StyleManager::GetInstance()->getScreenWidth(), StyleManager::GetInstance()->getScreenHeight());
     StyleManager::GetInstance()->setScrollAreaStyle(ui->scrollArea, true);
 
-    StyleManager::GetInstance()->setLabelStyle(ui->pathLbl, "Путь к файлу: " + dz->getAnswerUrl(), false, "black", true, 16);
+    StyleManager::GetInstance()->setLabelStyle(ui->pathLbl, "Путь к файлу: ", false, "black", true, 16);
     ui->pathLbl->move(ui->pathLbl->x(), 200);
     ui->pathLbl->setFixedSize(ui->pathLbl->sizeHint().width(), ui->pathLbl->sizeHint().height());
 
@@ -21,14 +24,18 @@ CourseDzPage::CourseDzPage(CourseTask* dz, QWidget *parent)
     ui->titleLbl->setFixedSize(ui->titleLbl->sizeHint().width(), ui->titleLbl->sizeHint().height());
     ui->titleHorLine->setFixedSize(StyleManager::GetInstance()->getScreenWidth(), 2);
     ui->titleHorLine->setStyleSheet("border: 2px solid lightgrey;");
+    ui->verdictLbl->setText("");
+    ui->timeLbl->setText("");
     if (dz->getVerdict() != 0)
     {
         StyleManager::GetInstance()->setLabelStyle(ui->verdictLbl, "Оценено: " + QString::number(dz->getVerdict()), false, "black", true, 20);
         StyleManager::GetInstance()->setDisableButtonStyle(ui->setPathButton, ui->setPathButton->text(), true, 16, 13);
         ui->setPathButton->setEnabled(false);
+        ui->timeLbl->hide();
     }
     else if (!dz->getAnswerUrl().isEmpty())
     {
+        ui->verdictLbl->hide();
         StyleManager::GetInstance()->setLabelStyle(ui->timeLbl, dz->getSolutionTime().toString("Сдано: dd.MM.yyyy"), false, "black", true, 20);
         StyleManager::GetInstance()->setDisableButtonStyle(ui->setPathButton, ui->setPathButton->text(), true, 16, 13);
         ui->setPathButton->setEnabled(false);
@@ -41,6 +48,12 @@ CourseDzPage::CourseDzPage(CourseTask* dz, QWidget *parent)
         ui->setPathButton->setEnabled(true);
     }
     ui->setPathButton->move(ui->pathLbl->x(), 120);
+    StyleManager::GetInstance()->setBlueButtonStyle(ui->submitButton, "Сдать", true, 16, 13);
+    ui->submitButton->move(ui->pathLbl->x(), 300);
+    if(ClientState::GetInstance()->getAuth()->GetCurrentRole()!=STUDENT)
+    {
+        ui->submitButton->hide();
+    }
     ui->timeLbl->setFixedSize(ui->timeLbl->sizeHint().width(), ui->timeLbl->sizeHint().height());
     ui->timeLbl->move(ui->titleLbl->width() + ui->titleLbl->x() + 30, ui->titleLbl->y());
 
@@ -108,7 +121,37 @@ void CourseDzPage::on_exitButton_clicked()
 
 void CourseDzPage::on_setPathButton_clicked()
 {
-    QString path = QFileDialog::getOpenFileName(this, "Выбор файла", QDir::homePath(), "DZ files (*.xlsx *.pdf)");
+    path = QFileDialog::getOpenFileName(this, "Выбор файла", QDir::homePath(), "DZ files (*.xlsx *.pdf)");
     ui->pathLbl->setText("Путь к файлу: " + path);
     ui->pathLbl->setFixedSize(ui->pathLbl->sizeHint().width(), ui->pathLbl->sizeHint().height());
 }
+
+void CourseDzPage::on_submitButton_clicked()
+{
+    if(path!="")
+    {
+        QString fileName;
+        for(int j=path.size()-1; j>=0; j--)
+            if(path[j]=='/')
+            {
+                fileName=path.mid(j+1);
+                break;
+            }
+        QString serverPath = "./data/Courses/submits/"+QString::number(ClientState::GetInstance()->getAuth()->getId())+"/"+QString::number(dz->getId())+"/";
+        ClientManager::GetInstance()->SendFileToServer(path,serverPath);
+        serverPath+=fileName;
+        ClientState::GetInstance()->ShowNotifacate("Перед выходом дождитесь уведомления\nО выгрузке файла:"+fileName,"black");
+
+        QJsonObject json;
+        json["Authentication"] = ClientState::GetInstance()->getAuth()->Serialize();
+        dz->setAnswerUrl(serverPath);
+        json["Task"]=dz->Serialize();
+        ClientManager::GetInstance()->SendJsonToServer(ADDSTUDENTSUBMIT,json);
+        on_exitButton_clicked();
+    }
+    else
+        ClientState::GetInstance()->ShowNotifacate("Прекрепите файл","red");
+
+
+}
+

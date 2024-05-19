@@ -1444,12 +1444,10 @@ bool DatabaseManager::AddStudentTaskSubmit(Submit *submit) {
         }
         else {
         QSqlQuery submitQuery(m_db);
-        submitQuery.prepare("INSERT INTO path_course_tasks_submits (path_course_tasks_id1, \"time\", verdict, notes, answer_url, users_id1, is_checked) "
-                            "VALUES (:taskId, :submitTime, :notes, :answer_url, :userId, :isChecked)");
+        submitQuery.prepare("INSERT INTO path_course_tasks_submits (path_course_tasks_id1, \"time\", answer_url, users_id1, is_checked) "
+                            "VALUES (:taskId,  NOW(), :answer_url, :userId, :isChecked)");
         submitQuery.bindValue(":taskId", task->getId());
-        submitQuery.bindValue(":submitTime", task->getSolutionTime());
         submitQuery.bindValue(":answer_url", task->getAnswerUrl());
-        submitQuery.bindValue(":notes", task->getNotes());
         submitQuery.bindValue(":userId", submit->student->getId());
         submitQuery.bindValue(":isChecked", false);
 
@@ -1466,7 +1464,19 @@ bool DatabaseManager::AddStudentTaskSubmit(Submit *submit) {
 }
 
 QList<Submit*> DatabaseManager::GetUncheckedTaskSubmitsFromCourse(int32_t path_course_tasks_id) {
+
     QList<Submit*> uncheckedSubmits;
+    QSqlQuery taskQuery(m_db);
+    taskQuery.prepare("SELECT * FROM path_course_tasks where id = :id");
+    taskQuery.bindValue(":id",path_course_tasks_id);
+    if (!taskQuery.exec()) {
+        qDebug() << "Error executing the GetUncheckedTaskSubmitsFromCourse query:" << taskQuery.lastError().text();
+        return uncheckedSubmits;
+    }
+    QString content = taskQuery.value("content").toString();
+    QString title = taskQuery.value("title").toString();
+    int max_mark = taskQuery.value("max_mark").toInt();
+
     QSqlQuery query(m_db);
     query.prepare("SELECT pcts.id, pcts.\"time\", pcts.verdict, pcts.notes, pcts.answer_url, pcts.is_checked, u.id, u.fio, u.login, u.password, u.avatar_url, u.role "
                   "FROM path_course_tasks_submits AS pcts "
@@ -1494,7 +1504,7 @@ QList<Submit*> DatabaseManager::GetUncheckedTaskSubmitsFromCourse(int32_t path_c
         int32_t role = query.value(11).toInt();
 
         Authentication* student = new Authentication(login, password, userId, fio, avatarUrl, static_cast<EnumRoles>(role));
-        CourseTask* task = new CourseTask(path_course_tasks_id, 0, "", 0, 0, "", answerUrl, submitTime.date(), verdict, notes);
+        CourseTask* task = new CourseTask(path_course_tasks_id,0,content,max_mark,0,"", answerUrl, submitTime.date(), verdict, notes,title);
         Submit* submit = new Submit{student, task};
         uncheckedSubmits.append(submit);
     }

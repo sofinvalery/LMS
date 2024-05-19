@@ -117,3 +117,8 @@ void CourseTask::setVerdict(int32_t newVerdict)
 
 
 
+
+void CourseTask::setAnswerUrl(const QString &newAnswerUrl)
+{
+    answerUrl = newAnswerUrl;
+}

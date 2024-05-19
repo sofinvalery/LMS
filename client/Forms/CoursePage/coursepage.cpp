@@ -161,12 +161,24 @@ void CoursePage::on_scoreButton_clicked()
     ClientManager::GetInstance()->SendJsonToServer(GETGROUPSBYCOURSEID,json);
 }
 
+void CoursePage::showCheckTask(QList<Submit*> submits)
+{
+    ClientState::GetInstance()->getMainwindow()->getDownload()->close();
+    ClientState::GetInstance()->getMainwindow()->doAllButtonClicked();
+    CheckDz* checkdz = new CheckDz(submits);
+    checkdz->setParent(ClientState::GetInstance()->getMainwindow()->getWidget());
+    checkdz->raise();
+    checkdz->show();
+}
+
 
 void CoursePage::on_checkButton_clicked()
 {
-    // CheckDz* checkdz = new CheckDz();
-    // checkdz->setParent(ClientState::GetInstance()->getMainwindow()->getWidget());
-    // checkdz->raise();
-    // checkdz->show();
+    ClientState::GetInstance()->getMainwindow()->getDownload()->raise();
+    ClientState::GetInstance()->getMainwindow()->getDownload()->show();
+    ClientState::GetInstance()->getMainwindow()->doAllButtonDisable();
+    QJsonObject json;
+    json["CourseId"]=int(course->GetCourseId());
+    ClientManager::GetInstance()->SendJsonToServer(GETGROUPSBYCOURSEID,json);
 }
 

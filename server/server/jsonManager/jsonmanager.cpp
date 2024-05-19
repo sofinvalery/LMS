@@ -26,6 +26,7 @@ static Action Actions[] ={
     [GETSUBMITS] = getSubmits,
     [GETINFOFORSETSUBMITS] = getInfoForSetSubmits,
     [SETSUBMITS] = setSubmits,
+    [ADDSTUDENTSUBMIT] = addStudentSubmit,
 };
 
 QJsonObject jsonManager(QJsonObject json,Authentication **auth)
@@ -445,4 +446,21 @@ QJsonObject setSubmits(QJsonObject json, Authentication **auth)
     }
     QJsonObject sendjson;
     return sendjson;
+}
+
+QJsonObject addStudentSubmit(QJsonObject json, Authentication **auth)
+{
+    DatabaseManager db;
+    Submit* sub =new Submit;
+    sub->student=Authentication::Deserialize(json["Authentication"].toObject());
+    sub->work=CourseTask::Deserialize(json["Task"].toObject());
+    db.AddStudentTaskSubmit(sub);
+
+
+    delete sub->student;
+    delete sub->work;
+    delete sub;
+
+    QJsonObject send;
+    return send;
 }
