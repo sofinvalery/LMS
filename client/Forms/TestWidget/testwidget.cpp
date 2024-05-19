@@ -30,7 +30,7 @@ void TestWidget::on_BackButton_clicked()
 
 void TestWidget::on_EditTestButton_clicked()
 {
-    TestEditor * editor = new TestEditor(test->getListQuestions(), this);
+    TestEditor * editor = new TestEditor(test, this);
     editor->move(StyleManager::GetInstance()->getScreenWidth() / 2 - 290, StyleManager::GetInstance()->getScreenHeight() / 2 - 250);
     editor->show();
 }

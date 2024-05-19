@@ -15,7 +15,7 @@ class TestEditor : public QWidget
     Q_OBJECT
 
 public:
-    explicit TestEditor(QList<Question*>& questions, QWidget *parent = nullptr);
+    explicit TestEditor(CourseTest * test, QWidget *parent = nullptr);
     ~TestEditor();
 
 
@@ -48,7 +48,8 @@ private slots:
 
 private:
     Ui::TestEditor *ui;
-    QList<Question*> questions;
+    //QList<Question*> questions;
+    CourseTest * test;
     int32_t typeq = -1;
     bool IsAdding = false;
 

@@ -2,12 +2,13 @@
 #include "ui_testeditor.h"
 #include <QButtonGroup>
 
-TestEditor::TestEditor(QList<Question*>& questions, QWidget *parent)
+TestEditor::TestEditor(CourseTest * test, QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::TestEditor)
 {
     ui->setupUi(this);
-    this->questions = questions;
+    //this->questions = questions;
+    this->test = test;
     QButtonGroup* radiobuttons = new QButtonGroup;
     ui->KostilRadioButton->hide();
     radiobuttons->addButton(ui->OneAnswer1Button);
@@ -16,7 +17,7 @@ TestEditor::TestEditor(QList<Question*>& questions, QWidget *parent)
     radiobuttons->addButton(ui->OneAnswer4Button);
     radiobuttons->addButton(ui->KostilRadioButton);
     ui->KostilRadioButton2->hide();
-    if(questions.empty()){
+    if(test->getListQuestions().empty()){
         ui->CurrentQuestionSpinBox->setEnabled(false);
         OneAnswerToggle(false);
         ManyAnswersToggle(false);
@@ -25,7 +26,7 @@ TestEditor::TestEditor(QList<Question*>& questions, QWidget *parent)
         IsAdding = true;
     }
     else{
-        ui->CurrentQuestionSpinBox->setMaximum(questions.size());
+        ui->CurrentQuestionSpinBox->setMaximum(test->getListQuestions().size());
         on_CurrentQuestionSpinBox_valueChanged(1);
     }
 
@@ -152,38 +153,38 @@ void TestEditor::on_ApplyChangesButton_clicked()
     case 1:{
 
         QString tempst = ui->WordingQuestionTextEdit->toPlainText();
-        questions[ui->CurrentQuestionSpinBox->value()-1]->setQuestion(tempst);
+        test->getListQuestions()[ui->CurrentQuestionSpinBox->value()-1]->setQuestion(tempst);
         QList<QString> temp1;
         temp1.append(ui->FirstAnswerLineEdit->text());
         temp1.append(ui->SecondAnswerLineEdit->text());
         temp1.append(ui->ThirdAnswerLineEdit->text());
         temp1.append(ui->FourthAnswerLineEdit->text());
         QList<int32_t> tempnum = WhatRadioButtonIsChecked();
-        questions[ui->CurrentQuestionSpinBox->value()-1]->setAnswers(temp1);
-        questions[ui->CurrentQuestionSpinBox->value()-1]->setStudentAnswer(tempnum);
+        test->getListQuestions()[ui->CurrentQuestionSpinBox->value()-1]->setAnswers(temp1);
+        test->getListQuestions()[ui->CurrentQuestionSpinBox->value()-1]->setStudentAnswer(tempnum);
     }
         break;
     case 2:{
 
         QString tempst = ui->WordingQuestionTextEdit->toPlainText();
-        questions[ui->CurrentQuestionSpinBox->value()-1]->setQuestion(tempst);
+        test->getListQuestions()[ui->CurrentQuestionSpinBox->value()-1]->setQuestion(tempst);
         QList<QString> temp1;
         temp1.append(ui->FirstAnswerLineEdit->text());
         temp1.append(ui->SecondAnswerLineEdit->text());
         temp1.append(ui->ThirdAnswerLineEdit->text());
         temp1.append(ui->FourthAnswerLineEdit->text());
         QList<int32_t> tempnum = WhatCheckBoxIsChecked();
-        questions[ui->CurrentQuestionSpinBox->value()-1]->setAnswers(temp1);
-        questions[ui->CurrentQuestionSpinBox->value()-1]->setStudentAnswer(tempnum);
+        test->getListQuestions()[ui->CurrentQuestionSpinBox->value()-1]->setAnswers(temp1);
+        test->getListQuestions()[ui->CurrentQuestionSpinBox->value()-1]->setStudentAnswer(tempnum);
     }
         break;
     case 3:{
 
         QString tempst = ui->WordingQuestionTextEdit->toPlainText();
-        questions[ui->CurrentQuestionSpinBox->value()-1]->setQuestion(tempst);
+        test->getListQuestions()[ui->CurrentQuestionSpinBox->value()-1]->setQuestion(tempst);
         QList<QString> temp1;
         temp1.append(ui->DetailedAnswerLineEdit->text());
-        questions[ui->CurrentQuestionSpinBox->value()-1]->setAnswers(temp1);
+        test->getListQuestions()[ui->CurrentQuestionSpinBox->value()-1]->setAnswers(temp1);
     }
     break;
     }
@@ -193,7 +194,7 @@ void TestEditor::on_ApplyChangesButton_clicked()
 void TestEditor::on_CurrentQuestionSpinBox_valueChanged(int arg1)
 {
 
-    Question * tempquestion = questions[ui->CurrentQuestionSpinBox->value()-1];
+    Question * tempquestion = test->getListQuestions()[ui->CurrentQuestionSpinBox->value()-1];
     CleanAll();
     switch (tempquestion->getType()){
     case 1:{
@@ -255,9 +256,9 @@ void TestEditor::on_AddNewQuestionButton_clicked()
     QList<QString> tempa = {};
     QList<int32_t> temps = {};
 
-    questions.insert(ui->CurrentQuestionSpinBox->value(), new Question(tempq, tempa, typeq, temps));
+    test->getListQuestions().insert(ui->CurrentQuestionSpinBox->value(), new Question(tempq, tempa, typeq, temps));
     ui->CurrentQuestionSpinBox->setEnabled(true);
-    ui->CurrentQuestionSpinBox->setMaximum(questions.size());
+    ui->CurrentQuestionSpinBox->setMaximum(test->getListQuestions().size());
     ui->CurrentQuestionSpinBox->setValue(ui->CurrentQuestionSpinBox->value()+1);
 
     CleanAll();
