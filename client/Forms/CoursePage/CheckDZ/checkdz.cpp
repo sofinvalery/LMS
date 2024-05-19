@@ -14,14 +14,14 @@ CheckDz::CheckDz(QList<Submit*> submitList, QWidget *parent)
     this->resize(StyleManager::GetInstance()->getScreenWidth(), StyleManager::GetInstance()->getScreenHeight());
     ui->scrollArea->resize(StyleManager::GetInstance()->getScreenWidth(), StyleManager::GetInstance()->getScreenHeight());
     StyleManager::GetInstance()->setScrollAreaStyle(ui->scrollArea, true);
-
-    Submit* sub=new Submit();
-    sub->student = new Authentication("o725b12", "3123");
-    sub->work = new CourseTask(10, 10, "dsada", 15, 1, "pdf", "dsa", QDate::currentDate(), 4, "dasd", "titleName");
-
-    CheckDzComponents* check = new CheckDzComponents(sub, this);
-    check->move(20, 60);
-
+    HeightLine=80;
+    for(auto sub: submitList)
+    {
+        CheckDzComponents* check = new CheckDzComponents(sub, ui->scrollAreaWidgetContents);
+        check->move(20, HeightLine);
+        HeightLine+=100;
+    }
+    ui->scrollAreaWidgetContents->setMinimumHeight(HeightLine+200);
     StyleManager::GetInstance()->setCustomButtonStyle(ui->exitButton, "<--", "#E65D4F", true, 16, 4);
     ui->exitButton->move(20, 20);
 }
