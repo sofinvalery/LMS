@@ -7,7 +7,6 @@ TestEditor::TestEditor(CourseTest * test, QWidget *parent)
     , ui(new Ui::TestEditor)
 {
     ui->setupUi(this);
-    //this->questions = questions;
     this->test = test;
     QButtonGroup* radiobuttons = new QButtonGroup;
     ui->KostilRadioButton->hide();
@@ -18,12 +17,13 @@ TestEditor::TestEditor(CourseTest * test, QWidget *parent)
     radiobuttons->addButton(ui->KostilRadioButton);
     ui->KostilRadioButton2->hide();
     if(test->getListQuestions().empty()){
-        ui->CurrentQuestionSpinBox->setEnabled(false);
-        OneAnswerToggle(false);
-        ManyAnswersToggle(false);
-        PossibleAnswersToggle(false);
-        ui->DetailedAnswerLineEdit->setEnabled(false);
-        IsAdding = true;
+        CleanAll();
+        typeq = 0;
+        QString tempq = "";
+        QList<QString> tempa = {};
+        QList<int32_t> temps = {};
+        test->getListQuestions().append(new Question(tempq, tempa, typeq, temps));
+
     }
     else{
         ui->CurrentQuestionSpinBox->setMaximum(test->getListQuestions().size());
@@ -88,20 +88,20 @@ QList<int32_t> TestEditor::WhatRadioButtonIsChecked()
 QList<int32_t> TestEditor::WhatCheckBoxIsChecked()
 {
     QList<int32_t> Buttons;
-    if (ui->ManyAnswers1Button)
+    if (ui->ManyAnswers1Button->isChecked())
         Buttons.append(1);
     else
         Buttons.append(0);
-    if (ui->ManyAnswers2Button)
-        Buttons.append(2);
+    if (ui->ManyAnswers2Button->isChecked())
+        Buttons.append(1);
     else
         Buttons.append(0);
-    if (ui->ManyAnswers3Button)
-        Buttons.append(3);
+    if (ui->ManyAnswers3Button->isChecked())
+        Buttons.append(1);
     else
         Buttons.append(0);
-    if (ui->ManyAnswers4Button)
-        Buttons.append(4);
+    if (ui->ManyAnswers4Button->isChecked())
+        Buttons.append(1);
     else
         Buttons.append(0);
     return Buttons;
@@ -144,14 +144,9 @@ void TestEditor::on_DetailedAnswerButton_toggled(bool checked)
 void TestEditor::on_ApplyChangesButton_clicked()
 {
 
-    switch (typeq){                                                                                         /*void setQuestion(const QString &newQuestion);
-
-                                                                                                                void setAnswers(const QList<QString> &newAnswers);
-
-                                                                                                                void setType(int32_t newType);*/
-                                                                                                               //void setStudentAnswer(const QList<int32_t> &newStudentAnswer);
+    switch (typeq){
     case 1:{
-
+        test->getListQuestions()[ui->CurrentQuestionSpinBox->value()-1]->setType(1);
         QString tempst = ui->WordingQuestionTextEdit->toPlainText();
         test->getListQuestions()[ui->CurrentQuestionSpinBox->value()-1]->setQuestion(tempst);
         QList<QString> temp1;
@@ -167,7 +162,7 @@ void TestEditor::on_ApplyChangesButton_clicked()
     }
         break;
     case 2:{
-
+        test->getListQuestions()[ui->CurrentQuestionSpinBox->value()-1]->setType(2);
         QString tempst = ui->WordingQuestionTextEdit->toPlainText();
         test->getListQuestions()[ui->CurrentQuestionSpinBox->value()-1]->setQuestion(tempst);
         QList<QString> temp1;
@@ -232,9 +227,9 @@ void TestEditor::on_CurrentQuestionSpinBox_valueChanged(int arg1)
         ui->FourthAnswerLineEdit->setText(tempquestion->getAnswers()[3]);
         ui->WordingQuestionTextEdit->setText(tempquestion->getQuestion());
         if (tempquestion->getStudentAnswer()[0] == 1) ui->ManyAnswers1Button->setChecked(true);
-        if (tempquestion->getStudentAnswer()[1] == 1) ui->ManyAnswers1Button->setChecked(true);
-        if (tempquestion->getStudentAnswer()[2] == 1) ui->ManyAnswers1Button->setChecked(true);
-        if (tempquestion->getStudentAnswer()[3] == 1) ui->ManyAnswers1Button->setChecked(true);
+        if (tempquestion->getStudentAnswer()[1] == 1) ui->ManyAnswers2Button->setChecked(true);
+        if (tempquestion->getStudentAnswer()[2] == 1) ui->ManyAnswers3Button->setChecked(true);
+        if (tempquestion->getStudentAnswer()[3] == 1) ui->ManyAnswers4Button->setChecked(true);
     }
     break;
     case 3:{
@@ -269,15 +264,6 @@ void TestEditor::on_AddNewQuestionButton_clicked()
 
     CleanAll();
 
-
-    // создать пустой квешн
-    //эддинг статус поставить тру (а он вообще нужен в таком случае???)
-    // в кнопке применить эддинг статус поставить фолс
-    // заблокать кнопку?
-    // проблема - как определить тип заранее? пробабли въебать рандомный и потом поменять (о, либо въебать 0 и прописать ноль в спинбокс ченджвалуе что оно не шароебило)
-    // спинбокс валуе увеличить на одно, ток тогда наверное будет какой-то проеб с функцией валуе ченджет
-    // спинбокс валуе увеличить на один, либо присвоить квешнс.сайз
-
 }
 
 void TestEditor::CleanAll()
@@ -292,5 +278,26 @@ void TestEditor::CleanAll()
     OneAnswerToggle(false);
     ManyAnswersToggle(false);
     ui->KostilRadioButton2->setChecked(true);
+}
+
+
+void TestEditor::on_pushButton_clicked()
+{
+    if(test->getListQuestions().size() > 1){
+        test->getListQuestions().removeAt(ui->CurrentQuestionSpinBox->value() - 1);
+        CleanAll();
+        ui->CurrentQuestionSpinBox->setMaximum(ui->CurrentQuestionSpinBox->maximum() - 1);
+        ui->CurrentQuestionSpinBox->setValue(ui->CurrentQuestionSpinBox->value() - 1);
+        on_CurrentQuestionSpinBox_valueChanged(ui->CurrentQuestionSpinBox->value());
+    }
+    if(test->getListQuestions().size() == 1){
+        test->getListQuestions().removeAt(0);
+        typeq = 0;
+        QString tempq = "";
+        QList<QString> tempa = {};
+        QList<int32_t> temps = {};
+        test->getListQuestions().append(new Question(tempq, tempa, typeq, temps));
+        CleanAll();
+    }
 }
 

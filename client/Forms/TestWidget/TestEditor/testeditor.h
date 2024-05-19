@@ -46,17 +46,13 @@ private slots:
 
     void CleanAll();
 
+    void on_pushButton_clicked();
+
 private:
     Ui::TestEditor *ui;
-    //QList<Question*> questions;
     CourseTest * test;
     int32_t typeq = -1;
     bool IsAdding = false;
-
-                                                                                    // QString question;
-                                                                                    // QList<QString> answers;
-                                                                                    // int32_t type;
-                                                                                    // QList<int32_t> studentAnswer;
 };
 
 #endif // TESTEDITOR_H
