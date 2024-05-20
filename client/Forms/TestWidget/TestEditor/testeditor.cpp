@@ -281,15 +281,8 @@ void TestEditor::CleanAll()
 }
 
 
-void TestEditor::on_pushButton_clicked()
+void TestEditor::on_pushButton_clicked() // удаление (если переименую кнопку опять всё сломается)
 {
-    if(test->getListQuestions().size() > 1){
-        test->getListQuestions().removeAt(ui->CurrentQuestionSpinBox->value() - 1);
-        CleanAll();
-        ui->CurrentQuestionSpinBox->setMaximum(ui->CurrentQuestionSpinBox->maximum() - 1);
-        ui->CurrentQuestionSpinBox->setValue(ui->CurrentQuestionSpinBox->value() - 1);
-        on_CurrentQuestionSpinBox_valueChanged(ui->CurrentQuestionSpinBox->value());
-    }
     if(test->getListQuestions().size() == 1){
         test->getListQuestions().removeAt(0);
         typeq = 0;
@@ -299,5 +292,20 @@ void TestEditor::on_pushButton_clicked()
         test->getListQuestions().append(new Question(tempq, tempa, typeq, temps));
         CleanAll();
     }
+    if(test->getListQuestions().size() > 1){
+        if (ui->CurrentQuestionSpinBox->value() == 1){
+            test->getListQuestions().removeAt(0);
+            ui->CurrentQuestionSpinBox->setMaximum(ui->CurrentQuestionSpinBox->maximum() - 1);
+            on_CurrentQuestionSpinBox_valueChanged(1);
+        }
+        else{
+            test->getListQuestions().removeAt(ui->CurrentQuestionSpinBox->value() - 1);
+            CleanAll();
+            ui->CurrentQuestionSpinBox->setMaximum(ui->CurrentQuestionSpinBox->maximum() - 1);
+            ui->CurrentQuestionSpinBox->setValue(ui->CurrentQuestionSpinBox->value() - 1);
+            on_CurrentQuestionSpinBox_valueChanged(ui->CurrentQuestionSpinBox->value());
+        }
+    }
+
 }
 
