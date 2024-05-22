@@ -81,13 +81,26 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>250</y>
+      <y>340</y>
       <width>531</width>
       <height>16</height>
      </rect>
     </property>
     <property name="text">
      <string>результат теста</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="MaxMarkLabel">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>270</y>
+      <width>531</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>максимальное количество баллов за тест:</string>
     </property>
    </widget>
   </widget>

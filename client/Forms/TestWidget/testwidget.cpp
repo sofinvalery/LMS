@@ -15,6 +15,10 @@ TestWidget::TestWidget(CourseTest * test, QWidget *parent)
     this->resize( StyleManager::GetInstance()->getScreenWidth(), StyleManager::GetInstance()->getScreenHeight());
 
     ui->groupBox->setMinimumSize(this->frameGeometry().width(),this->frameGeometry().height());
+
+    ui->TitleLabel->setText(test->getTitle());
+
+    ui->MaxMarkLabel->setText("Максимальное количество баллов: " + QString::number(test->getMaxMark()));
 }
 
 TestWidget::~TestWidget()
