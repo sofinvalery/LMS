@@ -48,6 +48,8 @@ private slots:
 
     void on_pushButton_clicked();
 
+    bool IsAnythingEmpty();
+
 private:
     Ui::TestEditor *ui;
     CourseTest * test;

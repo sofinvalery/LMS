@@ -26,12 +26,19 @@ int main(int argc, char *argv[])
     temp.append("Сочнейшая рили");
     temp.append("сво сво сво");
     QList<int32_t> temp1;
-    temp1.append(3);
+    temp1.append(1);
+    temp1.append(0);
+    temp1.append(0);
+    temp1.append(0);
     Question* question = new Question("Беброчка сочная?", temp, 1, temp1);
     QList<Question*> temp2;
     temp2.append(question);
+    temp.clear();
+    temp.append("svo");
+    question = new Question("ГООООООЛ?", temp, 3);
+    temp2.append(question);
     QList<CourseComponent*> sad = {new CoursePdf(21313, 1, "testpdf", ""), new CoursePdf(21313, 1, "testpdf", ""), new CoursePdf(21313, 1, "testpdf", ""), new CoursePdf(21313, 1, "testpdf", ""),
-                                    new CourseTest(12123, 3, "testtest", 10, "", 100, 9, "сдал", QDate(2004,4,4), 0, temp2), new CourseTask(1213123, 4, "adsasda", 10, 15, "pdf", "qwe", QDate(2004,4,4), 9, ""), new CourseTutorials(123, 123, "Примечание: \nСочная беброчка"),
+                                    new CourseTest(12123, 3, "testtest", 10, "", 10, 9, "сдал", QDate(2004,4,4), 0, temp2), new CourseTask(1213123, 4, "adsasda", 10, 15, "pdf", "qwe", QDate(2004,4,4), 9, ""), new CourseTutorials(123, 123, "Примечание: \nСочная беброчка"),
                                     new CourseTutorials(123123, 5, "tutorial")};
     ClientState::GetInstance()->setAuth(authentication);
     ClientState::GetInstance()->setListCourses(list);

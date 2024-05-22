@@ -345,6 +345,22 @@
      <string>Удалить этот вопрос</string>
     </property>
    </widget>
+   <widget class="QLabel" name="ErrorLabel">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>390</y>
+      <width>361</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: red;</string>
+    </property>
+    <property name="text">
+     <string>Ошибка, какое-то поле пустое</string>
+    </property>
+   </widget>
   </widget>
  </widget>
  <resources/>

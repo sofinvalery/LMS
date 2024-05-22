@@ -1,6 +1,7 @@
 #include "testwidget.h"
 #include "ui_testwidget.h"
 #include "Forms/Main/mainwindow.h"
+#include "TestPassing/testpassing.h"
 
 TestWidget::TestWidget(CourseTest * test, QWidget *parent)
     : QWidget(parent)
@@ -33,5 +34,23 @@ void TestWidget::on_EditTestButton_clicked()
     TestEditor * editor = new TestEditor(test, this);
     editor->move(StyleManager::GetInstance()->getScreenWidth() / 2 - 290, StyleManager::GetInstance()->getScreenHeight() / 2 - 250);
     editor->show();
+
+}
+
+
+void TestWidget::on_StartTestButton_clicked()
+{
+    TestPassing * testpassing = new TestPassing(this);
+    testpassing->showFullScreen();
+}
+
+CourseTest * TestWidget::getTest()
+{
+    return test;
+}
+
+void TestWidget::setVerdict(QString verdict)
+{
+    ui->NotesLabel->setText(verdict);
 }
 

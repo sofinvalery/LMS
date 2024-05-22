@@ -77,6 +77,19 @@
      <string>&lt;-</string>
     </property>
    </widget>
+   <widget class="QLabel" name="NotesLabel">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>250</y>
+      <width>531</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>результат теста</string>
+    </property>
+   </widget>
   </widget>
  </widget>
  <resources/>

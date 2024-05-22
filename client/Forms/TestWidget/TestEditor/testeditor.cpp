@@ -29,6 +29,7 @@ TestEditor::TestEditor(CourseTest * test, QWidget *parent)
         ui->CurrentQuestionSpinBox->setMaximum(test->getListQuestions().size());
         on_CurrentQuestionSpinBox_valueChanged(1);
     }
+    ui->ErrorLabel->hide();
 
 }
 
@@ -74,14 +75,22 @@ void TestEditor::PossibleAnswersToggle(bool status)
 QList<int32_t> TestEditor::WhatRadioButtonIsChecked()
 {
     QList<int32_t> Buttons;
-    if (ui->OneAnswer1Button)
+    if (ui->OneAnswer1Button->isChecked())
         Buttons.append(1);
-    if (ui->OneAnswer2Button)
-        Buttons.append(2);
-    if (ui->OneAnswer3Button)
-        Buttons.append(3);
-    if (ui->OneAnswer4Button)
-        Buttons.append(4);
+    else
+        Buttons.append(0);
+    if (ui->OneAnswer2Button->isChecked())
+        Buttons.append(1);
+    else
+        Buttons.append(0);
+    if (ui->OneAnswer3Button->isChecked())
+        Buttons.append(1);
+    else
+        Buttons.append(0);
+    if (ui->OneAnswer4Button->isChecked())
+        Buttons.append(1);
+    else
+        Buttons.append(0);
     return Buttons;
 }
 
@@ -141,58 +150,59 @@ void TestEditor::on_DetailedAnswerButton_toggled(bool checked)
 }
 
 
-void TestEditor::on_ApplyChangesButton_clicked()
+void TestEditor::on_ApplyChangesButton_clicked()        //добавление/изменение вопросов
 {
+    if (!IsAnythingEmpty()){
+        switch (typeq){
+        case 1:{        // добавление/изменение вопроса с одним вариантом ответа
+            test->getListQuestions()[ui->CurrentQuestionSpinBox->value()-1]->setType(1);
+            QString tempst = ui->WordingQuestionTextEdit->toPlainText();
+            test->getListQuestions()[ui->CurrentQuestionSpinBox->value()-1]->setQuestion(tempst);
+            QList<QString> temp1;
+            temp1.append(ui->FirstAnswerLineEdit->text());
+            temp1.append(ui->SecondAnswerLineEdit->text());
+            temp1.append(ui->ThirdAnswerLineEdit->text());
+            temp1.append(ui->FourthAnswerLineEdit->text());
+            QList<int32_t> tempnum = WhatRadioButtonIsChecked();
+            test->getListQuestions()[ui->CurrentQuestionSpinBox->value()-1]->setAnswers(temp1);
+            test->getListQuestions()[ui->CurrentQuestionSpinBox->value()-1]->setStudentAnswer(tempnum);
+            test->getListQuestions()[ui->CurrentQuestionSpinBox->value()-1]->setType(typeq);
 
-    switch (typeq){
-    case 1:{
-        test->getListQuestions()[ui->CurrentQuestionSpinBox->value()-1]->setType(1);
-        QString tempst = ui->WordingQuestionTextEdit->toPlainText();
-        test->getListQuestions()[ui->CurrentQuestionSpinBox->value()-1]->setQuestion(tempst);
-        QList<QString> temp1;
-        temp1.append(ui->FirstAnswerLineEdit->text());
-        temp1.append(ui->SecondAnswerLineEdit->text());
-        temp1.append(ui->ThirdAnswerLineEdit->text());
-        temp1.append(ui->FourthAnswerLineEdit->text());
-        QList<int32_t> tempnum = WhatRadioButtonIsChecked();
-        test->getListQuestions()[ui->CurrentQuestionSpinBox->value()-1]->setAnswers(temp1);
-        test->getListQuestions()[ui->CurrentQuestionSpinBox->value()-1]->setStudentAnswer(tempnum);
-        test->getListQuestions()[ui->CurrentQuestionSpinBox->value()-1]->setType(typeq);
+        }
+            break;
+        case 2:{        //добавление/изменение вопроса с неск вариантами ответа
+            test->getListQuestions()[ui->CurrentQuestionSpinBox->value()-1]->setType(2);
+            QString tempst = ui->WordingQuestionTextEdit->toPlainText();
+            test->getListQuestions()[ui->CurrentQuestionSpinBox->value()-1]->setQuestion(tempst);
+            QList<QString> temp1;
+            temp1.append(ui->FirstAnswerLineEdit->text());
+            temp1.append(ui->SecondAnswerLineEdit->text());
+            temp1.append(ui->ThirdAnswerLineEdit->text());
+            temp1.append(ui->FourthAnswerLineEdit->text());
+            QList<int32_t> tempnum = WhatCheckBoxIsChecked();
+            test->getListQuestions()[ui->CurrentQuestionSpinBox->value()-1]->setAnswers(temp1);
+            test->getListQuestions()[ui->CurrentQuestionSpinBox->value()-1]->setStudentAnswer(tempnum);
+            test->getListQuestions()[ui->CurrentQuestionSpinBox->value()-1]->setType(typeq);
 
-    }
+        }
+            break;
+        case 3:{        //добавление/изменение вопроса с разверн ответом
+            QString tempst = ui->WordingQuestionTextEdit->toPlainText();
+            test->getListQuestions()[ui->CurrentQuestionSpinBox->value()-1]->setQuestion(tempst);
+            QList<QString> temp1;
+            temp1.append(ui->DetailedAnswerLineEdit->text());
+            test->getListQuestions()[ui->CurrentQuestionSpinBox->value()-1]->setAnswers(temp1);
+            test->getListQuestions()[ui->CurrentQuestionSpinBox->value()-1]->setType(typeq);
+        }
         break;
-    case 2:{
-        test->getListQuestions()[ui->CurrentQuestionSpinBox->value()-1]->setType(2);
-        QString tempst = ui->WordingQuestionTextEdit->toPlainText();
-        test->getListQuestions()[ui->CurrentQuestionSpinBox->value()-1]->setQuestion(tempst);
-        QList<QString> temp1;
-        temp1.append(ui->FirstAnswerLineEdit->text());
-        temp1.append(ui->SecondAnswerLineEdit->text());
-        temp1.append(ui->ThirdAnswerLineEdit->text());
-        temp1.append(ui->FourthAnswerLineEdit->text());
-        QList<int32_t> tempnum = WhatCheckBoxIsChecked();
-        test->getListQuestions()[ui->CurrentQuestionSpinBox->value()-1]->setAnswers(temp1);
-        test->getListQuestions()[ui->CurrentQuestionSpinBox->value()-1]->setStudentAnswer(tempnum);
-        test->getListQuestions()[ui->CurrentQuestionSpinBox->value()-1]->setType(typeq);
-
-    }
-        break;
-    case 3:{
-        QString tempst = ui->WordingQuestionTextEdit->toPlainText();
-        test->getListQuestions()[ui->CurrentQuestionSpinBox->value()-1]->setQuestion(tempst);
-        QList<QString> temp1;
-        temp1.append(ui->DetailedAnswerLineEdit->text());
-        test->getListQuestions()[ui->CurrentQuestionSpinBox->value()-1]->setAnswers(temp1);
-        test->getListQuestions()[ui->CurrentQuestionSpinBox->value()-1]->setType(typeq);
-    }
-    break;
+        }
     }
 }
 
 
 void TestEditor::on_CurrentQuestionSpinBox_valueChanged(int arg1)
 {
-
+    ui->ErrorLabel->hide();
     Question * tempquestion = test->getListQuestions()[ui->CurrentQuestionSpinBox->value()-1];
     CleanAll();
     switch (tempquestion->getType()){
@@ -281,7 +291,7 @@ void TestEditor::CleanAll()
 }
 
 
-void TestEditor::on_pushButton_clicked() // удаление (если переименую кнопку опять всё сломается)
+void TestEditor::on_pushButton_clicked() // удаление вопроса (если переименую кнопку опять всё сломается)
 {
     if(test->getListQuestions().size() == 1){
         test->getListQuestions().removeAt(0);
@@ -307,5 +317,51 @@ void TestEditor::on_pushButton_clicked() // удаление (если пере�
         }
     }
 
+}
+
+bool TestEditor::IsAnythingEmpty()
+{
+    QList<int32_t> empty;
+    empty.append(0);
+    empty.append(0);
+    empty.append(0);
+    empty.append(0);
+    switch (typeq){
+    case 1:{
+        if (ui->FirstAnswerLineEdit->text() == "" || ui->SecondAnswerLineEdit->text() == "" || ui->ThirdAnswerLineEdit->text() == "" || ui->FourthAnswerLineEdit->text() == "" || ui->WordingQuestionTextEdit->toPlainText() == ""
+            || WhatRadioButtonIsChecked() == empty){
+            ui->ErrorLabel->show();
+            return true;
+        }
+        else{
+            ui->ErrorLabel->hide();
+            return false;
+        }
+    }
+    case 2:{
+        if (ui->FirstAnswerLineEdit->text() == "" || ui->SecondAnswerLineEdit->text() == "" || ui->ThirdAnswerLineEdit->text() == "" || ui->FourthAnswerLineEdit->text() == "" || ui->WordingQuestionTextEdit->toPlainText() == ""
+            || WhatCheckBoxIsChecked() == empty){
+            ui->ErrorLabel->show();
+            return true;
+        }
+        else{
+            ui->ErrorLabel->hide();
+            return false;
+        }
+    }
+    case 3:{
+        if (ui->WordingQuestionTextEdit->toPlainText() == "" || ui->DetailedAnswerLineEdit->text() == ""){
+            ui->ErrorLabel->show();
+            return true;
+        }
+        else{
+            ui->ErrorLabel->hide();
+            return false;
+        }
+    }
+    case 0:
+        ui->ErrorLabel->show();
+        return true;
+    }
 }
 

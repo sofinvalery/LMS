@@ -17,10 +17,19 @@ public:
     explicit TestWidget(CourseTest * test, QWidget *parent = nullptr);
     ~TestWidget();
 
+    void setVerdict(QString verdict);
+
+
+    CourseTest *getTest();
+
 private slots:
     void on_BackButton_clicked();
 
     void on_EditTestButton_clicked();
+
+    void on_StartTestButton_clicked();
+
+
 
 private:
     Ui::TestWidget *ui;

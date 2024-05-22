@@ -44,6 +44,7 @@ SOURCES += \
     Forms/Score/TestTaskComponents/testtaskcomponents.cpp \
     Forms/Score/score.cpp \
     Forms/TestWidget/TestEditor/testeditor.cpp \
+    Forms/TestWidget/TestPassing/testpassing.cpp \
     Forms/TestWidget/testwidget.cpp \
     StyleManager/stylemanager.cpp \
     main.cpp  \
@@ -91,6 +92,7 @@ HEADERS += \
     Forms/Score/TestTaskComponents/testtaskcomponents.h \
     Forms/Score/score.h \
     Forms/TestWidget/TestEditor/testeditor.h \
+    Forms/TestWidget/TestPassing/testpassing.h \
     Forms/TestWidget/testwidget.h \
     StyleManager/stylemanager.h
 
@@ -120,6 +122,7 @@ FORMS += \
     Forms/Score/TestTaskComponents/testtaskcomponents.ui \
     Forms/Score/score.ui \
     Forms/TestWidget/TestEditor/testeditor.ui \
+    Forms/TestWidget/TestPassing/testpassing.ui \
     Forms/TestWidget/testwidget.ui
 
 
