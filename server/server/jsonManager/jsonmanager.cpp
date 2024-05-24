@@ -111,10 +111,7 @@ QJsonObject getCourseComponents(QJsonObject json,Authentication **auth)
     return sendjson;
 }
 
-QJsonObject getTestQuestions(QJsonObject json,Authentication **auth)
-{
-
-}
+QJsonObject getTestQuestions(QJsonObject json,Authentication **auth) { return QJsonObject(); }
 
 QJsonObject setNewGroup(QJsonObject json,Authentication **auth)
 {

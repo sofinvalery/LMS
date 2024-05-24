@@ -1,4 +1,4 @@
-#include "databasemanager.h"
+#include "databaseManager.h"
 
 static QThreadStorage<QSqlDatabase> mDatabasePool;
 

@@ -60,8 +60,8 @@ QList<Course*> DatabaseManager::GetMainPage(Authentication* auth) {
 
     if (auth->GetCurrentRole() == STUDENT) {
         query.prepare("SELECT c.id, c.title, c.ava_title_url, c.start_time, c.end_time, "
-                      "SUM(COALESCE(pts.verdict, 0)) + SUM(COALESCE(pcts.verdict, 0)) AS current_points, "
-                      "SUM(COALESCE(pct.max_mark, 0) + COALESCE(pct2.max_mark, 0)) AS max_points "
+                      "COALESCE(SUM(pts.verdict), 0) AS current_points, "
+                      "COALESCE(SUM(pct.max_mark), 0) + COALESCE(SUM(pct2.max_mark), 0) AS max_points "
                       "FROM courses AS c "
                       "INNER JOIN zachisleniya_in_potok AS zip ON c.students_groups_union_id1 = zip.students_groups_union_id "
                       "INNER JOIN zachisleniya AS z ON zip.groups_id = z.groups_id "
@@ -74,7 +74,7 @@ QList<Course*> DatabaseManager::GetMainPage(Authentication* auth) {
     } else if (auth->GetCurrentRole() == TEACHER) {
         query.prepare("SELECT c.id, c.title, c.ava_title_url, c.start_time, c.end_time "
                       "FROM courses AS c "
-                      "INNER JOIN `groups` AS g ON c.groups_id = g.id "
+                      "INNER JOIN groups AS g ON c.groups_id = g.id "
                       "INNER JOIN zachisleniya AS z ON g.id = z.groups_id "
                       "WHERE z.users_id = :userId");
     } else {
@@ -88,29 +88,23 @@ QList<Course*> DatabaseManager::GetMainPage(Authentication* auth) {
         return courses;
     }
 
-    if (!query.first()) {
-        qDebug() << "No user found with the given login and password.";
-        return courses;
-    }
-    else {
-        do {
-            int courseId = query.value("id").toInt();
-            QString title = query.value("title").toString();
-            QString avaUrl = query.value("ava_title_url").toString();
-            QDate start = query.value("start_time").toDate();
-            QDate end = query.value("end_time").toDate();
-            int currentPoints = 0;
-            int maxPoints = 0;
-            if (auth->GetCurrentRole() == STUDENT) {
-                currentPoints = query.value("current_points").toInt();
-                maxPoints = query.value("max_points").toInt();
-            }
-
-            Course* course = new Course(courseId, title, avaUrl, start, end, currentPoints, maxPoints);
-            courses.append(course);
+    while (query.next()) {
+        int courseId = query.value("id").toInt();
+        QString title = query.value("title").toString();
+        QString avaUrl = query.value("ava_title_url").toString();
+        QDate start = query.value("start_time").toDate();
+        QDate end = query.value("end_time").toDate();
+        int currentPoints = 0;
+        int maxPoints = 0;
+        if (auth->GetCurrentRole() == STUDENT) {
+            currentPoints = query.value("current_points").toInt();
+            maxPoints = query.value("max_points").toInt();
         }
-        while (query.next());
+
+        Course* course = new Course(courseId, title, avaUrl, start, end, currentPoints, maxPoints);
+        courses.append(course);
     }
+
     return courses;
 }
 
