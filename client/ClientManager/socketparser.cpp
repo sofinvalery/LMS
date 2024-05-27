@@ -42,6 +42,9 @@ void SocketParser::socketparse(QJsonObject json)
     case GETINFOFORSETSUBMITS: getInfoForSetSubmits(data);
         break;
     case GETUNCHECKEDTASK: getUnCheckedSubmits(data);
+        break;
+    case GETTESTQUESTION: getAnswerForShowTestPage(data);
+        break;
 
 
     default:
@@ -227,6 +230,11 @@ void SocketParser::getUnCheckedSubmits(QJsonObject json)
     }
     emit getUnCheckedSubmits(submits);
 
+}
+
+void SocketParser::getAnswerForShowTestPage(QJsonObject json)
+{
+    emit showTestPage(json);
 }
 
 

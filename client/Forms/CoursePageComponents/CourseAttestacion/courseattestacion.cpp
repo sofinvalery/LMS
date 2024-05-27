@@ -2,12 +2,14 @@
 #include "ui_courseattestacion.h"
 #include "StyleManager/stylemanager.h"
 #include "ClientState/clientstate.h"
+#include "ClientManager/socketparser.h"
 
 CourseAttestacion::CourseAttestacion(CourseComponent * test, QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::CourseAttestacion)
 {
     ui->setupUi(this);
+    connect(SocketParser::GetInstance(),SIGNAL(showTestPage(QJsonObject)),this,SLOT(showTestWidjet(QJsonObject)));
     this->test = qobject_cast<CourseTest*>(test);
     icon = new QPixmap(":/img/resources/test.png");
     ui->LabelIMG->setPixmap(icon->scaled(31, 21, Qt::KeepAspectRatio));
@@ -42,8 +44,23 @@ void CourseAttestacion::SetTextOnButton(QString buttontext)
 
 void CourseAttestacion::on_DownloadButton_clicked()
 {
-    testwidget = new TestWidget(test);
-    testwidget->setParent(ClientState::GetInstance()->getMainwindow());
-    testwidget->show();
+    ClientState::GetInstance()->getMainwindow()->getDownload()->raise();
+    ClientState::GetInstance()->getMainwindow()->getDownload()->show();
+    ClientState::GetInstance()->getMainwindow()->doAllButtonDisable();
+    ClientManager::GetInstance()->SendJsonToServer(GETTESTQUESTION,test->Serialize());
+}
+
+void CourseAttestacion::showTestWidjet(QJsonObject json)
+{
+    if(json["TestId"].toInt()==test->getId())
+    {
+        test->DeserializeQuestionList(json);
+        ClientState::GetInstance()->getMainwindow()->getDownload()->close();
+        ClientState::GetInstance()->getMainwindow()->doAllButtonClicked();
+        testwidget = new TestWidget(test);
+        testwidget->setParent(ClientState::GetInstance()->getMainwindow()->getWidget());
+        testwidget->raise();
+        testwidget->show();
+    }
 }
 

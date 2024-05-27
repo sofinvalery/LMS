@@ -1,5 +1,5 @@
 #include "jsonmanager.h"
-
+#include<QRandomGenerator>
 
 typedef QJsonObject (*Action)(QJsonObject,Authentication **auth);
 
@@ -111,7 +111,54 @@ QJsonObject getCourseComponents(QJsonObject json,Authentication **auth)
     return sendjson;
 }
 
-QJsonObject getTestQuestions(QJsonObject json,Authentication **auth) { return QJsonObject(); }
+QJsonObject getTestQuestions(QJsonObject json,Authentication **auth) {
+
+    CourseTest* test = CourseTest::Deserialize(json);
+    DatabaseManager db;
+    QString path= db.GetTestQuestion(test->getId());
+    QJsonObject jsonObject;
+
+    QFile file(path);
+    if (file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        QByteArray jsonData = file.readAll();
+        file.close();
+
+        QJsonDocument jsonDocument = QJsonDocument::fromJson(jsonData);
+        if (!jsonDocument.isNull()) {
+            if (jsonDocument.isObject()) {
+                jsonObject = jsonDocument.object();
+            }
+        }
+    }
+    QJsonObject sendjson;
+    sendjson["Action"]=GETTESTQUESTION;
+    if((*auth)->GetCurrentRole()!=STUDENT)
+    {
+        jsonObject["TestId"] = test->getId();
+        sendjson["Data"]=jsonObject;
+    }
+    else{
+        QJsonObject result;
+        QJsonArray questions = jsonObject["listQuestions"].toArray();
+        QVector<int> indices;
+        for (int i = 0; i < questions.size(); ++i) {
+            indices.append(i);
+        }
+        std::random_shuffle(indices.begin(), indices.end(), [](int n) {
+            return QRandomGenerator::global()->generate() % n;
+        });
+        QJsonArray selectedQuestions;
+        for (int i = 0; i < qMin(test->getTestSize(), questions.size()); ++i) {
+            selectedQuestions.append(questions[indices[i]]);
+        }
+        result["listQuestions"] = selectedQuestions;
+        result["TestId"] = test->getId();
+        sendjson["Data"]=result;
+    }
+
+    delete test;
+    return sendjson;
+}
 
 QJsonObject setNewGroup(QJsonObject json,Authentication **auth)
 {

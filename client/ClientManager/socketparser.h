@@ -29,6 +29,7 @@ private:
     void getSubmit(QJsonObject json);
     void getInfoForSetSubmits(QJsonObject json);
     void getUnCheckedSubmits(QJsonObject json);
+    void getAnswerForShowTestPage(QJsonObject json);
     static SocketParser* s_Instance;
 public:
     static SocketParser* GetInstance() { return s_Instance = (s_Instance != nullptr ? s_Instance : new SocketParser()); }
@@ -46,6 +47,7 @@ signals:
     void getSubmit(QList<Submit *>submits, Group* group);
     void getInfoForSetSubmits();
     void getUnCheckedSubmits(QList<Submit*>);
+    void showTestPage(QJsonObject json);
 };
 
 #endif // SOCKETPARSER_H

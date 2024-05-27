@@ -2,6 +2,7 @@
 #include "ui_testwidget.h"
 #include "Forms/Main/mainwindow.h"
 #include "TestPassing/testpassing.h"
+#include "ClientState/clientstate.h"
 
 TestWidget::TestWidget(CourseTest * test, QWidget *parent)
     : QWidget(parent)
@@ -10,7 +11,6 @@ TestWidget::TestWidget(CourseTest * test, QWidget *parent)
     ui->setupUi(this);
     this->test = test;
     ui->groupBox->setStyleSheet("background-color: white;");
-    this->move(0, 75+140);
 
     this->resize( StyleManager::GetInstance()->getScreenWidth(), StyleManager::GetInstance()->getScreenHeight());
 
@@ -44,8 +44,14 @@ void TestWidget::on_EditTestButton_clicked()
 
 void TestWidget::on_StartTestButton_clicked()
 {
-    TestPassing * testpassing = new TestPassing(this);
-    testpassing->showFullScreen();
+    if(test->getListQuestions().size()>=test->getTestSize())
+    {
+        TestPassing * testpassing = new TestPassing(this);
+        testpassing->showFullScreen();
+    }
+    else{
+        ClientState::GetInstance()->ShowNotifacate("В тесте не достаточно вопросов","red");
+    }
 }
 
 CourseTest * TestWidget::getTest()
