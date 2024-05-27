@@ -232,6 +232,7 @@ void TestPassing::on_EndTestButton_clicked() // результат теста - 
 {
     testWidget->setVerdict("Количество баллов за тест: " +  QString::number(SummPoints(), 'g', 2 ));
     qDebug() << SummPoints();
+
     this->close();
     this->deleteLater();
 }

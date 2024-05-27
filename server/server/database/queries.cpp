@@ -1141,7 +1141,7 @@ bool DatabaseManager::EditCourseTest(CourseTest* test) {
     query.bindValue(":urlJson", test->getUrlJson());
     query.bindValue(":order", test->getOrder());
     query.bindValue(":id", test->getId());
-    query.bindValue(":test_size", test->getTestSize());
+    query.bindValue(":testSize", test->getTestSize());
     query.bindValue(":time_in_seconds",test->getTimeInSeconds());
 
     if (!query.exec()) {
@@ -1405,6 +1405,19 @@ bool DatabaseManager::SetTaskSubmits(QList<Submit*> submits) {
     }
 
     return true;
+}
+
+bool DatabaseManager::SetQuestionList(QString path,int testId)
+{
+     QSqlQuery query(m_db);
+    query.prepare("UPDATE path_course_tests SET url_json = :path WHERE id = :id");
+    query.bindValue(":path", path);
+    query.bindValue(":id", testId);
+    if (!query.exec()) {
+        qDebug() << "Error SetQuestionList:" << query.lastError().text();
+        return false;
+    }
+    else return true;
 }
 
 bool DatabaseManager::AddStudentTaskSubmit(Submit *submit) {

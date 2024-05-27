@@ -1,6 +1,7 @@
 #include "testeditor.h"
 #include "ui_testeditor.h"
 #include <QButtonGroup>
+#include "ClientManager/clientmanager.h"
 
 TestEditor::TestEditor(CourseTest * test, QWidget *parent)
     : QWidget(parent)
@@ -17,6 +18,7 @@ TestEditor::TestEditor(CourseTest * test, QWidget *parent)
     radiobuttons->addButton(ui->KostilRadioButton);
     ui->KostilRadioButton2->hide();
     if(test->getListQuestions().empty()){
+        ui->CurrentQuestionSpinBox->setMaximum(1);
         CleanAll();
         typeq = 0;
         QString tempq = "";
@@ -35,6 +37,7 @@ TestEditor::TestEditor(CourseTest * test, QWidget *parent)
 
 TestEditor::~TestEditor()
 {
+    ClientManager::GetInstance()->SendJsonToServer(SETQUESTIONSLIST,test->SerializeQuestionList());
     delete ui;
 }
 

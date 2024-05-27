@@ -1,5 +1,6 @@
 #include "jsonmanager.h"
 #include<QRandomGenerator>
+#include<QSaveFile>
 
 typedef QJsonObject (*Action)(QJsonObject,Authentication **auth);
 
@@ -29,6 +30,8 @@ static Action Actions[] ={
     [ADDSTUDENTSUBMIT] = addStudentSubmit,
     [GETUNCHECKEDTASK] = getUnCheckedTask,
     [TEACHERCHECKSUBMIT] = addCheckedSubmit,
+    [SETQUESTIONSLIST] = setQuestionList,
+
 };
 
 QJsonObject jsonManager(QJsonObject json,Authentication **auth)
@@ -546,6 +549,25 @@ QJsonObject addCheckedSubmit(QJsonObject json, Authentication **auth)
     delete sub->student;
     delete sub->work;
     delete sub;
+    QJsonObject send;
+    return send;
+}
+
+QJsonObject setQuestionList(QJsonObject json, Authentication **auth)
+{
+    int testId = json["TestId"].toInt();
+    QJsonDocument jsonDoc(json);
+    QByteArray jsonData = jsonDoc.toJson(QJsonDocument::Indented);
+    QString path = "./data/Courses/tests/"+QString::number(testId)+".json";
+    QSaveFile file(path);
+    if (file.open(QIODevice::WriteOnly | QIODevice::Text)) {
+        file.write(jsonData);
+        file.commit();
+    }
+    DatabaseManager db;
+    db.SetQuestionList(path,testId);
+
+
     QJsonObject send;
     return send;
 }

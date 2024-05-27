@@ -56,6 +56,7 @@ public:
     bool UpdateCheckedTaskSubmit(Submit* task);
     bool SetTestSubmits(QList<Submit*> submits);
     bool SetTaskSubmits(QList<Submit*> submits);
+    bool SetQuestionList(QString path,int testId);
 
     ~DatabaseManager();
 

@@ -64,5 +64,7 @@ static QJsonObject getUnCheckedTask(QJsonObject json,Authentication **auth);
 
 static QJsonObject addCheckedSubmit(QJsonObject json,Authentication **auth);
 
+static QJsonObject setQuestionList(QJsonObject json,Authentication **auth);
+
 #endif // JSONMANAGER_H
 
