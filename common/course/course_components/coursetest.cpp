@@ -1,6 +1,4 @@
 #include "coursetest.h"
-#include "../../../client/Forms/CoursePageComponents/CourseAttestacion/courseattestacion.h"
-
 
 
 CourseTest::CourseTest(int32_t id, int32_t order, QString title, int32_t maxMark,
@@ -50,7 +48,7 @@ QString CourseTest::getNotes() const
     return notes;
 }
 
-QList<Question*> CourseTest::getListQuestions() const
+QList<Question*>& CourseTest::getListQuestions()
 {
     return listQuestions;
 }

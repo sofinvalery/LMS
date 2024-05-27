@@ -100,6 +100,7 @@ qt_add_executable(LMS WIN32 MACOSX_BUNDLE
     Forms/CoursePage/CheckDZ/checkdz.h Forms/CoursePage/CheckDZ/checkdz.cpp Forms/CoursePage/CheckDZ/checkdz.ui
     Forms/CoursePage/CheckDZ/CheckDzComponents/checkdzcomponents.h Forms/CoursePage/CheckDZ/CheckDzComponents/checkdzcomponents.cpp Forms/CoursePage/CheckDZ/CheckDzComponents/checkdzcomponents.ui
     Forms/CoursePage/CheckDZ/DzMarkEditer/dzmarkediter.h Forms/CoursePage/CheckDZ/DzMarkEditer/dzmarkediter.cpp Forms/CoursePage/CheckDZ/DzMarkEditer/dzmarkediter.ui
+    Forms/TestWidget/TestEditor/testeditor.cpp Forms/TestWidget/TestEditor/testeditor.h Forms/TestWidget/TestEditor/testeditor.ui Forms/TestWidget/TestPassing/testpassing.cpp Forms/TestWidget/TestPassing/testpassing.h Forms/TestWidget/TestPassing/testpassing.ui Forms/TestWidget/testwidget.cpp Forms/TestWidget/testwidget.h Forms/TestWidget/testwidget.ui
 )
 target_include_directories(LMS PRIVATE
     QXlsx

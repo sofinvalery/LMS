@@ -67,6 +67,7 @@ CoursePageEditor::CoursePageEditor(CoursePage * coursepage, QWidget *parent)
 
 CoursePageEditor::~CoursePageEditor()
 {
+    coursepage->TurnOnEditButton();
     delete ui;
 }
 

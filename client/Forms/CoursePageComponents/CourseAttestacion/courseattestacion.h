@@ -5,6 +5,7 @@
 
 #include "../../../../common/course/course_components/coursetest.h"
 #include "QPixmap"
+#include "Forms/TestWidget/testwidget.h"
 
 
 namespace Ui {
@@ -20,10 +21,15 @@ public:
     ~CourseAttestacion();
     void SetTextOnButton(QString buttontext);
 
+private slots:
+    void on_DownloadButton_clicked();
+
 private:
     Ui::CourseAttestacion *ui;
     CourseTest * test;
     QPixmap * icon;
+    TestWidget * testwidget;
+
 };
 
 #endif // COURSEATTESTACION_H

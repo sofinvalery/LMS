@@ -59,7 +59,6 @@ CoursePage::CoursePage(Course *course, QWidget *parent)
     ui->IconLabel->setFixedSize(ui->IconLabel->sizeHint().width(), ui->IconLabel->sizeHint().height());
     StyleManager::GetInstance()->setLabelStyle(ui->CourseNameLabel, course->GetTitle(), true, "black", true, 36);
     ui->CourseNameLabel->setFixedSize(ui->CourseNameLabel->sizeHint().width(), ui->CourseNameLabel->sizeHint().height());
-    qInfo() << ui->CourseNameLabel->width() << " " << ui->CourseNameLabel->height();
     ui->CourseNameLabel->move(204, 40);
 
     ui->horizontalLine->setStyleSheet("border: 3px solid lightgrey;");
@@ -106,6 +105,11 @@ void CoursePage::CleanComponents()
     widgets.clear();
 }
 
+void CoursePage::TurnOnEditButton()
+{
+    ui->EditCourseButton->setEnabled(true);
+}
+
 CoursePage::~CoursePage()
 {
     delete ui;
@@ -116,6 +120,7 @@ void CoursePage::on_EditCourseButton_clicked()
     CoursePageEditor* editor = new CoursePageEditor(this, this);
     editor->move(StyleManager::GetInstance()->getScreenWidth() / 2 - 290, StyleManager::GetInstance()->getScreenHeight() / 2 - 250);
     editor->show();
+    ui->EditCourseButton->setEnabled(false);                             // докинуть стиль неакт кнопки
 }
 
 void CoursePage::showScoreForTeacher()
@@ -183,4 +188,6 @@ void CoursePage::on_checkButton_clicked()
     json["CourseId"]=int(course->GetCourseId());
     ClientManager::GetInstance()->SendJsonToServer(GETUNCHECKEDTASK,json);
 }
+
+
 

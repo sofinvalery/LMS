@@ -34,14 +34,14 @@ public:
     Loader *getDialogLoader() const;
     void raiseDownloadAndLoader();
 
-    QWidget *getWidget() const;
-
 public slots:
     void ShowManePage();
     void clickCoursePage(Course* course);
     void on_mainButton_clicked();
     void doAllButtonClicked();
     void doAllButtonDisable();
+
+    QWidget *getWidget() const;
 
 private slots:
     void ShowAddingPotok();

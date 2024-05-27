@@ -35,7 +35,6 @@ PotokAdder::PotokAdder(QWidget *parent)
     GroupNames.append(ui->Group_name);
     GroupErrors.append(ui->Error_Box);
     StyleManager::GetInstance()->setLabelStyle(ui->Error_Box, "", false, "red", true, 16);
-
 }
 
 PotokAdder::~PotokAdder()

@@ -31,7 +31,7 @@ public:
 
     void AddQuestionToList(Question* question) { listQuestions.append(question); }
 
-    QList<Question*> getListQuestions() const;
+    QList<Question*>& getListQuestions();
 
     QJsonObject Serialize() override;
 
