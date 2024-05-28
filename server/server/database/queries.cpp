@@ -52,25 +52,47 @@ bool DatabaseManager::Login(Authentication* auth) {
     return true;
 }
 
-
+// SELECT c.id, c.title, c.ava_title_url, c.start_time, c.end_time, 
+// COALESCE(SUM(pts.verdict), 0) AS current_points, 
+// COALESCE(SUM(pct.max_mark), 0) + COALESCE(SUM(pct2.max_mark), 0) AS max_points 
+// FROM courses AS c 
+// INNER JOIN zachisleniya_in_potok AS zip ON c.students_groups_union_id1 = zip.students_groups_union_id 
+// INNER JOIN zachisleniya AS z ON zip.groups_id = z.groups_id
+// LEFT JOIN path_course_tasks AS pct ON pct.courses_id1 = c.id 
+// LEFT JOIN path_course_tests AS pct2 ON pct2.courses_id1 = c.id 
+// LEFT JOIN path_course_tasks_submits AS pts ON pct.id = pts.path_course_tasks_id1 AND pts.users_id1 = z.users_id 
+// LEFT JOIN path_course_test_submits AS pcts ON pct2.id = pcts.path_course_tests_id AND pcts.users_id1 = z.users_id 
+// WHERE z.users_id = 32 
+// GROUP BY c.id, c.title, c.ava_title_url, c.start_time, c.end_time;
 
 QList<Course*> DatabaseManager::GetMainPage(Authentication* auth) {
     QSqlQuery query(m_db);
     QList<Course*> courses;
 
     if (auth->GetCurrentRole() == STUDENT) {
-        query.prepare("SELECT c.id, c.title, c.ava_title_url, c.start_time, c.end_time, "
-                      "COALESCE(SUM(pts.verdict), 0) AS current_points, "
-                      "COALESCE(SUM(pct.max_mark), 0) + COALESCE(SUM(pct2.max_mark), 0) AS max_points "
-                      "FROM courses AS c "
-                      "INNER JOIN zachisleniya_in_potok AS zip ON c.students_groups_union_id1 = zip.students_groups_union_id "
-                      "INNER JOIN zachisleniya AS z ON zip.groups_id = z.groups_id "
-                      "LEFT JOIN path_course_tasks AS pct ON pct.courses_id1 = c.id "
-                      "LEFT JOIN path_course_tests AS pct2 ON pct2.courses_id1 = c.id "
-                      "LEFT JOIN path_course_tasks_submits AS pts ON pct.id = pts.path_course_tasks_id1 AND pts.users_id1 = z.users_id "
-                      "LEFT JOIN path_course_test_submits AS pcts ON pct2.id = pcts.path_course_tests_id AND pcts.users_id1 = z.users_id "
-                      "WHERE z.users_id = :userId "
-                      "GROUP BY c.id, c.title, c.ava_title_url, c.start_time, c.end_time");
+        query.prepare(
+                    "SELECT "
+                        "c.id, c.title, c.ava_title_url, c.start_time, c.end_time, "
+                        "COALESCE(SUM(pts.verdict), 0) + COALESCE(SUM(pcts.verdict), 0) AS current_points, "
+                        "COALESCE(SUM(pct.max_mark), 0) + COALESCE(SUM(pct2.max_mark), 0) AS max_points "
+                    "FROM "
+                        "courses AS c "
+                    "INNER JOIN "
+                        "zachisleniya_in_potok AS zip ON c.students_groups_union_id1 = zip.students_groups_union_id "
+                    "INNER JOIN "
+                        "zachisleniya AS z ON zip.groups_id = z.groups_id "
+                    "LEFT JOIN "
+                        "path_course_tasks AS pct ON pct.courses_id1 = c.id "
+                    "LEFT JOIN "
+                        "path_course_tests AS pct2 ON pct2.courses_id1 = c.id "
+                    "LEFT JOIN "
+                        "path_course_tasks_submits AS pts ON pct.id = pts.path_course_tasks_id1 AND pts.users_id1 = z.users_id "
+                    "LEFT JOIN "
+                        "path_course_test_submits AS pcts ON pct2.id = pcts.path_course_tests_id AND pcts.users_id1 = z.users_id "
+                    "WHERE "
+                        "z.users_id = :userId "
+                    "GROUP BY "
+                        "c.id, c.title, c.ava_title_url, c.start_time, c.end_time");
     } else if (auth->GetCurrentRole() == TEACHER) {
         query.prepare("SELECT c.id, c.title, c.ava_title_url, c.start_time, c.end_time "
                       "FROM courses AS c "
