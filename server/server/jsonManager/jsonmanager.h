@@ -7,10 +7,9 @@
 #include "../../common/course/course.h"
 #include "../../common/course/course_components/coursetutorials.h"
 #include "../database/databaseManager.h"
+#include <algorithm>
 
 QJsonObject jsonManager(QJsonObject json,Authentication **auth);
-
-
 
 static QJsonObject logining(QJsonObject json,Authentication **auth);
 

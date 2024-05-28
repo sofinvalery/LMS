@@ -147,9 +147,11 @@ QJsonObject getTestQuestions(QJsonObject json,Authentication **auth) {
         for (int i = 0; i < questions.size(); ++i) {
             indices.append(i);
         }
-        std::random_shuffle(indices.begin(), indices.end(), [](int n) {
-            return QRandomGenerator::global()->generate() % n;
-        });
+
+        std::random_device rd;
+        std::mt19937 g(rd());
+
+        std::shuffle(indices.begin(), indices.end(), g);
         QJsonArray selectedQuestions;
         for (int i = 0; i < qMin(test->getTestSize(), questions.size()); ++i) {
             selectedQuestions.append(questions[indices[i]]);
