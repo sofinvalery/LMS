@@ -18,7 +18,14 @@ TestWidget::TestWidget(CourseTest * test, QWidget *parent)
 
     ui->TitleLabel->setText(test->getTitle());
 
-    ui->MaxMarkLabel->setText("Максимальное количество баллов: " + QString::number(test->getMaxMark()));
+    ui->MaxMarkLabel->setText("Максимальное количество баллов: " + QString::number(test->getTestSize()));
+
+    // if(ClientState::GetInstance()->getAuth()->GetCurrentRole() != STUDENT){  // STUDENT \\ ADMIN \\ TEACHER
+    //     ui->StartTestButton->hide();
+    // }
+    if(ClientState::GetInstance()->getAuth()->GetCurrentRole() == STUDENT){
+        ui->EditTestButton->hide();
+    }
 }
 
 TestWidget::~TestWidget()

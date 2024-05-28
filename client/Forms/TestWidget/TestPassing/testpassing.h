@@ -10,7 +10,7 @@
 struct QuestionAnswers{
     int32_t type;
     QList<int32_t> Answers;
-    QString DetailedAnswer;
+    QString DetailedAnswer = "";
 
 };
 

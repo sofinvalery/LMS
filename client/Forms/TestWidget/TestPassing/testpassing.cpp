@@ -47,9 +47,46 @@ void TestPassing::on_CurrentQuestionSpinBox_valueChanged(int arg1)
         ui->Answer3Label->setText(questionList[arg1 - 1]->getAnswers()[2]);
         ui->Answer4Label->setText(questionList[arg1 - 1]->getAnswers()[3]);
     }
+
+
+
     if (questionList[arg1 - 1]->getType() == 1) HideRadioButtons(false);
     if (questionList[arg1 - 1]->getType() == 2) HideCheckBoxes(false);
     if (questionList[arg1 - 1]->getType() == 3) ui->DetailedAnswerLineEdit->show();
+    if(questionList[arg1 - 1]->getType() == 1){
+        if (answers[ui->CurrentQuestionSpinBox->value()-1]->Answers[0] == 1)
+            ui->Answer1RadioButton->setChecked(true);
+        if (answers[ui->CurrentQuestionSpinBox->value()-1]->Answers[1] == 1)
+            ui->Answer2RadioButton->setChecked(true);
+        if (answers[ui->CurrentQuestionSpinBox->value()-1]->Answers[2] == 1)
+            ui->Answer3RadioButton->setChecked(true);
+        if (answers[ui->CurrentQuestionSpinBox->value()-1]->Answers[3] == 1)
+            ui->Answer4RadioButton->setChecked(true);
+        if (answers[ui->CurrentQuestionSpinBox->value()-1]->Answers[0] == 0 && answers[ui->CurrentQuestionSpinBox->value()-1]->Answers[1] == 0 && answers[ui->CurrentQuestionSpinBox->value()-1]->Answers[2] == 1 &&
+            answers[ui->CurrentQuestionSpinBox->value()-1]->Answers[3] == 0)
+            ui->KostilRadioButton->setChecked(true);
+    }
+    if(questionList[arg1 - 1]->getType() == 2){
+        if (answers[ui->CurrentQuestionSpinBox->value()-1]->Answers[0] == 1)
+            ui->Answer1CheckBox->setChecked(true);
+        else
+            ui->Answer1CheckBox->setChecked(false);
+        if (answers[ui->CurrentQuestionSpinBox->value()-1]->Answers[1] == 1)
+            ui->Answer2CheckBox->setChecked(true);
+        else
+            ui->Answer2CheckBox->setChecked(false);
+        if (answers[ui->CurrentQuestionSpinBox->value()-1]->Answers[2] == 1)
+            ui->Answer3CheckBox->setChecked(true);
+        else
+            ui->Answer3CheckBox->setChecked(false);
+        if (answers[ui->CurrentQuestionSpinBox->value()-1]->Answers[3] == 1)
+            ui->Answer4CheckBox->setChecked(true);
+        else
+            ui->Answer4CheckBox->setChecked(false);
+    }
+    if(questionList[arg1 - 1]->getType() == 3){
+        ui->DetailedAnswerLineEdit->setText(answers[ui->CurrentQuestionSpinBox->value()-1]->DetailedAnswer);
+    }
 }
 
 void TestPassing::HidePossibleAnswers(bool hide)
@@ -167,7 +204,7 @@ void TestPassing::on_Answer1CheckBox_toggled(bool checked)
 {
     if (answers[ui->CurrentQuestionSpinBox->value()-1]->type == 2){
         if (checked) answers[ui->CurrentQuestionSpinBox->value()-1]->Answers[0] = 1;
-        else answers[ui->CurrentQuestionSpinBox->value()-1]->Answers[0] = 1;
+        else answers[ui->CurrentQuestionSpinBox->value()-1]->Answers[0] = 0;
     }
 }
 
@@ -176,7 +213,7 @@ void TestPassing::on_Answer2CheckBox_toggled(bool checked)
 {
     if (answers[ui->CurrentQuestionSpinBox->value()-1]->type == 2){
         if (checked) answers[ui->CurrentQuestionSpinBox->value()-1]->Answers[1] = 1;
-        else answers[ui->CurrentQuestionSpinBox->value()-1]->Answers[1] = 1;
+        else answers[ui->CurrentQuestionSpinBox->value()-1]->Answers[1] = 0;
     }
 }
 
@@ -185,7 +222,7 @@ void TestPassing::on_Answer3CheckBox_toggled(bool checked)
 {
     if (answers[ui->CurrentQuestionSpinBox->value()-1]->type == 2){
         if (checked) answers[ui->CurrentQuestionSpinBox->value()-1]->Answers[2] = 1;
-        else answers[ui->CurrentQuestionSpinBox->value()-1]->Answers[2] = 1;
+        else answers[ui->CurrentQuestionSpinBox->value()-1]->Answers[2] = 0;
     }
 }
 
@@ -194,7 +231,7 @@ void TestPassing::on_Answer4CheckBox_toggled(bool checked)
 {
     if (answers[ui->CurrentQuestionSpinBox->value()-1]->type == 2){
         if (checked) answers[ui->CurrentQuestionSpinBox->value()-1]->Answers[3] = 1;
-        else answers[ui->CurrentQuestionSpinBox->value()-1]->Answers[3] = 1;
+        else answers[ui->CurrentQuestionSpinBox->value()-1]->Answers[3] = 0;
     }
 }
 
@@ -230,7 +267,8 @@ double TestPassing::SummPoints()
 
 void TestPassing::on_EndTestButton_clicked() // результат теста - summpoints
 {
-    testWidget->setVerdict("Количество баллов за тест: " +  QString::number(SummPoints(), 'g', 2 ));
+    testWidget->setVerdict("Количество баллов за тест: " +  QString::number(int32_t(SummPoints()), 'g', 2 ));
+    testWidget->getTest()->setVerdict(int32_t(SummPoints()));
     qDebug() << SummPoints();
 
     this->close();
