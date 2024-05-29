@@ -86,9 +86,9 @@ QList<Course*> DatabaseManager::GetMainPage(Authentication* auth) {
                     "LEFT JOIN "
                         "path_course_tests AS pct2 ON pct2.courses_id1 = c.id "
                     "LEFT JOIN "
-                        "path_course_tasks_submits AS pts ON pct.id = pts.path_course_tasks_id1 AND pts.users_id1 = z.users_id "
+                        "path_course_tasks_submits AS pts ON pct.id = pts.path_course_tasks_id1 AND pts.users_id1 = :userId "
                     "LEFT JOIN "
-                        "path_course_test_submits AS pcts ON pct2.id = pcts.path_course_tests_id AND pcts.users_id1 = z.users_id "
+                        "path_course_test_submits AS pcts ON pct2.id = pcts.path_course_tests_id AND pcts.users_id1 = :userId "
                     "WHERE "
                         "z.users_id = :userId "
                     "GROUP BY "
@@ -119,8 +119,48 @@ QList<Course*> DatabaseManager::GetMainPage(Authentication* auth) {
         int currentPoints = 0;
         int maxPoints = 0;
         if (auth->GetCurrentRole() == STUDENT) {
-            currentPoints = query.value("current_points").toInt();
-            maxPoints = query.value("max_points").toInt();
+            QSqlQuery query_1(m_db);
+            query_1.prepare("select sum(verdict) from path_course_tasks_submits "
+                "where users_id1 = :userId and "
+                            "path_course_tasks_id1 in (select id from path_course_tasks where courses_id1 = :id)");
+            query_1.bindValue(":userId",auth->getId());
+            query_1.bindValue(":id",courseId);
+            if (!query_1.exec()) {
+                qDebug() << "Error executing getMainPage query1:" << query_1.lastError().text();
+                return courses;
+            }
+            query_1.next();
+            currentPoints += query_1.value(0).toInt();
+            QSqlQuery query_2(m_db);
+            query_2.prepare("select sum(verdict) from path_course_test_submits "
+                            "where users_id1 = :userId and "
+                            "path_course_tests_id in (select id from path_course_tests where courses_id1 = :id)");
+            query_2.bindValue(":userId",auth->getId());
+            query_2.bindValue(":id",courseId);
+            if (!query_2.exec()) {
+                qDebug() << "Error executing getMainPage query2:" << query_2.lastError().text();
+                return courses;
+            }
+            query_2.next();
+            currentPoints += query_2.value(0).toInt();
+            QSqlQuery query_3(m_db);
+            query_3.prepare("select sum(test_size) from path_course_tests where courses_id1 = :id");
+            query_3.bindValue(":id",courseId);
+            if (!query_3.exec()) {
+                qDebug() << "Error executing getMainPage query3:" << query_3.lastError().text();
+                return courses;
+            }
+            query_3.next();
+            maxPoints += query_3.value(0).toInt();
+            QSqlQuery query_4(m_db);
+            query_4.prepare("select sum(max_mark) from path_course_tasks where courses_id1 = :id");
+            query_4.bindValue(":id",courseId);
+            if (!query_4.exec()) {
+                qDebug() << "Error executing getMainPage query4:" << query_4.lastError().text();
+                return courses;
+            }
+            query_4.next();
+            maxPoints += query_4.value(0).toInt();
         }
 
         Course* course = new Course(courseId, title, avaUrl, start, end, currentPoints, maxPoints);
