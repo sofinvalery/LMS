@@ -7,9 +7,7 @@
 ClientManager* ClientManager::s_Instance = nullptr;
 
 
-ClientManager::ClientManager(QObject *parent)
-    : QObject{parent}
-{
+ClientManager::ClientManager(QObject *parent) : QObject{parent} {
     connect(this,SIGNAL(SendFileDataToServer(fileSocket*)),this,SLOT(SendFileData(fileSocket*)),Qt::DirectConnection);
     connect(this,SIGNAL(ReadFileDataToServer(fileSocket*)),this,SLOT(ReadFileData(fileSocket*)),Qt::QueuedConnection);
     qRegisterMetaType<TransferEnum>("TransferEnum");
@@ -35,8 +33,7 @@ ClientManager::ClientManager(QObject *parent)
     downloadPath=QStandardPaths::standardLocations(QStandardPaths::DownloadLocation);
 }
 
-void ClientManager::slotReadyReadJson()
-{
+void ClientManager::slotReadyReadJson() {
     QDataStream in(socket);
     in.setVersion(QDataStream::Qt_6_2);
     if(in.status()==QDataStream::Ok){
@@ -69,8 +66,7 @@ void ClientManager::slotReadyReadJson()
     }
 }
 
-void ClientManager::slotReadyReadFile()
-{
+void ClientManager::slotReadyReadFile() {
     fileSocket* temp=nullptr;
     for(fileSocket* t : fileSockets)
     {
@@ -178,14 +174,12 @@ void ClientManager::slotReadyReadFile()
         }
 
     }
-    else
-    {
+    else {
         ServerOrClientError();
     }
 }
 //вывести как нибудь что все пошло не туда...
-void ClientManager::ServerOrClientError()
-{
+void ClientManager::ServerOrClientError() {
     socket->waitForDisconnected();
     connect(ClientState::GetInstance()->getRec(),SIGNAL(re()),this,SLOT(tryReconnected()));
     connect(socket,SIGNAL(encrypted()),ClientState::GetInstance()->getRec(),SLOT(reconnectGood()));
@@ -193,8 +187,7 @@ void ClientManager::ServerOrClientError()
     ClientState::GetInstance()->ShowReconnect();
 }
 
-void ClientManager::SendToServerJson(QJsonObject json)
-{
+void ClientManager::SendToServerJson(QJsonObject json) {
     Data.clear();
     QDataStream out(&Data,QIODevice::WriteOnly);
     out.setVersion(QDataStream::Qt_6_2);
@@ -204,16 +197,14 @@ void ClientManager::SendToServerJson(QJsonObject json)
     socket->write(Data);
 }
 
-void ClientManager::sslErrorOccured( QList<QSslError> list )
-{
+void ClientManager::sslErrorOccured( QList<QSslError> list ) {
         for (const QSslError &error : list) {
             qInfo() << "SSL error:" << error.errorString();
         }
         qobject_cast<QSslSocket *>(sender())->ignoreSslErrors(list);
 }
 
-void ClientManager::tryReconnected()
-{
+void ClientManager::tryReconnected() {
     qInfo()<<"Asd";
 
     QMetaObject::invokeMethod(this, [this]{ socket->connectToHostEncrypted(hostName,port); }, Qt::QueuedConnection);
@@ -245,8 +236,7 @@ void ClientManager::tryReconnected()
     }
 }
 
-fileSocket* ClientManager::GetFileSocket()
-{
+fileSocket* ClientManager::GetFileSocket() {
     for(fileSocket* temp : fileSockets)
     {
         if(temp->isReady)
@@ -274,8 +264,7 @@ fileSocket* ClientManager::GetFileSocket()
     else return nullptr;
 }
 
-void ClientManager::SendRequestFile(QString path)
-{
+void ClientManager::SendRequestFile(QString path) {
     fileSocket* temp=GetFileSocket();
     if (temp==nullptr)
     {
@@ -292,8 +281,7 @@ void ClientManager::SendRequestFile(QString path)
     temp->socket->write(temp->Data);
 }
 
-void ClientManager::SendFile(QString clientPath, QString serverPath)
-{
+void ClientManager::SendFile(QString clientPath, QString serverPath) {
     fileSocket* temp=GetFileSocket();
     temp->isReady=false;
     temp->fileParams.sendFile=new QFile(clientPath);
@@ -301,15 +289,14 @@ void ClientManager::SendFile(QString clientPath, QString serverPath)
     QDataStream sendStream(&send, QIODevice::WriteOnly);
     send.clear();
     sendStream.setVersion(QDataStream::Qt_6_2);
-    if(!temp->fileParams.sendFile->open(QIODevice::ReadOnly))
-    {
+    if(!temp->fileParams.sendFile->open(QIODevice::ReadOnly)) {
         sendStream<<qint64(0)<<quint32(SENDFILEMESSAGE);
         temp->socket->write(send);
         temp->fileParams.sendFile->close();
         delete temp->fileParams.sendFile;
         return;
     }
-    else{
+    else {
         temp->fileParams.fileInfo = new QFileInfo(clientPath);
         QString name = temp->fileParams.fileInfo->fileName();
         sendStream<<qint64(0)<<quint32(SENDFILEMESSAGE)<<qint64(temp->fileParams.sendFile->size())<<name<<serverPath;
@@ -324,13 +311,11 @@ void ClientManager::SendFile(QString clientPath, QString serverPath)
     }
 }
 
-void ClientManager::SendFileData(fileSocket *temp)
-{
+void ClientManager::SendFileData(fileSocket *temp) {
     temp->socket->waitForBytesWritten();
     temp->fileParams.SendFileSize =temp->socket->write(temp->fileParams.DataFile,temp->fileParams.sizeFile);
     emit temp->addRead(temp->fileParams.SendFileSize);
-    if(temp->fileParams.SendFileSize==-1)
-    {
+    if(temp->fileParams.SendFileSize==-1) {
         qInfo()<<"ошибка отправки файла";
         DeleteFileParams(temp);
         int i=0;
@@ -346,17 +331,14 @@ void ClientManager::SendFileData(fileSocket *temp)
         delete temp;
         return;
     }
-    while(temp->fileParams.SendFileSize!=temp->fileParams.sizeFile)
-    {
+    while(temp->fileParams.SendFileSize!=temp->fileParams.sizeFile) {
         temp->socket->waitForBytesWritten();
         temp->fileParams.SendFileSize +=temp->socket->write(temp->fileParams.DataFile+temp->fileParams.SendFileSize,temp->fileParams.sizeFile-temp->fileParams.SendFileSize);
-        if(temp->fileParams.SendFileSize==-1)
-        {
+        if(temp->fileParams.SendFileSize==-1) {
             qInfo()<<"ошибка отправки файла";
             DeleteFileParams(temp);
             int i=0;
-            for(; i<fileSockets.size();i++)
-            {
+            for(; i<fileSockets.size();i++) {
                 if(fileSockets[i]==temp)
                     break;
             }
@@ -368,25 +350,22 @@ void ClientManager::SendFileData(fileSocket *temp)
             return;
         }
     }
-    if(temp->fileParams.read->atEnd()){
+    if(temp->fileParams.read->atEnd()) {
         emit temp->downloadFinish(temp->fileParams.fileInfo->fileName());
         ClientState::GetInstance()->ShowNotifacate("Выгружен файл:\n"+temp->fileParams.fileInfo->fileName(),"black");
         DeleteFileParams(temp);
     }
-    else
-    {
+    else {
         emit ReadFileDataToServer(temp);
     }
 }
 
-void ClientManager::ReadFileData(fileSocket* temp)
-{
+void ClientManager::ReadFileData(fileSocket* temp) {
     temp->fileParams.sizeFile=temp->fileParams.read->readRawData(temp->fileParams.DataFile,sizeof(char)*2048);
     emit SendFileDataToServer(temp);
 }
 
-void ClientManager::DeleteFileParams(fileSocket * temp)
-{
+void ClientManager::DeleteFileParams(fileSocket * temp) {
     temp->fileParams.sizeFile=0;
     temp->fileParams.SendFileSize=0;
     delete temp->fileParams.read;
@@ -398,23 +377,19 @@ void ClientManager::DeleteFileParams(fileSocket * temp)
     temp->fileParams.sendFile=nullptr;
 }
 
-void ClientManager::SendJsonToServer(TransferEnum e, QJsonObject json)
-{
+void ClientManager::SendJsonToServer(TransferEnum e, QJsonObject json) {
     emit Json(e,json);
 }
 
-void ClientManager::SendRequestFileToServer(QString path)
-{
+void ClientManager::SendRequestFileToServer(QString path) {
     emit RequestFile(path);
 }
 
-void ClientManager::SendFileToServer(QString clientPath, QString serverPath)
-{
+void ClientManager::SendFileToServer(QString clientPath, QString serverPath) {
     emit File(clientPath,serverPath);
 }
 
-void ClientManager::SendJson(TransferEnum e, QJsonObject json)
-{
+void ClientManager::SendJson(TransferEnum e, QJsonObject json) {
         QJsonObject sendJson;
         sendJson["Action"]=e;
         sendJson["Data"]=json;

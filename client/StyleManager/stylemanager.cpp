@@ -28,8 +28,7 @@ StyleManager::StyleManager() {
 #endif
 }
 
-void StyleManager::setSimpleButtonStyle(QPushButton* buttonName, QString buttonText, bool boldStatus, unsigned short int fontSize, unsigned short int fontSizeAnim = 18)
-{
+void StyleManager::setSimpleButtonStyle(QPushButton* buttonName, QString buttonText, bool boldStatus, unsigned short int fontSize, unsigned short int fontSizeAnim = 18) {
     buttonName->setFont(boldStatus == true ? StyleManager::GetInstance()->getBold() : StyleManager::GetInstance()->getRegular());
     buttonName->setCursor(Qt::PointingHandCursor);
     buttonName->setText(buttonText);
@@ -43,8 +42,7 @@ void StyleManager::setSimpleButtonStyle(QPushButton* buttonName, QString buttonT
         "}");
 }
 
-void StyleManager::setBlueButtonStyle(QPushButton* buttonName, QString buttonText, bool boldStatus, unsigned short int fontSize, unsigned short int borderRadius = 10)
-{
+void StyleManager::setBlueButtonStyle(QPushButton* buttonName, QString buttonText, bool boldStatus, unsigned short int fontSize, unsigned short int borderRadius = 10) {
     buttonName->setFont(boldStatus == true ? StyleManager::GetInstance()->getBold() : StyleManager::GetInstance()->getRegular());
     buttonName->setCursor(Qt::PointingHandCursor);
     buttonName->setText(buttonText);
@@ -64,8 +62,7 @@ void StyleManager::setBlueButtonStyle(QPushButton* buttonName, QString buttonTex
         "}");
 }
 
-void StyleManager::setDisableButtonStyle(QPushButton* buttonName, QString buttonText, bool boldStatus, unsigned short int fontSize, unsigned short int borderRadius = 10)
-{
+void StyleManager::setDisableButtonStyle(QPushButton* buttonName, QString buttonText, bool boldStatus, unsigned short int fontSize, unsigned short int borderRadius = 10) {
     buttonName->setFont(boldStatus == true ? StyleManager::GetInstance()->getBold() : StyleManager::GetInstance()->getRegular());
     buttonName->setText(buttonText);
     buttonName->setStyleSheet(
@@ -89,8 +86,7 @@ void StyleManager::setWidgetGroupBoxStyle(QWidget* widgetName, QGroupBox* groupb
     widgetName->move(0, moveY);
 }
 
-void StyleManager::setLabelStyle(QLabel* labelName, QString labelText, bool boldStatus, QString textColour, bool showStatus, unsigned short int fontSize, bool backgroundColour, QString setBackgroundColour)
-{
+void StyleManager::setLabelStyle(QLabel* labelName, QString labelText, bool boldStatus, QString textColour, bool showStatus, unsigned short int fontSize, bool backgroundColour, QString setBackgroundColour) {
     labelName->setFont(boldStatus == true ? StyleManager::GetInstance()->getBold() : StyleManager::GetInstance()->getRegular());
     labelName->setVisible(showStatus);
     labelName->setText(labelText);
@@ -107,8 +103,7 @@ void StyleManager::setLabelStyle(QLabel* labelName, QString labelText, bool bold
                                  "}");
 }
 
-void StyleManager::setLineEditStyle(QLineEdit* lineEditName, QString placeHolderText, bool boldStatus, unsigned short int fontSize, unsigned short int W = 100, unsigned short int H = 50)
-{
+void StyleManager::setLineEditStyle(QLineEdit* lineEditName, QString placeHolderText, bool boldStatus, unsigned short int fontSize, unsigned short int W = 100, unsigned short int H = 50) {
     lineEditName->setFont(boldStatus == true ? StyleManager::GetInstance()->getBold() : StyleManager::GetInstance()->getRegular());
     lineEditName->setPlaceholderText(placeHolderText);
     lineEditName->setFixedWidth(W);
@@ -122,8 +117,7 @@ void StyleManager::setLineEditStyle(QLineEdit* lineEditName, QString placeHolder
         );
 }
 
-void StyleManager::setScrollAreaStyle(QScrollArea* scrollAreaName, bool topBorderStatus)
-{
+void StyleManager::setScrollAreaStyle(QScrollArea* scrollAreaName, bool topBorderStatus) {
     scrollAreaName->setStyleSheet(topBorderStatus ? "QScrollArea {"
                                                     "border: none;"
                                                     "border-top: 3px solid lightgrey;"
@@ -148,8 +142,7 @@ void StyleManager::setScrollAreaStyle(QScrollArea* scrollAreaName, bool topBorde
         "}");
 }
 
-void StyleManager::setLinkButtonStyle(QPushButton* buttonName, QString buttonText, bool boldStatus, unsigned short int fontSize, unsigned short int fontSizeAnim)
-{
+void StyleManager::setLinkButtonStyle(QPushButton* buttonName, QString buttonText, bool boldStatus, unsigned short int fontSize, unsigned short int fontSizeAnim) {
     buttonName->setFont(boldStatus == true ? StyleManager::GetInstance()->getBold() : StyleManager::GetInstance()->getRegular());
     buttonName->setCursor(Qt::PointingHandCursor);
     buttonName->setText(buttonText);
@@ -168,8 +161,7 @@ void StyleManager::setLinkButtonStyle(QPushButton* buttonName, QString buttonTex
         "}");
 }
 
-void StyleManager::setCustomButtonStyle(QPushButton* buttonName, QString buttonText, QString buttonColour, bool boldStatus, unsigned short int fontSize, unsigned short int borderRadius)
-{
+void StyleManager::setCustomButtonStyle(QPushButton* buttonName, QString buttonText, QString buttonColour, bool boldStatus, unsigned short int fontSize, unsigned short int borderRadius) {
     buttonName->setFont(boldStatus == true ? StyleManager::GetInstance()->getBold() : StyleManager::GetInstance()->getRegular());
     buttonName->setCursor(Qt::PointingHandCursor);
     buttonName->setText(buttonText);
@@ -189,8 +181,7 @@ void StyleManager::setCustomButtonStyle(QPushButton* buttonName, QString buttonT
         "}");
 }
 
-void StyleManager::setCompleterStyle(QCompleter* completerName, QString fontFamily)
-{
+void StyleManager::setCompleterStyle(QCompleter* completerName, QString fontFamily) {
     completerName->popup()->setStyleSheet(
         "QListView {"
         "border: 2px solid lightgrey;"
@@ -214,8 +205,7 @@ void StyleManager::setCompleterStyle(QCompleter* completerName, QString fontFami
                        "}");
 }
 
-void StyleManager::setProgressBarStyle(QProgressBar *progressBarName, bool boldStatus, unsigned short int borderRadius, QString backgroundColour, QString downloadColour)
-{
+void StyleManager::setProgressBarStyle(QProgressBar *progressBarName, bool boldStatus, unsigned short int borderRadius, QString backgroundColour, QString downloadColour) {
     progressBarName->setFont(boldStatus == true ? StyleManager::GetInstance()->getBold() : StyleManager::GetInstance()->getRegular());
     progressBarName->setStyleSheet(
         "QProgressBar {"
@@ -237,22 +227,10 @@ QString StyleManager::adjustColour(const QString& colour, int delta) {
     return QColor::fromHsv(h, s, v).name();
 }
 
-int StyleManager::getScreenWidth()
-{
-    return scr->availableGeometry().width();
-}
+int StyleManager::getScreenWidth() { return scr->availableGeometry().width(); }
 
-int StyleManager::getScreenHeight()
-{
-    return scr->availableGeometry().height();
-}
+int StyleManager::getScreenHeight() { return scr->availableGeometry().height(); }
 
-QFont StyleManager::getRegular()
-{
-    return GetInstance()->regularFont;
-}
+QFont StyleManager::getRegular() { return GetInstance()->regularFont; }
 
-QFont StyleManager::getBold()
-{
-    return GetInstance()->boldFont;
-}
+QFont StyleManager::getBold() { return GetInstance()->boldFont; }

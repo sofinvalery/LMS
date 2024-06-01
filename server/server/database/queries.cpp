@@ -120,9 +120,9 @@ QList<Course*> DatabaseManager::GetMainPage(Authentication* auth) {
         int maxPoints = 0;
         if (auth->GetCurrentRole() == STUDENT) {
             QSqlQuery query_1(m_db);
-            query_1.prepare("select sum(verdict) from path_course_tasks_submits "
-                "where users_id1 = :userId and "
-                            "path_course_tasks_id1 in (select id from path_course_tasks where courses_id1 = :id)");
+            query_1.prepare("SELECT SUM(verdict) FROM path_course_tasks_submits "
+                "where users_id1 = :userId AND "
+                            "path_course_tasks_id1 IN (select id from path_course_tasks where courses_id1 = :id)");
             query_1.bindValue(":userId",auth->getId());
             query_1.bindValue(":id",courseId);
             if (!query_1.exec()) {
@@ -132,9 +132,9 @@ QList<Course*> DatabaseManager::GetMainPage(Authentication* auth) {
             query_1.next();
             currentPoints += query_1.value(0).toInt();
             QSqlQuery query_2(m_db);
-            query_2.prepare("select sum(verdict) from path_course_test_submits "
-                            "where users_id1 = :userId and "
-                            "path_course_tests_id in (select id from path_course_tests where courses_id1 = :id)");
+            query_2.prepare("SELECT SUM(verdict) FROM path_course_test_submits "
+                            "where users_id1 = :userId AND "
+                            "path_course_tests_id IN (select id FROM path_course_tests WHERE courses_id1 = :id)");
             query_2.bindValue(":userId",auth->getId());
             query_2.bindValue(":id",courseId);
             if (!query_2.exec()) {
@@ -144,7 +144,7 @@ QList<Course*> DatabaseManager::GetMainPage(Authentication* auth) {
             query_2.next();
             currentPoints += query_2.value(0).toInt();
             QSqlQuery query_3(m_db);
-            query_3.prepare("select sum(test_size) from path_course_tests where courses_id1 = :id");
+            query_3.prepare("SELECT SUM(test_size) FROM path_course_tests WHERE courses_id1 = :id");
             query_3.bindValue(":id",courseId);
             if (!query_3.exec()) {
                 qDebug() << "Error executing getMainPage query3:" << query_3.lastError().text();
@@ -153,7 +153,7 @@ QList<Course*> DatabaseManager::GetMainPage(Authentication* auth) {
             query_3.next();
             maxPoints += query_3.value(0).toInt();
             QSqlQuery query_4(m_db);
-            query_4.prepare("select sum(max_mark) from path_course_tasks where courses_id1 = :id");
+            query_4.prepare("SELECT SUM(max_mark) FROM path_course_tasks WHERE courses_id1 = :id");
             query_4.bindValue(":id",courseId);
             if (!query_4.exec()) {
                 qDebug() << "Error executing getMainPage query4:" << query_4.lastError().text();
